@@ -1,0 +1,23 @@
+{
+  "name": "git-annex-js",
+  "version": "1.0.0",
+  "description": "JavaScript interface for git-annex",
+  "main": "./src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jstritch/git-annex-js"
+  },
+  "keywords": [
+    "git",
+    "git-annex"
+  ],
+  "author": "John Stritch",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jstritch/git-annex-js/issues"
+  },
+  "homepage": "https://github.com/jstritch/git-annex-js#readme",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+}
