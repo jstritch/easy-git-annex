@@ -2,14 +2,19 @@
   "name": "git-annex-js",
   "version": "1.0.0",
   "description": "JavaScript interface for git-annex",
-  "main": "./src/index.js",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jstritch/git-annex-js"
   },
   "keywords": [
     "git",
-    "git-annex"
+    "git-annex",
+    "JavaScript"
   ],
   "author": "John Stritch",
   "license": "MIT",
@@ -18,6 +23,18 @@
   },
   "homepage": "https://github.com/jstritch/git-annex-js#readme",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "npx tsc",
+    "lint": "npx eslint --ext .ts,.json,.json5 .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "yalc": "yalc publish --push"
   },
+  "devDependencies": {
+    "@types/node": "^16.10.2",
+    "@typescript-eslint/eslint-plugin": "^4.32.0",
+    "@typescript-eslint/parser": "^4.32.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.24.2",
+    "eslint-plugin-jsonc": "^1.7.0",
+    "typescript": "^4.4.3"
+  }
 }
