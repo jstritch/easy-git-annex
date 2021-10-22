@@ -2,21 +2,30 @@
   "env": {
     "es2021": true,
     "node": true,
-    "jest": true
+    "jest": true,
+    "jest/globals": true
   },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 2021
+  },
+  "plugins": [
+    "promise",
+    "jest",
+    "jest-formatting"
+  ],
   "extends": [
     "eslint:recommended",
     "plugin:import/recommended",
-    "plugin:import/typescript"
+    "plugin:import/typescript",
+    "plugin:node/recommended",
+    "plugin:promise/recommended",
+    "plugin:jest/recommended",
+    "plugin:jest/style"
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": 2021,
-    "sourceType": "module"
+  "settings": {
+    "node": { "tryExtensions": [".ts"] }
   },
-  "plugins": [
-    "@typescript-eslint"
-  ],
   "rules": {
     "array-bracket-newline": ["error", "consistent"],
     "array-bracket-spacing": ["error", "never"],
@@ -27,7 +36,7 @@
     "block-spacing": ["error", "always"],
     "brace-style": ["error", "1tbs", { "allowSingleLine": true }],
     "camelcase": "error",
-    "comma-dangle": ["error", "always-multiline"],
+    "comma-dangle": ["error", "only-multiline"],
     "comma-spacing": ["error", { "before": false, "after": true }],
     "comma-style": ["error", "last"],
     "computed-property-spacing": ["error", "never", { "enforceForClassMembers": true }],
@@ -84,7 +93,26 @@
     "space-unary-ops": "error",
     "spaced-comment": "warn",
     "switch-colon-spacing": "error",
-    "template-curly-spacing": ["error", "never"]
+    "template-curly-spacing": ["error", "never"],
+
+    "jest/consistent-test-it": ["error", { "fn": "test" }],
+    "jest/no-duplicate-hooks": "error",
+    "jest/no-if": "error",
+    "jest/no-test-return-statement": "error",
+    "jest/prefer-called-with": "error",
+    "jest/prefer-hooks-on-top": "error",
+    "jest/require-hook": "error",
+    "jest/require-to-throw-message": "error",
+    "jest/require-top-level-describe": "error",
+
+    "jest-formatting/padding-around-all": 1,
+
+    "node/file-extension-in-import": ["error", "never"],
+    "node/no-unsupported-features/es-syntax": ["error", { "ignores": ["modules"] }],
+    "node/prefer-promises/fs": ["error"],
+
+    "promise/prefer-await-to-then": "error",
+    "promise/prefer-await-to-callbacks": "error"
   },
   "overrides": [
     {
@@ -98,20 +126,23 @@
       }
     },
     {
-      "files": ["*.json5"],
-      "parser": "jsonc-eslint-parser",
-      "extends": [
-        "plugin:jsonc/recommended-with-json5"
-      ],
-      "rules": {
-        "jsonc/auto": "error"
+      "files": ["src/**/*.ts"],
+      "parserOptions": {
+        "project": "./tsconfig.json",
+        "sourceType": "module"
+      }
+    },
+    {
+      "files": ["tests/**/*.ts"],
+      "parserOptions": {
+        "project": "./tsconfig-jest.json"
       }
     },
     {
       "files": ["*.ts"],
-      "parserOptions": {
-        "project": "./tsconfig.json"
-      },
+      "plugins": [
+        "@typescript-eslint"
+      ],
       "extends": [
         "plugin:@typescript-eslint/eslint-recommended",
         "plugin:@typescript-eslint/recommended",
@@ -164,7 +195,7 @@
         "brace-style": "off",
         "@typescript-eslint/brace-style": ["error", "1tbs", { "allowSingleLine": true }],
         "comma-dangle": "off",
-        "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+        "@typescript-eslint/comma-dangle": ["error", "only-multiline"],
         "comma-spacing": "off",
         "@typescript-eslint/comma-spacing": ["error", { "before": false, "after": true }],
         "default-param-last": "off",

@@ -1,5 +1,7 @@
 # Visit https://git-scm.com/docs/gitignore for information.
 
 .DS_Store
+coverage
 dist
+docs
 node_modules

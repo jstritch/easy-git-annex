@@ -1,0 +1,14 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "readme": "README.md",
+  "out": "docs",
+  "categorizeByGroup": true,
+  "defaultCategory": "Uncategorized",
+  "categoryOrder": [
+    "Command Options",
+    "Command Results",
+    "Uncategorized"
+  ],
+  "disableSources": true,
+  "hideGenerator": true
+}

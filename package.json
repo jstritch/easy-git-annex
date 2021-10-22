@@ -1,8 +1,11 @@
 {
   "name": "git-annex-js",
   "version": "1.0.0",
-  "description": "JavaScript interface for git-annex",
+  "description": "JavaScript API for git-annex",
   "main": "./dist/index.js",
+  "engines": {
+    "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "/dist"
@@ -13,8 +16,11 @@
   },
   "keywords": [
     "git",
+    "annex",
     "git-annex",
-    "JavaScript"
+    "javascript",
+    "typescript",
+    "api"
   ],
   "author": "John Stritch",
   "license": "MIT",
@@ -24,17 +30,27 @@
   "homepage": "https://github.com/jstritch/git-annex-js#readme",
   "scripts": {
     "build": "npx tsc",
-    "lint": "npx eslint --ext .ts,.json,.json5 .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "npx eslint --ext .ts,.json --ignore-path .gitignore .",
+    "test": "npx jest",
+    "test:coverage": "npx jest --collectCoverage",
+    "typedoc": "npx typedoc",
     "yalc": "yalc publish --push"
   },
   "devDependencies": {
-    "@types/node": "^16.10.2",
-    "@typescript-eslint/eslint-plugin": "^4.32.0",
-    "@typescript-eslint/parser": "^4.32.0",
-    "eslint": "^7.32.0",
-    "eslint-plugin-import": "^2.24.2",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^16.11.2",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jest": "^25.2.2",
+    "eslint-plugin-jest-formatting": "^3.0.0",
     "eslint-plugin-jsonc": "^1.7.0",
-    "typescript": "^4.4.3"
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.1.1",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7",
+    "typedoc": "^0.22.6",
+    "typescript": "^4.4.4"
   }
 }

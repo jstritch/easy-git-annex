@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
+    "types": ["node", "jest"],
     "declarationDir": "./dist",
     "outDir": "./dist",
 
@@ -22,6 +23,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
     "strict": true,
