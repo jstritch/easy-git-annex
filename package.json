@@ -31,7 +31,7 @@
   "homepage": "https://github.com/jstritch/git-annex-js#readme",
   "scripts": {
     "build": "npx tsc",
-    "lint": "npx eslint --ext .ts,.json --ignore-path .gitignore .",
+    "lint": "npx eslint --ext .ts,.js,.json --ignore-path .gitignore .",
     "test": "npx jest",
     "test:coverage": "npx jest --collectCoverage",
     "typedoc": "npx typedoc",
