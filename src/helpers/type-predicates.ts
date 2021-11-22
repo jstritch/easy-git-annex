@@ -17,3 +17,11 @@ export function isString(o: unknown): o is string {
 export function isStringArray(o: unknown): o is string[] {
   return Array.isArray(o) && o.every((element) => { return typeof element === 'string'; });
 }
+
+export function isKeyValue(o: unknown): o is [string, string] {
+  return isStringArray(o) && o.length === 2;
+}
+
+export function isKeyValueArray(o: unknown): o is [string, string][] {
+  return Array.isArray(o) && o.every((element) => { return isKeyValue(element); });
+}
