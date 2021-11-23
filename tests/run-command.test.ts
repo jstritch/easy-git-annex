@@ -84,7 +84,7 @@ describe('runCommand', () => {
     cbErrFn.mockClear();
   });
 
-  test('correctly runs a simple command', async() => {
+  test('correctly runs a simple command', async () => {
     let commandResult: CommandResult | null = null;
     let error: unknown = null;
 
@@ -105,7 +105,7 @@ describe('runCommand', () => {
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly identifies a nonexistent repositoryPath', async() => {
+  test('correctly identifies a nonexistent repositoryPath', async () => {
     let error: unknown = null;
 
     try {
@@ -118,7 +118,7 @@ describe('runCommand', () => {
     expect(error).toMatchObject({ message: expect.stringMatching('reported Error: spawn git ENOENT') as unknown });
   });
 
-  test('correctly identifies a nonexistent executable', async() => {
+  test('correctly identifies a nonexistent executable', async () => {
     let error: unknown = null;
 
     try {
@@ -131,7 +131,7 @@ describe('runCommand', () => {
     expect(error).toMatchObject({ message: expect.stringMatching('reported Error: spawn foobar ENOENT') as unknown });
   });
 
-  test('correctly identifies an empty argument list', async() => {
+  test('correctly identifies an empty argument list', async () => {
     let commandResult: CommandResult | null = null;
     let error: unknown = null;
 
@@ -152,7 +152,7 @@ describe('runCommand', () => {
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly identifies a nonexistent command name', async() => {
+  test('correctly identifies a nonexistent command name', async () => {
     let commandResult: CommandResult | null = null;
     let error: unknown = null;
 
@@ -173,7 +173,7 @@ describe('runCommand', () => {
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly includes the environment variables on an error condition', async() => {
+  test('correctly includes the environment variables on an error condition', async () => {
     let error: unknown = null;
 
     try {
@@ -202,7 +202,7 @@ describe('runCommand', () => {
     throw new Error('Boo from stderr!');
   }
 
-  test('correctly invokes a user-supplied stdout handler', async() => {
+  test('correctly invokes a user-supplied stdout handler', async () => {
     let commandResult: CommandResult | null = null;
     let error: unknown = null;
 
@@ -224,7 +224,7 @@ describe('runCommand', () => {
     expect(cbErrFn).toHaveBeenCalledWith(expect.any(String), expect.anything());
   });
 
-  test('correctly invokes a user-supplied stderr handler', async() => {
+  test('correctly invokes a user-supplied stderr handler', async () => {
     let commandResult: CommandResult | null = null;
     let error: unknown = null;
 
