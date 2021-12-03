@@ -3,6 +3,7 @@ import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
 import { AnnexOptions } from './interfaces/annex-options';
 import { ApiOptions } from './interfaces/api-options';
 import { CommandResult } from './interfaces/command-result';
+import { ConfigOptions } from './interfaces/config-options';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 import { InitOptions } from './interfaces/init-options';
 import { isString } from './helpers/type-predicates';
@@ -26,6 +27,10 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return runCommand(cmd);
   }
 
+  private makeArgs(commandName: string, anxOptions: unknown, ...parameters: string[]): string[] {
+    return [commandName, ...parseAnnexOptions(commandName, anxOptions), ...parameters];
+  }
+
   private pushIfString(args: string[], value?: string): void {
     if (isString(value)) {
       args.push(value);
@@ -40,12 +45,25 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runCommand('git-annex', args, apiOptions);
   }
 
-  private makeArgs(commandName: string, anxOptions: unknown, ...parameters: string[]): string[] {
-    return [commandName, ...parseAnnexOptions(commandName, anxOptions), ...parameters];
+  public async config(anxOptions: ConfigOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('config', anxOptions);
+    return this.runAnx(args, apiOptions);
   }
 
-  public async describe(description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
-    const args = this.makeArgs('describe', anxOptions, 'here', description);
+  public async describe(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('describe', anxOptions, repository, description);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async group(repository: string, groupname?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('group', anxOptions, repository);
+    this.pushIfString(args, groupname);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async groupwanted(groupname: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('groupwanted', anxOptions, groupname);
+    this.pushIfString(args, expression);
     return this.runAnx(args, apiOptions);
   }
 
@@ -60,6 +78,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async ungroup(repository: string, groupname: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('ungroup', anxOptions, repository, groupname);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async uninit(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs('uninit', anxOptions);
     return this.runAnx(args, apiOptions);
@@ -67,6 +90,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async version(anxOptions?: VersionOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs('version', anxOptions);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async wanted(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs('wanted', anxOptions, repository);
+    this.pushIfString(args, expression);
     return this.runAnx(args, apiOptions);
   }
 

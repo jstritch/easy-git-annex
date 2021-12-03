@@ -29,6 +29,14 @@ export function parseAnnexOptions(commandName: string, anxOptions: unknown): str
             }
             break;
 
+          case 'keyValue':
+            if (isKeyValue(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue[0], cmdOptValue[1]);
+            } else {
+              expectedType = '[string, string]';
+            }
+            break;
+
           case 'numeric':
             if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);

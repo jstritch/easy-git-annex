@@ -93,6 +93,20 @@ describe('parseAnnexOptions', () => {
     }).toThrow('Value type boolean is not supported for option --debugfilter, use string | string[] instead');
   });
 
+  test('correctly parses a keyValue', () => {
+    const key = 'annex.largefiles';
+    const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';
+    const opts = parseAnnexOptions('config', { '--set': [key, value] });
+
+    expect(opts).toEqual(['--set', key, value]);
+  });
+
+  test('correctly identifies an unexpected keyValue value', () => {
+    expect(() => {
+      parseAnnexOptions('config', { '--set': 'key=value' });
+    }).toThrow('Value type string is not supported for option --set, use [string, string] instead');
+  });
+
   test('correctly parses a repeatableKeyValue scalar', () => {
     const opts = parseAnnexOptions('version', { '--c': ['name', 'value'] });
 

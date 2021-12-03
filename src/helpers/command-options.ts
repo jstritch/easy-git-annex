@@ -20,16 +20,25 @@ const commandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--user-agent', kind: 'string' },
     { name: '--verbose', kind: 'flag' },
   ]],
+  ['config', [
+    { name: '--get', kind: 'string' },
+    { name: '--set', kind: 'keyValue' },
+    { name: '--unset', kind: 'string' },
+  ]],
   ['describe', []],
+  ['group', []],
+  ['groupwanted', []],
   ['init', [
     { name: '--autoenable', kind: 'flag' },
     { name: '--version', kind: 'numeric' },
   ]],
   ['reinit', []],
+  ['ungroup', []],
   ['uninit', []],
   ['version', [
     { name: '--raw', kind: 'flag' },
-  ]]
+  ]],
+  ['wanted', []],
 ]);
 
 function getMapEntry(commandName: string): CommandOption[] {
