@@ -20,7 +20,7 @@ describe('describe()', () => {
     expect(result).toHaveProperty('exitCode', 0);
 
     const newDescription = 'anx repository test new description';
-    const describeResult = await myAnx.describe(newDescription);
+    const describeResult = await myAnx.describe('here', newDescription);
 
     expect(describeResult).toHaveProperty('exitCode', 0);
 
@@ -35,7 +35,7 @@ describe('describe()', () => {
     const directory = await createDirectory();
     const myAnx = anx.createAccessor(directory);
     const newDescription = 'anx repository test new description';
-    const result = await myAnx.describe(newDescription);
+    const result = await myAnx.describe('here', newDescription);
 
     expect(result).toHaveProperty('exitCode', 1);
     expect(result).toHaveProperty('err', 'git-annex: Not in a git repository.\n');
