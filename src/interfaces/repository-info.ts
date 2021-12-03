@@ -9,7 +9,7 @@ export enum TrustLevel {
 }
 
 /**
- * RepositoryInfo identifies a repository.
+ * RepositoryInfo describes a repository.
  * @category Helper
  */
 export interface RepositoryInfo {
