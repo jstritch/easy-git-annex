@@ -8,7 +8,7 @@ describe('config', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.init();
+    await myAnx.initAnx();
   });
 
   afterEach(async () => {
@@ -19,20 +19,22 @@ describe('config', () => {
     const key = 'annex.largefiles';
     const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';
 
-    const result = await myAnx.config({ '--set': [key, value] });
+    const result = await myAnx.configAnx({ '--set': [key, value] });
 
     expect(result).toHaveProperty('exitCode', 0);
 
-    const getResult = await myAnx.config({ '--get': key });
+    const getResult = await myAnx.configAnx({ '--get': key });
 
+    expect(getResult).toHaveProperty('exitCode', 0);
     expect(getResult).toMatchObject({ out: expect.stringContaining(value) as unknown });
 
-    const unsetResult = await myAnx.config({ '--unset': key });
+    const unsetResult = await myAnx.configAnx({ '--unset': key });
 
     expect(unsetResult).toHaveProperty('exitCode', 0);
 
-    const getResult2 = await myAnx.config({ '--get': key });
+    const getResult2 = await myAnx.configAnx({ '--get': key });
 
+    expect(getResult2).toHaveProperty('exitCode', 0);
     expect(getResult2).toHaveProperty('out', '');
   });
 

@@ -1,10 +1,14 @@
 import { AnnexOptions } from './annex-options';
 import { ApiOptions } from './api-options';
+import { CloneOptions } from './clone-options';
 import { CommandResult } from './command-result';
-import { ConfigOptions } from './config-options';
-import { InitOptions } from './init-options';
+import { ConfigAnxOptions } from './config-anx-options';
+import { ConfigGitOptions } from './config-git-options';
+import { InitAnxOptions } from './init-anx-options';
+import { InitGitOptions } from './init-git-options';
 import { RepositoryInfo } from './repository-info';
-import { VersionOptions } from './version-options';
+import { VersionAnxOptions } from './version-anx-options';
+import { VersionGitOptions } from './version-git-options';
 
 /**
  * The GitAnnexAPI interface defines the git-annex commands.
@@ -30,19 +34,19 @@ export interface GitAnnexAPI {
    * Files not matching the filter are stored normally by Git.
    *
    * ```javascript
-   * const result = await myAnx.config({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg or largerthan(500kb)'] });
+   * const result = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg or largerthan(500kb)'] });
    * ```
    *
    * Consult the
    * [git-annex config documentation](https://git-annex.branchable.com/git-annex-config/)
    * for additional information.
-   * @param anxOptions The ConfigOptions for the command.
-   * One of [[ConfigOptions.--set]], [[ConfigOptions.--get]], or [[ConfigOptions.--unset]] must be specified.
+   * @param anxOptions The ConfigAnxOptions for the command.
+   * One of [[ConfigAnxOptions.--set]], [[ConfigAnxOptions.--get]], or [[ConfigAnxOptions.--unset]] must be specified.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex config result.
    * @category Configuration
    */
-  config(anxOptions: ConfigOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  configAnx(anxOptions: ConfigAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Changes the description of a repository.
@@ -107,7 +111,7 @@ export interface GitAnnexAPI {
    * Initializes a repository for use with git-annex.
    *
    * ```javascript
-   * const result = await myAnx.init('usb-drive-two');
+   * const result = await myAnx.initAnx('usb-drive-two');
    * ```
    *
    * Consult the
@@ -115,12 +119,12 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param description The description or uuid of the repository.
    * If omitted, a description is generated using the username, hostname and the path.
-   * @param anxOptions The InitOptions for the command.
+   * @param anxOptions The InitAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex init result.
    * @category Initialization
    */
-  init(description?: string, anxOptions?: InitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  initAnx(description?: string, anxOptions?: InitAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Initializes a repository for use with git-annex specifying the uuid.
@@ -175,12 +179,12 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex version documentation](https://git-annex.branchable.com/git-annex-version)
    * for additional information.
-   * @param anxOptions The VersionOptions for the command.
+   * @param anxOptions The VersionAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex version information.
    * @category Version
    */
-  version(anxOptions?: VersionOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  versionAnx(anxOptions?: VersionAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or sets the wanted preferred content expression of a repository.
@@ -216,11 +220,87 @@ export interface GitAnnexAPI {
   runGit(args: string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Clones a repository into an empty directory.
+   *
+   * Consult the
+   * [git clone documentation](https://git-scm.com/docs/git-clone)
+   * for additional information.
+   * @param repository The (possibly remote) repository to be cloned.
+   * @param gitOptions The CloneOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git clone result.
+   * @category Initialization
+   */
+  clone(repository: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Gets or set git configuration settings.
+   *
+   * Consult the
+   * [git config documentation](https://git-scm.com/docs/git-config/)
+   * for additional information.
+   * @param gitOptions The ConfigGitOptions for the command.
+   * One of [[ConfigGitOptions.--get]], [[ConfigGitOptions.--set]],
+   * [[ConfigGitOptions.--unset]], or [[ConfigGitOptions.--list]] must be specified.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git config result.
+   * @category Configuration
+   */
+  configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Creates an empty Git repository or reinitializes an existing one.
+   *
+   * Consult the
+   * [git init documentation](https://git-scm.com/docs/git-init)
+   * for additional information.
+   * @param gitOptions The InitGitOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git init result.
+   * @category Initialization
+   */
+  initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Obtains build information about the local git installation.
+   *
+   * Consult the
+   * [git version documentation](https://git-scm.com/docs/git-version)
+   * for additional information.
+   * @param gitOptions The VersionGitOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git version information.
+   * @category Version
+   */
+  versionGit(gitOptions?: VersionGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Obtains an array identifying the current repositories.
    * @returns An array describing the repositories.
+   * The order of the repositories returned is indeterminate.
    * An empty array is retuned if the repository has not been initialized by git-annex.
    * @category Helper
    */
   getRepositories(): Promise<RepositoryInfo[]>;
+
+  /**
+   * Converts an operating-system relative path to a git relative path.
+   *
+   * Git and git-annex commands use forward slash path separators
+   * regardless of platform.
+   * The gitPath method performs the conversion when necessary for the operating system.
+   * @category Helper
+   */
+  gitPath(relativePath: string): string;
+
+  /**
+   * Converts an array of operating-system relative paths to git relative paths.
+   *
+   * Git and git-annex commands use forward slash path separators
+   * regardless of platform.
+   * The gitPath method performs the conversions when necessary for the operating system.
+   * @category Helper
+   */
+  gitPaths(relativePaths: string[]): string[];
 
 }

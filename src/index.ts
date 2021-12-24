@@ -18,9 +18,13 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
 
 export * from './interfaces/annex-options';
 export * from './interfaces/api-options';
+export * from './interfaces/clone-options';
 export * from './interfaces/command-result';
-export * from './interfaces/config-options';
+export * from './interfaces/config-anx-options';
+export * from './interfaces/config-git-options';
 export * from './interfaces/git-annex-api';
-export * from './interfaces/init-options';
+export * from './interfaces/init-anx-options';
+export * from './interfaces/init-git-options';
 export * from './interfaces/repository-info';
-export * from './interfaces/version-options';
+export * from './interfaces/version-anx-options';
+export * from './interfaces/version-git-options';

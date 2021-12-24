@@ -3,7 +3,7 @@
  * Consult the
  * [git-annex-common-options documentation](https://git-annex.branchable.com/git-annex-common-options/)
  * for additional information.
- * @category Annex Command Options
+ * @category Command Options
  */
 export interface AnnexOptions {
 

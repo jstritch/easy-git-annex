@@ -27,7 +27,7 @@
 *   console.log(`gitAnnexOut: ${this.something} ${data}`);
 * }
 * ...
-* const anxVersion = await myAnx.version({ outHandler: this.onAnnexOut.bind(this) }));
+* const anxVersion = await myAnx.versionAnx({}, { outHandler: this.onAnnexOut.bind(this) }));
 * ```
 * @category API Options
 * @callback

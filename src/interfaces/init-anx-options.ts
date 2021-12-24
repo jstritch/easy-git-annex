@@ -1,10 +1,10 @@
 import { AnnexOptions } from './annex-options';
 
 /**
- * InitOptions defines the supported options for the git-annex init command.
- * @category Annex Command Options
+ * InitAnxOptions defines the supported options for the git-annex init command.
+ * @category Command Options
  */
-export interface InitOptions extends AnnexOptions {
+export interface InitAnxOptions extends AnnexOptions {
 
   /**
    * Enables any special remotes that were configured with autoenable=true.

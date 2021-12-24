@@ -16,7 +16,7 @@ describe('uninit', () => {
     await createRepository(repositoryPath);
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
-    const result = await myAnx.init(description);
+    const result = await myAnx.initAnx(description);
 
     expect(result).toHaveProperty('exitCode', 0);
 

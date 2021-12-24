@@ -8,7 +8,7 @@ describe('group', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.init();
+    await myAnx.initAnx();
   });
 
   afterEach(async () => {

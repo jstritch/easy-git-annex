@@ -1,56 +1,103 @@
-export interface CommandOption {
-  name: string;
-  kind: string;
+export enum CommandGroup {
+  Anx = 'anx',
+  AnxCommon = 'anx-common',
+  Git = 'git',
 }
 
-const commandOptions: Map<string, CommandOption[]> = new Map([
+export enum OptionKind {
+  CommaDelimitedStrings,
+  Flag,
+  KeyValue,
+  Numeric,
+  QuasiKeyValue,
+  RepeatableKeyValue,
+  String,
+  StringParam,
+}
+
+export interface CommandOption {
+  name: string;
+  kind: OptionKind;
+}
+
+const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['_common', [
-    { name: '--backend', kind: 'string' },
-    { name: '--c', kind: 'repeatableKeyValue' },
-    { name: '--debug', kind: 'flag' },
-    { name: '--debugfilter', kind: 'commaDelimitedStrings' },
-    { name: '--fast', kind: 'flag' },
-    { name: '--force', kind: 'flag' },
-    { name: '--mincopies', kind: 'numeric' },
-    { name: '--no-debug', kind: 'flag' },
-    { name: '--numcopies', kind: 'numeric' },
-    { name: '--quiet', kind: 'flag' },
-    { name: '--size-limit', kind: 'string' },
-    { name: '--time-limit', kind: 'string' },
-    { name: '--user-agent', kind: 'string' },
-    { name: '--verbose', kind: 'flag' },
+    { name: '--backend', kind: OptionKind.String },
+    { name: '--c', kind: OptionKind.RepeatableKeyValue },
+    { name: '--debug', kind: OptionKind.Flag },
+    { name: '--debugfilter', kind: OptionKind.CommaDelimitedStrings },
+    { name: '--fast', kind: OptionKind.Flag },
+    { name: '--force', kind: OptionKind.Flag },
+    { name: '--mincopies', kind: OptionKind.Numeric },
+    { name: '--no-debug', kind: OptionKind.Flag },
+    { name: '--numcopies', kind: OptionKind.Numeric },
+    { name: '--quiet', kind: OptionKind.Flag },
+    { name: '--size-limit', kind: OptionKind.String },
+    { name: '--time-limit', kind: OptionKind.String },
+    { name: '--user-agent', kind: OptionKind.String },
+    { name: '--verbose', kind: OptionKind.Flag },
   ]],
   ['config', [
-    { name: '--get', kind: 'string' },
-    { name: '--set', kind: 'keyValue' },
-    { name: '--unset', kind: 'string' },
+    { name: '--get', kind: OptionKind.String },
+    { name: '--set', kind: OptionKind.KeyValue },
+    { name: '--unset', kind: OptionKind.String },
   ]],
   ['describe', []],
   ['group', []],
   ['groupwanted', []],
   ['init', [
-    { name: '--autoenable', kind: 'flag' },
-    { name: '--version', kind: 'numeric' },
+    { name: '--autoenable', kind: OptionKind.Flag },
+    { name: '--version', kind: OptionKind.Numeric },
   ]],
   ['reinit', []],
   ['ungroup', []],
   ['uninit', []],
   ['version', [
-    { name: '--raw', kind: 'flag' },
+    { name: '--raw', kind: OptionKind.Flag },
   ]],
   ['wanted', []],
 ]);
 
-function getMapEntry(commandName: string): CommandOption[] {
-  const cmdOptions = commandOptions.get(commandName);
+const gitCommandOptions: Map<string, CommandOption[]> = new Map([
+  ['clone', [
+    { name: '--origin', kind: OptionKind.StringParam },
+    { name: '--progress', kind: OptionKind.Flag },
+    { name: '--quiet', kind: OptionKind.Flag },
+    { name: '--verbose', kind: OptionKind.Flag },
+  ]],
+  ['config', [
+    { name: '--local', kind: OptionKind.Flag },
+    { name: '--global', kind: OptionKind.Flag },
+    { name: '--system', kind: OptionKind.Flag },
+    { name: '--show-scope', kind: OptionKind.Flag },
+    { name: '--list', kind: OptionKind.Flag },
+    { name: '--get', kind: OptionKind.StringParam },
+    { name: '--set', kind: OptionKind.QuasiKeyValue },
+    { name: '--unset', kind: OptionKind.StringParam },
+  ]],
+  ['init', [
+    { name: '--bare', kind: OptionKind.Flag },
+    { name: '--initial-branch', kind: OptionKind.String },
+    { name: '--shared', kind: OptionKind.String },
+    { name: '--template', kind: OptionKind.String },
+    { name: '--quiet', kind: OptionKind.Flag },
+  ]],
+  ['version', [
+    { name: '--build-options', kind: OptionKind.Flag },
+  ]],
+]);
+
+function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOption[] {
+  const cmdOptions = commandGroup === CommandGroup.Anx ? anxCommandOptions.get(commandName) : gitCommandOptions.get(commandName);
   if (cmdOptions === undefined) {
-    throw new Error(`The command ${commandName} is not recognized`);
+    throw new Error(`The ${commandGroup} command ${commandName} is not recognized`);
   }
   return cmdOptions;
 }
 
-export function getCommandOptions(commandName: string): CommandOption[] {
-  const commonOptions = getMapEntry('_common');
-  const cmdOptions = getMapEntry(commandName);
-  return commonOptions.concat(cmdOptions);
+export function getCommandOptions(commandGroup: CommandGroup, commandName: string): CommandOption[] {
+  if (commandGroup === CommandGroup.AnxCommon) {
+    return getMapEntry(CommandGroup.Anx, '_common').concat(getMapEntry(CommandGroup.Anx, commandName));
+  }
+  return getMapEntry(commandGroup, commandName);
 }

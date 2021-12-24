@@ -14,7 +14,7 @@ export async function createDirectory(): Promise<string> {
 export async function createRepository(repositoryPath?: string): Promise<string> {
   const repoPath = repositoryPath ?? await createDirectory();
   const myAnx = anx.createAccessor(repoPath);
-  await myAnx.runGit(['init', '.']);
+  await myAnx.initGit();
   return repoPath;
 }
 

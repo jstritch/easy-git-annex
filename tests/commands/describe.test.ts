@@ -15,7 +15,7 @@ describe('describe()', () => {
   test('correctly changes the description of a git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
-    const result = await myAnx.init(description);
+    const result = await myAnx.initAnx(description);
 
     expect(result).toHaveProperty('exitCode', 0);
 

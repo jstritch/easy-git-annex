@@ -1,10 +1,10 @@
 import { AnnexOptions } from './annex-options';
 
 /**
- * ConfigOptions defines the supported options for the git-annex config command.
- * @category Annex Command Options
+ * ConfigAnxOptions defines the supported options for the git-annex config command.
+ * @category Command Options
  */
-export interface ConfigOptions extends AnnexOptions {
+export interface ConfigAnxOptions extends AnnexOptions {
 
   /**
    * Gets a configuration value.

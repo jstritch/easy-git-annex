@@ -15,7 +15,7 @@ describe('init', () => {
   test('correctly initializes a git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
-    const result = await myAnx.init(description);
+    const result = await myAnx.initAnx(description);
 
     expect(result).toHaveProperty('exitCode', 0);
 
@@ -28,7 +28,7 @@ describe('init', () => {
 
   test('correctly initializes a git repository with a generated desciption', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
-    const result = await myAnx.init();
+    const result = await myAnx.initAnx();
 
     expect(result).toHaveProperty('exitCode', 0);
 
@@ -43,7 +43,7 @@ describe('init', () => {
     const directory = await createDirectory();
     const myAnx = anx.createAccessor(directory);
     const description = 'anx repository test description';
-    const result = await myAnx.init(description);
+    const result = await myAnx.initAnx(description);
 
     expect(result).toHaveProperty('exitCode', 1);
     expect(result).toHaveProperty('err', 'git-annex: Not in a git repository.\n');
