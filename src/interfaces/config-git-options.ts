@@ -11,17 +11,17 @@ export interface ConfigGitOptions {
   '--get'?: string;
 
   /**
-   * Access the global ~/.gitconfig file rather than the repository.
+   * Accesses the global ~/.gitconfig file rather than the repository.
    */
   '--global'?: null;
 
   /**
-   * List all variables set in the config file, along with their values.
+   * Lists all variables set in the config file, along with their values.
    */
   '--list'?: null;
 
   /**
-   * Access the repository .git/config file.
+   * Accesses the repository .git/config file.
    */
   '--local'?: null;
 
@@ -41,7 +41,7 @@ export interface ConfigGitOptions {
   '--show-scope'?: null;
 
   /**
-   * Access the system-wide $(prefix)/etc/gitconfig file.
+   * Accesses the system-wide $(prefix)/etc/gitconfig file.
    */
   '--system'?: null;
 
