@@ -5,23 +5,24 @@
 export interface CloneOptions {
 
   /**
-   * Instead of using the remote name `origin` to keep track of the upstream repository,
-   * use the name provided.
+   * Specifies the remote name of the upstream repository.
+   * If unspecified, the value `origin` is used.
    */
   '--origin'?: string;
 
   /**
-   * Forces progress status even if the standard error stream is not directed to a terminal.
+   * Forces progress reports to the standard error stream.
    */
   '--progress'?: null;
 
   /**
-   * Operate quietly. Progress is not reported to the standard error stream.
+   * Suppresses progress reports to the standard error stream.
    */
   '--quiet'?: null;
 
   /**
-   * Run verbosely. Does not affect the reporting of progress status to the standard error stream.
+   * Sends additional progress information to the standard error stream.
+   * The --verbose option is independent of [[--progress]] and [[--quiet]].
    */
   '--verbose'?: null;
 }
