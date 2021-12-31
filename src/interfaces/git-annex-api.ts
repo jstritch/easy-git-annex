@@ -1,12 +1,18 @@
+import { AddAnxOptions } from './add-anx-options';
 import { AnnexOptions } from './annex-options';
 import { ApiOptions } from './api-options';
 import { CloneOptions } from './clone-options';
 import { CommandResult } from './command-result';
+import { CommitOptions } from './commit-options';
 import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
-import { InitAnxOptions } from './init-anx-options';
 import { InitGitOptions } from './init-git-options';
+import { LockOptions } from './lock-options';
 import { RepositoryInfo } from './repository-info';
+import { RmOptions } from './rm-options';
+import { StatusAnxOptions } from './status-anx-options';
+import { TagOptions } from './tag-options';
+import { UnlockOptions } from './unlock-options';
 import { VersionAnxOptions } from './version-anx-options';
 import { VersionGitOptions } from './version-git-options';
 
@@ -24,6 +30,21 @@ export interface GitAnnexAPI {
    * @category Low-level
    */
   runAnx(args: string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Adds files to git and git-annex.
+   *
+   * Consult the
+   * [git-annex add documentation](https://git-annex.branchable.com/git-annex-add/)
+   * for additional information.
+   * @param relativePaths The files to add to git and git-annex.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The AddAnxOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex add result.
+   * @category Contents
+   */
+  addAnx(relativePaths?: string | string[], anxOptions?: AddAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or set git-annex configuration settings.
@@ -57,11 +78,11 @@ export interface GitAnnexAPI {
    * @param repository The uuid or description of the repository to modify.
    * The string `here` may be used to specify the current repository.
    * Helper method [[getRepositories]] returns an array of repositories.
-   * @param description A new description of the repository.
+   * @param description A description of the new repository.
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex describe result.
-   * @category Initialization
+   * @category Setup
    */
   describe(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
@@ -117,14 +138,29 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex init documentation](https://git-annex.branchable.com/git-annex-init/)
    * for additional information.
-   * @param description The description or uuid of the repository.
-   * If omitted, a description is generated using the username, hostname and the path.
-   * @param anxOptions The InitAnxOptions for the command.
+   * @param description The description of the repository.
+   * If omitted, a description is generated using the username, hostname, and the path.
+   * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex init result.
-   * @category Initialization
+   * @category Setup
    */
-  initAnx(description?: string, anxOptions?: InitAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Locks files to prevent modification.
+   *
+   * Consult the
+   * [git-annex lock documentation](https://git-annex.branchable.com/git-annex-lock/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The LockOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex lock result.
+   * @category Contents
+   */
+  lock(relativePaths?: string | string[], anxOptions?: LockOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Initializes a repository for use with git-annex specifying the uuid.
@@ -135,13 +171,28 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex reinit documentation](https://git-annex.branchable.com/git-annex-reinit/)
    * for additional information.
-   * @param uuid The uuid of the repository.
+   * @param uuid The uuid of the repository being replaced.
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex reinit result.
-   * @category Initialization
+   * @category Setup
    */
   reinit(uuid: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Shows the working tree status.
+   *
+   * Consult the
+   * [git-annex status documentation](https://git-annex.branchable.com/git-annex-status/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The StatusAnxOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex status result.
+   * @category Contents
+   */
+  statusAnx(relativePaths?: string | string[], anxOptions?: StatusAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Removes a repository from a group previously set by the [[group]] command.
@@ -169,9 +220,24 @@ export interface GitAnnexAPI {
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex uninit result.
-   * @category Initialization
+   * @category Setup
    */
   uninit(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Unlocks files for modification.
+   *
+   * Consult the
+   * [git-annex unlock documentation](https://git-annex.branchable.com/git-annex-unlock/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The UnlockOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex unlock result.
+   * @category Contents
+   */
+  unlock(relativePaths?: string | string[], anxOptions?: UnlockOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Obtains build information about the local git-annex installation.
@@ -226,12 +292,29 @@ export interface GitAnnexAPI {
    * [git clone documentation](https://git-scm.com/docs/git-clone)
    * for additional information.
    * @param repository The (possibly remote) repository to be cloned.
+   * @param repositoryPath The destination directory of the clone.
+   * If omitted, the "humanish" part of repository is used.
    * @param gitOptions The CloneOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git clone result.
-   * @category Initialization
+   * @category Setup
    */
-  clone(repository: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  clone(repository: string, repositoryPath?: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Records changes to the repository.
+   *
+   * Consult the
+   * [git commit documentation](https://git-scm.com/docs/git-commit)
+   * for additional information.
+   * @param relativePaths The files to record in git and git-annex.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param gitOptions The CommitOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git commit result.
+   * @category Contents
+   */
+  commit(relativePaths?: string | string[], gitOptions?: CommitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or set git configuration settings.
@@ -257,9 +340,39 @@ export interface GitAnnexAPI {
    * @param gitOptions The InitGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git init result.
-   * @category Initialization
+   * @category Setup
    */
   initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Removes file content from the repository.
+   *
+   * Consult the
+   * [git rm documentation](https://git-scm.com/docs/git-rm)
+   * for additional information.
+   * @param relativePaths The files to remove git and git-annex.
+   * The helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param gitOptions The RmOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git rm result.
+   * @category Contents
+   */
+  rm(relativePaths: string | string[], gitOptions?: RmOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Creates, deletes, or lists tag objects.
+   * When called without parameters all tags are listed.
+   *
+   * Consult the
+   * [git tag documentation](https://git-scm.com/docs/git-tag)
+   * for additional information.
+   * @param tagname The name of the tag to create, delete, or describe.
+   * @param gitOptions The TagOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git tag result.
+   * @category Contents
+   */
+  tag(tagname?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Obtains build information about the local git installation.
@@ -269,10 +382,44 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param gitOptions The VersionGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git version information.
+   * @returns The git version result.
    * @category Version
    */
   versionGit(gitOptions?: VersionGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Obtains an array of key-value backends.
+   * @returns An array containing the backend names.
+   * The order of the repositories returned is indeterminate.
+   * @category Helper
+   */
+  getBackends(): Promise<string[]>;
+
+  /**
+   * Searches a multi-line string and returns the first line begining with the specified prefix.
+   * The prefix may be included or omitted from the return string.
+   *
+   * @param str The string to be searched.
+   * @param prefix The string to locate at the beginning of a line.
+   * @param includePrefix A flag indicating whether the prefix is to be included in the return value.
+   * @returns The requested line or null if the prefix was not located.
+   * @category Helper
+   */
+  getLineStarting(str: string, prefix: string, includePrefix: boolean): string | null;
+
+  /**
+   * Searches a multi-line string and returns the first line begining with the specified prefix as a string array.
+   * The return array is created by removing the prefix from the beginning-of-line and
+   * splitting the remainder at each space character.
+   *
+   * @param str The string to be searched.
+   * @param prefix The string to locate at the beginning of a line.
+   * Including a space at the end of prefix causes the usually desirable effect
+   * of eliminating an empty string as the first element of the return array.
+   * @returns The requested line as a string array or null if the prefix was not located.
+   * @category Helper
+   */
+  getLineStartingAsArray(str: string, prefix: string): string[] | null;
 
   /**
    * Obtains an array identifying the current repositories.

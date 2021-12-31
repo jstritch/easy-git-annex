@@ -16,15 +16,21 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return new GitAnnexAccessor(repositoryPath);
 }
 
+export * from './interfaces/add-anx-options';
 export * from './interfaces/annex-options';
 export * from './interfaces/api-options';
 export * from './interfaces/clone-options';
 export * from './interfaces/command-result';
+export * from './interfaces/commit-options';
 export * from './interfaces/config-anx-options';
 export * from './interfaces/config-git-options';
 export * from './interfaces/git-annex-api';
-export * from './interfaces/init-anx-options';
 export * from './interfaces/init-git-options';
+export * from './interfaces/lock-options';
 export * from './interfaces/repository-info';
+export * from './interfaces/rm-options';
+export * from './interfaces/status-anx-options';
+export * from './interfaces/tag-options';
+export * from './interfaces/unlock-options';
 export * from './interfaces/version-anx-options';
 export * from './interfaces/version-git-options';

@@ -9,6 +9,8 @@ export interface AnnexOptions {
 
   /**
    * Specifies the key-value backend to use.
+   * Helper method [[GitAnnexAPI.getBackends]] may be used to obtain a list of
+   * valid names from which to choose.
    */
   '--backend'?: string;
 
@@ -69,11 +71,6 @@ export interface AnnexOptions {
    * Limits the duration of a git-annex command.
    */
   '--time-limit'?: string;
-
-  /**
-   * Overrides the User-Agent to use when downloading files from the web.
-   */
-  '--user-agent'?: null;
 
   /**
    * Enables verbose display.

@@ -34,8 +34,14 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--quiet', kind: OptionKind.Flag },
     { name: '--size-limit', kind: OptionKind.String },
     { name: '--time-limit', kind: OptionKind.String },
-    { name: '--user-agent', kind: OptionKind.String },
     { name: '--verbose', kind: OptionKind.Flag },
+  ]],
+  ['add', [
+    { name: '--force-large', kind: OptionKind.Flag },
+    { name: '--force-small', kind: OptionKind.Flag },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-progress', kind: OptionKind.Flag },
   ]],
   ['config', [
     { name: '--get', kind: OptionKind.String },
@@ -45,13 +51,19 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['describe', []],
   ['group', []],
   ['groupwanted', []],
-  ['init', [
-    { name: '--autoenable', kind: OptionKind.Flag },
-    { name: '--version', kind: OptionKind.Numeric },
+  ['init', []],
+  ['lock', [
+    { name: '--json', kind: OptionKind.Flag },
   ]],
   ['reinit', []],
+  ['status', [
+    { name: '--json', kind: OptionKind.Flag },
+  ]],
   ['ungroup', []],
   ['uninit', []],
+  ['unlock', [
+    { name: '--json', kind: OptionKind.Flag },
+  ]],
   ['version', [
     { name: '--raw', kind: OptionKind.Flag },
   ]],
@@ -65,6 +77,10 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--quiet', kind: OptionKind.Flag },
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
+  ['commit', [
+    { name: '--message', kind: OptionKind.String },
+    { name: '--quiet', kind: OptionKind.Flag },
+  ]],
   ['config', [
     { name: '--local', kind: OptionKind.Flag },
     { name: '--global', kind: OptionKind.Flag },
@@ -77,10 +93,18 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['init', [
     { name: '--bare', kind: OptionKind.Flag },
-    { name: '--initial-branch', kind: OptionKind.String },
-    { name: '--shared', kind: OptionKind.String },
-    { name: '--template', kind: OptionKind.String },
+  ]],
+  ['rm', [
+    { name: '--force', kind: OptionKind.Flag },
+    { name: '--ignore-unmatch', kind: OptionKind.Flag },
     { name: '--quiet', kind: OptionKind.Flag },
+    { name: '-r', kind: OptionKind.Flag },
+  ]],
+  ['tag', [
+    { name: '--annotate', kind: OptionKind.Flag },
+    { name: '--delete', kind: OptionKind.Flag },
+    { name: '--force', kind: OptionKind.Flag },
+    { name: '--message', kind: OptionKind.String },
   ]],
   ['version', [
     { name: '--build-options', kind: OptionKind.Flag },
@@ -88,7 +112,8 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
 ]);
 
 function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOption[] {
-  const cmdOptions = commandGroup === CommandGroup.Anx ? anxCommandOptions.get(commandName) : gitCommandOptions.get(commandName);
+  const cmdMap = commandGroup === CommandGroup.Anx ? anxCommandOptions : gitCommandOptions;
+  const cmdOptions = cmdMap.get(commandName);
   if (cmdOptions === undefined) {
     throw new Error(`The ${commandGroup} command ${commandName} is not recognized`);
   }
