@@ -5,7 +5,7 @@
 export interface VersionGitOptions {
 
   /**
-   * Include additional information about how git was built for diagnostic purposes.
+   * Includes additional information about how git was built.
    */
   '--build-options'?: null;
 }
