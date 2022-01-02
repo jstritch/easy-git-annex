@@ -27,6 +27,7 @@ export * from './interfaces/config-git-options';
 export * from './interfaces/git-annex-api';
 export * from './interfaces/init-git-options';
 export * from './interfaces/lock-options';
+export * from './interfaces/remote-options';
 export * from './interfaces/repository-info';
 export * from './interfaces/rm-options';
 export * from './interfaces/status-anx-options';

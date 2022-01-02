@@ -1,3 +1,4 @@
+import { RemoteCommand, RemoteOptions } from './remote-options';
 import { AddAnxOptions } from './add-anx-options';
 import { AnnexOptions } from './annex-options';
 import { ApiOptions } from './api-options';
@@ -343,6 +344,21 @@ export interface GitAnnexAPI {
    * @category Setup
    */
   initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Manages the set of tracked repositories.
+   *
+   * Consult the
+   * [git remote documentation](https://git-scm.com/docs/git-remote)
+   * for additional information.
+   * @param subCommand The remote subcommand to run.
+   * @param commandParameters The options and arguments for the subCommand.
+   * @param gitOptions The RemoteOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git remote result.
+   * @category Remotes
+   */
+  remote(subCommand?: RemoteCommand, commandParameters?: string | string[], gitOptions?: RemoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Removes file content from the repository.

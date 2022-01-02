@@ -1,5 +1,6 @@
 import { CommandParameters, runCommand } from './helpers/run-command';
 import { isString, isStringArray } from './helpers/type-predicates';
+import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
 import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
 import { AddAnxOptions } from './interfaces/add-anx-options';
 import { AnnexOptions } from './interfaces/annex-options';
@@ -38,8 +39,8 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return runCommand(cmd);
   }
 
-  private makeArgs(commandGroup: CommandGroup, commandName: string, anxOptions: unknown, ...parameters: string[]): string[] {
-    return [commandName, ...parseCommandOptions(commandGroup, commandName, anxOptions), ...parameters];
+  private makeArgs(commandGroup: CommandGroup, commandName: string, commandOptions: unknown, ...parameters: string[]): string[] {
+    return [commandName, ...parseCommandOptions(commandGroup, commandName, commandOptions), ...parameters];
   }
 
   private pushIfString(args: string[], value: unknown, prependMarker = false): boolean {
@@ -191,6 +192,13 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'init', gitOptions);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async remote(subCommand?: RemoteCommand, commandParameters?: string | string[], gitOptions?: RemoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'remote', gitOptions);
+    this.pushIfString(args, subCommand);
+    this.pushIfStringOrStringArray(args, commandParameters);
     return this.runGit(args, apiOptions);
   }
 

@@ -94,6 +94,9 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
   ['init', [
     { name: '--bare', kind: OptionKind.Flag },
   ]],
+  ['remote', [
+    { name: '--verbose', kind: OptionKind.Flag },
+  ]],
   ['rm', [
     { name: '--force', kind: OptionKind.Flag },
     { name: '--ignore-unmatch', kind: OptionKind.Flag },
