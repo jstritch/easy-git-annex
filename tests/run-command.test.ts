@@ -1,6 +1,19 @@
-import { CommandParameters, runCommand } from '../src/helpers/run-command';
+import { CommandParameters, runCommand, RunCommandResult } from '../src/helpers/run-command';
 import { cloneEnv } from './helpers';
 import { CommandResult } from '../src/interfaces/command-result';
+
+describe('toCommandResultString', () => {
+
+  test('correctly reports the member variables', () => {
+
+    const commandResult = new RunCommandResult('someDir', 'someExe', ['foo', 'bar', 'baz'], 42, 'good stuff', 'other stuff');
+    const resultString = commandResult.toCommandResultString();
+    const expected = 'The command: someExe foo bar baz\nfor repository someDir\nreturned exit code: 42\nout: good stuff\nerr: other stuff.';
+
+    expect(resultString).toBe(expected);
+  });
+
+});
 
 describe('new CommandParameters', () => {
 
