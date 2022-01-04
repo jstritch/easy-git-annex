@@ -27,7 +27,7 @@ export class RunCommandResult implements CommandResult {
   }
 
   public toCommandResultString(): string {
-    return `The command: ${this.exeName} ${this.args.join(' ')}\nfor repository ${this.repositoryPath}\nreturned exit code: ${this.exitCode}\nout: ${this.out}\nerr: ${this.err}.`;
+    return `The command: ${this.exeName} ${this.args.join(' ')}\nfor repository ${this.repositoryPath}\nreturned exit code: ${this.exitCode}\nout: ${this.out}\nerr: ${this.err}`;
   }
 }
 

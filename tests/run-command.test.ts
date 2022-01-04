@@ -8,7 +8,7 @@ describe('toCommandResultString', () => {
 
     const commandResult = new RunCommandResult('someDir', 'someExe', ['foo', 'bar', 'baz'], 42, 'good stuff', 'other stuff');
     const resultString = commandResult.toCommandResultString();
-    const expected = 'The command: someExe foo bar baz\nfor repository someDir\nreturned exit code: 42\nout: good stuff\nerr: other stuff.';
+    const expected = 'The command: someExe foo bar baz\nfor repository someDir\nreturned exit code: 42\nout: good stuff\nerr: other stuff';
 
     expect(resultString).toBe(expected);
   });
