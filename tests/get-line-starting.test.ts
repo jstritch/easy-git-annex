@@ -10,51 +10,41 @@ supported repository versions: 8
 upgrade supported from repository versions: 0 1 2 3 4 5 6 7`;
 
 describe('getLineStarting', () => {
-  let myAnx: anx.GitAnnexAPI;
-
-  beforeEach(() => {
-    myAnx = anx.createAccessor(process.cwd());
-  });
 
   test('returns the entire line', () => {
-    expect(myAnx.getLineStarting(versionOutput, 'git-annex version: ', true)).toBe('git-annex version: 8.20211118-g23ee48898');
+    expect(anx.getLineStarting(versionOutput, 'git-annex version: ', true)).toBe('git-annex version: 8.20211118-g23ee48898');
   });
 
   test('returns the entire line when nothing follows the prefix', () => {
-    expect(myAnx.getLineStarting(versionOutput, 'git-annex version: 8.20211118-g23ee48898', true)).toBe('git-annex version: 8.20211118-g23ee48898');
+    expect(anx.getLineStarting(versionOutput, 'git-annex version: 8.20211118-g23ee48898', true)).toBe('git-annex version: 8.20211118-g23ee48898');
   });
 
   test('removes the prefix', () => {
-    expect(myAnx.getLineStarting(versionOutput, 'remote types: ', false)).toBe('git gcrypt p2p S3 bup directory rsync web bittorrent webdav adb tahoe glacier ddar git-lfs httpalso borg hook external');
+    expect(anx.getLineStarting(versionOutput, 'remote types: ', false)).toBe('git gcrypt p2p S3 bup directory rsync web bittorrent webdav adb tahoe glacier ddar git-lfs httpalso borg hook external');
   });
 
   test('returns an empty string when nothing follows the prefix', () => {
-    expect(myAnx.getLineStarting(versionOutput, 'operating system: linux x86_64', false)).toBe('');
+    expect(anx.getLineStarting(versionOutput, 'operating system: linux x86_64', false)).toBe('');
   });
 
   test('returns null when the prefix does not exist', () => {
-    expect(myAnx.getLineStarting(versionOutput, 'REMOTE TYPES: ', false)).toBeNull();
+    expect(anx.getLineStarting(versionOutput, 'REMOTE TYPES: ', false)).toBeNull();
   });
 
 });
 
 describe('getLineStartingAsArray', () => {
-  let myAnx: anx.GitAnnexAPI;
-
-  beforeEach(() => {
-    myAnx = anx.createAccessor(process.cwd());
-  });
 
   test('returns the array', () => {
-    expect(myAnx.getLineStartingAsArray(versionOutput, 'upgrade supported from repository versions: ')).toHaveLength(8);
+    expect(anx.getLineStartingAsArray(versionOutput, 'upgrade supported from repository versions: ')).toHaveLength(8);
   });
 
   test('returns an empty string[] when nothing follows the prefix', () => {
-    expect(myAnx.getLineStartingAsArray(versionOutput, 'operating system: linux x86_64')).toHaveLength(0);
+    expect(anx.getLineStartingAsArray(versionOutput, 'operating system: linux x86_64')).toHaveLength(0);
   });
 
   test('throws when the prefix does not exist', () => {
-    expect(myAnx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toBeNull();
+    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toBeNull();
   });
 
 });

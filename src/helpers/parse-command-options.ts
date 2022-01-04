@@ -1,6 +1,6 @@
 import { CommandGroup, getCommandOptions, OptionKind } from './command-options';
 import { isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates';
-
+import { gitPath } from './git-path';
 /**
  * Converts the commandOptions supplied by the application to a string array.
  * @param commandGroup With commandName, identifies the possible set of options.
@@ -35,6 +35,16 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
               opts.push(cmdOpt.name, cmdOptValue[0], cmdOptValue[1]);
             } else {
               expectedType = '[string, string]';
+            }
+            break;
+
+          case OptionKind.RepeatableKeyValue:
+            if (isKeyValue(cmdOptValue)) {
+              opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
+            } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
+              cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, `${element[0]}=${element[1]}`); });
+            } else {
+              expectedType = '[string, string] | [string, string][]';
             }
             break;
 
@@ -80,16 +90,15 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
-          case OptionKind.RepeatableKeyValue:
-            if (isKeyValue(cmdOptValue)) {
-              opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
-            } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
-              cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, `${element[0]}=${element[1]}`); });
+          case OptionKind.RepeatablePath:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${gitPath(cmdOptValue)}`);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${gitPath(element)}`); });
             } else {
-              expectedType = '[string, string] | [string, string][]';
+              expectedType = 'string | string[]';
             }
             break;
-
         }
 
         if (isString(expectedType)) {

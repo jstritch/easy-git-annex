@@ -8,10 +8,12 @@ import { CommitOptions } from './commit-options';
 import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
 import { InitGitOptions } from './init-git-options';
+import { InitremoteOptions } from './initremote-options';
 import { LockOptions } from './lock-options';
 import { RepositoryInfo } from './repository-info';
 import { RmOptions } from './rm-options';
 import { StatusAnxOptions } from './status-anx-options';
+import { SyncOptions } from './sync-options';
 import { TagOptions } from './tag-options';
 import { UnlockOptions } from './unlock-options';
 import { VersionAnxOptions } from './version-anx-options';
@@ -76,7 +78,7 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex describe documentation](https://git-annex.branchable.com/git-annex-describe/)
    * for additional information.
-   * @param repository The uuid or description of the repository to modify.
+   * @param repository The name, uuid, or description of the repository to modify.
    * The string `here` may be used to specify the current repository.
    * Helper method [[getRepositories]] returns an array of repositories.
    * @param description A description of the new repository.
@@ -88,6 +90,22 @@ export interface GitAnnexAPI {
   describe(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Enables use of an existing remote in the current repository.
+   *
+   * Consult the
+   * [git-annex enableremote documentation](https://git-annex.branchable.com/git-annex-enableremote/)
+   * for additional information.
+   * @param name The name of the repository.
+   * If not specified, the remotes are listed in CommandResult.err.
+   * @param parameters Configuration of the remote.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex enableremote result.
+   * @category Remotes
+   */
+  enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Gets or sets the group association of a repository.
    *
    * ```javascript
@@ -97,7 +115,7 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex group documentation](https://git-annex.branchable.com/git-annex-group)
    * for additional information.
-   * @param repository The description or uuid of the repository.
+   * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Helper method [[getRepositories]] returns an array of repositories.
    * @param groupname The single-word group name to associate with the repository.
@@ -149,6 +167,24 @@ export interface GitAnnexAPI {
   initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Creates a special (non-git) remote.
+   *
+   * Consult the
+   * [git-annex initremote documentation](https://git-annex.branchable.com/git-annex-initremote/)
+   * for additional information.
+   * @param name The name of the repository.
+   * @param type The remote type.
+   * Helper method [[GitAnnexAPI.getRemoteTypes]] may be used to obtain a list of
+   * valid types from which to choose.
+   * @param parameters The remote configuration.
+   * @param anxOptions The InitremoteOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex initremote result.
+   * @category Remotes
+   */
+  initremote(name: string, type: string, parameters?: [string, string] | [string, string][], anxOptions?: InitremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Locks files to prevent modification.
    *
    * Consult the
@@ -181,6 +217,21 @@ export interface GitAnnexAPI {
   reinit(uuid: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Changes name of a special remote.
+   *
+   * Consult the
+   * [git-annex renameremote documentation](https://git-annex.branchable.com/git-annex-renameremote/)
+   * for additional information.
+   * @param name The name of the remote.
+   * @param newName The new name of the remote.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex renameremote result.
+   * @category Remotes
+   */
+  renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Shows the working tree status.
    *
    * Consult the
@@ -196,12 +247,27 @@ export interface GitAnnexAPI {
   statusAnx(relativePaths?: string | string[], anxOptions?: StatusAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Synchronizes the local repository with remotes.
+   *
+   * Consult the
+   * [git-annex sync documentation](https://git-annex.branchable.com/git-annex-sync/)
+   * for additional information.
+   * @param remotes The remote names or remote groups to be synchroniuzed.
+   * If unspecified, all remotes are synchronized.
+   * @param anxOptions The SyncOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex sync result.
+   * @category Remotes
+   */
+  sync(remotes: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Removes a repository from a group previously set by the [[group]] command.
    *
    * Consult the
    * [git-annex ungroup documentation](https://git-annex.branchable.com/git-annex-ungroup)
    * for additional information.
-   * @param repository The description or uuid of the repository.
+   * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Helper method [[getRepositories]] returns an array of repositories.
    * @param groupname The single-word group name to dissociate with the repository.
@@ -263,7 +329,7 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex wanted documentation](https://git-annex.branchable.com/git-annex-wanted)
    * for additional information.
-   * @param repository The description or uuid of the repository.
+   * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Helper method [[getRepositories]] returns an array of repositories.
    * @param expression The
@@ -412,30 +478,12 @@ export interface GitAnnexAPI {
   getBackends(): Promise<string[]>;
 
   /**
-   * Searches a multi-line string and returns the first line begining with the specified prefix.
-   * The prefix may be included or omitted from the return string.
-   *
-   * @param str The string to be searched.
-   * @param prefix The string to locate at the beginning of a line.
-   * @param includePrefix A flag indicating whether the prefix is to be included in the return value.
-   * @returns The requested line or null if the prefix was not located.
+   * Obtains an array of remote types.
+   * @returns An array containing the remote type names.
+   * The order of the names returned is indeterminate.
    * @category Helper
    */
-  getLineStarting(str: string, prefix: string, includePrefix: boolean): string | null;
-
-  /**
-   * Searches a multi-line string and returns the first line begining with the specified prefix as a string array.
-   * The return array is created by removing the prefix from the beginning-of-line and
-   * splitting the remainder at each space character.
-   *
-   * @param str The string to be searched.
-   * @param prefix The string to locate at the beginning of a line.
-   * Including a space at the end of prefix causes the usually desirable effect
-   * of eliminating an empty string as the first element of the return array.
-   * @returns The requested line as a string array or null if the prefix was not located.
-   * @category Helper
-   */
-  getLineStartingAsArray(str: string, prefix: string): string[] | null;
+  getRemoteTypes(): Promise<string[]>;
 
   /**
    * Obtains an array identifying the current repositories.
@@ -445,25 +493,4 @@ export interface GitAnnexAPI {
    * @category Helper
    */
   getRepositories(): Promise<RepositoryInfo[]>;
-
-  /**
-   * Converts an operating-system relative path to a git relative path.
-   *
-   * Git and git-annex commands use forward slash path separators
-   * regardless of platform.
-   * The gitPath method performs the conversion when necessary for the operating system.
-   * @category Helper
-   */
-  gitPath(relativePath: string): string;
-
-  /**
-   * Converts an array of operating-system relative paths to git relative paths.
-   *
-   * Git and git-annex commands use forward slash path separators
-   * regardless of platform.
-   * The gitPath method performs the conversions when necessary for the operating system.
-   * @category Helper
-   */
-  gitPaths(relativePaths: string[]): string[];
-
 }

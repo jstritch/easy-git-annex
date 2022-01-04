@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { createRepository, deleteDirectory } from '../helpers';
 
-describe('remote', () => {
+describe('enableremote', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
   let remotePath: string;
@@ -9,6 +9,7 @@ describe('remote', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await myAnx.initAnx();
     remotePath = await createRepository();
   });
 
@@ -17,17 +18,20 @@ describe('remote', () => {
     await deleteDirectory(remotePath);
   });
 
-  test('correctly adds a remote', async () => {
-    const remoteName = 'fountainhead';
-    const addResult = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+  test('correctly lists remotes', async () => {
+    const remoteName = 'annex-remote';
+    const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
 
-    expect(addResult.exitCode).toBe(0);
+    expect(initResult.exitCode).toBe(0);
 
-    const showRemoteResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
+    const showRemoteResult = await myAnx.remote();
 
     expect(showRemoteResult.exitCode).toBe(0);
     expect(showRemoteResult.out).toEqual(expect.stringContaining(remoteName));
-    expect(showRemoteResult.out).toEqual(expect.stringContaining(remotePath));
+
+    const enableRemoteResult = await myAnx.enableremote();
+
+    expect(enableRemoteResult.err).toEqual(expect.stringContaining(remoteName));
   });
 
 });

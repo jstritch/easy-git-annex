@@ -1,5 +1,6 @@
 import { CommandParameters, runCommand } from './helpers/run-command';
-import { isString, isStringArray } from './helpers/type-predicates';
+import { gitPath, gitPaths } from './helpers/git-path';
+import { isKeyValue, isKeyValueArray, isString, isStringArray } from './helpers/type-predicates';
 import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
 import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
 import { AddAnxOptions } from './interfaces/add-anx-options';
@@ -11,12 +12,15 @@ import { CommandResult } from './interfaces/command-result';
 import { CommitOptions } from './interfaces/commit-options';
 import { ConfigAnxOptions } from './interfaces/config-anx-options';
 import { ConfigGitOptions } from './interfaces/config-git-options';
+import { getLineStartingAsArray } from './helpers/get-line-starting';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 import { InitGitOptions } from './interfaces/init-git-options';
+import { InitremoteOptions } from './interfaces/initremote-options';
 import { LockOptions } from './interfaces/lock-options';
 import { parseCommandOptions } from './helpers/parse-command-options';
 import { RmOptions } from './interfaces/rm-options';
 import { StatusAnxOptions } from './interfaces/status-anx-options';
+import { SyncOptions } from './interfaces/sync-options';
 import { TagOptions } from './interfaces/tag-options';
 import { UnlockOptions } from './interfaces/unlock-options';
 import { VersionAnxOptions } from './interfaces/version-anx-options';
@@ -69,13 +73,25 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   private pushIfRelativePaths(args: string[], value: unknown, prependMarker = false): boolean {
-    let gitPaths: unknown;
+    let paths: unknown;
     if (isString(value)) {
-      gitPaths = this.gitPath(value);
+      paths = gitPath(value);
     } else if (isStringArray(value)) {
-      gitPaths = this.gitPaths(value);
+      paths = gitPaths(value);
     }
-    return this.pushIfStringOrStringArray(args, gitPaths, prependMarker);
+    return this.pushIfStringOrStringArray(args, paths, prependMarker);
+  }
+
+  private pushIfKeyValuePairs(args: string[], value: unknown): boolean {
+    if (isKeyValue(value)) {
+      args.push(`${value[0]}=${value[1]}`);
+      return true;
+    }
+    if (isKeyValueArray(value)) {
+      value.forEach((element) => { args.push(`${element[0]}=${element[1]}`); });
+      return true;
+    }
+    return false;
   }
 
   //
@@ -102,6 +118,13 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'enableremote', anxOptions);
+    this.pushIfString(args, name);
+    this.pushIfKeyValuePairs(args, parameters);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async group(repository: string, groupname?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'group', anxOptions, repository);
     this.pushIfString(args, groupname);
@@ -120,6 +143,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async initremote(name: string, type: string, parameters?: [string, string] | [string, string][], anxOptions?: InitremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'initremote', anxOptions, name, `type=${type}`);
+    this.pushIfKeyValuePairs(args, parameters);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async lock(relativePaths?: string | string[], anxOptions?: LockOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'lock', anxOptions);
     this.pushIfRelativePaths(args, relativePaths);
@@ -131,9 +160,20 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'renameremote', anxOptions, name, newName);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async statusAnx(relativePaths?: string | string[], anxOptions?: StatusAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'status', anxOptions);
     this.pushIfRelativePaths(args, relativePaths);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async sync(remotes: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'sync', anxOptions);
+    this.pushIfStringOrStringArray(args, remotes);
     return this.runAnx(args, apiOptions);
   }
 
@@ -225,22 +265,14 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async getBackends(): Promise<string[]> {
     const versionResult = await this.versionAnx();
-    const list = this.getLineStartingAsArray(versionResult.out, 'key/value backends: ');
+    const list = getLineStartingAsArray(versionResult.out, 'key/value backends: ');
     return list ?? [];
   }
 
-  public getLineStarting(str: string, prefix: string, includePrefix: boolean): string | null {
-    const re = new RegExp(includePrefix ? `^${prefix}.*$` : `(?<=^${prefix}).*$`, 'm');
-    const matches = str.match(re);
-    return matches !== null && matches.length > 0 ? matches[0] : null;
-  }
-
-  public getLineStartingAsArray(str: string, prefix: string): string[] | null {
-    const line = this.getLineStarting(str, prefix, false);
-    if (line === null) {
-      return null;
-    }
-    return line.length > 0 ? line.split(' ') : [];
+  public async getRemoteTypes(): Promise<string[]> {
+    const versionResult = await this.versionAnx();
+    const list = getLineStartingAsArray(versionResult.out, 'remote types: ');
+    return list ?? [];
   }
 
   public async getRepositories(): Promise<RepositoryInfo[]> {
@@ -262,13 +294,5 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       });
     }
     return repositories;
-  }
-
-  public gitPath(relativePath: string): string {
-    return relativePath.replace(/\\/g, '/');
-  }
-
-  public gitPaths(relativePaths: string[]): string[] {
-    return relativePaths.map((relativePath) => { return this.gitPath(relativePath); });
   }
 }

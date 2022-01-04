@@ -106,6 +106,24 @@ describe('parseCommandOptions', () => {
     }).toThrow('Value type boolean is not supported for option --debugfilter, use string | string[] instead');
   });
 
+  test('correctly parses a RepeatablePath scalar', () => {
+    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa\\bbb\\ccc' });
+
+    expect(opts).toEqual(['--content-of=aaa/bbb/ccc']);
+  });
+
+  test('correctly parses a RepeatablePath array[2]', () => {
+    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa\\bbb\\ccc', 'xxx\\yyy\\zzz'] });
+
+    expect(opts).toEqual(['--content-of=aaa/bbb/ccc', '--content-of=xxx/yyy/zzz']);
+  });
+
+  test('correctly identifies an unexpected RepeatablePath value', () => {
+    expect(() => {
+      parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': {} });
+    }).toThrow('Value type object is not supported for option --content-of, use string | string[] instead');
+  });
+
   test('correctly parses a KeyValue', () => {
     const key = 'annex.largefiles';
     const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';

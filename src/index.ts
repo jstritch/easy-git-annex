@@ -11,6 +11,7 @@ import { GitAnnexAPI } from './interfaces/git-annex-api';
  *
  * @param repositoryPath The path to the repository root directory.
  * @returns An interface for interacting with git-annex.
+ * @category Entry point
  */
 export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return new GitAnnexAccessor(repositoryPath);
@@ -26,12 +27,16 @@ export * from './interfaces/config-anx-options';
 export * from './interfaces/config-git-options';
 export * from './interfaces/git-annex-api';
 export * from './interfaces/init-git-options';
+export * from './interfaces/initremote-options';
 export * from './interfaces/lock-options';
 export * from './interfaces/remote-options';
 export * from './interfaces/repository-info';
 export * from './interfaces/rm-options';
 export * from './interfaces/status-anx-options';
+export * from './interfaces/sync-options';
 export * from './interfaces/tag-options';
 export * from './interfaces/unlock-options';
 export * from './interfaces/version-anx-options';
 export * from './interfaces/version-git-options';
+export * from './helpers/git-path';
+export * from './helpers/get-line-starting';
