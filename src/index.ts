@@ -25,6 +25,8 @@ export * from './interfaces/command-result';
 export * from './interfaces/commit-options';
 export * from './interfaces/config-anx-options';
 export * from './interfaces/config-git-options';
+export * from './interfaces/fsck-anx-options';
+export * from './interfaces/fsck-git-options';
 export * from './interfaces/git-annex-api';
 export * from './interfaces/init-git-options';
 export * from './interfaces/initremote-options';

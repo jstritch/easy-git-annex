@@ -12,7 +12,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
   if (commandOptions === undefined) {
     return [];
   } else if (isStringArray(commandOptions)) {
-    return commandOptions;
+    return [...commandOptions];
   } else if (isRecord(commandOptions)) {
     const opts: string[] = [];
     const cmdOptions = getCommandOptions(commandGroup, commandName);

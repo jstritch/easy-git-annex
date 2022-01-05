@@ -12,6 +12,8 @@ import { CommandResult } from './interfaces/command-result';
 import { CommitOptions } from './interfaces/commit-options';
 import { ConfigAnxOptions } from './interfaces/config-anx-options';
 import { ConfigGitOptions } from './interfaces/config-git-options';
+import { FsckAnxOptions } from './interfaces/fsck-anx-options';
+import { FsckGitOptions } from './interfaces/fsck-git-options';
 import { getLineStartingAsArray } from './helpers/get-line-starting';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 import { InitGitOptions } from './interfaces/init-git-options';
@@ -125,6 +127,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async fsckAnx(relativePaths?: string | string[], anxOptions?: FsckAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'fsck', anxOptions);
+    this.pushIfRelativePaths(args, relativePaths);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async group(repository: string, groupname?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'group', anxOptions, repository);
     this.pushIfString(args, groupname);
@@ -162,6 +170,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'renameremote', anxOptions, name, newName);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async repair(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'repair', anxOptions);
     return this.runAnx(args, apiOptions);
   }
 
@@ -213,8 +226,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   public async clone(repository: string, repositoryPath?: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
-    const args = this.makeArgs(CommandGroup.Git, 'clone', gitOptions);
-    this.pushIfString(args, repository, true);
+    const args = this.makeArgs(CommandGroup.Git, 'clone', gitOptions, '--', repository);
     this.pushIfString(args, repositoryPath);
     return this.runGit(args, apiOptions);
   }
@@ -227,6 +239,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'config', gitOptions);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'fsck', gitOptions);
+    this.pushIfString(args, object);
     return this.runGit(args, apiOptions);
   }
 

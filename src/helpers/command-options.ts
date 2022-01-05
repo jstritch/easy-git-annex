@@ -51,6 +51,18 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['describe', []],
   ['enableremote', []],
+  ['fsck', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--branch', kind: OptionKind.String },
+    { name: '--from', kind: OptionKind.String },
+    { name: '--incremental', kind: OptionKind.Flag },
+    { name: '--incremental-schedule', kind: OptionKind.String },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--key', kind: OptionKind.String },
+    { name: '--more', kind: OptionKind.Flag },
+    { name: '--unused', kind: OptionKind.Flag },
+  ]],
   ['group', []],
   ['groupwanted', []],
   ['init', []],
@@ -120,6 +132,24 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--set', kind: OptionKind.QuasiKeyValue },
     { name: '--unset', kind: OptionKind.StringParam },
   ]],
+  ['fsck', [
+    { name: '--cache', kind: OptionKind.Flag },
+    { name: '--connectivity-only', kind: OptionKind.Flag },
+    { name: '--dangling', kind: OptionKind.Flag },
+    { name: '--full', kind: OptionKind.Flag },
+    { name: '--lost-found', kind: OptionKind.Flag },
+    { name: '--name-objects', kind: OptionKind.Flag },
+    { name: '--no-dangling', kind: OptionKind.Flag },
+    { name: '--no-full', kind: OptionKind.Flag },
+    { name: '--no-progress', kind: OptionKind.Flag },
+    { name: '--no-reflogs', kind: OptionKind.Flag },
+    { name: '--progress', kind: OptionKind.Flag },
+    { name: '--root', kind: OptionKind.Flag },
+    { name: '--strict', kind: OptionKind.Flag },
+    { name: '--tags', kind: OptionKind.Flag },
+    { name: '--unreachable', kind: OptionKind.Flag },
+    { name: '--verbose', kind: OptionKind.Flag },
+  ]],
   ['init', [
     { name: '--bare', kind: OptionKind.Flag },
   ]],
@@ -154,7 +184,7 @@ function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOp
 
 export function getCommandOptions(commandGroup: CommandGroup, commandName: string): CommandOption[] {
   if (commandGroup === CommandGroup.AnxCommon) {
-    return getMapEntry(CommandGroup.Anx, '_common').concat(getMapEntry(CommandGroup.Anx, commandName));
+    return [...getMapEntry(CommandGroup.Anx, '_common'), ...getMapEntry(CommandGroup.Anx, commandName)];
   }
   return getMapEntry(commandGroup, commandName);
 }

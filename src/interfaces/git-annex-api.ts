@@ -7,6 +7,8 @@ import { CommandResult } from './command-result';
 import { CommitOptions } from './commit-options';
 import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
+import { FsckAnxOptions } from './fsck-anx-options';
+import { FsckGitOptions } from './fsck-git-options';
 import { InitGitOptions } from './init-git-options';
 import { InitremoteOptions } from './initremote-options';
 import { LockOptions } from './lock-options';
@@ -104,6 +106,21 @@ export interface GitAnnexAPI {
    * @category Remotes
    */
   enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Verifies the validity of objects in git-annex.
+   *
+   * Consult the
+   * [git-annex fsck documentation](https://git-annex.branchable.com/git-annex-fsck/)
+   * for additional information.
+   * @param relativePaths The files to check.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The LockOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex fsck result.
+   * @category Maintenance
+   */
+  fsckAnx(relativePaths?: string | string[], anxOptions?: FsckAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or sets the group association of a repository.
@@ -230,6 +247,19 @@ export interface GitAnnexAPI {
    * @category Remotes
    */
   renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Recovers a broken git repository.
+   *
+   * Consult the
+   * [git-annex repair documentation](https://git-annex.branchable.com/git-annex-repair/)
+   * for additional information.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex repair result.
+   * @category Maintenance
+   */
+  repair(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Shows the working tree status.
@@ -397,6 +427,21 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Verifies the connectivity and validity of objects in git.
+   *
+   * Consult the
+   * [git fsck documentation](https://git-scm.com/docs/git-fsck)
+   * for additional information.
+   * @param object An object to treat as the head of an unreachability trace.
+   * If omitted, the index file, all SHA-1 references in refs namespace, and all reflogs are used.
+   * @param gitOptions The FsckGitOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git fsck result.
+   * @category Maintenance
+   */
+  fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Creates an empty Git repository or reinitializes an existing one.
