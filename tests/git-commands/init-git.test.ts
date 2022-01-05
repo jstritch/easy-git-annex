@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { createDirectory, deleteDirectory } from '../helpers';
 
-describe('init', () => {
+describe('initGit', () => {
   let repositoryPath: string;
 
   beforeEach(async () => {

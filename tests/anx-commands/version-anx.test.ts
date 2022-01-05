@@ -1,6 +1,6 @@
 import * as anx from '../../src/index';
 
-describe('version', () => {
+describe('versionAnx', () => {
 
   test('correctly returns the git-annex version', async () => {
     const myAnx = anx.createAccessor('');

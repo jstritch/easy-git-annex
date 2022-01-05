@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { createRepository, deleteDirectory } from '../helpers';
 
-describe('config', () => {
+describe('configAnx', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
