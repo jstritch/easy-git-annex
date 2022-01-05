@@ -30,7 +30,7 @@ export interface AddAnxOptions extends AnnexOptions {
 
   /**
    * Includes progress objects in JSON output.
-   * Specifying --json-progress automatically enables [['--json']].
+   * Specifying --json-progress automatically enables [[--json]].
    */
   '--json-progress'?: null;
 }

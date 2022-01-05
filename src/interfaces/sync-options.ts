@@ -13,7 +13,7 @@ export interface SyncOptions extends AnnexOptions {
 
   /**
    * Controls whether to merge histories that do not share a common ancestor.
-   * See also [['--no-allow-unrelated-histories']].
+   * See also [[--no-allow-unrelated-histories]].
    */
   '--allow-unrelated-histories'?: null;
 
@@ -23,13 +23,13 @@ export interface SyncOptions extends AnnexOptions {
   '--cleanup'?: null;
 
   /**
-   * The complement of [['--no-commit']].
+   * The complement of [[--no-commit]].
    */
   '--commit'?: string;
 
   /**
    * Causes the content of annexed files to also be uploaded and downloaded as necessary.
-   * See also [['--no-content']].
+   * See also [[--no-content]].
    */
   '--content'?: null;
 
@@ -50,62 +50,62 @@ export interface SyncOptions extends AnnexOptions {
   '--message'?: string;
 
   /**
-   * The complement of [['--allow-unrelated-histories']].
+   * The complement of [[--allow-unrelated-histories]].
    */
   '--no-allow-unrelated-histories'?: null;
 
   /**
    * Avoids committing local changes.
-   * See also [['--commit']].
+   * See also [[--commit]].
    */
   '--no-commit'?: null;
 
   /**
-   * The complement of [['--content']].
+   * The complement of [[--content]].
    */
   '--no-content'?: null;
 
   /**
    * Disables all pulling.
-   * See also [['--pull']].
+   * See also [[--pull]].
    */
   '--no-pull'?: null;
 
   /**
    * Disables all pushing.
-   * See also [['--push']].
+   * See also [[--push]].
    */
   '--no-push'?: null;
 
   /**
    * Disables automatic merge conflict resolution.
-   * See also [['--resolvemerge']].
+   * See also [[--resolvemerge]].
    */
   '--no-resolvemerge'?: null;
 
   /**
-   * The complement of [['--only-annex']].
+   * The complement of [[--only-annex]].
    */
   '--not-only-annex'?: null;
 
   /**
    * Syncs only the git-annex branch and annexed content, not other git branches.
-   * See also [['--not-only-annex']].
+   * See also [[--not-only-annex]].
    */
   '--only-annex'?: null;
 
   /**
-   * The complement of [['--no-pull']].
+   * The complement of [[--no-pull]].
    */
   '--pull'?: null;
 
   /**
-   * The complement of [['--no-push']].
+   * The complement of [[--no-push]].
    */
   '--push'?: null;
 
   /**
-   * The complement of [['--no-resolvemerge']].
+   * The complement of [[--no-resolvemerge]].
    */
   '--resolvemerge'?: null;
 }
