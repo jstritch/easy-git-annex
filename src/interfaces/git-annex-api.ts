@@ -9,8 +9,10 @@ import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
 import { FsckAnxOptions } from './fsck-anx-options';
 import { FsckGitOptions } from './fsck-git-options';
+import { InfoOptions } from './info-options';
 import { InitGitOptions } from './init-git-options';
 import { InitremoteOptions } from './initremote-options';
+import { ListOptions } from './list-options';
 import { LockOptions } from './lock-options';
 import { RepositoryInfo } from './repository-info';
 import { RmOptions } from './rm-options';
@@ -165,6 +167,20 @@ export interface GitAnnexAPI {
   groupwanted(groupname: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Obtains information about an item or the repository.
+   *
+   * Consult the
+   * [git-annex info documentation](https://git-annex.branchable.com/git-annex-info/)
+   * for additional information.
+   * @param items The items of interest.
+   * @param anxOptions The InfoOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex info result.
+   * @category Inspection
+   */
+  info(items?: string | string[], anxOptions?: InfoOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Initializes a repository for use with git-annex.
    *
    * ```javascript
@@ -200,6 +216,21 @@ export interface GitAnnexAPI {
    * @category Remotes
    */
   initremote(name: string, type: string, parameters?: [string, string] | [string, string][], anxOptions?: InitremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Shows which remotes contain files.
+   *
+   * Consult the
+   * [git-annex list documentation](https://git-annex.branchable.com/git-annex-list/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The ListOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex list result.
+   * @category Inspection
+   */
+  list(relativePaths?: string | string[], anxOptions?: ListOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Locks files to prevent modification.

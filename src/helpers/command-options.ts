@@ -65,11 +65,18 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['group', []],
   ['groupwanted', []],
+  ['info', [
+    { name: '--bytes', kind: OptionKind.Flag },
+    { name: '--json', kind: OptionKind.Flag },
+  ]],
   ['init', []],
   ['initremote', [
     { name: '--private', kind: OptionKind.Flag },
     { name: '--sameas', kind: OptionKind.String },
     { name: '--whatelse', kind: OptionKind.Flag },
+  ]],
+  ['list', [
+    { name: '--allrepos', kind: OptionKind.Flag },
   ]],
   ['lock', [
     { name: '--json', kind: OptionKind.Flag },

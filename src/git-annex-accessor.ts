@@ -16,8 +16,10 @@ import { FsckAnxOptions } from './interfaces/fsck-anx-options';
 import { FsckGitOptions } from './interfaces/fsck-git-options';
 import { getLineStartingAsArray } from './helpers/get-line-starting';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
+import { InfoOptions } from './interfaces/info-options';
 import { InitGitOptions } from './interfaces/init-git-options';
 import { InitremoteOptions } from './interfaces/initremote-options';
+import { ListOptions } from './interfaces/list-options';
 import { LockOptions } from './interfaces/lock-options';
 import { parseCommandOptions } from './helpers/parse-command-options';
 import { RmOptions } from './interfaces/rm-options';
@@ -145,6 +147,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async info(items?: string | string[], anxOptions?: InfoOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'info', anxOptions);
+    this.pushIfStringOrStringArray(args, items);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'init', anxOptions);
     this.pushIfString(args, description);
@@ -154,6 +162,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async initremote(name: string, type: string, parameters?: [string, string] | [string, string][], anxOptions?: InitremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'initremote', anxOptions, name, `type=${type}`);
     this.pushIfKeyValuePairs(args, parameters);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async list(relativePaths?: string | string[], anxOptions?: ListOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'list', anxOptions);
+    this.pushIfRelativePaths(args, relativePaths);
     return this.runAnx(args, apiOptions);
   }
 
@@ -301,7 +315,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       ['untrusted repositories', TrustLevel.Untrusted],
     ]);
 
-    const result = await this.runAnx(['info', '--json']);
+    const result = await this.info(undefined, { '--json': null });
     if (result.exitCode === 0 && result.out.length > 0) {
       const infos = JSON.parse(result.out) as Record<string, unknown>;
       repositoryArrays.forEach((trustLevel, property) => {
