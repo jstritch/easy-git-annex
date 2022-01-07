@@ -5,14 +5,15 @@ export enum CommandGroup {
 }
 
 export enum OptionKind {
-  CommaDelimitedStrings,
   Flag,
   KeyValue,
-  Numeric,
-  QuasiKeyValue,
   RepeatableKeyValue,
+  AnonymousKeyValue,
+  Numeric,
   String,
   StringParam,
+  CommaDelimitedStrings,
+  AnonymousStrings,
   RepeatablePath,
 }
 
@@ -43,6 +44,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--jobs', kind: OptionKind.Numeric },
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-progress', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['config', [
     { name: '--get', kind: OptionKind.String },
@@ -62,12 +64,14 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--key', kind: OptionKind.String },
     { name: '--more', kind: OptionKind.Flag },
     { name: '--unused', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['group', []],
   ['groupwanted', []],
   ['info', [
     { name: '--bytes', kind: OptionKind.Flag },
     { name: '--json', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['init', []],
   ['initremote', [
@@ -77,9 +81,11 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['list', [
     { name: '--allrepos', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['lock', [
     { name: '--json', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['reinit', []],
   ['renameremote', []],
@@ -111,6 +117,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['uninit', []],
   ['unlock', [
     { name: '--json', kind: OptionKind.Flag },
+    { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['version', [
     { name: '--raw', kind: OptionKind.Flag },
@@ -136,7 +143,7 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--show-scope', kind: OptionKind.Flag },
     { name: '--list', kind: OptionKind.Flag },
     { name: '--get', kind: OptionKind.StringParam },
-    { name: '--set', kind: OptionKind.QuasiKeyValue },
+    { name: 'set', kind: OptionKind.AnonymousKeyValue },
     { name: '--unset', kind: OptionKind.StringParam },
   ]],
   ['fsck', [

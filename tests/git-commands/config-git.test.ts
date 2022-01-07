@@ -19,7 +19,7 @@ describe('configGit', () => {
     const key = 'git-annex-js.test';
     const value = 'some/setting';
 
-    const result = await myAnx.configGit({ '--set': [key, value], '--local': null });
+    const result = await myAnx.configGit({ set: [key, value], '--local': null });
 
     expect(result.exitCode).toBe(0);
 

@@ -22,6 +22,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
         let expectedType: string | null = null;
 
         switch (cmdOpt.kind) {
+
           case OptionKind.Flag:
             if (cmdOptValue === null) {
               opts.push(cmdOpt.name);
@@ -48,7 +49,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
-          case OptionKind.QuasiKeyValue:
+          case OptionKind.AnonymousKeyValue:
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOptValue[0], cmdOptValue[1]);
             } else {
@@ -85,6 +86,16 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
             } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
               opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else {
+              expectedType = 'string | string[]';
+            }
+            break;
+
+          case OptionKind.AnonymousStrings:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOptValue);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              opts.push(...cmdOptValue);
             } else {
               expectedType = 'string | string[]';
             }

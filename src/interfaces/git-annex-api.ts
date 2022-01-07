@@ -451,7 +451,7 @@ export interface GitAnnexAPI {
    * [git config documentation](https://git-scm.com/docs/git-config/)
    * for additional information.
    * @param gitOptions The ConfigGitOptions for the command.
-   * One of [[ConfigGitOptions.--get]], [[ConfigGitOptions.--set]],
+   * One of [[ConfigGitOptions.--get]], [[ConfigGitOptions.set]],
    * [[ConfigGitOptions.--unset]], or [[ConfigGitOptions.--list]] must be specified.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git config result.
