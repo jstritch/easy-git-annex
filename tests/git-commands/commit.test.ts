@@ -124,7 +124,7 @@ describe('commit', () => {
     expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile2));
   });
 
-  test('correctly ignores a nonexistent file', async () => {
+  test('correctly reports a nonexistent file', async () => {
 
     const statusResult = await myAnx.commit(nonexistentFile, { '--message': 'add nonexistent file' });
 
@@ -133,7 +133,7 @@ describe('commit', () => {
     expect(statusResult.out).toBe('');
   });
 
-  test('correctly ignores a nonexistent file in an array of files', async () => {
+  test('correctly reports a nonexistent file in an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));

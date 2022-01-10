@@ -257,7 +257,7 @@ describe('rm', () => {
     expect(rmCommitStatusResult.out).toEqual(expect.not.stringContaining(textFile2));
   });
 
-  test('correctly ignores a nonexistent file', async () => {
+  test('correctly reports a nonexistent file', async () => {
 
     const statusResult = await myAnx.rm(nonexistentFile);
 
