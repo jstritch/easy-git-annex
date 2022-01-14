@@ -103,7 +103,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   //
 
   public async runAnx(args: string[], apiOptions?: ApiOptions): Promise<CommandResult> {
-    return this.runCommand('git-annex', args, apiOptions);
+    return this.runCommand('git', ['annex', ...args], apiOptions);
   }
 
   public async addAnx(relativePaths?: string | string[], anxOptions?: AddAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
