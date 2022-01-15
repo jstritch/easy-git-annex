@@ -2,6 +2,7 @@ import * as anx from '../../src/index';
 import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
+import { gitPath } from '../../src/helpers/git-path';
 
 const projectPath = process.cwd();
 const nonexistentFile = 'lorem ipsum.txt';
@@ -112,7 +113,7 @@ describe('addAnx', () => {
 
     expect(addResult.exitCode).not.toBe(0);
     expect(addResult.out).toBe('');
-    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${nonexistentFile} not found`));
+    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${gitPath(nonexistentFile)} not found`));
   });
 
   test('correctly reports a nonexistent file in an array of files', async () => {
@@ -124,7 +125,7 @@ describe('addAnx', () => {
     const addResult = await myAnx.addAnx([binaryFile1, textFile1, nonexistentFile, binaryFile2, textFile2]);
 
     expect(addResult.exitCode).not.toBe(0);
-    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${nonexistentFile} not found`));
+    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${gitPath(nonexistentFile)} not found`));
 
     const statusResult = await myAnx.statusAnx();
 

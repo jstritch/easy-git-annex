@@ -203,13 +203,13 @@ describe('parseCommandOptions', () => {
   // RepeatablePath
 
   test('correctly parses a RepeatablePath scalar', () => {
-    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa\\bbb\\ccc' });
+    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa/bbb/ccc' });
 
     expect(opts).toEqual(['--content-of=aaa/bbb/ccc']);
   });
 
   test('correctly parses a RepeatablePath array[2]', () => {
-    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa\\bbb\\ccc', 'xxx\\yyy\\zzz'] });
+    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa/bbb/ccc', 'xxx/yyy/zzz'] });
 
     expect(opts).toEqual(['--content-of=aaa/bbb/ccc', '--content-of=xxx/yyy/zzz']);
   });

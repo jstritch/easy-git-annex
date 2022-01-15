@@ -3,11 +3,16 @@
 *
 * Git and git-annex commands use forward slash path separators
 * regardless of platform.
-* The gitPath method performs the conversion when necessary for the operating system.
+* Windows requires paths with spaces be enclosed in quotation marks.
+* The gitPath method performs the conversions as necessary for the platform.
 * @category Helper
 */
 export function gitPath(relativePath: string): string {
-  return relativePath.replace(/\\/g, '/');
+  if (process.platform !== 'win32') {
+    return relativePath;
+  }
+  const separated = relativePath.replace(/\\/g, '/');
+  return !separated.includes(' ') ? separated : `"${separated}"`;
 }
 
 /**
@@ -15,9 +20,13 @@ export function gitPath(relativePath: string): string {
  *
  * Git and git-annex commands use forward slash path separators
  * regardless of platform.
- * The gitPath method performs the conversions when necessary for the operating system.
+ * Windows requires paths with spaces be enclosed in quotation marks.
+ * The gitPaths method performs the conversions as necessary for the platform.
  * @category Helper
  */
 export function gitPaths(relativePaths: string[]): string[] {
+  if (process.platform !== 'win32') {
+    return relativePaths;
+  }
   return relativePaths.map((relativePath) => { return gitPath(relativePath); });
 }
