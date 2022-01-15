@@ -1,4 +1,5 @@
 import * as anx from '../../src/index';
+import * as path from 'path';
 import { createDirectory, createRepository, deleteDirectory } from '../helpers';
 
 describe('initAnx', () => {
@@ -36,7 +37,7 @@ describe('initAnx', () => {
     const here = repositoryInfos.find((repository) => { return repository.here; });
 
     expect(repositoryInfos).toHaveLength(3);
-    expect(here).toMatchObject({ description: expect.stringContaining(repositoryPath) as unknown });
+    expect(here).toMatchObject({ description: expect.stringContaining(path.basename(repositoryPath)) as unknown });
   });
 
   test('correctly reports a directory is not a git repository', async () => {
