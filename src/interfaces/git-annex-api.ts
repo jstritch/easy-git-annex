@@ -168,6 +168,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains information about an item or the repository.
+   * Consider helper method [[getRepositories]] if a list of repositories is required.
    *
    * Consult the
    * [git-annex info documentation](https://git-annex.branchable.com/git-annex-info/)

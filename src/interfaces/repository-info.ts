@@ -10,7 +10,7 @@ export enum TrustLevel {
 
 /**
  * RepositoryInfo describes a repository.
- * @category Helper
+ * @category Returned Objects
  */
 export interface RepositoryInfo {
 

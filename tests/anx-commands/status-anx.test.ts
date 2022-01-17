@@ -3,6 +3,8 @@ import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 import { gitPath } from '../../src/helpers/git-path';
+import { isStatusAnx } from '../../src/helpers/type-predicates';
+import { safeParseToArray } from '../../src/helpers/safe-parse';
 
 const projectPath = process.cwd();
 const nonexistentFile = 'lorem ipsum.txt';
@@ -124,19 +126,19 @@ describe('statusAnx', () => {
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.addAnx([binaryFile1, binaryFile2, textFile1, textFile2]);
 
     expect(addResult.exitCode).toBe(0);
 
     const statusResult = await myAnx.statusAnx(undefined, { '--json': null });
+    const status = safeParseToArray(isStatusAnx, statusResult.out);
 
     expect(statusResult.exitCode).toBe(0);
-    /* eslint-disable no-useless-escape */
-    expect(statusResult.out).toEqual(expect.stringContaining(`\"status\":\"A\",\"error-messages\":[],\"file\":\"./${binaryFile1}\"`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`\"status\":\"A\",\"error-messages\":[],\"file\":\"./${binaryFile2}\"`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`\"status\":\"A\",\"error-messages\":[],\"file\":\"./${textFile1}\"`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`\"status\":\"A\",\"error-messages\":[],\"file\":\"./${textFile2}\"`));
-    /* eslint-enable no-useless-escape */
+    expect(status).toHaveLength(4);
+    expect(status[0].status).toBe('A');
+    expect(status[1].status).toBe('A');
+    expect(status[2].status).toBe('A');
+    expect(status[3].status).toBe('A');
   });
 
 });

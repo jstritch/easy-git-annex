@@ -7,7 +7,8 @@ import { AnnexOptions } from './annex-options';
 export interface StatusAnxOptions extends AnnexOptions {
 
   /**
-  * Produces a JSON object on each line of output.
+   * Produces a JSON object on each line of output.
+   * Type predicate [[isStatusAnx]] may be passed to [[safeParse]] or [[safeParseToArray]] when processing the output.
    */
   '--json'?: null;
 }

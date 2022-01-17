@@ -1,5 +1,6 @@
 /**
  * RemoteCommand defines the subcommands recognized by the git remote command.
+ * @category Helper
  */
 export enum RemoteCommand {
   Add = 'add',

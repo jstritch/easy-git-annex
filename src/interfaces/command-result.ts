@@ -1,6 +1,6 @@
 /**
  * CommandResult contains uninterpreted information about a completed command execution.
- * @category Annex Commands
+ * @category Returned Objects
  */
 export interface CommandResult {
 

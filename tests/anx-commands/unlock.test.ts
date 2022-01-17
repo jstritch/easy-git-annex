@@ -3,6 +3,8 @@ import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 import { gitPath } from '../../src/helpers/git-path';
+import { isActionResult } from '../../src/helpers/type-predicates';
+import { safeParseToArray } from '../../src/helpers/safe-parse';
 
 const projectPath = process.cwd();
 const nonexistentFile = 'lorem ipsum.txt';
@@ -219,15 +221,13 @@ describe('unlock', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const unlockResult = await myAnx.unlock(undefined, { '--json': null });
+    const unlockResult = await myAnx.unlock([binaryFile1, binaryFile2], { '--json': null });
+    const actions = safeParseToArray(isActionResult, unlockResult.out);
 
     expect(unlockResult.exitCode).toBe(0);
-    /* eslint-disable no-useless-escape */
-    expect(unlockResult.out).toEqual(expect.stringContaining(`\"command\":\"unlock\",\"success\":true,\"input\":[\"${binaryFile1}\"]`));
-    expect(unlockResult.out).toEqual(expect.stringContaining(`\"command\":\"unlock\",\"success\":true,\"input\":[\"${binaryFile2}\"]`));
-    expect(unlockResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(unlockResult.out).toEqual(expect.not.stringContaining(textFile2));
-    /* eslint-enable no-useless-escape */
+    expect(actions).toHaveLength(2);
+    expect(actions[0]).toMatchObject({ command: 'unlock', file: binaryFile1, success: true });
+    expect(actions[1]).toMatchObject({ command: 'unlock', file: binaryFile2, success: true });
 
     const unlockStatusResult = await myAnx.statusAnx();
 

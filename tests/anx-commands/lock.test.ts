@@ -3,6 +3,8 @@ import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 import { gitPath } from '../../src/helpers/git-path';
+import { isActionResult } from '../../src/helpers/type-predicates';
+import { safeParseToArray } from '../../src/helpers/safe-parse';
 
 const projectPath = process.cwd();
 const nonexistentFile = 'lorem ipsum.txt';
@@ -297,14 +299,11 @@ describe('lock', () => {
     expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
 
     const lockResult = await myAnx.lock(undefined, { '--json': null });
+    const actions = safeParseToArray(isActionResult, lockResult.out);
 
     expect(lockResult.exitCode).toBe(0);
-    /* eslint-disable no-useless-escape */
-    expect(lockResult.out).toEqual(expect.stringContaining(`\"command\":\"lock\",\"success\":true,\"input\":[\"${binaryFile1}\"]`));
-    expect(lockResult.out).toEqual(expect.not.stringContaining(binaryFile2));
-    expect(lockResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockResult.out).toEqual(expect.not.stringContaining(textFile2));
-    /* eslint-enable no-useless-escape */
+    expect(actions).toHaveLength(1);
+    expect(actions[0]).toMatchObject({ command: 'lock', file: binaryFile1, success: true });
 
     const lockStatusResult = await myAnx.statusAnx();
 

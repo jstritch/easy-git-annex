@@ -1,8 +1,10 @@
 import * as anx from '../../src/index';
 import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
+import { isActionResult, isByteProgress } from '../../src/helpers/type-predicates';
 import { promises as fs } from 'fs';
 import { gitPath } from '../../src/helpers/git-path';
+import { safeParseToArray } from '../../src/helpers/safe-parse';
 
 const projectPath = process.cwd();
 const nonexistentFile = 'lorem ipsum.txt';
@@ -143,14 +145,10 @@ describe('addAnx', () => {
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(undefined, { '--json': null });
+    const actions = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    /* eslint-disable no-useless-escape */
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"success\":true,\"input\":[\"${binaryFile1}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"success\":true,\"input\":[\"${binaryFile2}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"note\":\"non-large file; adding content to git repository\",\"success\":true,\"input\":[\"${textFile1}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"note\":\"non-large file; adding content to git repository\",\"success\":true,\"input\":[\"${textFile2}\"]`));
-    /* eslint-enable no-useless-escape */
+    expect(actions).toHaveLength(4);
 
     const statusResult = await myAnx.statusAnx();
 
@@ -168,16 +166,12 @@ describe('addAnx', () => {
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(undefined, { '--json-progress': null });
+    const progress = safeParseToArray(isByteProgress, addResult.out);
+    const actions = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    expect(addResult.out).toEqual(expect.stringMatching(`.*byte-progress.*${binaryFile1}.*`));
-    expect(addResult.out).toEqual(expect.stringMatching(`.*byte-progress.*${binaryFile2}.*`));
-    /* eslint-disable no-useless-escape */
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"success\":true,\"input\":[\"${binaryFile1}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"success\":true,\"input\":[\"${binaryFile2}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"note\":\"non-large file; adding content to git repository\",\"success\":true,\"input\":[\"${textFile1}\"]`));
-    expect(addResult.out).toEqual(expect.stringContaining(`\"command\":\"add\",\"note\":\"non-large file; adding content to git repository\",\"success\":true,\"input\":[\"${textFile2}\"]`));
-    /* eslint-enable no-useless-escape */
+    expect(progress.length).toBeGreaterThanOrEqual(2);
+    expect(actions).toHaveLength(4);
 
     const statusResult = await myAnx.statusAnx();
 
