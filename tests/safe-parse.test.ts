@@ -19,7 +19,7 @@ describe('safeParse', () => {
   test('returns undefined for a bad string', () => {
     const json = 'non-large file; adding content to git repository';
 
-    expect(anx.safeParse(anx.isByteProgress, json)).toBeUndefined();
+    expect(anx.safeParse(anx.isActionProgress, json)).toBeUndefined();
   });
 
 });
@@ -33,13 +33,13 @@ describe('safeParseToArray', () => {
 {"byte-progress":6404,"action":{"command":"add","input":["file2.jpg"],"file":"file2.jpg"},"total-size":6404,"percent-progress":"100%"}
 {"command":"add","success":true,"input":["file2.jpg"],"key":"SHA256E-s6404--7abbf94d50640dc0501eeb9ec3d8234746a45d3c7ea721839c88cd7fbb9785eb.jpg","error-messages":[],"file":"file2.jpg"}
 {"command":"add","note":"non-large file; adding content to git repository","success":true,"input":["file2.txt"],"error-messages":[],"file":"file2.txt"}`;
-    const a = anx.safeParseToArray(anx.isByteProgress, json);
+    const a = anx.safeParseToArray(anx.isActionProgress, json);
 
     expect(a).toHaveLength(2);
   });
 
   test('returns an empty array when passed the empty string', () => {
-    const a = anx.safeParseToArray(anx.isByteProgress, '');
+    const a = anx.safeParseToArray(anx.isActionProgress, '');
 
     expect(a).toHaveLength(0);
   });

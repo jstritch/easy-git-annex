@@ -1,6 +1,6 @@
 import { CommandParameters, runCommand } from './helpers/run-command';
 import { gitPath, gitPaths } from './helpers/git-path';
-import { isKeyValue, isKeyValueArray, isString, isStringArray } from './helpers/type-predicates';
+import { isKeyValue, isKeyValueArray, isStatusAnx, isString, isStringArray } from './helpers/type-predicates';
 import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
 import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
 import { AddAnxOptions } from './interfaces/add-anx-options';
@@ -23,6 +23,8 @@ import { ListOptions } from './interfaces/list-options';
 import { LockOptions } from './interfaces/lock-options';
 import { parseCommandOptions } from './helpers/parse-command-options';
 import { RmOptions } from './interfaces/rm-options';
+import { safeParseToArray } from './helpers/safe-parse';
+import { StatusAnx } from './interfaces/status-anx';
 import { StatusAnxOptions } from './interfaces/status-anx-options';
 import { SyncOptions } from './interfaces/sync-options';
 import { TagOptions } from './interfaces/tag-options';
@@ -301,12 +303,6 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return list ?? [];
   }
 
-  public async getRemoteTypes(): Promise<string[]> {
-    const versionResult = await this.versionAnx();
-    const list = getLineStartingAsArray(versionResult.out, 'remote types: ');
-    return list ?? [];
-  }
-
   public async getRepositories(): Promise<RepositoryInfo[]> {
     const repositories: RepositoryInfo[] = [];
     const repositoryArrays = new Map<string, TrustLevel>([
@@ -326,5 +322,19 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       });
     }
     return repositories;
+  }
+
+  public async getSpecialRemoteTypes(): Promise<string[]> {
+    const versionResult = await this.versionAnx();
+    const list = getLineStartingAsArray(versionResult.out, 'remote types: ');
+    return list ?? [];
+  }
+
+  public async getStatusAnx(relativePaths?: string | string[]): Promise<StatusAnx[]> {
+    const result = await this.statusAnx(relativePaths, { '--json': null });
+    if (result.exitCode !== 0) {
+      throw new Error(result.toCommandResultString());
+    }
+    return safeParseToArray(isStatusAnx, result.out);
   }
 }

@@ -16,6 +16,7 @@ import { ListOptions } from './list-options';
 import { LockOptions } from './lock-options';
 import { RepositoryInfo } from './repository-info';
 import { RmOptions } from './rm-options';
+import { StatusAnx } from './status-anx';
 import { StatusAnxOptions } from './status-anx-options';
 import { SyncOptions } from './sync-options';
 import { TagOptions } from './tag-options';
@@ -168,7 +169,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains information about an item or the repository.
-   * Consider helper method [[getRepositories]] if a list of repositories is required.
+   * Consider using helper method [[getRepositories]] if a list of repositories is required.
    *
    * Consult the
    * [git-annex info documentation](https://git-annex.branchable.com/git-annex-info/)
@@ -208,7 +209,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param name The name of the repository.
    * @param type The remote type.
-   * Helper method [[GitAnnexAPI.getRemoteTypes]] may be used to obtain a list of
+   * Helper method [[GitAnnexAPI.getSpecialRemoteTypes]] may be used to obtain a list of
    * valid types from which to choose.
    * @param parameters The remote configuration.
    * @param anxOptions The InitremoteOptions for the command.
@@ -555,12 +556,12 @@ export interface GitAnnexAPI {
   getBackends(): Promise<string[]>;
 
   /**
-   * Obtains an array of remote types.
-   * @returns An array containing the remote type names.
+   * Obtains an array of special remote types.
+   * @returns An array containing the special remote type names.
    * The order of the names returned is indeterminate.
    * @category Helper
    */
-  getRemoteTypes(): Promise<string[]>;
+  getSpecialRemoteTypes(): Promise<string[]>;
 
   /**
    * Obtains an array identifying the current repositories.
@@ -570,4 +571,13 @@ export interface GitAnnexAPI {
    * @category Helper
    */
   getRepositories(): Promise<RepositoryInfo[]>;
+
+  /**
+   * Obtains an array describing the working tree status.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @returns An array describing the working tree.
+   * @category Helper
+   */
+  getStatusAnx(relativePaths?: string | string[]): Promise<StatusAnx[]>;
 }

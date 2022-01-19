@@ -1,9 +1,8 @@
 import * as anx from '../../src/index';
 import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
-import { isActionResult, isByteProgress } from '../../src/helpers/type-predicates';
+import { isActionProgress, isActionResult } from '../../src/helpers/type-predicates';
 import { promises as fs } from 'fs';
-import { gitPath } from '../../src/helpers/git-path';
 import { safeParseToArray } from '../../src/helpers/safe-parse';
 
 const projectPath = process.cwd();
@@ -33,92 +32,40 @@ describe('addAnx', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly adds one binary file', async () => {
+  test('adds one binary file', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(binaryFile1);
 
     expect(addResult.exitCode).toBe(0);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly adds one text file', async () => {
+  test('adds one text file', async () => {
 
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(textFile1);
 
     expect(addResult.exitCode).toBe(0);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly adds an array of files', async () => {
+  test('adds an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx([binaryFile1, textFile1]);
 
     expect(addResult.exitCode).toBe(0);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly adds all binary and text files', async () => {
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
-
-    expect(addResult.exitCode).toBe(0);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
-  });
-
-  test('correctly reports a nonexistent file', async () => {
+  test('reports a nonexistent file', async () => {
 
     const addResult = await myAnx.addAnx(nonexistentFile);
 
     expect(addResult.exitCode).not.toBe(0);
-    expect(addResult.out).toBe('');
-    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${gitPath(nonexistentFile)} not found`));
+    expect(addResult.err).toContain(nonexistentFile);
   });
 
-  test('correctly reports a nonexistent file in an array of files', async () => {
+  test('reports a nonexistent file in an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
@@ -127,62 +74,38 @@ describe('addAnx', () => {
     const addResult = await myAnx.addAnx([binaryFile1, textFile1, nonexistentFile, binaryFile2, textFile2]);
 
     expect(addResult.exitCode).not.toBe(0);
-    expect(addResult.err).toEqual(expect.stringContaining(`git-annex: ${gitPath(nonexistentFile)} not found`));
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(addResult.err).toContain(nonexistentFile);
   });
 
-  test('correctly produces --json output', async () => {
+  test('produces --json output', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(undefined, { '--json': null });
-    const actions = safeParseToArray(isActionResult, addResult.out);
+    const actionResults = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    expect(actions).toHaveLength(4);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(actionResults).toHaveLength(4);
   });
 
-  test('correctly produces --json output when only --json-progress specified', async () => {
+  test('produces --json output when only --json-progress specified', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(undefined, { '--json-progress': null });
-    const progress = safeParseToArray(isByteProgress, addResult.out);
-    const actions = safeParseToArray(isActionResult, addResult.out);
+    const actionProgress = safeParseToArray(isActionProgress, addResult.out);
+    const actionResults = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    expect(progress.length).toBeGreaterThanOrEqual(2);
-    expect(actions).toHaveLength(4);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(actionProgress.length).toBeGreaterThanOrEqual(2);
+    expect(actionResults).toHaveLength(4);
   });
 
-  test('correctly accepts the --jobs option', async () => {
+  test('accepts the --jobs option', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
@@ -191,115 +114,56 @@ describe('addAnx', () => {
     const addResult = await myAnx.addAnx(undefined, { '--jobs': 2 });
 
     expect(addResult.exitCode).toBe(0);
-    expect(addResult.args).toEqual(expect.arrayContaining(['--jobs=2']));
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(addResult.args).toContain('--jobs=2');
   });
 
-  test('correctly accepts the --force-large option', async () => {
+  test('accepts the --force-large option', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx(undefined, { '--force-large': null });
+    const addResult = await myAnx.addAnx(undefined, { '--force-large': null, '--json': null });
+    const actionResults = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    expect(addResult.args).toEqual(expect.arrayContaining(['--force-large']));
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(actionResults).toHaveLength(4);
+    expect(actionResults[0]?.key).toBeDefined();
+    expect(actionResults[1]?.key).toBeDefined();
+    expect(actionResults[2]?.key).toBeDefined();
+    expect(actionResults[3]?.key).toBeDefined();
   });
 
-  test('correctly accepts the --force-small option', async () => {
+  test('accepts the --force-small option', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx(undefined, { '--force-small': null });
+    const addResult = await myAnx.addAnx(undefined, { '--force-small': null, '--json': null });
+    const actionResults = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-    expect(addResult.args).toEqual(expect.arrayContaining(['--force-small']));
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
+    expect(actionResults).toHaveLength(4);
+    expect(actionResults[0]?.note).toBeDefined();
+    expect(actionResults[1]?.note).toBeDefined();
+    expect(actionResults[2]?.note).toBeDefined();
+    expect(actionResults[3]?.note).toBeDefined();
   });
 
-  test('correctly adds modified binary and text files', async () => {
-
-    const modifiedFiles = [binaryFile2, textFile2];
+  test('accepts the matching option', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.addAnx(undefined, { matching: '--include=*.jpg', '--json': null });
+    const actionResults = safeParseToArray(isActionResult, addResult.out);
 
     expect(addResult.exitCode).toBe(0);
-
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`A ./${textFile2}`));
-
-    const commitResult = await myAnx.commit(undefined, { '--message': 'add four files' });
-
-    expect(commitResult.exitCode).toBe(0);
-
-    const unlockResult = await myAnx.unlock(modifiedFiles);
-
-    expect(unlockResult.exitCode).toBe(0);
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile2));
-    const modifyStatusResult = await myAnx.statusAnx();
-
-    expect(modifyStatusResult.exitCode).toBe(0);
-    expect(modifyStatusResult.out).toEqual(expect.stringContaining(`M ./${binaryFile2}`));
-    expect(modifyStatusResult.out).toEqual(expect.stringContaining(`M ./${textFile2}`));
-
-    const addAfterModifyResult = await myAnx.addAnx(modifiedFiles);
-
-    expect(addAfterModifyResult.exitCode).toBe(0);
-
-    const lockResult = await myAnx.lock(modifiedFiles);
-
-    expect(lockResult.exitCode).toBe(0);
-
-    const lockStatusResult = await myAnx.statusAnx();
-
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`M ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`M ./${textFile2}`));
-
-    const modifyResult = await myAnx.commit(undefined, { '--message': 'modify two files' });
-
-    expect(modifyResult.exitCode).toBe(0);
-
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toBe('');
+    expect(actionResults).toHaveLength(2);
+    expect(actionResults[0]?.key).toBeDefined();
+    expect(actionResults[1]?.key).toBeDefined();
   });
 
 });

@@ -5,13 +5,13 @@
  * @param str The string to be searched.
  * @param prefix The string to locate at the beginning of a line.
  * @param includePrefix A flag indicating whether the prefix is to be included in the return value.
- * @returns The requested line or null if the prefix was not located.
+ * @returns The requested line or undefined if the prefix was not located.
  * @category Helper
  */
-export function getLineStarting(str: string, prefix: string, includePrefix: boolean): string | null {
+export function getLineStarting(str: string, prefix: string, includePrefix: boolean): string | undefined {
   const re = new RegExp(includePrefix ? `^${prefix}.*$` : `(?<=^${prefix}).*$`, 'm');
   const matches = str.match(re);
-  return matches !== null && matches.length > 0 ? matches[0] : null;
+  return matches !== null && matches.length > 0 ? matches[0] : undefined;
 }
 
 /**
@@ -21,13 +21,13 @@ export function getLineStarting(str: string, prefix: string, includePrefix: bool
  *
  * @param str The string to be searched.
  * @param prefix The string to locate at the beginning of a line.
- * @returns The requested line as a string array or null if the prefix was not located.
+ * @returns The requested line as a string array or undefined if the prefix was not located.
  * @category Helper
  */
-export function getLineStartingAsArray(str: string, prefix: string): string[] | null {
+export function getLineStartingAsArray(str: string, prefix: string): string[] | undefined {
   const line = getLineStarting(str, prefix, false);
-  if (line === null) {
-    return null;
+  if (line === undefined) {
+    return undefined;
   }
   return line.length > 0 ? line.split(' ') : [];
 }

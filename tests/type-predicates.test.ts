@@ -1,4 +1,4 @@
-import { isAction, isActionResult, isBoolean, isByteProgress, isKeyValue, isKeyValueArray, isNumber, isRecord, isStatusAnx, isString, isStringArray } from '../src/helpers/type-predicates';
+import { isAction, isActionProgress, isActionResult, isBoolean, isKeyValue, isKeyValueArray, isNumber, isRecord, isStatusAnx, isString, isStringArray } from '../src/helpers/type-predicates';
 
 describe('isBoolean', () => {
 
@@ -371,6 +371,53 @@ describe('isAction', () => {
   });
 });
 
+describe('isActionProgress', () => {
+
+  test('correctly identifies a ActionProgress', () => {
+    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
+
+    expect(isActionProgress(o)).toBe(true);
+  });
+
+  test('correctly identifies null', () => {
+    expect(isActionProgress(null)).toBe(false);
+  });
+
+  test('correctly identifies undefined', () => {
+    expect(isActionProgress(undefined)).toBe(false);
+  });
+
+  test('correctly identifies a ActionProgress with bad Action', () => {
+    const a = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
+    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
+
+    expect(isActionProgress(o)).toBe(false);
+  });
+
+  test('correctly identifies a ActionProgress with bad byte-progress', () => {
+    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+    const o = { action: a, 'byte-progress': '6405', 'total-size': 6405, 'percent-progress': '100%' };
+
+    expect(isActionProgress(o)).toBe(false);
+  });
+
+  test('correctly identifies a ActionProgress with bad total-size', () => {
+    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+    const o = { action: a, 'byte-progress': 6405, 'total-size': '6405', 'percent-progress': '100%' };
+
+    expect(isActionProgress(o)).toBe(false);
+  });
+
+  test('correctly identifies a ActionProgress with bad percent-progress', () => {
+    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': 100 };
+
+    expect(isActionProgress(o)).toBe(false);
+  });
+
+});
+
 describe('isActionResult', () => {
 
   test('correctly identifies an ActionResult with required properties', () => {
@@ -428,53 +475,6 @@ describe('isActionResult', () => {
 
     expect(isActionResult(o)).toBe(false);
   });
-});
-
-describe('isByteProgress', () => {
-
-  test('correctly identifies a ByteProgress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
-
-    expect(isByteProgress(o)).toBe(true);
-  });
-
-  test('correctly identifies null', () => {
-    expect(isByteProgress(null)).toBe(false);
-  });
-
-  test('correctly identifies undefined', () => {
-    expect(isByteProgress(undefined)).toBe(false);
-  });
-
-  test('correctly identifies a ByteProgress with bad Action', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
-
-    expect(isByteProgress(o)).toBe(false);
-  });
-
-  test('correctly identifies a ByteProgress with bad byte-progress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': '6405', 'total-size': 6405, 'percent-progress': '100%' };
-
-    expect(isByteProgress(o)).toBe(false);
-  });
-
-  test('correctly identifies a ByteProgress with bad total-size', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': '6405', 'percent-progress': '100%' };
-
-    expect(isByteProgress(o)).toBe(false);
-  });
-
-  test('correctly identifies a ByteProgress with bad percent-progress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': 100 };
-
-    expect(isByteProgress(o)).toBe(false);
-  });
-
 });
 
 describe('isStatusAnx', () => {

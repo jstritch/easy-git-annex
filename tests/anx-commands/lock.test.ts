@@ -2,7 +2,6 @@ import * as anx from '../../src/index';
 import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
-import { gitPath } from '../../src/helpers/git-path';
 import { isActionResult } from '../../src/helpers/type-predicates';
 import { safeParseToArray } from '../../src/helpers/safe-parse';
 
@@ -33,12 +32,9 @@ describe('lock', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly locks one binary file', async () => {
+  test('locks one binary file', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(binaryFile1);
 
     expect(addResult.exitCode).toBe(0);
@@ -47,42 +43,18 @@ describe('lock', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-
     const unlockResult = await myAnx.unlock(binaryFile1);
 
     expect(unlockResult.exitCode).toBe(0);
 
-    const unlockStatusResult = await myAnx.statusAnx();
-
-    expect(unlockStatusResult.exitCode).toBe(0);
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
-
     const lockResult = await myAnx.lock(binaryFile1);
 
     expect(lockResult.exitCode).toBe(0);
-
-    const lockStatusResult = await myAnx.statusAnx();
-
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile1}`));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly locks one text file', async () => {
+  test('locks one text file', async () => {
 
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx(textFile1);
 
     expect(addResult.exitCode).toBe(0);
@@ -91,42 +63,19 @@ describe('lock', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-
     const unlockResult = await myAnx.unlock(textFile1);
 
     expect(unlockResult.exitCode).toBe(0);
 
-    const statusResult = await myAnx.statusAnx();
-
-    expect(statusResult.exitCode).toBe(0);
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile1}`));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(statusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(statusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
-
     const lockResult = await myAnx.lock(textFile1);
 
     expect(lockResult.exitCode).toBe(0);
-
-    const lockStatusResult = await myAnx.statusAnx();
-
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile1}`));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly locks an array of files', async () => {
+  test('locks an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
     const addResult = await myAnx.addAnx([binaryFile1, textFile1]);
 
     expect(addResult.exitCode).toBe(0);
@@ -135,23 +84,9 @@ describe('lock', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-
     const unlockResult = await myAnx.unlock([binaryFile1, textFile1]);
 
     expect(unlockResult.exitCode).toBe(0);
-
-    const unlockStatusResult = await myAnx.statusAnx();
-
-    expect(unlockStatusResult.exitCode).toBe(0);
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(unlockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
 
     const lockResult = await myAnx.lock([binaryFile1, textFile1]);
 
@@ -160,66 +95,17 @@ describe('lock', () => {
     const lockStatusResult = await myAnx.statusAnx();
 
     expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
   });
 
-  test('correctly locks binary and text files', async () => {
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx([binaryFile1, textFile1]);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit(undefined, { '--message': 'add two files' });
-
-    expect(commitResult.exitCode).toBe(0);
-
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-
-    const unlockResult = await myAnx.unlock();
-
-    expect(unlockResult.exitCode).toBe(0);
-
-    const unlockStatusResult = await myAnx.statusAnx();
-
-    expect(unlockStatusResult.exitCode).toBe(0);
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(unlockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
-
-    const lockResult = await myAnx.lock();
-
-    expect(lockResult.exitCode).toBe(0);
-
-    const lockStatusResult = await myAnx.statusAnx();
-
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
-  });
-
-  test('correctly reports a nonexistent file', async () => {
+  test('reports a nonexistent file', async () => {
 
     const lockResult = await myAnx.lock(nonexistentFile);
 
     expect(lockResult.exitCode).not.toBe(0);
-    expect(lockResult.err).toEqual(expect.stringContaining(`git-annex: ${gitPath(nonexistentFile)} not found`));
+    expect(lockResult.err).toContain(nonexistentFile);
   });
 
-  test('correctly reports a nonexistent file in an array of files', async () => {
+  test('reports a nonexistent file in an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
@@ -233,85 +119,66 @@ describe('lock', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile2));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile2));
-
     const unlockResult = await myAnx.unlock([binaryFile1, textFile1, binaryFile2, textFile2]);
 
     expect(unlockResult.exitCode).toBe(0);
 
-    const unlockStatusResult = await myAnx.statusAnx();
-
-    expect(unlockStatusResult.exitCode).toBe(0);
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile2}`));
-    expect(unlockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(unlockStatusResult.out).toEqual(expect.not.stringContaining(textFile2));
-
     const lockResult = await myAnx.lock([binaryFile1, textFile1, nonexistentFile, binaryFile2, textFile2]);
 
     expect(lockResult.exitCode).not.toBe(0);
-
-    const lockStatusResult = await myAnx.statusAnx();
-
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile2));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile2));
+    expect(lockResult.err).toContain(nonexistentFile);
   });
 
-  test('correctly produces --json output', async () => {
+  test('produces --json output', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx([binaryFile1, textFile1]);
+    const addResult = await myAnx.addAnx();
 
     expect(addResult.exitCode).toBe(0);
 
-    const commitResult = await myAnx.commit(undefined, { '--message': 'add two files' });
+    const commitResult = await myAnx.commit(undefined, { '--message': 'add four files' });
 
     expect(commitResult.exitCode).toBe(0);
-
-    const commitStatusResult = await myAnx.statusAnx();
-
-    expect(commitStatusResult.exitCode).toBe(0);
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(commitStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
 
     const unlockResult = await myAnx.unlock();
 
     expect(unlockResult.exitCode).toBe(0);
 
-    const unlockStatusResult = await myAnx.statusAnx();
-
-    expect(unlockStatusResult.exitCode).toBe(0);
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`T ./${binaryFile1}`));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(unlockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(unlockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
-
     const lockResult = await myAnx.lock(undefined, { '--json': null });
-    const actions = safeParseToArray(isActionResult, lockResult.out);
+    const actionResults = safeParseToArray(isActionResult, lockResult.out);
 
     expect(lockResult.exitCode).toBe(0);
-    expect(actions).toHaveLength(1);
-    expect(actions[0]).toMatchObject({ command: 'lock', file: binaryFile1, success: true });
+    expect(actionResults).toHaveLength(2);
+  });
 
-    const lockStatusResult = await myAnx.statusAnx();
+  test('accepts the matching option', async () => {
 
-    expect(lockStatusResult.exitCode).toBe(0);
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(binaryFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${binaryFile2}`));
-    expect(lockStatusResult.out).toEqual(expect.not.stringContaining(textFile1));
-    expect(lockStatusResult.out).toEqual(expect.stringContaining(`? ./${textFile2}`));
+    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
+    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
+    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
+    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
+    const addResult = await myAnx.addAnx();
+
+    expect(addResult.exitCode).toBe(0);
+
+    const commitResult = await myAnx.commit(undefined, { '--message': 'add four files' });
+
+    expect(commitResult.exitCode).toBe(0);
+
+    const unlockResult = await myAnx.unlock([binaryFile1, textFile1, binaryFile2, textFile2]);
+
+    expect(unlockResult.exitCode).toBe(0);
+
+    const lockResult = await myAnx.lock(undefined, { matching: '--include=*.jpg', '--json': null });
+    const actionResults = safeParseToArray(isActionResult, lockResult.out);
+
+    expect(lockResult.exitCode).toBe(0);
+    expect(actionResults).toHaveLength(2);
+    expect(actionResults[0]?.key).toBeDefined();
+    expect(actionResults[1]?.key).toBeDefined();
   });
 
 });

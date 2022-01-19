@@ -1,6 +1,6 @@
 import * as anx from '../../src/index';
 
-describe('getRemoteTypes', () => {
+describe('getSpecialRemoteTypes', () => {
   let myAnx: anx.GitAnnexAPI;
 
   beforeEach(() => {
@@ -8,7 +8,7 @@ describe('getRemoteTypes', () => {
   });
 
   test('returns the array', async () => {
-    const remoteTypes = await myAnx.getRemoteTypes();
+    const remoteTypes = await myAnx.getSpecialRemoteTypes();
 
     expect(remoteTypes.length).toBeGreaterThan(0);
   });

@@ -18,7 +18,7 @@ export function safeParse<T>(guard: (o: unknown) => o is T, json: string): T | u
  * Parses a multi-line string with one JSON object per line to an array of the specified type.
  * Objects not passing the type guard are silently filtered out of the result set.
  * @param guard The type predicate to validate each deserialized object.
- * @param json The JSON strings to parse.
+ * @param text The JSON strings to parse.
  * @returns An array containing the desrialized objects passing the type guard function.
  * @category Helper
  */

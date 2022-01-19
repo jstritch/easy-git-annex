@@ -1,6 +1,7 @@
 import { CommandGroup, getCommandOptions, OptionKind } from './command-options';
 import { isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates';
 import { gitPath } from './git-path';
+
 /**
  * Converts the commandOptions supplied by the application to a string array.
  * @param commandGroup With commandName, identifies the possible set of options.

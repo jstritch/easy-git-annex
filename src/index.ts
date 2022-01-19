@@ -22,7 +22,7 @@ export * from './interfaces/action-result';
 export * from './interfaces/add-anx-options';
 export * from './interfaces/annex-options';
 export * from './interfaces/api-options';
-export * from './interfaces/byte-progress';
+export * from './interfaces/action-progress';
 export * from './interfaces/clone-options';
 export * from './interfaces/command-result';
 export * from './interfaces/commit-options';

@@ -27,8 +27,8 @@ describe('getLineStarting', () => {
     expect(anx.getLineStarting(versionOutput, 'operating system: linux x86_64', false)).toBe('');
   });
 
-  test('returns null when the prefix does not exist', () => {
-    expect(anx.getLineStarting(versionOutput, 'REMOTE TYPES: ', false)).toBeNull();
+  test('returns undefined when the prefix does not exist', () => {
+    expect(anx.getLineStarting(versionOutput, 'REMOTE TYPES: ', false)).toBeUndefined();
   });
 
 });
@@ -43,8 +43,8 @@ describe('getLineStartingAsArray', () => {
     expect(anx.getLineStartingAsArray(versionOutput, 'operating system: linux x86_64')).toHaveLength(0);
   });
 
-  test('throws when the prefix does not exist', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toBeNull();
+  test('returns undefined when the prefix does not exist', () => {
+    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toBeUndefined();
   });
 
 });

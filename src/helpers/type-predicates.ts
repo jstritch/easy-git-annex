@@ -1,6 +1,6 @@
 import { Action } from '../interfaces/action';
+import { ActionProgress } from '../interfaces/action-progress';
 import { ActionResult } from '../interfaces/action-result';
-import { ByteProgress } from '../interfaces/byte-progress';
 import { StatusAnx } from '../interfaces/status-anx';
 
 /**
@@ -88,6 +88,21 @@ export function isAction(o: unknown): o is Action {
 }
 
 /**
+ * Determines if an object is a [[ActionProgress]].
+ * @param o The object to examine.
+ * @returns True if o is a ActionProgress; otherwise, false.
+ * @category Type Predicate
+ */
+export function isActionProgress(o: unknown): o is ActionProgress {
+  if (!isRecord(o)) { return false; }
+  if (!isAction(o['action'])) { return false; }
+  if (!isNumber(o['byte-progress'])) { return false; }
+  if (!isNumber(o['total-size'])) { return false; }
+  if (!isString(o['percent-progress'])) { return false; }
+  return true;
+}
+
+/**
  * Determines if an object is an [[ActionResult]].
  * @param o The object to examine.
  * @returns True if o is an ActionResult; otherwise, false.
@@ -104,24 +119,9 @@ export function isActionResult(o: unknown): o is ActionResult {
 }
 
 /**
- * Determines if an object is a [[ByteProgress]].
- * @param o The object to examine.
- * @returns True if o is a ByteProgress; otherwise, false.
- * @category Type Predicate
- */
-export function isByteProgress(o: unknown): o is ByteProgress {
-  if (!isRecord(o)) { return false; }
-  if (!isAction(o['action'])) { return false; }
-  if (!isNumber(o['byte-progress'])) { return false; }
-  if (!isNumber(o['total-size'])) { return false; }
-  if (!isString(o['percent-progress'])) { return false; }
-  return true;
-}
-
-/**
  * Determines if an object is a [[StatusAnx]].
  * @param o The object to examine.
- * @returns True if o is an StatusAnx; otherwise, false.
+ * @returns True if o is a StatusAnx; otherwise, false.
  * @category Type Predicate
  */
 export function isStatusAnx(o: unknown): o is StatusAnx {
