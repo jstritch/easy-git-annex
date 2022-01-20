@@ -10,7 +10,7 @@
 * [The Node.js Event Loop, Timers, and process.nextTick()](https://nodejs.org/en/docs/guides/event-loop-timers-and-nexttick/).
 *
 * Uncaught Errors thrown by ConsoleDataHandler functions are
-* logged to console.error by git-annex-js.
+* logged to console.error by easy-git-annex.
 * An application may override this behavior by
 * catching and handling any error in the callback.
 *
@@ -40,7 +40,7 @@ export interface ConsoleDataHandler {
 }
 
 /**
- * ApiOptions control the behavior of git-annex-js.
+ * ApiOptions control the behavior of easy-git-annex.
  * @category API Options
  */
 export interface ApiOptions {

@@ -2,7 +2,7 @@ import * as anx from '../../src/index';
 import * as path from 'path';
 import { createDirectory, deleteDirectory } from '../helpers';
 
-const cloneSource = 'https://github.com/jstritch/git-annex-js.git';
+const cloneSource = 'https://github.com/jstritch/easy-git-annex.git';
 const nonexistentSource = 'https://github.com/jstritch/nonexistent.git';
 
 const cloneTimeout = 30 * 1000; // milliseconds
@@ -24,10 +24,10 @@ describe('clone', () => {
     const result = await myAnx.clone(cloneSource);
 
     expect(result.exitCode).toBe(0);
-    expect(result.err).toEqual(expect.stringContaining('Cloning into \'git-annex-js\''));
+    expect(result.err).toEqual(expect.stringContaining('Cloning into \'easy-git-annex\''));
     expect(result.out).toBe('');
 
-    const clonedAnx = anx.createAccessor(path.join(repositoryPath, 'git-annex-js'));
+    const clonedAnx = anx.createAccessor(path.join(repositoryPath, 'easy-git-annex'));
     const remoteResult = await clonedAnx.remote();
 
     expect(remoteResult.exitCode).toBe(0);

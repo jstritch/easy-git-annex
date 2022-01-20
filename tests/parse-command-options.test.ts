@@ -87,7 +87,7 @@ describe('parseCommandOptions', () => {
   // AnonymousKeyValue
 
   test('correctly parses a AnonymousKeyValue', () => {
-    const key = 'git-annex-js.test';
+    const key = 'easy-git-annex.test';
     const value = 'true';
     const opts = parseCommandOptions(CommandGroup.Git, 'config', { set: [key, value] });
 

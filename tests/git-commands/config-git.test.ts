@@ -16,7 +16,7 @@ describe('configGit', () => {
   });
 
   test('correctly sets, gets, and unsets a value', async () => {
-    const key = 'git-annex-js.test';
+    const key = 'easy-git-annex.test';
     const value = 'some/setting';
 
     const result = await myAnx.configGit({ set: [key, value], '--local': null });

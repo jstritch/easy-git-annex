@@ -1,5 +1,5 @@
 /**
- * The git-annex-js library entry point.
+ * The easy-git-annex library entry point.
  */
 
 import { GitAnnexAccessor } from './git-annex-accessor';

@@ -1,1 +1,1 @@
-git-annex-js verification file tests/data/file1.txt
+easy-git-annex verification file tests/data/file1.txt
