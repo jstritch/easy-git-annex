@@ -18,24 +18,27 @@ describe('initremote', () => {
     await deleteDirectory(remotePath);
   });
 
-  test('correctly adds a remote', async () => {
+  test('adds a remote', async () => {
     const remoteName = 'annex-remote';
     const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
 
     expect(initResult.exitCode).toBe(0);
 
-    const showRemoteResult = await myAnx.remote();
+    const enableRemoteResult = await myAnx.enableremote();
 
-    expect(showRemoteResult.exitCode).toBe(0);
-    expect(showRemoteResult.out).toEqual(expect.stringContaining(remoteName));
+    expect(enableRemoteResult.err).toContain(remoteName);
+
+    const remoteNames = await myAnx.getRemoteNames();
+
+    expect(remoteNames).toHaveLength(1);
+    expect(remoteNames).toContain(remoteName);
   });
 
-  test('correctly reports missing configuration', async () => {
+  test('reports missing remote configuration', async () => {
     const remoteName = 'annex-remote';
     const initResult = await myAnx.initremote(remoteName, 'directory', ['directory', remotePath]);
 
     expect(initResult.exitCode).not.toBe(0);
-    expect(initResult.err).toEqual(expect.stringContaining('git-annex: Specify encryption=hybrid or encryption=none or encryption=pubkey or encryption=shared or encryption=sharedpubkey.'));
   });
 
 });

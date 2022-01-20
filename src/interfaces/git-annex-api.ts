@@ -202,7 +202,12 @@ export interface GitAnnexAPI {
   initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Creates a special (non-git) remote.
+   * Creates a special remote.
+   *
+   * ```javascript
+   * const result = await myAnx.initremote(remoteName, 'directory',
+   *                [['directory', remotePath], ['encryption', 'none']]);
+   * ```
    *
    * Consult the
    * [git-annex initremote documentation](https://git-annex.branchable.com/git-annex-initremote/)
@@ -315,7 +320,7 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex sync documentation](https://git-annex.branchable.com/git-annex-sync/)
    * for additional information.
-   * @param remotes The remote names or remote groups to be synchroniuzed.
+   * @param remotes The remote names or remote groups to be synchronized.
    * If unspecified, all remotes are synchronized.
    * @param anxOptions The SyncOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -491,6 +496,11 @@ export interface GitAnnexAPI {
 
   /**
    * Manages the set of tracked repositories.
+   * Consider using helper method [[getRemoteNames]] if a list of remote names is required.
+   *
+   * ```javascript
+   * const result = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+   * ```
    *
    * Consult the
    * [git remote documentation](https://git-scm.com/docs/git-remote)
@@ -556,12 +566,11 @@ export interface GitAnnexAPI {
   getBackends(): Promise<string[]>;
 
   /**
-   * Obtains an array of special remote types.
-   * @returns An array containing the special remote type names.
-   * The order of the names returned is indeterminate.
+   * Obtains an array of remote names.
+   * @returns An array containing the remote names.
    * @category Helper
    */
-  getSpecialRemoteTypes(): Promise<string[]>;
+  getRemoteNames(): Promise<string[]>;
 
   /**
    * Obtains an array identifying the current repositories.
@@ -571,6 +580,14 @@ export interface GitAnnexAPI {
    * @category Helper
    */
   getRepositories(): Promise<RepositoryInfo[]>;
+
+  /**
+   * Obtains an array of special remote types.
+   * @returns An array containing the special remote type names.
+   * The order of the names returned is indeterminate.
+   * @category Helper
+   */
+  getSpecialRemoteTypes(): Promise<string[]>;
 
   /**
    * Obtains an array describing the working tree status.

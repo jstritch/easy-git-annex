@@ -18,20 +18,25 @@ describe('enableremote', () => {
     await deleteDirectory(remotePath);
   });
 
-  test('correctly lists remotes', async () => {
+  test('lists remotes when called without parameters', async () => {
     const remoteName = 'annex-remote';
     const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
 
     expect(initResult.exitCode).toBe(0);
 
-    const showRemoteResult = await myAnx.remote();
-
-    expect(showRemoteResult.exitCode).toBe(0);
-    expect(showRemoteResult.out).toEqual(expect.stringContaining(remoteName));
-
     const enableRemoteResult = await myAnx.enableremote();
 
-    expect(enableRemoteResult.err).toEqual(expect.stringContaining(remoteName));
+    expect(enableRemoteResult.err).toContain(remoteName);
   });
 
+  test('enables a remote with parameters', async () => {
+    const remoteName = 'annex-remote';
+    const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
+
+    expect(initResult.exitCode).toBe(0);
+
+    const enableRemoteResult = await myAnx.enableremote(remoteName, ['directory', remotePath]);
+
+    expect(enableRemoteResult.exitCode).toBe(0);
+  });
 });

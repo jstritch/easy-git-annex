@@ -303,6 +303,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return list ?? [];
   }
 
+  public async getRemoteNames(): Promise<string[]> {
+    const remoteResult = await this.remote();
+    return remoteResult.exitCode === 0 ? remoteResult.out.split('\n').filter((name) => { return name; }) : [];
+  }
+
   public async getRepositories(): Promise<RepositoryInfo[]> {
     const repositories: RepositoryInfo[] = [];
     const repositoryArrays = new Map<string, TrustLevel>([

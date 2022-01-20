@@ -20,40 +20,34 @@ describe('clone', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly clones a git repository with all defaults', async () => {
+  test('clones a git repository with all defaults', async () => {
     const result = await myAnx.clone(cloneSource);
 
     expect(result.exitCode).toBe(0);
-    expect(result.err).toEqual(expect.stringContaining('Cloning into \'easy-git-annex\''));
-    expect(result.out).toBe('');
 
     const clonedAnx = anx.createAccessor(path.join(repositoryPath, 'easy-git-annex'));
-    const remoteResult = await clonedAnx.remote();
+    const remoteNames = await clonedAnx.getRemoteNames();
 
-    expect(remoteResult.exitCode).toBe(0);
-    expect(remoteResult.out).toEqual(expect.stringContaining('origin'));
+    expect(remoteNames).toHaveLength(1);
+    expect(remoteNames).toContain('origin');
   }, cloneTimeout);
 
-  test('correctly clones a git repository with --origin', async () => {
+  test('clones to specified directory with --origin', async () => {
     const remoteName = 'github';
     const result = await myAnx.clone(cloneSource, repositoryPath, { '--origin': remoteName });
 
     expect(result.exitCode).toBe(0);
-    expect(result.err).toEqual(expect.stringContaining(`Cloning into '${repositoryPath}'`));
-    expect(result.out).toBe('');
 
-    const remoteResult = await myAnx.remote();
+    const remoteNames = await myAnx.getRemoteNames();
 
-    expect(remoteResult.exitCode).toBe(0);
-    expect(remoteResult.out).toEqual(expect.stringContaining(remoteName));
+    expect(remoteNames).toHaveLength(1);
+    expect(remoteNames).toContain(remoteName);
   }, cloneTimeout);
 
-  test('correctly reports a bad url', async () => {
+  test('reports a bad url', async () => {
     const result = await myAnx.clone(nonexistentSource, repositoryPath, { '--progress': null });
 
     expect(result.exitCode).not.toBe(0);
-    expect(result.err).toEqual(expect.stringMatching(`.*repository.*${nonexistentSource}.*not found.*`));
-    expect(result.out).toBe('');
   }, cloneTimeout);
 
 });

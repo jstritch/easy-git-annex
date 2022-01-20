@@ -18,25 +18,25 @@ describe('renameremote', () => {
     await deleteDirectory(remotePath);
   });
 
-  test('correctly lists remotes', async () => {
+  test('renames a remote', async () => {
     const remoteName = 'annex-remote';
     const newName = 'annex-renamed';
     const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
 
     expect(initResult.exitCode).toBe(0);
 
-    const showRemoteResult = await myAnx.remote();
+    const enableRemoteResult1 = await myAnx.enableremote();
 
-    expect(showRemoteResult.exitCode).toBe(0);
-    expect(showRemoteResult.out).toEqual(expect.stringContaining(remoteName));
+    expect(enableRemoteResult1.err).toContain(remoteName);
+    expect(enableRemoteResult1.err).not.toContain(newName);
 
     const renameRemoteResult = await myAnx.renameremote(remoteName, newName);
 
     expect(renameRemoteResult.exitCode).toBe(0);
 
-    const enableRemoteResult = await myAnx.enableremote();
+    const enableRemoteResult2 = await myAnx.enableremote();
 
-    expect(enableRemoteResult.err).toEqual(expect.stringContaining(newName));
+    expect(enableRemoteResult2.err).toContain(newName);
   });
 
 });

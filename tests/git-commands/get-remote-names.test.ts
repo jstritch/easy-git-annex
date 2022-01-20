@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { createRepository, deleteDirectory } from '../helpers';
 
-describe('remote', () => {
+describe('getRemoteNames', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
   let remotePath: string;
@@ -17,7 +17,14 @@ describe('remote', () => {
     await deleteDirectory(remotePath);
   });
 
-  test('adds a remote', async () => {
+  test('shows no remotes', async () => {
+
+    const remoteNames = await myAnx.getRemoteNames();
+
+    expect(remoteNames).toHaveLength(0);
+  });
+
+  test('shows one remote', async () => {
     const remoteName = 'fountainhead';
     const addResult = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
 

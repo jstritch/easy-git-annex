@@ -25,10 +25,10 @@ describe('sync', () => {
   afterEach(async () => {
     await myAnx.uninit();
     await deleteDirectory(repositoryPath);
-    // await deleteDirectory(remotePath); // => EACCES: permission denied, unlink
+    // await deleteDirectory(remotePath); // => "EACCES: permission denied, unlink"; need recursive chmod 0o666
   });
 
-  test('correctly synchronizes a directory special remote', async () => {
+  test('synchronizes a directory special remote', async () => {
     const remoteName = 'synchronized-directory';
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
