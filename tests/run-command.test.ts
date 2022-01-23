@@ -4,7 +4,7 @@ import { CommandResult } from '../src/interfaces/command-result';
 
 describe('toCommandResultString', () => {
 
-  test('correctly reports the member variables', () => {
+  test('reports the member variables', () => {
 
     const commandResult = new RunCommandResult('someDir', 'someExe', ['foo', 'bar', 'baz'], 42, 'good stuff', 'other stuff');
     const resultString = commandResult.toCommandResultString();
@@ -34,40 +34,30 @@ describe('new CommandParameters', () => {
     con += data;
   }
 
-  test('correctly sets default values when apiOptions is undefined', () => {
-    const commandParameters = new CommandParameters('someDir', 'someExe', ['foo', 'bar', 'baz']);
+  test('sets default values when apiOptions is undefined', () => {
+    const args = ['foo', 'bar', 'baz'];
+    const commandParameters = new CommandParameters('someDir', 'someExe', args);
 
-    expect(commandParameters).toHaveProperty('repositoryPath', 'someDir');
-    expect(commandParameters).toHaveProperty('exeName', 'someExe');
-    expect(commandParameters).toHaveProperty('args', ['foo', 'bar', 'baz']);
-    expect(commandParameters).toHaveProperty('env', process.env);
-    expect(commandParameters).toHaveProperty('errHandler', null);
-    expect(commandParameters).toHaveProperty('outHandler', null);
+    expect(commandParameters.repositoryPath).toBe('someDir');
+    expect(commandParameters.exeName).toBe('someExe');
+    expect(commandParameters.args).toBe(args);
+    expect(commandParameters.env).toBe(process.env);
+    expect(commandParameters.errHandler).toBeNull();
+    expect(commandParameters.outHandler).toBeNull();
     expect(con).toHaveLength(0);
   });
 
-  test('correctly sets default values when apiOptions is empty', () => {
-    const commandParameters = new CommandParameters('someDir', 'someExe', ['foo', 'bar', 'baz'], {});
-
-    expect(commandParameters).toHaveProperty('repositoryPath', 'someDir');
-    expect(commandParameters).toHaveProperty('exeName', 'someExe');
-    expect(commandParameters).toHaveProperty('args', ['foo', 'bar', 'baz']);
-    expect(commandParameters).toHaveProperty('env', process.env);
-    expect(commandParameters).toHaveProperty('errHandler', null);
-    expect(commandParameters).toHaveProperty('outHandler', null);
-    expect(con).toHaveLength(0);
-  });
-
-  test('correctly sets values when apiOptions is provided', () => {
+  test('sets values when apiOptions is provided', () => {
+    const args = ['foo', 'bar', 'baz'];
     const apiOptions = { env: env, errHandler: onConsoleErr, outHandler: onConsoleOut };
-    const commandParameters = new CommandParameters('someDir', 'someExe', ['foo', 'bar', 'baz'], apiOptions);
+    const commandParameters = new CommandParameters('someDir', 'someExe', args, apiOptions);
 
-    expect(commandParameters).toHaveProperty('repositoryPath', 'someDir');
-    expect(commandParameters).toHaveProperty('exeName', 'someExe');
-    expect(commandParameters).toHaveProperty('args', ['foo', 'bar', 'baz']);
-    expect(commandParameters).toHaveProperty('env', env);
-    expect(commandParameters).toHaveProperty('errHandler', onConsoleErr);
-    expect(commandParameters).toHaveProperty('outHandler', onConsoleOut);
+    expect(commandParameters.repositoryPath).toBe('someDir');
+    expect(commandParameters.exeName).toBe('someExe');
+    expect(commandParameters.args).toBe(args);
+    expect(commandParameters.env).toBe(env);
+    expect(commandParameters.errHandler).toBe(onConsoleErr);
+    expect(commandParameters.outHandler).toBe(onConsoleOut);
     expect(con).toHaveLength(0);
   });
 
@@ -97,56 +87,57 @@ describe('runCommand', () => {
     cbErrFn.mockClear();
   });
 
-  test('correctly runs a simple command', async () => {
+  test('runs a simple command', async () => {
     let commandResult: CommandResult | null = null;
-    let error: unknown = null;
+    let error: Error | null = null;
+    const args = ['help'];
 
     try {
-      const cmd = new CommandParameters(process.cwd(), exeName, ['help']);
+      const cmd = new CommandParameters(process.cwd(), exeName, args);
       commandResult = await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(commandResult).toHaveProperty('repositoryPath', process.cwd());
-    expect(commandResult).toHaveProperty('exeName', exeName);
-    expect(commandResult).toHaveProperty('args', ['help']);
-    expect(commandResult).toHaveProperty('exitCode', 0);
-    expect(commandResult).toMatchObject({ out: expect.stringContaining('usage: git [--version] [--help]') as unknown });
-    expect(commandResult).toHaveProperty('err', '');
+    expect(commandResult?.repositoryPath).toBe(process.cwd());
+    expect(commandResult?.exeName).toBe(exeName);
+    expect(commandResult?.args).toBe(args);
+    expect(commandResult?.exitCode).toBe(0);
+    expect(commandResult?.out).toContain('usage: git [--version] [--help]');
+    expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly identifies a nonexistent repositoryPath', async () => {
-    let error: unknown = null;
+  test('identifies a nonexistent repositoryPath', async () => {
+    let error: Error | null = null;
 
     try {
       const cmd = new CommandParameters('foobarbaz', exeName, ['help']);
       await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(error).toMatchObject({ message: expect.stringMatching('reported Error: spawn git ENOENT') as unknown });
+    expect(error?.message).toContain('reported Error: spawn git ENOENT');
   });
 
-  test('correctly identifies a nonexistent executable', async () => {
-    let error: unknown = null;
+  test('identifies a nonexistent executable', async () => {
+    let error: Error | null = null;
 
     try {
       const cmd = new CommandParameters(process.cwd(), 'foobar', []);
       await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(error).toMatchObject({ message: expect.stringMatching('reported Error: spawn foobar ENOENT') as unknown });
+    expect(error?.message).toContain('reported Error: spawn foobar ENOENT');
   });
 
-  test('correctly identifies an empty argument list', async () => {
+  test('identifies an empty argument list', async () => {
     let commandResult: CommandResult | null = null;
-    let error: unknown = null;
+    let error: Error | null = null;
 
     try {
       const cmd = new CommandParameters(process.cwd(), exeName, []);
@@ -155,39 +146,40 @@ describe('runCommand', () => {
       error = e as Error;
     }
 
-    expect(commandResult).toHaveProperty('repositoryPath', process.cwd());
-    expect(commandResult).toHaveProperty('exeName', exeName);
-    expect(commandResult).toHaveProperty('args', []);
-    expect(commandResult).toHaveProperty('exitCode', 1);
-    expect(commandResult).toMatchObject({ out: expect.stringContaining('usage: git [--version] [--help]') as unknown });
-    expect(commandResult).toHaveProperty('err', '');
+    expect(commandResult?.repositoryPath).toBe(process.cwd());
+    expect(commandResult?.exeName).toBe(exeName);
+    expect(commandResult?.args).toHaveLength(0);
+    expect(commandResult?.exitCode).toBe(1);
+    expect(commandResult?.out).toContain('usage: git [--version] [--help]');
+    expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly identifies a nonexistent command name', async () => {
+  test('identifies a nonexistent command name', async () => {
     let commandResult: CommandResult | null = null;
-    let error: unknown = null;
+    let error: Error | null = null;
+    const args = ['asdfghjkl'];
 
     try {
-      const cmd = new CommandParameters(process.cwd(), exeName, ['asdfghjkl']);
+      const cmd = new CommandParameters(process.cwd(), exeName, args);
       commandResult = await runCommand(cmd);
     } catch (e: unknown) {
       error = e as Error;
     }
 
-    expect(commandResult).toHaveProperty('repositoryPath', process.cwd());
-    expect(commandResult).toHaveProperty('exeName', exeName);
-    expect(commandResult).toHaveProperty('args', ['asdfghjkl']);
-    expect(commandResult).toHaveProperty('exitCode', 1);
-    expect(commandResult).toHaveProperty('out', '');
-    expect(commandResult).toHaveProperty('err', 'git: \'asdfghjkl\' is not a git command. See \'git --help\'.\n');
+    expect(commandResult?.repositoryPath).toBe(process.cwd());
+    expect(commandResult?.exeName).toBe(exeName);
+    expect(commandResult?.args).toBe(args);
+    expect(commandResult?.exitCode).toBe(1);
+    expect(commandResult?.out).toBe('');
+    expect(commandResult?.err).toContain('git: \'asdfghjkl\' is not a git command. See \'git --help\'.\n');
     expect(error).toBeNull();
     expect(cbErrFn).not.toHaveBeenCalled();
   });
 
-  test('correctly includes the environment variables on an error condition', async () => {
-    let error: unknown = null;
+  test('includes the environment variables on an error condition', async () => {
+    let error: Error | null = null;
 
     try {
       const anxEnv = cloneEnv();
@@ -198,11 +190,11 @@ describe('runCommand', () => {
       const cmd = new CommandParameters(process.cwd(), 'foobar', [], apiOptions);
       await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(error).toMatchObject({ message: expect.stringMatching('annexTest: someValue') as unknown });
-    expect(error).toMatchObject({ message: expect.stringMatching('annexTestUndefined: undefined') as unknown });
+    expect(error?.message).toContain('annexTest: someValue');
+    expect(error?.message).toContain('annexTestUndefined: undefined');
   });
 
   function onConsoleOut(data: string): void {
@@ -215,48 +207,50 @@ describe('runCommand', () => {
     throw new Error('Boo from stderr!');
   }
 
-  test('correctly invokes a user-supplied stdout handler', async () => {
+  test('invokes a user-supplied stdout handler', async () => {
     let commandResult: CommandResult | null = null;
-    let error: unknown = null;
+    let error: Error | null = null;
+    const args = ['help'];
 
     try {
       const apiOptions = { outHandler: onConsoleOut };
-      const cmd = new CommandParameters(process.cwd(), exeName, ['help'], apiOptions);
+      const cmd = new CommandParameters(process.cwd(), exeName, args, apiOptions);
       commandResult = await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(commandResult).toHaveProperty('repositoryPath', process.cwd());
-    expect(commandResult).toHaveProperty('exeName', exeName);
-    expect(commandResult).toHaveProperty('args', ['help']);
-    expect(commandResult).toHaveProperty('exitCode', 0);
-    expect(commandResult).toHaveProperty('out', conOut);
-    expect(commandResult).toHaveProperty('err', '');
+    expect(commandResult?.repositoryPath).toBe(process.cwd());
+    expect(commandResult?.exeName).toBe(exeName);
+    expect(commandResult?.args).toBe(args);
+    expect(commandResult?.exitCode).toBe(0);
+    expect(commandResult?.out).toBe(conOut);
+    expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
     expect(cbErrFn).toHaveBeenCalledWith(expect.any(String), expect.anything());
   });
 
-  test('correctly invokes a user-supplied stderr handler', async () => {
+  test('invokes a user-supplied stderr handler', async () => {
     let commandResult: CommandResult | null = null;
-    let error: unknown = null;
+    let error: Error | null = null;
+    const args = ['help'];
 
     try {
       const anxEnv = cloneEnv();
       anxEnv['GIT_TRACE'] = '2';
       const apiOptions = { env: anxEnv, outHandler: onConsoleOut, errHandler: onConsoleErr };
-      const cmd = new CommandParameters(process.cwd(), exeName, ['help'], apiOptions);
+      const cmd = new CommandParameters(process.cwd(), exeName, args, apiOptions);
       commandResult = await runCommand(cmd);
     } catch (e: unknown) {
-      error = e;
+      error = e as Error;
     }
 
-    expect(commandResult).toHaveProperty('repositoryPath', process.cwd());
-    expect(commandResult).toHaveProperty('exeName', exeName);
-    expect(commandResult).toHaveProperty('args', ['help']);
-    expect(commandResult).toHaveProperty('exitCode', 0);
-    expect(commandResult).toHaveProperty('out', conOut);
-    expect(commandResult).toHaveProperty('err', conErr);
+    expect(commandResult?.repositoryPath).toBe(process.cwd());
+    expect(commandResult?.exeName).toBe(exeName);
+    expect(commandResult?.args).toBe(args);
+    expect(commandResult?.exitCode).toBe(0);
+    expect(commandResult?.out).toBe(conOut);
+    expect(commandResult?.err).toBe(conErr);
     expect(conErr).toContain('trace: built-in: git help');
     expect(error).toBeNull();
     expect(cbErrFn).toHaveBeenCalledWith(expect.any(String), expect.anything());

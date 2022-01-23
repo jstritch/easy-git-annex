@@ -320,7 +320,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async getRemoteNames(): Promise<string[]> {
     const remoteResult = await this.remote();
-    return remoteResult.exitCode === 0 ? remoteResult.out.split('\n').filter((name) => { return name; }) : [];
+    return remoteResult.out.split('\n').filter((name) => { return name; });
   }
 
   public async getRepositories(): Promise<RepositoryInfo[]> {

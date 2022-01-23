@@ -1,9 +1,8 @@
-import * as path from 'path';
-import { cloneEnv, createRepository, deleteDirectory, pathExists } from './helpers';
+import { cloneEnv, createDirectory, deleteDirectory, pathExists } from './helpers';
 
 describe('cloneEnv', () => {
 
-  test('correctly duplicates the current environemt variables', () => {
+  test('duplicates the current environemt variables', () => {
     const anxEnv = cloneEnv();
     anxEnv['variableName'] = 'stringValue';
 
@@ -14,13 +13,12 @@ describe('cloneEnv', () => {
 
 });
 
-describe('createDirectory, createRepository, deleteDirectory, pathExists', () => {
+describe('createDirectory, deleteDirectory, pathExists', () => {
 
-  test('correctly creates and deletes a repository', async () => {
-    const repositoryPath = await createRepository();
+  test('creates and deletes a directory', async () => {
+    const repositoryPath = await createDirectory();
 
     expect(await pathExists(repositoryPath)).toBe(true);
-    expect(await pathExists(path.join(repositoryPath, '.git'))).toBe(true);
 
     await deleteDirectory(repositoryPath);
 

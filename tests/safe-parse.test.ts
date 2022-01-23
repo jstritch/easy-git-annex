@@ -6,7 +6,7 @@ describe('safeParse', () => {
     const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [], note: 'non-large file; adding content to git repository' };
     const json = JSON.stringify(o);
 
-    expect(anx.safeParse(anx.isActionResult, json)).toMatchObject(o);
+    expect(anx.safeParse(anx.isActionResult, json)).toEqual(o);
   });
 
   test('returns undefined for a valid string of incorrect type', () => {
