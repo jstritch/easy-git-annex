@@ -12,14 +12,14 @@ describe('initGit', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly initializes a git repository', async () => {
+  test('initializes a git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const result = await myAnx.initGit();
 
     expect(result.exitCode).toBe(0);
   });
 
-  test('correctly initializes a bare git repository', async () => {
+  test('initializes a bare git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const result = await myAnx.initGit({ '--bare': null });
 

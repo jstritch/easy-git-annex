@@ -21,19 +21,16 @@ describe('rm', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.initAnx();
-    await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
   });
 
   afterEach(async () => {
-    await myAnx.uninit();
     await deleteDirectory(repositoryPath);
   });
 
   test('removes one binary file', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    const addResult = await myAnx.addAnx(binaryFile1);
+    const addResult = await myAnx.runGit(['add', binaryFile1]);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -44,13 +41,13 @@ describe('rm', () => {
     const rmResult = await myAnx.rm(binaryFile1);
 
     expect(rmResult.exitCode).toBe(0);
-    expect(rmResult.out).not.toBe('');
+    expect(rmResult.out).toContain(binaryFile1);
   });
 
   test('removes one text file', async () => {
 
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    const addResult = await myAnx.addAnx(textFile1);
+    const addResult = await myAnx.runGit(['add', textFile1]);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -61,13 +58,14 @@ describe('rm', () => {
     const rmResult = await myAnx.rm(textFile1);
 
     expect(rmResult.exitCode).toBe(0);
+    expect(rmResult.out).toContain(textFile1);
   });
 
   test('removes an array of files', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    const addResult = await myAnx.addAnx([binaryFile1, textFile1]);
+    const addResult = await myAnx.runGit(['add', binaryFile1, textFile1]);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -78,6 +76,8 @@ describe('rm', () => {
     const rmResult = await myAnx.rm([binaryFile1, textFile1]);
 
     expect(rmResult.exitCode).toBe(0);
+    expect(rmResult.out).toContain(binaryFile1);
+    expect(rmResult.out).toContain(textFile1);
   });
 
   test('reports a nonexistent file', async () => {
@@ -94,7 +94,7 @@ describe('rm', () => {
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.runGit(['add', '.']);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -106,6 +106,7 @@ describe('rm', () => {
 
     expect(rmResult.exitCode).not.toBe(0);
     expect(rmResult.err).toContain(nonexistentFile);
+    expect(rmResult.out).toBe('');
   });
 
   test('ignores a nonexistent file when --ignore-unmatch is specified', async () => {
@@ -114,7 +115,7 @@ describe('rm', () => {
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.runGit(['add', '.']);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -125,6 +126,10 @@ describe('rm', () => {
     const rmResult = await myAnx.rm([binaryFile1, textFile1, nonexistentFile, binaryFile2, textFile2], { '--ignore-unmatch': null });
 
     expect(rmResult.exitCode).toBe(0);
+    expect(rmResult.out).toContain(binaryFile1);
+    expect(rmResult.out).toContain(binaryFile2);
+    expect(rmResult.out).toContain(textFile1);
+    expect(rmResult.out).toContain(textFile2);
   });
 
   test('accepts the -r and --force options', async () => {
@@ -133,7 +138,7 @@ describe('rm', () => {
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.runGit(['add', '.']);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -141,21 +146,21 @@ describe('rm', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const unlockResult = await myAnx.unlock(binaryFile2);
-
-    expect(unlockResult.exitCode).toBe(0);
-
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile2));
     const rmResult = await myAnx.rm('.', { '-r': null, '--force': null });
 
     expect(rmResult.exitCode).toBe(0);
+    expect(rmResult.out).toContain(binaryFile1);
+    expect(rmResult.out).toContain(binaryFile2);
+    expect(rmResult.out).toContain(textFile1);
+    expect(rmResult.out).toContain(textFile2);
   });
 
   test('accepts the quiet option', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    const addResult = await myAnx.addAnx(binaryFile1);
+    const addResult = await myAnx.runGit(['add', binaryFile1]);
 
     expect(addResult.exitCode).toBe(0);
 

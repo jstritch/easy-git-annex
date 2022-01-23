@@ -29,4 +29,17 @@ describe('remote', () => {
     expect(remoteNames).toContain(remoteName);
   });
 
+  test('accepts only the --verbose option', async () => {
+    const remoteName = 'fountainhead';
+    const addResult = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+
+    expect(addResult.exitCode).toBe(0);
+
+    const showResult = await myAnx.remote(undefined, undefined, { '--verbose': null });
+
+    expect(showResult.exitCode).toBe(0);
+    expect(showResult.out).toContain(remoteName);
+    expect(showResult.out).toContain(remotePath);
+  });
+
 });

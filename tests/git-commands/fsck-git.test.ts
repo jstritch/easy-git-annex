@@ -20,22 +20,19 @@ describe('fsckGit', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.initAnx();
-    await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
   });
 
   afterEach(async () => {
-    await myAnx.uninit();
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly checks the repository', async () => {
+  test('checks the repository reporting progress', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
     await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.addAnx();
+    const addResult = await myAnx.runGit(['add', '.']);
 
     expect(addResult.exitCode).toBe(0);
 
@@ -43,9 +40,10 @@ describe('fsckGit', () => {
 
     expect(commitResult.exitCode).toBe(0);
 
-    const fsckResult = await myAnx.fsckGit();
+    const fsckResult = await myAnx.fsckGit(undefined, { '--progress': null });
 
     expect(fsckResult.exitCode).toBe(0);
+    expect(fsckResult.err).toContain('100%');
   });
 
 });
