@@ -35,7 +35,7 @@ export interface SyncOptions extends AnnexOptions {
 
   /**
    * Limits the transferred files to the specified relative paths.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    */
   '--content-of'?: string | string[];
 

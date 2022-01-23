@@ -49,7 +49,7 @@ export interface GitAnnexAPI {
    * [git-annex add documentation](https://git-annex.branchable.com/git-annex-add/)
    * for additional information.
    * @param relativePaths The files to add to git and git-annex.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The AddAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex add result.
@@ -120,7 +120,7 @@ export interface GitAnnexAPI {
    * [git-annex fsck documentation](https://git-annex.branchable.com/git-annex-fsck/)
    * for additional information.
    * @param relativePaths The files to check.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The LockOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex fsck result.
@@ -217,7 +217,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param name The name of the repository.
    * @param type The remote type.
-   * Helper method [[GitAnnexAPI.getSpecialRemoteTypes]] may be used to obtain a list of
+   * Helper method [[getSpecialRemoteTypes]] may be used to obtain a list of
    * valid types from which to choose.
    * @param parameters The remote configuration.
    * @param anxOptions The InitremoteOptions for the command.
@@ -234,7 +234,7 @@ export interface GitAnnexAPI {
    * [git-annex list documentation](https://git-annex.branchable.com/git-annex-list/)
    * for additional information.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The ListOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex list result.
@@ -249,7 +249,7 @@ export interface GitAnnexAPI {
    * [git-annex lock documentation](https://git-annex.branchable.com/git-annex-lock/)
    * for additional information.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The LockOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex lock result.
@@ -309,7 +309,7 @@ export interface GitAnnexAPI {
    * [git-annex status documentation](https://git-annex.branchable.com/git-annex-status/)
    * for additional information.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The StatusAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex status result.
@@ -369,7 +369,7 @@ export interface GitAnnexAPI {
    * [git-annex unlock documentation](https://git-annex.branchable.com/git-annex-unlock/)
    * for additional information.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The UnlockOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex unlock result.
@@ -446,7 +446,7 @@ export interface GitAnnexAPI {
    * [git commit documentation](https://git-scm.com/docs/git-commit)
    * for additional information.
    * @param relativePaths The files to record in git and git-annex.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The CommitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git commit result.
@@ -504,10 +504,10 @@ export interface GitAnnexAPI {
    * [git mv documentation](https://git-scm.com/docs/git-mv)
    * for additional information.
    * @param relativePaths The files to move.
-   * The helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * The helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param destination The move destination path.
    * If relativePaths specifies more than one file, destination must be a directory.
-   * The helper method [[gitPath]] is called internally.
+   * The helper function [[gitPath]] is called internally.
    * @param gitOptions The MvOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git mv result.
@@ -542,7 +542,7 @@ export interface GitAnnexAPI {
    * [git rm documentation](https://git-scm.com/docs/git-rm)
    * for additional information.
    * @param relativePaths The files to remove git and git-annex.
-   * The helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * The helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The RmOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git rm result.
@@ -557,7 +557,7 @@ export interface GitAnnexAPI {
    * [git status documentation](https://git-scm.com/docs/git-status)
    * for additional information.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The StatusGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git status result.
@@ -628,7 +628,7 @@ export interface GitAnnexAPI {
   /**
    * Obtains an array describing the working tree status.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @returns An array describing the working tree.
    * @category Helper
    */
@@ -637,7 +637,7 @@ export interface GitAnnexAPI {
   /**
    * Obtains an array describing the working tree status.
    * @param relativePaths The files of interest.
-   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @returns An array describing the working tree.
    * @category Helper
    */
