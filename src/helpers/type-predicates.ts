@@ -44,9 +44,9 @@ export function isString(o: unknown): o is string {
 }
 
 /**
- * Determines if an object is a string[].
+ * Determines if an object is an array of string.
  * @param o The object to examine.
- * @returns True if o is a string[]; otherwise, false.
+ * @returns True if o is an array of string; otherwise, false.
  * @category Type Predicate
  */
 export function isStringArray(o: unknown): o is string[] {
@@ -64,9 +64,9 @@ export function isKeyValue(o: unknown): o is [string, string] {
 }
 
 /**
- * Determines if an object is a tuple of [string, string][].
+ * Determines if an object is an array of tuple of [string, string].
  * @param o The object to examine.
- * @returns True if o is a tuple of [string, string][]; otherwise, false.
+ * @returns True if o is an array of tuple of [string, string]; otherwise, false.
  * @category Type Predicate
  */
 export function isKeyValueArray(o: unknown): o is [string, string][] {
@@ -88,9 +88,9 @@ export function isAction(o: unknown): o is Action {
 }
 
 /**
- * Determines if an object is a [[ActionProgress]].
+ * Determines if an object is an [[ActionProgress]].
  * @param o The object to examine.
- * @returns True if o is a ActionProgress; otherwise, false.
+ * @returns True if o is an ActionProgress; otherwise, false.
  * @category Type Predicate
  */
 export function isActionProgress(o: unknown): o is ActionProgress {

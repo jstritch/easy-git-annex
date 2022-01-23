@@ -43,8 +43,8 @@ describe('getLineStartingAsArray', () => {
     expect(anx.getLineStartingAsArray(versionOutput, 'operating system: linux x86_64')).toHaveLength(0);
   });
 
-  test('returns undefined when the prefix does not exist', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toBeUndefined();
+  test('returns an empty string[] when the prefix does not exist', () => {
+    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toHaveLength(0);
   });
 
 });

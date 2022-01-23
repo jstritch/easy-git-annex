@@ -21,11 +21,14 @@ import { InitGitOptions } from './interfaces/init-git-options';
 import { InitremoteOptions } from './interfaces/initremote-options';
 import { ListOptions } from './interfaces/list-options';
 import { LockOptions } from './interfaces/lock-options';
+import { MvOptions } from './interfaces/mv-options';
 import { parseCommandOptions } from './helpers/parse-command-options';
 import { RmOptions } from './interfaces/rm-options';
 import { safeParseToArray } from './helpers/safe-parse';
 import { StatusAnx } from './interfaces/status-anx';
 import { StatusAnxOptions } from './interfaces/status-anx-options';
+import { StatusGit } from './interfaces/status-git';
+import { StatusGitOptions } from './interfaces/status-git-options';
 import { SyncOptions } from './interfaces/sync-options';
 import { TagOptions } from './interfaces/tag-options';
 import { UnlockOptions } from './interfaces/unlock-options';
@@ -269,6 +272,13 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runGit(args, apiOptions);
   }
 
+  public async mv(relativePaths: string | string[], destination: string, gitOptions?: MvOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'mv', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths);
+    args.push(gitPath(destination));
+    return this.runGit(args, apiOptions);
+  }
+
   public async remote(subCommand?: RemoteCommand, commandParameters?: string | string[], gitOptions?: RemoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'remote', gitOptions);
     this.pushIfString(args, subCommand);
@@ -278,6 +288,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async rm(relativePaths: string | string[], gitOptions?: RmOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'rm', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'status', gitOptions);
     this.pushIfRelativePaths(args, relativePaths, true);
     return this.runGit(args, apiOptions);
   }
@@ -299,8 +315,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async getBackends(): Promise<string[]> {
     const versionResult = await this.versionAnx();
-    const list = getLineStartingAsArray(versionResult.out, 'key/value backends: ');
-    return list ?? [];
+    return getLineStartingAsArray(versionResult.out, 'key/value backends: ');
   }
 
   public async getRemoteNames(): Promise<string[]> {
@@ -331,15 +346,39 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async getSpecialRemoteTypes(): Promise<string[]> {
     const versionResult = await this.versionAnx();
-    const list = getLineStartingAsArray(versionResult.out, 'remote types: ');
-    return list ?? [];
+    return getLineStartingAsArray(versionResult.out, 'remote types: ');
   }
 
   public async getStatusAnx(relativePaths?: string | string[]): Promise<StatusAnx[]> {
     const result = await this.statusAnx(relativePaths, { '--json': null });
-    if (result.exitCode !== 0) {
-      throw new Error(result.toCommandResultString());
-    }
     return safeParseToArray(isStatusAnx, result.out);
+  }
+
+  public async getStatusGit(relativePaths?: string | string[]): Promise<StatusGit[]> {
+    const status: StatusGit[] = [];
+    const result = await this.statusGit(relativePaths, { '--porcelain': 'v1', '-z': null });
+    if (result.exitCode === 0 && result.out.length > 0) {
+      const strs = result.out.split('\0');
+      let needsOrig: StatusGit | null = null;
+      strs.forEach((s) => {
+        if (s.length > 0) {
+          if (needsOrig) {
+            needsOrig.origPath = s;
+            needsOrig = null;
+          } else {
+            const statusGit = {
+              x: s[0],
+              y: s[1],
+              path: s.substring(3)
+            };
+            if (statusGit.x === 'R' || statusGit.x === 'C') {
+              needsOrig = statusGit;
+            }
+            status.push(statusGit);
+          }
+        }
+      });
+    }
+    return status;
   }
 }

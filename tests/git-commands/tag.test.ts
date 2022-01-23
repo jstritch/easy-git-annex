@@ -16,22 +16,19 @@ describe('tag', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.initAnx();
-    await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
   });
 
   afterEach(async () => {
-    await myAnx.uninit();
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly creates, moves, deletes, and lists tags', async () => {
+  test('creates, moves, deletes, and lists tags', async () => {
     const tag1 = 'v1.0';
     const tag2 = 'v1.1';
     const tag3 = 'v2.0';
 
     await fs.copyFile(file1Path, path.join(repositoryPath, file1));
-    const addResult1 = await myAnx.addAnx(file1);
+    const addResult1 = await myAnx.runGit(['add', file1]);
 
     expect(addResult1.exitCode).toBe(0);
 
@@ -54,12 +51,12 @@ describe('tag', () => {
     const listCreatedResult = await myAnx.tag();
 
     expect(listCreatedResult.exitCode).toBe(0);
-    expect(listCreatedResult.out).toEqual(expect.stringContaining(tag1));
-    expect(listCreatedResult.out).toEqual(expect.stringContaining(tag2));
-    expect(listCreatedResult.out).toEqual(expect.stringContaining(tag3));
+    expect(listCreatedResult.out).toContain(tag1);
+    expect(listCreatedResult.out).toContain(tag2);
+    expect(listCreatedResult.out).toContain(tag3);
 
     await fs.copyFile(file2Path, path.join(repositoryPath, file2));
-    const addResult2 = await myAnx.addAnx(file2);
+    const addResult2 = await myAnx.runGit(['add', file2]);
 
     expect(addResult2.exitCode).toBe(0);
 
@@ -78,9 +75,9 @@ describe('tag', () => {
     const listRevisedResult = await myAnx.tag();
 
     expect(listRevisedResult.exitCode).toBe(0);
-    expect(listRevisedResult.out).toEqual(expect.stringContaining(tag1));
-    expect(listRevisedResult.out).toEqual(expect.not.stringContaining(tag2));
-    expect(listRevisedResult.out).toEqual(expect.stringContaining(tag3));
+    expect(listRevisedResult.out).toContain(tag1);
+    expect(listRevisedResult.out).not.toContain(tag2);
+    expect(listRevisedResult.out).toContain(tag3);
   });
 
 });

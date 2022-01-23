@@ -8,6 +8,7 @@ import { gitPath } from './git-path';
  * @param commandName With commandGroup, identifies the possible set of options.
  * @param commandOptions The command options requested by the application.
  * @returns A string array containing the command options.
+ * @internal
  */
 export function parseCommandOptions(commandGroup: CommandGroup, commandName: string, commandOptions: unknown): string[] {
   if (commandOptions === undefined) {
@@ -74,6 +75,16 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.OptionalString:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | null';
+            }
+            break;
+
           case OptionKind.StringParam:
             if (isString(cmdOptValue)) {
               opts.push(cmdOpt.name, cmdOptValue);
@@ -114,7 +125,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
         }
 
         if (isString(expectedType)) {
-          throw new Error(`Value type ${typeof cmdOptValue} is not supported for option ${cmdOpt.name}, use ${expectedType} instead`);
+          throw new Error(`Value type ${typeof cmdOptValue} is not supported for ${commandName} option ${cmdOpt.name}, use ${expectedType} instead`);
         }
       }
     });

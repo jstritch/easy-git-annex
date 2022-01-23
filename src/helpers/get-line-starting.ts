@@ -21,13 +21,14 @@ export function getLineStarting(str: string, prefix: string, includePrefix: bool
  *
  * @param str The string to be searched.
  * @param prefix The string to locate at the beginning of a line.
- * @returns The requested line as a string array or undefined if the prefix was not located.
+ * @returns The requested line as a string array.
+ * The array is empty if the prefix was not located.
  * @category Helper
  */
-export function getLineStartingAsArray(str: string, prefix: string): string[] | undefined {
+export function getLineStartingAsArray(str: string, prefix: string): string[] {
   const line = getLineStarting(str, prefix, false);
   if (line === undefined) {
-    return undefined;
+    return [];
   }
   return line.length > 0 ? line.split(' ') : [];
 }

@@ -34,6 +34,7 @@ export class RunCommandResult implements CommandResult {
 /**
  * An instance of the CommandParameters class completely defines a command to be executed.
  * The constructor simplifies proper initialization with specified and/or default values.
+ * @internal
  */
 export class CommandParameters {
 
@@ -61,6 +62,7 @@ export class CommandParameters {
 
 /**
  * Function runCommand executes a command without blocking the event loop.
+ * @internal
  */
 export async function runCommand(cmd: CommandParameters): Promise<CommandResult> {
   return new Promise((resolve, reject) => {

@@ -8,14 +8,13 @@ describe('configGit', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
-    await myAnx.initAnx();
   });
 
   afterEach(async () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly sets, gets, and unsets a value', async () => {
+  test('sets, gets, and unsets a value', async () => {
     const key = 'easy-git-annex.test';
     const value = 'some/setting';
 
@@ -26,7 +25,7 @@ describe('configGit', () => {
     const getResult = await myAnx.configGit({ '--get': key, '--local': null });
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(value));
+    expect(getResult.out).toContain(value);
 
     const unsetResult = await myAnx.configGit({ '--unset': key, '--local': null });
 
@@ -38,12 +37,12 @@ describe('configGit', () => {
     expect(getResult2.out).toBe('');
   });
 
-  test('correctly lists the configured values', async () => {
+  test('lists the configured values', async () => {
 
     const result = await myAnx.configGit({ '--list': null, '--show-scope': null });
 
     expect(result.exitCode).toBe(0);
-    expect(result.out).toEqual(expect.stringContaining('local'));
+    expect(result.out).toContain('local');
   });
 
 });

@@ -1,4 +1,5 @@
 export enum CommandGroup {
+  // the string values are for error reporting
   Anx = 'anx',
   AnxCommon = 'anx-common',
   Git = 'git',
@@ -11,6 +12,7 @@ export enum OptionKind {
   AnonymousKeyValue,
   Numeric,
   String,
+  OptionalString,
   StringParam,
   CommaDelimitedStrings,
   AnonymousStrings,
@@ -136,7 +138,7 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--message', kind: OptionKind.String },
     { name: '--quiet', kind: OptionKind.Flag },
   ]],
-  ['config', [
+  ['config', [  // option order is important to Git
     { name: '--local', kind: OptionKind.Flag },
     { name: '--global', kind: OptionKind.Flag },
     { name: '--system', kind: OptionKind.Flag },
@@ -167,6 +169,11 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
   ['init', [
     { name: '--bare', kind: OptionKind.Flag },
   ]],
+  ['mv', [
+    { name: '--force', kind: OptionKind.Flag },
+    { name: '--verbose', kind: OptionKind.Flag },
+    { name: '-k', kind: OptionKind.Flag },
+  ]],
   ['remote', [
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
@@ -175,6 +182,25 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--ignore-unmatch', kind: OptionKind.Flag },
     { name: '--quiet', kind: OptionKind.Flag },
     { name: '-r', kind: OptionKind.Flag },
+  ]],
+  ['status', [
+    { name: '--ahead-behind', kind: OptionKind.Flag },
+    { name: '--branch', kind: OptionKind.Flag },
+    { name: '--column', kind: OptionKind.OptionalString },
+    { name: '--find-renames', kind: OptionKind.OptionalString },
+    { name: '--ignore-submodules', kind: OptionKind.OptionalString },
+    { name: '--ignored', kind: OptionKind.OptionalString },
+    { name: '--long', kind: OptionKind.Flag },
+    { name: '--no-ahead-behind', kind: OptionKind.Flag },
+    { name: '--no-column', kind: OptionKind.Flag },
+    { name: '--no-renames', kind: OptionKind.Flag },
+    { name: '--porcelain', kind: OptionKind.OptionalString },
+    { name: '--renames', kind: OptionKind.Flag },
+    { name: '--short', kind: OptionKind.Flag },
+    { name: '--show-stash', kind: OptionKind.Flag },
+    { name: '--untracked-files', kind: OptionKind.OptionalString },
+    { name: '--verbose', kind: OptionKind.Flag },
+    { name: '-z', kind: OptionKind.Flag },
   ]],
   ['tag', [
     { name: '--annotate', kind: OptionKind.Flag },

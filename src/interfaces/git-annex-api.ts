@@ -14,10 +14,13 @@ import { InitGitOptions } from './init-git-options';
 import { InitremoteOptions } from './initremote-options';
 import { ListOptions } from './list-options';
 import { LockOptions } from './lock-options';
+import { MvOptions } from './mv-options';
 import { RepositoryInfo } from './repository-info';
 import { RmOptions } from './rm-options';
 import { StatusAnx } from './status-anx';
 import { StatusAnxOptions } from './status-anx-options';
+import { StatusGit } from './status-git';
+import { StatusGitOptions } from './status-git-options';
 import { SyncOptions } from './sync-options';
 import { TagOptions } from './tag-options';
 import { UnlockOptions } from './unlock-options';
@@ -495,6 +498,24 @@ export interface GitAnnexAPI {
   initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Moves or renames a file, a directory, or a symlink.
+   *
+   * Consult the
+   * [git mv documentation](https://git-scm.com/docs/git-mv)
+   * for additional information.
+   * @param relativePaths The files to move.
+   * The helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param destination The move destination path.
+   * If relativePaths specifies more than one file, destination must be a directory.
+   * The helper method [[gitPath]] is called internally.
+   * @param gitOptions The MvOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git mv result.
+   * @category Contents
+   */
+  mv(relativePaths: string | string[], destination: string, gitOptions?: MvOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Manages the set of tracked repositories.
    * Consider using helper method [[getRemoteNames]] if a list of remote names is required.
    *
@@ -528,6 +549,21 @@ export interface GitAnnexAPI {
    * @category Contents
    */
   rm(relativePaths: string | string[], gitOptions?: RmOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Shows the working tree status.
+   *
+   * Consult the
+   * [git status documentation](https://git-scm.com/docs/git-status)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @param gitOptions The StatusGitOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git status result.
+   * @category Contents
+   */
+  statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Creates, deletes, or lists tag objects.
@@ -597,4 +633,13 @@ export interface GitAnnexAPI {
    * @category Helper
    */
   getStatusAnx(relativePaths?: string | string[]): Promise<StatusAnx[]>;
+
+  /**
+   * Obtains an array describing the working tree status.
+   * @param relativePaths The files of interest.
+   * If specified, helper method [[gitPath]] or [[gitPaths]] is called internally.
+   * @returns An array describing the working tree.
+   * @category Helper
+   */
+  getStatusGit(relativePaths?: string | string[]): Promise<StatusGit[]>;
 }
