@@ -17,6 +17,11 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return new GitAnnexAccessor(repositoryPath);
 }
 
+export * from './helpers/git-path';
+export * from './helpers/get-line-starting';
+export * from './helpers/safe-parse';
+export * from './helpers/type-predicates';
+
 export * from './interfaces/action';
 export * from './interfaces/action-result';
 export * from './interfaces/add-anx-options';
@@ -49,7 +54,3 @@ export * from './interfaces/tag-options';
 export * from './interfaces/unlock-options';
 export * from './interfaces/version-anx-options';
 export * from './interfaces/version-git-options';
-export * from './helpers/git-path';
-export * from './helpers/get-line-starting';
-export * from './helpers/safe-parse';
-export * from './helpers/type-predicates';
