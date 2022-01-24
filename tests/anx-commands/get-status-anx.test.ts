@@ -4,7 +4,7 @@ import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
-const binaryFile1 = 'file1.jpg';
+const binaryFile1 = 'file one.jpg';
 const binaryFile1Path = path.join(projectPath, 'tests', 'data', binaryFile1);
 
 describe('getStatusAnx', () => {

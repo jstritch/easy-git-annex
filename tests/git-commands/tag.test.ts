@@ -4,9 +4,9 @@ import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
-const file1 = 'file1.jpg';
+const file1 = 'file one.jpg';
 const file1Path = path.join(projectPath, 'tests', 'data', file1);
-const file2 = 'file1.txt';
+const file2 = 'file one.txt';
 const file2Path = path.join(projectPath, 'tests', 'data', file2);
 
 describe('tag', () => {

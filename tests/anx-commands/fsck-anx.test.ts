@@ -4,13 +4,13 @@ import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
-const binaryFile1 = 'file1.jpg';
+const binaryFile1 = 'file one.jpg';
 const binaryFile1Path = path.join(projectPath, 'tests', 'data', binaryFile1);
-const binaryFile2 = 'file2.jpg';
+const binaryFile2 = 'file two.jpg';
 const binaryFile2Path = path.join(projectPath, 'tests', 'data', binaryFile2);
-const textFile1 = 'file1.txt';
+const textFile1 = 'file one.txt';
 const textFile1Path = path.join(projectPath, 'tests', 'data', textFile1);
-const textFile2 = 'file2.txt';
+const textFile2 = 'file two.txt';
 const textFile2Path = path.join(projectPath, 'tests', 'data', textFile2);
 
 describe('fsckAnx', () => {

@@ -4,9 +4,9 @@ import { createRepository, deleteDirectory } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
-const textFile1 = 'file1.txt';
+const textFile1 = 'file one.txt';
 const textFile1Path = path.join(projectPath, 'tests', 'data', textFile1);
-const textFile2 = 'file2.txt';
+const textFile2 = 'file two.txt';
 
 describe('getStatusGit', () => {
   let repositoryPath: string;
