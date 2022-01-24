@@ -1,8 +1,7 @@
 export enum CommandGroup {
-  // the string values are for error reporting
-  Anx = 'anx',
-  AnxCommon = 'anx-common',
-  Git = 'git',
+  Anx,
+  AnxCommon,
+  Git,
 }
 
 export enum OptionKind {
@@ -217,7 +216,7 @@ function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOp
   const cmdMap = commandGroup === CommandGroup.Anx ? anxCommandOptions : gitCommandOptions;
   const cmdOptions = cmdMap.get(commandName);
   if (cmdOptions === undefined) {
-    throw new Error(`The ${commandGroup} command ${commandName} is not recognized`);
+    throw new Error(`The ${CommandGroup[commandGroup]} command ${commandName} is not recognized`);
   }
   return cmdOptions;
 }
