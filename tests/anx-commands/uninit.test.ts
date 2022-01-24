@@ -12,7 +12,7 @@ describe('uninit', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly uninitializes a git repository', async () => {
+  test('uninitializes a git repository', async () => {
     await createRepository(repositoryPath);
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
@@ -29,7 +29,7 @@ describe('uninit', () => {
     expect(repositoryInfos).toHaveLength(0);
   });
 
-  test('correctly reports a directory is not a git annex', async () => {
+  test('reports a directory is not a git annex', async () => {
     await createRepository(repositoryPath);
     const myAnx = anx.createAccessor(repositoryPath);
 

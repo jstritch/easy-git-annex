@@ -29,7 +29,7 @@ describe('list', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly lists the repository', async () => {
+  test('lists the repository', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
@@ -46,9 +46,8 @@ describe('list', () => {
     const listResult = await myAnx.list();
 
     expect(listResult.exitCode).toBe(0);
-    expect(listResult.out).toEqual(expect.stringContaining(binaryFile1));
-    expect(listResult.out).toEqual(expect.stringContaining(binaryFile2));
-
+    expect(listResult.out).toContain(binaryFile1);
+    expect(listResult.out).toContain(binaryFile2);
   });
 
 });

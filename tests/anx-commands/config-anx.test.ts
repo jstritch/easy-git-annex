@@ -15,7 +15,7 @@ describe('configAnx', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly sets, gets, and unsets a value', async () => {
+  test('sets, gets, and unsets a value', async () => {
     const key = 'annex.largefiles';
     const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';
 
@@ -26,7 +26,7 @@ describe('configAnx', () => {
     const getResult = await myAnx.configAnx({ '--get': key });
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(value));
+    expect(getResult.out).toContain(value);
 
     const unsetResult = await myAnx.configAnx({ '--unset': key });
 

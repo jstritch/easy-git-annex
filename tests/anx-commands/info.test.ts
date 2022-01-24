@@ -29,7 +29,7 @@ describe('info', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly obtains the repository information', async () => {
+  test('obtains the repository information', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
@@ -46,7 +46,7 @@ describe('info', () => {
     const infoResult = await myAnx.info();
 
     expect(infoResult.exitCode).toBe(0);
-    expect(infoResult.out).toEqual(expect.stringContaining(`${repositoryPath} [here]`));
+    expect(infoResult.out).toContain(`${repositoryPath} [here]`);
   });
 
 });

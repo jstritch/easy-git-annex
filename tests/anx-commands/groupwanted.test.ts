@@ -15,7 +15,7 @@ describe('groupwanted', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly sets the groupwanted expression', async () => {
+  test('sets the groupwanted expression', async () => {
     const groupname = 'redundantarchive';
     const expression = 'not (copies=redundantarchive:3)';
     const result = await myAnx.groupwanted(groupname, expression);
@@ -25,7 +25,7 @@ describe('groupwanted', () => {
     const getResult = await myAnx.groupwanted(groupname);
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(expression));
+    expect(getResult.out).toContain(expression);
   });
 
 });

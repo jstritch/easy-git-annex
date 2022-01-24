@@ -24,7 +24,7 @@ describe('parseCommandOptions', () => {
   test('identifies an unsupported command', () => {
     expect(() => {
       parseCommandOptions(CommandGroup.AnxCommon, 'foo', {});
-    }).toThrow('The anx command foo is not recognized');
+    }).toThrow('The Anx command foo is not recognized');
   });
 
   test('returns a string array', () => {
@@ -76,6 +76,12 @@ describe('parseCommandOptions', () => {
     const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': [['name0', 'value0'], ['name1', 'value1']] });
 
     expect(opts).toEqual(['--c', 'name0=value0', '--c', 'name1=value1']);
+  });
+
+  test('identifies an empty RepeatableKeyValue array', () => {
+    expect(() => {
+      parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': [] });
+    }).toThrow('Value type object is not supported for version option --c, use [string, string] | [string, string][] instead');
   });
 
   test('identifies an unexpected RepeatableKeyValue value', () => {
@@ -196,6 +202,12 @@ describe('parseCommandOptions', () => {
     expect(opts).toContain('--debugfilter=Process,External');
   });
 
+  test('identifies an empty CommaDelimitedStrings value array', () => {
+    expect(() => {
+      parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': [] });
+    }).toThrow('Value type object is not supported for version option --debugfilter, use string | string[] instead');
+  });
+
   test('identifies an unexpected CommaDelimitedStrings value', () => {
     expect(() => {
       parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': true });
@@ -216,6 +228,12 @@ describe('parseCommandOptions', () => {
     expect(opts).toEqual(['--exclude=\'*.mp3\'', '--or', '--include=\'*.ogg\'']);
   });
 
+  test('identifies an empty AnonymousStrings value array', () => {
+    expect(() => {
+      parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: [] });
+    }).toThrow('Value type object is not supported for list option matching, use string | string[] instead');
+  });
+
   test('identifies an unexpected AnonymousStrings value', () => {
     expect(() => {
       parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: 3 });
@@ -234,6 +252,12 @@ describe('parseCommandOptions', () => {
     const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa/bbb/ccc', 'xxx/yyy/zzz'] });
 
     expect(opts).toEqual(['--content-of=aaa/bbb/ccc', '--content-of=xxx/yyy/zzz']);
+  });
+
+  test('identifies an empty RepeatablePath value array', () => {
+    expect(() => {
+      parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': [] });
+    }).toThrow('Value type object is not supported for sync option --content-of, use string | string[] instead');
   });
 
   test('identifies an unexpected RepeatablePath value', () => {

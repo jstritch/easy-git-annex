@@ -13,7 +13,7 @@ describe('initAnx', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly initializes a git repository', async () => {
+  test('initializes a git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
     const result = await myAnx.initAnx(description);
@@ -24,10 +24,10 @@ describe('initAnx', () => {
     const here = repositoryInfos.find((repository) => { return repository.here; });
 
     expect(repositoryInfos).toHaveLength(3);
-    expect(here).toHaveProperty('description', description);
+    expect(here?.description).toBe(description);
   });
 
-  test('correctly initializes a git repository with a generated desciption', async () => {
+  test('initializes a git repository with a generated desciption', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const result = await myAnx.initAnx();
 
@@ -37,10 +37,10 @@ describe('initAnx', () => {
     const here = repositoryInfos.find((repository) => { return repository.here; });
 
     expect(repositoryInfos).toHaveLength(3);
-    expect(here).toMatchObject({ description: expect.stringContaining(path.basename(repositoryPath)) as unknown });
+    expect(here?.description).toContain(path.basename(repositoryPath));
   });
 
-  test('correctly reports a directory is not a git repository', async () => {
+  test('reports a directory is not a git repository', async () => {
     const directory = await createDirectory();
     const myAnx = anx.createAccessor(directory);
     const description = 'anx repository test description';

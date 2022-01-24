@@ -12,7 +12,7 @@ describe('describe()', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly changes the description of a git repository', async () => {
+  test('changes the description of a git repository', async () => {
     const myAnx = anx.createAccessor(repositoryPath);
     const description = 'anx repository test description';
     const result = await myAnx.initAnx(description);
@@ -28,10 +28,10 @@ describe('describe()', () => {
     const here = repositoryInfos.find((repository) => { return repository.here; });
 
     expect(repositoryInfos).toHaveLength(3);
-    expect(here).toHaveProperty('description', newDescription);
+    expect(here?.description).toBe(newDescription);
   });
 
-  test('correctly reports a directory is not a repository', async () => {
+  test('reports a directory is not a repository', async () => {
     const directory = await createDirectory();
     const myAnx = anx.createAccessor(directory);
     const newDescription = 'anx repository test new description';

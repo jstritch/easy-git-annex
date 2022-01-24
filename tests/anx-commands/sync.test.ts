@@ -25,7 +25,7 @@ describe('sync', () => {
   afterEach(async () => {
     await myAnx.uninit();
     await deleteDirectory(repositoryPath);
-    // await deleteDirectory(remotePath); // => "EACCES: permission denied, unlink"; need recursive chmod 0o666
+    // await deleteDirectory(remotePath); // => "EACCES: permission denied, unlink"; recursive async chmod, ugh
   });
 
   test('synchronizes a directory special remote', async () => {

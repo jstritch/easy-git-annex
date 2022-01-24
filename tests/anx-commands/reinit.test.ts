@@ -14,7 +14,7 @@ describe('reinit', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly reinitializes a git repository', async () => {
+  test('reinitializes a git repository', async () => {
     const uuid = '73c6cc5e-4d37-11ec-b03c-4728df437afb';
     const result = await myAnx.reinit(uuid);
 
@@ -24,7 +24,7 @@ describe('reinit', () => {
     const here = repositoryInfos.find((repository) => { return repository.here; });
 
     expect(repositoryInfos).toHaveLength(3);
-    expect(here).toHaveProperty('uuid', uuid);
+    expect(here?.uuid).toBe(uuid);
   });
 
 });

@@ -15,7 +15,7 @@ describe('wanted', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly sets and gets the wanted expression', async () => {
+  test('sets and gets the wanted expression', async () => {
     const expression = 'include=*.mp3 or include=*.ogg';
     const result = await myAnx.wanted('here', expression);
 
@@ -24,7 +24,7 @@ describe('wanted', () => {
     const getResult = await myAnx.wanted('here');
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(expression));
+    expect(getResult.out).toContain(expression);
   });
 
 });

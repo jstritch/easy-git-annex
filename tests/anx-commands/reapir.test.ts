@@ -29,7 +29,7 @@ describe('repair', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly repairs the repository', async () => {
+  test('repairs the repository', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));

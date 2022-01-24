@@ -15,7 +15,7 @@ describe('ungroup', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly removes the repository from a group', async () => {
+  test('removes the repository from a group', async () => {
     const groupname = 'client';
     const result = await myAnx.group('here', groupname);
 
@@ -24,7 +24,7 @@ describe('ungroup', () => {
     const getResult = await myAnx.group('here');
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(groupname));
+    expect(getResult.out).toContain(groupname);
 
     const ungroupResult = await myAnx.ungroup('here', groupname);
 
@@ -33,7 +33,7 @@ describe('ungroup', () => {
     const getAgainResult = await myAnx.group('here');
 
     expect(getAgainResult.exitCode).toBe(0);
-    expect(getAgainResult.out).toEqual(expect.not.stringContaining(groupname));
+    expect(getAgainResult.out).not.toContain(groupname);
   });
 
 });

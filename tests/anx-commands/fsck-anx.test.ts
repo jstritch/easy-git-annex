@@ -29,7 +29,7 @@ describe('fsckAnx', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly checks the repository', async () => {
+  test('checks the repository', async () => {
 
     await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
     await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));

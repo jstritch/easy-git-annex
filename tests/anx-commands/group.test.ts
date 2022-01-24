@@ -15,7 +15,7 @@ describe('group', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('correctly places the repository in a group', async () => {
+  test('places the repository in a group', async () => {
     const groupname = 'client';
     const result = await myAnx.group('here', groupname);
 
@@ -24,7 +24,7 @@ describe('group', () => {
     const getResult = await myAnx.group('here');
 
     expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toEqual(expect.stringContaining(groupname));
+    expect(getResult.out).toContain(groupname);
   });
 
 });
