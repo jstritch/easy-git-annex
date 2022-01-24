@@ -3,7 +3,7 @@ import * as path from 'path';
 import { createDirectory, deleteDirectory } from '../helpers';
 
 const cloneSource = 'https://github.com/jstritch/easy-git-annex.git';
-const nonexistentSource = 'https://github.com/jstritch/nonexistent.git';
+const nonexistentSource = 'nonexistent.git';
 
 const cloneTimeout = 30 * 1000; // milliseconds
 
@@ -48,6 +48,7 @@ describe('clone', () => {
     const result = await myAnx.clone(nonexistentSource, repositoryPath, { '--progress': null });
 
     expect(result.exitCode).not.toBe(0);
+    expect(result.err).toContain(nonexistentSource);
   }, cloneTimeout);
 
 });
