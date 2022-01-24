@@ -46,7 +46,7 @@ describe('info', () => {
     const infoResult = await myAnx.info();
 
     expect(infoResult.exitCode).toBe(0);
-    expect(infoResult.out).toContain(`${repositoryPath} [here]`);
+    expect(infoResult.out).toContain(`${path.basename(repositoryPath)} [here]`);
   });
 
 });
