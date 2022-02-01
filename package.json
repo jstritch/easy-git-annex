@@ -1,7 +1,7 @@
 {
   "name": "easy-git-annex",
   "version": "1.0.0",
-  "description": "Provides TypeScript/JavaScript access to git-annex and Git commands.",
+  "description": "JavaScript/TypeScript API for git-annex and Git commands.",
   "main": "./dist/index.js",
   "engines": {
     "node": "^12.22.0 || ^14.17.0 || >=16.0.0"
@@ -22,7 +22,7 @@
     "typescript",
     "api"
   ],
-  "author": "John Stritch",
+  "author": "John Stritch <easy.git.annex@gmail.com>",
   "license": "MIT",
   "funding": "https://github.com/sponsors/jstritch",
   "bugs": {

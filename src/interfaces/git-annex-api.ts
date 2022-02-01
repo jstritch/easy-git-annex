@@ -36,6 +36,8 @@ export interface GitAnnexAPI {
   /**
    * Provides the ability to run any git-annex command.
    * @param args The arguments to pass to the git-annex program.
+   * The application is responsible for calling [[gitPath]] and [[gitPaths]]
+   * for all relative paths when constructing the argument list.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex command result.
    * @category Low-level
@@ -60,15 +62,6 @@ export interface GitAnnexAPI {
   /**
    * Gets or set git-annex configuration settings.
    *
-   * Configuration settings control the behavior of git-annex.
-   * For example, annex.largefiles is a filter to determine which
-   * files are stored by git-annex.
-   * Files not matching the filter are stored normally by Git.
-   *
-   * ```javascript
-   * const result = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg or largerthan(500kb)'] });
-   * ```
-   *
    * Consult the
    * [git-annex config documentation](https://git-annex.branchable.com/git-annex-config/)
    * for additional information.
@@ -88,7 +81,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param repository The name, uuid, or description of the repository to modify.
    * The string `here` may be used to specify the current repository.
-   * Helper method [[getRepositories]] returns an array of repositories.
+   * Method [[getRepositories]] returns an array of repositories.
    * @param description A description of the new repository.
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -131,16 +124,12 @@ export interface GitAnnexAPI {
   /**
    * Gets or sets the group association of a repository.
    *
-   * ```javascript
-   * const result = await myAnx.group('here', 'client');
-   * ```
-   *
    * Consult the
    * [git-annex group documentation](https://git-annex.branchable.com/git-annex-group)
    * for additional information.
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
-   * Helper method [[getRepositories]] returns an array of repositories.
+   * Method [[getRepositories]] returns an array of repositories.
    * @param groupname The single-word group name to associate with the repository.
    * The groupname may be one previously created by the [[groupwanted]] method or
    * one of the [standard groups](https://git-annex.branchable.com/preferred_content/standard_groups/).
@@ -172,7 +161,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains information about an item or the repository.
-   * Consider using helper method [[getRepositories]] if a list of repositories is required.
+   * Consider using method [[getRepositories]] if a list of repositories is required.
    *
    * Consult the
    * [git-annex info documentation](https://git-annex.branchable.com/git-annex-info/)
@@ -188,15 +177,11 @@ export interface GitAnnexAPI {
   /**
    * Initializes a repository for use with git-annex.
    *
-   * ```javascript
-   * const result = await myAnx.initAnx('usb-drive-two');
-   * ```
-   *
    * Consult the
    * [git-annex init documentation](https://git-annex.branchable.com/git-annex-init/)
    * for additional information.
    * @param description The description of the repository.
-   * If omitted, a description is generated using the username, hostname, and the path.
+   * If omitted, a description is generated using the username, hostname, and path.
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex init result.
@@ -207,18 +192,12 @@ export interface GitAnnexAPI {
   /**
    * Creates a special remote.
    *
-   * ```javascript
-   * const result = await myAnx.initremote(remoteName, 'directory',
-   *                [['directory', remotePath], ['encryption', 'none']]);
-   * ```
-   *
    * Consult the
    * [git-annex initremote documentation](https://git-annex.branchable.com/git-annex-initremote/)
    * for additional information.
    * @param name The name of the repository.
    * @param type The remote type.
-   * Helper method [[getSpecialRemoteTypes]] may be used to obtain a list of
-   * valid types from which to choose.
+   * Method [[getSpecialRemoteTypes]] obtains a list of valid types.
    * @param parameters The remote configuration.
    * @param anxOptions The InitremoteOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -340,7 +319,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
-   * Helper method [[getRepositories]] returns an array of repositories.
+   * Method [[getRepositories]] returns an array of repositories.
    * @param groupname The single-word group name to dissociate with the repository.
    * @param anxOptions The AnnexOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -393,16 +372,12 @@ export interface GitAnnexAPI {
   /**
    * Gets or sets the wanted preferred content expression of a repository.
    *
-   * ```javascript
-   * const result = await myAnx.wanted('here', 'standard');
-   * ```
-   *
    * Consult the
    * [git-annex wanted documentation](https://git-annex.branchable.com/git-annex-wanted)
    * for additional information.
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
-   * Helper method [[getRepositories]] returns an array of repositories.
+   * Method [[getRepositories]] returns an array of repositories.
    * @param expression The
    * [preferred content expression](https://git-annex.branchable.com/git-annex-preferred-content/)
    * to set for the repository.
@@ -415,8 +390,10 @@ export interface GitAnnexAPI {
   wanted(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Provides the ability to run any git command.
-   * @param args The arguments to pass to the git program.
+   * Provides the ability to run any Git command.
+   * @param args The arguments to pass to the Git program.
+   * The application is responsible for calling [[gitPath]] and [[gitPaths]]
+   * for all relative paths when constructing the argument list.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git command result.
    * @category Low-level
@@ -431,7 +408,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param repository The (possibly remote) repository to be cloned.
    * @param repositoryPath The destination directory of the clone.
-   * If omitted, the "humanish" part of repository is used.
+   * If omitted, the repositoryPath passed to createAccessor is used.
    * @param gitOptions The CloneOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git clone result.
@@ -517,16 +494,13 @@ export interface GitAnnexAPI {
 
   /**
    * Manages the set of tracked repositories.
-   * Consider using helper method [[getRemoteNames]] if a list of remote names is required.
-   *
-   * ```javascript
-   * const result = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
-   * ```
+   * Consider using method [[getRemoteNames]] if a list of remote names is required.
    *
    * Consult the
    * [git remote documentation](https://git-scm.com/docs/git-remote)
    * for additional information.
    * @param subCommand The remote subcommand to run.
+   * If omitted, a list of existing remotes is returned.
    * @param commandParameters The options and arguments for the subCommand.
    * @param gitOptions The RemoteOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -597,14 +571,14 @@ export interface GitAnnexAPI {
    * Obtains an array of key-value backends.
    * @returns An array containing the backend names.
    * The order of the repositories returned is indeterminate.
-   * @category Helper
+   * @category Inspection
    */
   getBackends(): Promise<string[]>;
 
   /**
    * Obtains an array of remote names.
    * @returns An array containing the remote names.
-   * @category Helper
+   * @category Inspection
    */
   getRemoteNames(): Promise<string[]>;
 
@@ -613,7 +587,7 @@ export interface GitAnnexAPI {
    * @returns An array describing the repositories.
    * The order of the repositories returned is indeterminate.
    * An empty array is retuned if the repository has not been initialized by git-annex.
-   * @category Helper
+   * @category Inspection
    */
   getRepositories(): Promise<RepositoryInfo[]>;
 
@@ -621,7 +595,7 @@ export interface GitAnnexAPI {
    * Obtains an array of special remote types.
    * @returns An array containing the special remote type names.
    * The order of the names returned is indeterminate.
-   * @category Helper
+   * @category Inspection
    */
   getSpecialRemoteTypes(): Promise<string[]>;
 
@@ -630,7 +604,7 @@ export interface GitAnnexAPI {
    * @param relativePaths The files of interest.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @returns An array describing the working tree.
-   * @category Helper
+   * @category Contents
    */
   getStatusAnx(relativePaths?: string | string[]): Promise<StatusAnx[]>;
 
@@ -639,7 +613,7 @@ export interface GitAnnexAPI {
    * @param relativePaths The files of interest.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @returns An array describing the working tree.
-   * @category Helper
+   * @category Contents
    */
   getStatusGit(relativePaths?: string | string[]): Promise<StatusGit[]>;
 }

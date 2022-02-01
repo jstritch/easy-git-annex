@@ -30,5 +30,5 @@ export function getLineStartingAsArray(str: string, prefix: string): string[] {
   if (line === undefined) {
     return [];
   }
-  return line.length > 0 ? line.split(' ') : [];
+  return line.split(' ').filter((item) => { return item; });
 }

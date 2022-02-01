@@ -1,5 +1,5 @@
 /**
- * StatusGit defines an object returned by helper method [[getStatusGit]].
+ * StatusGit defines an object returned by method [[getStatusGit]].
  * Consult the
  * [git status documentation](https://git-scm.com/docs/git-status)
  * for a description of the fields.
@@ -20,7 +20,7 @@ export interface StatusGit {
   y: string;
 
   /**
-   * The file path.
+   * The relative file path.
    */
   path: string;
 

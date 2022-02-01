@@ -61,7 +61,7 @@ export interface StatusGitOptions {
 
   /**
    * Gives the output in an easy-to-parse format for scripts.
-   * Consider using helper method [[getStatusGit]] which returns objects.
+   * Consider using method [[getStatusGit]] which returns objects.
    */
   '--porcelain'?: string | null;
 
@@ -73,7 +73,7 @@ export interface StatusGitOptions {
 
   /**
    * Gives the output in the short-format.
-   * Consider using helper method [[getStatusGit]] which returns objects.
+   * Consider using method [[getStatusGit]] which returns objects.
    */
   '--short'?: null;
 

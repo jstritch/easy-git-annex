@@ -29,5 +29,5 @@ export function gitPaths(relativePaths: string[]): string[] {
   if (process.platform !== 'win32') {
     return relativePaths;
   }
-  return relativePaths.map((relativePath) => { return gitPath(relativePath); });
+  return relativePaths.map((relativePath) => { return relativePath.replace(/\\/g, '/'); });
 }

@@ -1,6 +1,5 @@
 /**
  * TrustLevel defines the possible trust levels for a repository.
- * @category Helper
  */
 export enum TrustLevel {
   Untrusted = 'untrusted',

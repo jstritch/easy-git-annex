@@ -1,5 +1,4 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
 import { createDirectory, deleteDirectory } from '../helpers';
 
 const cloneSource = 'https://github.com/jstritch/easy-git-annex.git';
@@ -25,8 +24,7 @@ describe('clone', () => {
 
     expect(result.exitCode).toBe(0);
 
-    const clonedAnx = anx.createAccessor(path.join(repositoryPath, 'easy-git-annex'));
-    const remoteNames = await clonedAnx.getRemoteNames();
+    const remoteNames = await myAnx.getRemoteNames();
 
     expect(remoteNames).toHaveLength(1);
     expect(remoteNames).toContain('origin');

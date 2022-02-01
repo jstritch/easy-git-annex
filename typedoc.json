@@ -1,14 +1,29 @@
 {
   "entryPoints": ["src/index.ts"],
-  "readme": "README.md",
-  "out": "docs",
+  "out": "docs/api",
+
   "categorizeByGroup": true,
-  "defaultCategory": "Uncategorized",
   "categoryOrder": [
+    "Returned Objects",
+    "Annex Commands",
+    "Version",
+    "Setup",
+    "Configuration",
+    "Contents",
+    "Remotes",
+    "Inspection",
+    "Maintenance",
+    "Low-level",
     "Command Options",
-    "Command Results",
-    "Uncategorized"
+    "API Options",
+    "Type Predicate",
+    "Helper",
+    "Entry Point",
+    "*"
   ],
+  "defaultCategory": "Uncategorized",
   "disableSources": true,
-  "hideGenerator": true
+  "hideGenerator": true,
+  "hideLegend": true,
+  "readme": "none"
 }

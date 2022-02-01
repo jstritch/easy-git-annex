@@ -10,6 +10,7 @@ import { GitAnnexAPI } from './interfaces/git-annex-api';
  * The returned accessor exposes git-annex behavior.
  *
  * @param repositoryPath The path to the repository root directory.
+ * The directory must exist but may be empty.
  * @returns An interface for interacting with git-annex.
  * @category Entry Point
  */

@@ -35,7 +35,7 @@ describe('remote', () => {
 
     expect(addResult.exitCode).toBe(0);
 
-    const showResult = await myAnx.remote(undefined, undefined, { '--verbose': null });
+    const showResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
 
     expect(showResult.exitCode).toBe(0);
     expect(showResult.out).toContain(remoteName);

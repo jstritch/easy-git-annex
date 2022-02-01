@@ -9,8 +9,7 @@ export interface AnnexOptions {
 
   /**
    * Specifies the key-value backend to use.
-   * Helper method [[getBackends]] may be used to obtain a list of
-   * valid names from which to choose.
+   * Method [[getBackends]] obtains a list of backend names.
    */
   '--backend'?: string;
 

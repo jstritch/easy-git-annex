@@ -95,8 +95,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     if (isKeyValue(value)) {
       args.push(`${value[0]}=${value[1]}`);
       return true;
-    }
-    if (isKeyValueArray(value)) {
+    } else if (isKeyValueArray(value)) {
       value.forEach((element) => { args.push(`${element[0]}=${element[1]}`); });
       return true;
     }
@@ -246,7 +245,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async clone(repository: string, repositoryPath?: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'clone', gitOptions, '--', repository);
-    this.pushIfString(args, repositoryPath);
+    args.push(isString(repositoryPath) ? repositoryPath : this.repositoryPath);
     return this.runGit(args, apiOptions);
   }
 
@@ -366,11 +365,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
             needsOrig.origPath = s;
             needsOrig = null;
           } else {
-            const statusGit = {
-              x: s[0],
-              y: s[1],
-              path: s.substring(3)
-            };
+            const statusGit = { x: s[0], y: s[1], path: s.substring(3) };
             if (statusGit.x === 'R' || statusGit.x === 'C') {
               needsOrig = statusGit;
             }

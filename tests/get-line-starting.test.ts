@@ -36,7 +36,7 @@ describe('getLineStarting', () => {
 describe('getLineStartingAsArray', () => {
 
   test('returns the array', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'upgrade supported from repository versions: ')).toHaveLength(8);
+    expect(anx.getLineStartingAsArray(versionOutput, 'upgrade supported from repository versions:')).toHaveLength(8);
   });
 
   test('returns an empty string[] when nothing follows the prefix', () => {
