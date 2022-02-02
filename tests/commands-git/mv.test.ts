@@ -1,6 +1,6 @@
 import * as anx from '../../src/index';
 import * as path from 'path';
-import { createRepository, deleteDirectory } from '../helpers';
+import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
@@ -18,6 +18,7 @@ describe('mv', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await setRepositoryAuthor(repositoryPath);
   });
 
   afterEach(async () => {

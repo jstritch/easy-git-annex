@@ -18,6 +18,12 @@ export async function createRepository(repositoryPath?: string): Promise<string>
   return repoPath;
 }
 
+export async function setRepositoryAuthor(repositoryPath: string): Promise<void> {
+  const myAnx = anx.createAccessor(repositoryPath);
+  await myAnx.configGit({ set: ['user.email', 'easy-git-annex@example.com'] });
+  await myAnx.configGit({ set: ['user.name', 'Some Person'] });
+}
+
 export async function deleteDirectory(repositoryPath: string): Promise<void> {
   await fs.rmdir(repositoryPath, { recursive: true });
 }
