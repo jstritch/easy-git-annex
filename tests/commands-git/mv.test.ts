@@ -33,6 +33,7 @@ describe('mv', () => {
 
     const commitResult = await myAnx.commit(textFile1, { '--message': 'add one text file' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
 
     const mvResult = await myAnx.mv(textFile1, textFile2);
@@ -50,6 +51,7 @@ describe('mv', () => {
 
     const commitResult = await myAnx.commit([textFile1, textFile2], { '--message': 'add two text files' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
 
     await fs.mkdir(path.join(repositoryPath, subDir));
@@ -69,6 +71,7 @@ describe('mv', () => {
 
     const commitResult = await myAnx.commit([textFile1, textFile2], { '--message': 'add two text files' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
 
     const mvResult = await myAnx.mv(textFile1, textFile2, { '--force': null });
@@ -86,6 +89,7 @@ describe('mv', () => {
 
     const commitResult = await myAnx.commit([textFile1, textFile2], { '--message': 'add two text files' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
 
     await fs.mkdir(path.join(repositoryPath, subDir));
@@ -104,6 +108,7 @@ describe('mv', () => {
 
     const commitResult = await myAnx.commit([textFile1, textFile2], { '--message': 'add two text files' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
 
     await fs.mkdir(path.join(repositoryPath, subDir));

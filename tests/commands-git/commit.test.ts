@@ -36,6 +36,7 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit(binaryFile1, { '--message': 'add one binary file' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
   });
@@ -50,6 +51,7 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit([binaryFile1, textFile1], { '--message': 'add one binary and one text file' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
     expect(commitResult.out).toContain(textFile1);
@@ -67,6 +69,7 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit(undefined, { '--message': 'add all four files' });
 
+    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
     expect(commitResult.out).toContain(binaryFile2);

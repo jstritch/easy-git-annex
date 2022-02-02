@@ -19,7 +19,7 @@ export async function createRepository(repositoryPath?: string): Promise<string>
 }
 
 export async function deleteDirectory(repositoryPath: string): Promise<void> {
-  await fs.rm(repositoryPath, { recursive: true });
+  await fs.rmdir(repositoryPath, { recursive: true });
 }
 
 export async function pathExists(aPath: string): Promise<boolean> {
