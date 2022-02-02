@@ -31,7 +31,6 @@ jobs:
     - name: Build
     - run: npm run build
     - name: Run automated tests
-    - run: npm test:ci
+    - run: npm run test:ci
     - name: Generate docs to validate exports
     - run: npm run typedoc
-    
