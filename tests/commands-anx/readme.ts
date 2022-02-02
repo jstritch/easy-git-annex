@@ -5,7 +5,6 @@ import * as path from 'path';
 import { promises as fs } from 'fs';
 
 async function setupAnnexClient(repositoryPath: string, description: string, largefiles: string): Promise<void> {
-
   const myAnx = anx.createAccessor(repositoryPath);
 
   let rslt = await myAnx.initGit();
@@ -41,7 +40,6 @@ async function addFiles(repositoryPath: string, relativePaths: string | string[]
 }
 
 export async function runExampleClick(): Promise<void> {
-
   try {
     // create a directory
     const repositoryPath = await fs.mkdtemp(path.join(os.tmpdir(), 'anx-client-'));

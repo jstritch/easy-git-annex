@@ -5,10 +5,8 @@ The easy-git-annex package is a JavaScript/TypeScript API for git-annex and Git 
 to storing large files in [Git](https://git-scm.com/).
 
 The easy-git-annex API is a wrapper over git-annex and Git commands.
-Applications pass JavaScript objects with command options
-to easy-git-annex which generates the appropriate command syntax.
-An application may also invoke any git-annex or Git command by constructing a
-string array with the desired syntax.
+Applications pass JavaScript objects with command options and parameters
+to easy-git-annex which generates the appropriate syntax and runs the command.
 
 Each command is run asynchronously without blocking the Node.js event loop.
 The Promise returned from every command has the same structure and
@@ -17,7 +15,7 @@ includes the command and its arguments, repository path, exit code, stdout, and 
 Helper functions assist the application with parsing command responses.
 
 Callbacks for stdout and stderr are available to show progress of time-consuming commands.
-Environment variables may be specified for the process.
+Environment variables may also be specified.
 
 ## Installation
 
@@ -38,17 +36,18 @@ import * as anx from 'easy-git-annex';
 
 Obtain an accessor to use the GitAnnexAPI interface with the desired repository.
 The directory passed to createAccessor must exist.
+The GitAnnexAPI interface is described in the documentation.
 
 ```javascript
 const myAnx = anx.createAccessor(repositoryPath);
 ```
 
-The number of simultaneous accessors is not limited by easy-git-annex.
+An application may hold multiple accessors simultaneously.
 
 ### Commands
 
 Git and git-annex commands are exposed by methods on the GitAnnexAPI interface.
-Frequently used commands have a specific method to invoke the command, such as commit.
+Frequently used commands, such as commit, have a specific method to invoke the command.
 Low-level methods runGit and runAnx are capable of invoking any Git or git-annex command.
 
 A process is spawned to run each command asynchronously.
@@ -56,25 +55,12 @@ The ApiOptions, described below, may be used to influence process creation.
 
 Additional methods return JavaScript objects for tasks common to many applications,
 for example getRemoteNames.
-Helper functions simplify an application's custom parsing to JavaScript objects.
 
-#### Command result
-
-The Promise returned by every command contains uninterpreted information about the process.
-The CommandResult interface is described in the documentation.
-
-Any method is capable of throwing an Error.
-Any command that doesn't throw may return an exitCode indicating failure.
-Application design must account for these situations.
-
-#### Command options
+### Command options
 
 Most git-annex and Git commands accept one or more options.
 Options may be passed as objects or a string array.
-When objects are passed, easy-git-annex constructs the command line.
-
-Passing JavaScript objects to specify command options frees
-the application from generating the exact command syntax required for every option.
+When objects are passed, easy-git-annex handles the mechanics of generating the correct command syntax.
 The string array approach is intended for command options not yet implemented by easy-git-annex.
 
 To pass options, construct an object with the desired keys and values.
@@ -83,27 +69,27 @@ Command option names containing hyphens must be enclosed
 in single or double quotation marks to be valid JavaScript identifiers.
 
 Several kinds of option values may be used by the application.
-Arrays of the appropriate type are used for options accepting more than one value.
+Arrays of the appropriate type are used for options accepting more than one value and options which may be repeated.
 
-##### Scalar
+#### Scalar
 
 Some options accept a single value.
-The following JavaScript adds files using two CPU cores, at most.
+The following JavaScript adds files using at most two CPU cores.
 
 ```javascript
 const addResult = await myAnx.addAnx(relativePaths, { '--jobs': 2 });
 ```
 
-##### Flag
+#### Flag
 
-Some options do not accept a value. Supply `null` for these options.
+Some options do not accept a value. Supply a `null` value for these options.
 The JavaScript below obtains a list of Git remotes and the associated URLs.
 
 ```javascript
 const remoteResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
 ```
 
-##### Key-value pair
+#### Key-value pair
 
 Options that require a key-value pair accept a tuple of [string, string]
 containing the key name and value.
@@ -113,7 +99,7 @@ An example JavaScript configuration setting appears below.
 const configResult = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
 ```
 
-##### String array
+#### String array
 
 An application may choose to construct the options as a string array.
 The following line is functionally equivalent to the scalar example above.
@@ -122,7 +108,7 @@ The following line is functionally equivalent to the scalar example above.
 const addResult = await myAnx.addAnx(relativePaths, ['--jobs=2']);
 ```
 
-#### Command parameters
+### Command parameters
 
 Some command accept parameters such as relative paths of file names.
 Git and git-annex commands use forward slash path separators regardless of platform.
@@ -130,14 +116,14 @@ The gitPath and gitPaths functions perform the conversions when necessary.
 
 The gitPath and gitPaths functions are called internally by easy-git-annex for implemented relative path parameters.
 When building a low-level command, calling gitPath and gitPaths is the application's responsibility.
-The following JavaScript illustrates calling the Git add command directly.
+The following JavaScript illustrates a low-level call of the Git add command.
 
 ```javascript
 const addResult = await myAnx.runGit(['add', anx.gitPath(relativePath)]);
 
 ```
 
-#### API options
+### API options
 
 An application may control the environment variables passed to the command and
 register callbacks for stdout and stderr using ApiOptions.
@@ -162,7 +148,30 @@ function onAnnexOut(data) { console.log(`gitAnnexOut: ${this.something} ${data}`
 const rslt = await myAnx.versionAnx({}, { outHandler: this.onAnnexOut.bind(this) }));
 ```
 
+### Command result
+
+The Promise returned by every command contains uninterpreted information about the process.
+The CommandResult interface is described in the documentation.
+
+Any method is capable of throwing an Error.
+Any command that doesn't throw may return an exitCode indicating failure.
+Application design must account for these situations.
+
+Type predicates and helper functions may be used to parse command responses.
+Some git-annex commands offer the ability to generate progress messages in JSON.
+Other information may be present in the stdout stream.
+The example below illustrates extracting progress objects using
+helper function safeParseToArray filtering with type predicate isActionProgress.
+The resulting objects may be used to notify the user.
+
+```javascript
+const progress = anx.safeParseToArray(anx.isActionProgress, data);
+```
+
 ## Documentation
+
+The details are explained in the API
+documentation.
 
 ## Contributions
 
@@ -172,6 +181,14 @@ If you find easy-git-annex helpful, please consider becoming a
 
 ## Example
 
+The example may be copied and run on your machine.
+It creates a temporary directory,
+prepares the directory for Git and git-annex,
+and adds one large and one small file to a subdirectory,
+and reports success or failure.
+The repository remains on your system for study.
+It may be deleted at any time.
+
 ```typescript
 import * as anx from 'easy-git-annex';
 import * as os from 'os';
@@ -179,7 +196,6 @@ import * as path from 'path';
 import { promises as fs } from 'fs';
 
 async function setupAnnexClient(repositoryPath: string, description: string, largefiles: string): Promise<void> {
-
   const myAnx = anx.createAccessor(repositoryPath);
 
   let rslt = await myAnx.initGit();
@@ -214,8 +230,7 @@ async function addFiles(repositoryPath: string, relativePaths: string | string[]
   if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
 }
 
-export async function runExampleClick(): Promise<void> {
-
+async function runExampleClick(): Promise<void> {
   try {
     // create a directory
     const repositoryPath = await fs.mkdtemp(path.join(os.tmpdir(), 'anx-client-'));
@@ -231,16 +246,13 @@ export async function runExampleClick(): Promise<void> {
     // add a small and large file
     const smallFile = path.join(exampleDir, 'small file.txt');
     const largeFile = path.join(exampleDir, 'large file.xtx');
-    await fs.writeFile(path.join(repositoryPath, smallFile),
-      'small file stored in Git\n');
-    await fs.writeFile(path.join(repositoryPath, largeFile),
-      'large file stored in git-annex\n');
+    await fs.writeFile(path.join(repositoryPath, smallFile), 'small file stored in Git\n');
+    await fs.writeFile(path.join(repositoryPath, largeFile), 'large file stored in git-annex\n');
     await addFiles(repositoryPath, [smallFile, largeFile], 'add two files');
 
     console.log(`Created ${repositoryPath}`);
   } catch (e: unknown) {
     console.error(e);
-    throw e;
   }
 }
 ```
