@@ -1,6 +1,6 @@
 import * as anx from '../../src/index';
 import * as path from 'path';
-import { createRepository, deleteDirectory } from '../helpers';
+import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
 import { promises as fs } from 'fs';
 
 const projectPath = process.cwd();
@@ -21,6 +21,7 @@ describe('commit', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await setRepositoryAuthor(repositoryPath);
   });
 
   afterEach(async () => {
@@ -36,7 +37,6 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit(binaryFile1, { '--message': 'add one binary file' });
 
-    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
   });
@@ -51,7 +51,6 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit([binaryFile1, textFile1], { '--message': 'add one binary and one text file' });
 
-    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
     expect(commitResult.out).toContain(textFile1);
@@ -69,7 +68,6 @@ describe('commit', () => {
 
     const commitResult = await myAnx.commit(undefined, { '--message': 'add all four files' });
 
-    expect(commitResult).toBeNull();
     expect(commitResult.exitCode).toBe(0);
     expect(commitResult.out).toContain(binaryFile1);
     expect(commitResult.out).toContain(binaryFile2);
