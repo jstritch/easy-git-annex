@@ -1,0 +1,31 @@
+{
+  "extends": [
+    "config:base"
+  ],
+  "baseBranches": ["master"],
+  "packageRules": [
+    {
+      "matchDatasources": ["npm"],
+      "stabilityDays": 3
+    },
+    {
+      "matchPackagePatterns": ["^eslint"],
+      "groupName": "eslint packages"
+    },
+    {
+      "matchPackagePatterns": ["jest", "@types/jest", "ts-jest", "eslint-plugin-jest"],
+      "groupName": "jest packages"
+    },
+    {
+      "matchPackagePatterns": ["typescript", "^@tsconfig", "^typescript-eslint"],
+      "groupName": "typescript packages"
+    }
+  ],
+  "automerge": true,
+  "automergeType": "branch",
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 5,
+  "rangeStrategy": "bump",
+  "timezone": "America/Chicago",
+  "schedule": ["before 5am", "after 7pm"]
+}
