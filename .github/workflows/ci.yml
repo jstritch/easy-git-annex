@@ -25,12 +25,12 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Install easy-git-annex
-    - run: npm ci
+      run: npm ci
     - name: Lint the source
-    - run: npm run lint
+      run: npm run lint
     - name: Build
-    - run: npm run build
+      run: npm run build
     - name: Run automated tests
-    - run: npm run test:ci
+      run: npm run test:ci
     - name: Generate docs to validate exports
-    - run: npm run typedoc
+      run: npm run typedoc
