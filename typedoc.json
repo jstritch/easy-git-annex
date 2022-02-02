@@ -1,0 +1,29 @@
+{
+  "entryPoints": ["src/index.ts"],
+  "out": "docs/api",
+
+  "categorizeByGroup": true,
+  "categoryOrder": [
+    "Returned Objects",
+    "Annex Commands",
+    "Version",
+    "Setup",
+    "Configuration",
+    "Contents",
+    "Remotes",
+    "Inspection",
+    "Maintenance",
+    "Low-level",
+    "Command Options",
+    "API Options",
+    "Type Predicate",
+    "Helper",
+    "Entry Point",
+    "*"
+  ],
+  "defaultCategory": "Uncategorized",
+  "disableSources": true,
+  "hideGenerator": true,
+  "hideLegend": true,
+  "readme": "none"
+}
