@@ -9,15 +9,15 @@
       "stabilityDays": 3
     },
     {
-      "matchPackagePatterns": ["^eslint", "^typescript-eslint"],
+      "matchPackagePatterns": ["^eslint"],
       "groupName": "eslint packages"
     },
     {
-      "matchPackagePatterns": ["jest", "@types/jest", "ts-jest"],
+      "matchPackagePatterns": ["jest", "@types/jest", "ts-jest", "eslint-plugin-jest"],
       "groupName": "jest packages"
     },
     {
-      "matchPackagePatterns": ["typescript", "^@tsconfig"],
+      "matchPackagePatterns": ["typescript", "^@tsconfig", "^typescript-eslint"],
       "groupName": "typescript packages"
     }
   ],
