@@ -17,8 +17,8 @@
       "groupName": "jest packages"
     },
     {
-      "matchPackageNames": ["typescript", "^typescript-eslint"],
-      "matchPackagePatterns": ["^@tsconfig"],
+      "matchPackageNames": ["typescript"],
+      "matchPackagePatterns": ["^@tsconfig", "^typescript-eslint"],
       "groupName": "typescript packages"
     }
   ],
