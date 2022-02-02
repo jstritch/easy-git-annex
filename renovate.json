@@ -13,11 +13,12 @@
       "groupName": "eslint packages"
     },
     {
-      "matchPackagePatterns": ["jest", "@types/jest", "ts-jest", "eslint-plugin-jest"],
+      "matchPackageNames": ["jest", "@types/jest", "ts-jest", "eslint-plugin-jest"],
       "groupName": "jest packages"
     },
     {
-      "matchPackagePatterns": ["typescript", "^@tsconfig", "^typescript-eslint"],
+      "matchPackageNames": ["typescript", "^typescript-eslint"],
+      "matchPackagePatterns": ["^@tsconfig"],
       "groupName": "typescript packages"
     }
   ],
