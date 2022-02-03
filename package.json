@@ -33,6 +33,7 @@
     "build": "npx tsc",
     "lint": "npx eslint --ext .ts,.js,.json --ignore-path .gitignore .",
     "test": "npx jest",
+    "test:badge": "npm run test:coverage && npx make-coverage-badge",
     "test:ci": "npx jest --testPathIgnorePatterns=/tests/commands-anx/ --testTimeout=15000",
     "test:coverage": "npx jest --collectCoverage",
     "typedoc": "npx typedoc",
@@ -52,6 +53,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^27.4.7",
+    "make-coverage-badge": "^1.2.0",
     "ts-jest": "^27.1.3",
     "typedoc": "^0.22.11",
     "typescript": "^4.5.5"

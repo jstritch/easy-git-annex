@@ -5,5 +5,6 @@ module.exports = {
   collectCoverageFrom: [
     'src/**/*.ts'
   ],
-  coverageDirectory: 'coverage'
+  coverageDirectory: 'coverage',
+  coverageReporters: ['json-summary', 'text'],
 };
