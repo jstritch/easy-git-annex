@@ -1,6 +1,8 @@
 {
   "entryPoints": ["src/index.ts"],
+  "readme": "README.md",
   "out": "docs/api",
+  "githubPages": false,
 
   "categorizeByGroup": true,
   "categoryOrder": [
@@ -24,6 +26,5 @@
   "defaultCategory": "Uncategorized",
   "disableSources": true,
   "hideGenerator": true,
-  "hideLegend": true,
-  "readme": "none"
+  "hideLegend": true
 }
