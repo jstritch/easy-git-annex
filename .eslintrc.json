@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["/api/**"],
+  "ignorePatterns": ["/docs/**"],
   "env": {
     "es2021": true,
     "node": true,
