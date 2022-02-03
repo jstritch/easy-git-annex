@@ -1,7 +1,7 @@
 {
   "entryPoints": ["src/index.ts"],
   "readme": "README.md",
-  "out": "docs/api",
+  "out": "api",
   "githubPages": false,
 
   "categorizeByGroup": true,
