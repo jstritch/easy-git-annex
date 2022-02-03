@@ -1,3 +1,7 @@
+[![Renovate Status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
+[![CI Status](https://github.com/jstritch/easy-git-annex/workflows/CI/badge.svg)](https://github.com/jstritch/easy-git-annex/actions)
+![Test Coverage](https://github.com/jstritch/easy-git-annex/blob/master/coverage/badge.svg?raw=true)
+
 # easy-git-annex
 
 The easy-git-annex package is a JavaScript/TypeScript API for git-annex and Git commands.
@@ -59,8 +63,8 @@ for example getRemoteNames.
 ### Command options
 
 Most git-annex and Git commands accept one or more options.
-Options may be passed as objects or a string array.
-When objects are passed, easy-git-annex handles the mechanics of generating the correct command syntax.
+Options may be passed as an object or a string array.
+When an object is passed, easy-git-annex handles the mechanics of generating the correct command syntax.
 The string array approach is intended for command options not yet implemented by easy-git-annex.
 
 To pass options, construct an object with the desired keys and values.
@@ -120,7 +124,6 @@ The following JavaScript illustrates a low-level call of the Git add command.
 
 ```javascript
 const addResult = await myAnx.runGit(['add', anx.gitPath(relativePath)]);
-
 ```
 
 ### API options
@@ -161,8 +164,8 @@ Type predicates and helper functions may be used to parse command responses.
 Some git-annex commands offer the ability to generate progress messages in JSON.
 Other information may be present in the stdout stream.
 The example below illustrates extracting progress objects using
-helper function safeParseToArray filtering with type predicate isActionProgress.
-The resulting objects may be used to notify the user.
+helper function safeParseToArray filtering objects with type predicate isActionProgress.
+The returned objects may be used to notify the user.
 
 ```javascript
 const progress = anx.safeParseToArray(anx.isActionProgress, data);
@@ -171,7 +174,7 @@ const progress = anx.safeParseToArray(anx.isActionProgress, data);
 ## Documentation
 
 The details are explained in the API
-documentation.
+[documentation](https://jstritch.github.io/easy-git-annex/).
 
 ## Contributions
 
@@ -187,7 +190,6 @@ prepares the directory for Git and git-annex,
 and adds one large and one small file to a subdirectory,
 and reports success or failure.
 The repository remains on your system for study.
-It may be deleted at any time.
 
 ```typescript
 import * as anx from 'easy-git-annex';
