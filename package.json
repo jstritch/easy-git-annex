@@ -1,6 +1,6 @@
 {
   "name": "easy-git-annex",
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "JavaScript/TypeScript API for git-annex and Git commands.",
   "main": "./dist/index.js",
   "engines": {
@@ -36,7 +36,7 @@
     "test:badge": "npm run test:coverage && npx make-coverage-badge",
     "test:ci": "npx jest --testPathIgnorePatterns=/tests/commands-anx/ --testTimeout=15000",
     "test:coverage": "npx jest --collectCoverage",
-    "typedoc": "npx typedoc",
+    "typedoc": "npx typedoc && git checkout HEAD ./docs/_config.yml",
     "yalc": "yalc publish --push"
   },
   "devDependencies": {

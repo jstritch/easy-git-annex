@@ -1,2 +1,2 @@
-## 1.0.0 - First Release
-* Initial behavior
+## v1.0.0-beta released 2022-02-04
+* Initial command set
