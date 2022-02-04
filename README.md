@@ -58,12 +58,12 @@ A process is spawned to run each command asynchronously.
 The ApiOptions, described below, may be used to influence process creation.
 
 Additional methods return JavaScript objects for tasks common to many applications,
-for example getRemoteNames.
+for example getStatusAnx and getStatusGit.
 
 ### Command options
 
 Most git-annex and Git commands accept one or more options.
-Options may be passed as an object or a string array.
+Options may be passed in an object or a string array.
 When an object is passed, easy-git-annex handles the mechanics of generating the correct command syntax.
 The string array approach is intended for command options not yet implemented by easy-git-annex.
 
@@ -72,7 +72,7 @@ Any keys in the object not for the command are ignored.
 Command option names containing hyphens must be enclosed
 in single or double quotation marks to be valid JavaScript identifiers.
 
-Several kinds of option values may be used by the application.
+Several types of option values are used.
 Arrays of the appropriate type are used for options accepting more than one value and options which may be repeated.
 
 #### Scalar
@@ -97,7 +97,7 @@ const remoteResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--
 
 Options that require a key-value pair accept a tuple of [string, string]
 containing the key name and value.
-An example JavaScript configuration setting appears below.
+An example git-annex configuration setting appears below.
 
 ```javascript
 const configResult = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
@@ -131,7 +131,7 @@ const addResult = await myAnx.runGit(['add', anx.gitPath(relativePath)]);
 An application may control the environment variables passed to the command and
 register callbacks for stdout and stderr using ApiOptions.
 
-The example below clones the current environment,
+The fragment below clones the current environment,
 adds variable GIT_TRACE to the copy, and establishes callback handlers for the output.
 The apiOptions parameter is accepted by easy-git-annex command methods.
 
@@ -144,7 +144,7 @@ const apiOptions = { env: anxEnv, outHandler: onConsoleOut, errHandler: onConsol
 ```
 
 The JavaScript bind function may be used to pass `this` and other parameters
-to a callback as shown in the JavaScript example below.
+to a callback as shown in the JavaScript fragment below.
 
 ```javascript
 function onAnnexOut(data) { console.log(`gitAnnexOut: ${this.something} ${data}`); }
@@ -158,7 +158,7 @@ The CommandResult interface is described in the documentation.
 
 Any method is capable of throwing an Error.
 Any command that doesn't throw may return an exitCode indicating failure.
-Application design must account for these situations.
+Application design must account for these eventualities.
 
 Type predicates and helper functions may be used to parse command responses.
 Some git-annex commands offer the ability to generate progress messages in JSON.
@@ -177,6 +177,9 @@ The details are explained in the API
 [documentation](https://jstritch.github.io/easy-git-annex/).
 
 ## Contributions
+
+Adding support for additional commands is usually straightforward.
+Please do your work on a new branch.
 
 I am an independent developer.
 If you find easy-git-annex helpful, please consider becoming a
@@ -232,7 +235,7 @@ async function addFiles(repositoryPath: string, relativePaths: string | string[]
   if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
 }
 
-async function runExampleClick(): Promise<void> {
+export async function runExampleClick(): Promise<void> {
   try {
     // create a directory
     const repositoryPath = await fs.mkdtemp(path.join(os.tmpdir(), 'anx-client-'));
