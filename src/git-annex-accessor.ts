@@ -56,50 +56,53 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return [commandName, ...parseCommandOptions(commandGroup, commandName, commandOptions), ...parameters];
   }
 
-  private pushIfString(args: string[], value: unknown, prependMarker = false): boolean {
+  private pushIfString(args: string[], value: unknown, prependMarker = false, throwIfNotString = true): boolean {
     if (isString(value)) {
       if (prependMarker) {  // end-of-options marker wanted?
         args.push('--');
       }
       args.push(value);
       return true;
+    } else if (value !== undefined && throwIfNotString) {
+      throw new Error(`The type ${typeof value} is not supported, use string instead`);
     }
     return false;
   }
 
-  private pushIfStringOrStringArray(args: string[], value: unknown, prependMarker = false): boolean {
-    if (this.pushIfString(args, value, prependMarker)) {
-      return true;
+  private pushIfStringOrStringArray(args: string[], value: unknown, prependMarker = false): void {
+    if (this.pushIfString(args, value, prependMarker, false)) {
+      return;
     }
     if (isStringArray(value)) {
       if (prependMarker) {  // end-of-options marker wanted?
         args.push('--');
       }
       args.push(...value);
-      return true;
+    } else if (value !== undefined) {
+      throw new Error(`The type ${typeof value} is not supported, use string | string[] instead`);
     }
-    return false;
   }
 
-  private pushIfRelativePaths(args: string[], value: unknown, prependMarker = false): boolean {
+  private pushIfRelativePaths(args: string[], value: unknown, prependMarker = false): void {
     let paths: unknown;
     if (isString(value)) {
       paths = gitPath(value);
     } else if (isStringArray(value)) {
       paths = gitPaths(value);
+    } else if (value !== undefined) {
+      throw new Error(`The type ${typeof value} is not supported, use string | string[] instead`);
     }
-    return this.pushIfStringOrStringArray(args, paths, prependMarker);
+    this.pushIfStringOrStringArray(args, paths, prependMarker);
   }
 
-  private pushIfKeyValuePairs(args: string[], value: unknown): boolean {
+  private pushIfKeyValuePairs(args: string[], value: unknown): void {
     if (isKeyValue(value)) {
       args.push(`${value[0]}=${value[1]}`);
-      return true;
     } else if (isKeyValueArray(value)) {
       value.forEach((element) => { args.push(`${element[0]}=${element[1]}`); });
-      return true;
+    } else if (value !== undefined) {
+      throw new Error(`The type ${typeof value} is not supported, use [string, string] | [string, string][] instead`);
     }
-    return false;
   }
 
   //
