@@ -65,7 +65,7 @@ for example getStatusAnx and getStatusGit.
 Most git-annex and Git commands accept one or more options.
 Options may be passed in an object or a string array.
 When an object is passed, easy-git-annex handles the mechanics of generating the correct command syntax.
-The string array approach is intended for command options not yet implemented by easy-git-annex.
+The string array approach is intended for features not yet implemented by easy-git-annex.
 
 To pass options, construct an object with the desired keys and values.
 Any keys in the object not for the command are ignored.
@@ -87,7 +87,7 @@ const addResult = await myAnx.addAnx(relativePaths, { '--jobs': 2 });
 #### Flag
 
 Some options do not accept a value. Supply a `null` value for these options.
-The JavaScript below obtains a list of Git remotes and the associated URLs.
+The line below obtains a list of Git remotes and the associated URLs.
 
 ```javascript
 const remoteResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
@@ -114,7 +114,7 @@ const addResult = await myAnx.addAnx(relativePaths, ['--jobs=2']);
 
 ### Command parameters
 
-Some command accept parameters such as relative paths of file names.
+Some commands accept parameters such as relative paths of file names.
 Git and git-annex commands use forward slash path separators regardless of platform.
 The gitPath and gitPaths functions perform the conversions when necessary.
 
@@ -144,7 +144,7 @@ const apiOptions = { env: anxEnv, outHandler: onConsoleOut, errHandler: onConsol
 ```
 
 The JavaScript bind function may be used to pass `this` and other parameters
-to a callback as shown in the JavaScript fragment below.
+to a callback as shown in the fragment below.
 
 ```javascript
 function onAnnexOut(data) { console.log(`gitAnnexOut: ${this.something} ${data}`); }
@@ -173,13 +173,13 @@ const progress = anx.safeParseToArray(anx.isActionProgress, data);
 
 ## Documentation
 
-The details are explained in the API
-[documentation](https://jstritch.github.io/easy-git-annex/).
+The commands are explained in the
+[API documentation](https://jstritch.github.io/easy-git-annex/).
 
 ## Contributions
 
 Adding support for additional commands is usually straightforward.
-Please do your work on a new branch.
+If you would like to improve easy-git-annex, please read CONTRIBUTING.md.
 
 I am an independent developer.
 If you find easy-git-annex helpful, please consider becoming a
@@ -261,3 +261,10 @@ export async function runExampleClick(): Promise<void> {
   }
 }
 ```
+
+## Node.js support
+
+This version of easy-git-annex runs on Node.js versions 12, 14, and 16.
+
+Node.js 12 end-of-life is 2022-04-30.
+Support for Node.js 12 will be dropped when version 18 support is added.
