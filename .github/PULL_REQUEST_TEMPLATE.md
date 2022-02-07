@@ -28,6 +28,7 @@ Resolves issue [issueNumber](https://github.com/jstritch/easy-git-annex/issues/i
 - easy-git-annex version:
 - git-annex version:
 - Git version:
+- Node.js version:
 - Platform(s):
 
 ### Checklist:
