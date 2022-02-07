@@ -32,4 +32,5 @@
 - easy-git-annex version:
 - git-annex version:
 - Git version:
+- Node.js version:
 - Platform(s):
