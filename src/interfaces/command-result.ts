@@ -37,6 +37,8 @@ export interface CommandResult {
 
   /**
    * Obtains a string representation of the CommandResult.
+   * @returns A sentence describing the CommandResult.
+   * All fields of the interface are included in the message.
    */
   toCommandResultString(): string;
 }
