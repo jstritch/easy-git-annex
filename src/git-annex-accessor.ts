@@ -56,21 +56,19 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return [commandName, ...parseCommandOptions(commandGroup, commandName, commandOptions), ...parameters];
   }
 
-  private pushIfString(args: string[], value: unknown, prependMarker = false, throwIfNotString = true): boolean {
+  private pushIfString(args: string[], value: unknown, prependMarker = false): boolean {
     if (isString(value)) {
       if (prependMarker) {  // end-of-options marker wanted?
         args.push('--');
       }
       args.push(value);
       return true;
-    } else if (value !== undefined && throwIfNotString) {
-      throw new Error(`The type ${typeof value} is not supported, use string instead`);
     }
     return false;
   }
 
   private pushIfStringOrStringArray(args: string[], value: unknown, prependMarker = false): void {
-    if (this.pushIfString(args, value, prependMarker, false)) {
+    if (this.pushIfString(args, value, prependMarker)) {
       return;
     }
     if (isStringArray(value)) {
@@ -78,8 +76,6 @@ export class GitAnnexAccessor implements GitAnnexAPI {
         args.push('--');
       }
       args.push(...value);
-    } else if (value !== undefined) {
-      throw new Error(`The type ${typeof value} is not supported, use string | string[] instead`);
     }
   }
 
@@ -89,8 +85,6 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       paths = gitPath(value);
     } else if (isStringArray(value)) {
       paths = gitPaths(value);
-    } else if (value !== undefined) {
-      throw new Error(`The type ${typeof value} is not supported, use string | string[] instead`);
     }
     this.pushIfStringOrStringArray(args, paths, prependMarker);
   }
@@ -100,8 +94,6 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       args.push(`${value[0]}=${value[1]}`);
     } else if (isKeyValueArray(value)) {
       value.forEach((element) => { args.push(`${element[0]}=${element[1]}`); });
-    } else if (value !== undefined) {
-      throw new Error(`The type ${typeof value} is not supported, use [string, string] | [string, string][] instead`);
     }
   }
 
