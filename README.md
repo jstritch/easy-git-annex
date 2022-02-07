@@ -178,7 +178,7 @@ The commands are explained in the
 
 ## Contributions
 
-Adding support for additional commands is usually straightforward.
+Adding support for additional commands is straightforward.
 If you would like to improve easy-git-annex, please read CONTRIBUTING.md.
 
 I am an independent developer.
@@ -265,6 +265,5 @@ export async function runExampleClick(): Promise<void> {
 ## Node.js support
 
 This version of easy-git-annex runs on Node.js versions 12, 14, and 16.
-
-Node.js 12 end-of-life is 2022-04-30.
-Support for Node.js 12 will be dropped when version 18 support is added.
+The Node.js version 12 end-of-life date is 2022-04-30.
+Support for Node.js 12 will be dropped afterward.
