@@ -578,7 +578,7 @@ export interface GitAnnexAPI {
   /**
    * Obtains an array of remote names.
    * @returns An array containing the remote names.
-   * @category Inspection
+   * @category Remotes
    */
   getRemoteNames(): Promise<string[]>;
 
