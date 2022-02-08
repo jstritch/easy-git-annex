@@ -1,6 +1,6 @@
 {
   "name": "easy-git-annex",
-  "version": "1.0.0-beta",
+  "version": "1.0.0",
   "description": "JavaScript/TypeScript API for git-annex and Git commands.",
   "main": "./dist/index.js",
   "engines": {
