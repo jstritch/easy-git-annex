@@ -56,7 +56,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return [commandName, ...parseCommandOptions(commandGroup, commandName, commandOptions), ...parameters];
   }
 
-  private pushIfString(args: string[], value: unknown, prependMarker = false): boolean {
+  private pushIfString(args: string[], value?: string | string[], prependMarker = false): boolean {
     if (isString(value)) {
       if (prependMarker) {  // end-of-options marker wanted?
         args.push('--');
@@ -67,7 +67,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return false;
   }
 
-  private pushIfStringOrStringArray(args: string[], value: unknown, prependMarker = false): void {
+  private pushIfStringOrStringArray(args: string[], value?: string | string[], prependMarker = false): void {
     if (this.pushIfString(args, value, prependMarker)) {
       return;
     }
@@ -79,17 +79,19 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     }
   }
 
-  private pushIfRelativePaths(args: string[], value: unknown, prependMarker = false): void {
-    let paths: unknown;
+  private pushIfRelativePaths(args: string[], value?: string | string[], prependMarker = false): void {
+    let paths: string | string[] | undefined;
     if (isString(value)) {
       paths = gitPath(value);
     } else if (isStringArray(value)) {
       paths = gitPaths(value);
     }
-    this.pushIfStringOrStringArray(args, paths, prependMarker);
+    if (paths) {
+      this.pushIfStringOrStringArray(args, paths, prependMarker);
+    }
   }
 
-  private pushIfKeyValuePairs(args: string[], value: unknown): void {
+  private pushIfKeyValuePairs(args: string[], value?: [string, string] | [string, string][]): void {
     if (isKeyValue(value)) {
       args.push(`${value[0]}=${value[1]}`);
     } else if (isKeyValueArray(value)) {
