@@ -123,12 +123,8 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
 function formatError(repositoryPath: string, exeName: string, args: string[], env: NodeJS.ProcessEnv, out: string, err: string, error: string | Error): string {
   let msg = `The command: ${exeName} ${args.join(' ')}\nfor repository ${repositoryPath}\n`;
   msg += `reported ${error.toString()}\nstdout: ${out}\nstderr: ${err}\nenv:`;
-  for (const [key, value] of Object.entries(env)) {
-    if (isString(value)) {
-      msg += `\n${key}: ${value}`;
-    } else {
-      msg += `\n${key}: ${typeof value}`;
-    }
-  }
+  Object.entries(env).forEach(([key, value]) => {
+    msg += `\n${key}: ${isString(value) ? value : typeof value}`;
+  });
   return msg;
 }
