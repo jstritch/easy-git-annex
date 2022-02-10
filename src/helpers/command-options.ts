@@ -2,10 +2,12 @@ export enum CommandGroup {
   Anx,
   AnxCommon,
   Git,
+  ListTag,
 }
 
 export enum OptionKind {
   Flag,
+  Stuck,
   KeyValue,
   RepeatableKeyValue,
   AnonymousKeyValue,
@@ -13,7 +15,10 @@ export enum OptionKind {
   String,
   OptionalString,
   StringParam,
+  OptionalStringParam,
   CommaDelimitedStrings,
+  OptionalCommaDelimitedStrings,
+  RepeatableString,
   AnonymousStrings,
   RepeatablePath,
 }
@@ -201,11 +206,32 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--verbose', kind: OptionKind.Flag },
     { name: '-z', kind: OptionKind.Flag },
   ]],
+  ['_listTag', [
+    { name: '-n', kind: OptionKind.Stuck },
+    { name: '--cleanup', kind: OptionKind.String },
+    { name: '--column', kind: OptionKind.OptionalCommaDelimitedStrings },
+    { name: '--contains', kind: OptionKind.OptionalStringParam },
+    { name: '--format', kind: OptionKind.String },
+    { name: '--ignore-case', kind: OptionKind.Flag },
+    { name: '--merged', kind: OptionKind.OptionalStringParam },
+    { name: '--no-column', kind: OptionKind.Flag },
+    { name: '--no-contains', kind: OptionKind.OptionalStringParam },
+    { name: '--no-merged', kind: OptionKind.OptionalStringParam },
+    { name: '--points-at', kind: OptionKind.OptionalStringParam },
+    { name: '--sort', kind: OptionKind.RepeatableString },
+  ]],
   ['tag', [
     { name: '--annotate', kind: OptionKind.Flag },
+    { name: '--create-reflog', kind: OptionKind.Flag },
     { name: '--delete', kind: OptionKind.Flag },
     { name: '--force', kind: OptionKind.Flag },
+    { name: '--list', kind: OptionKind.Flag },
+    { name: '--local-user', kind: OptionKind.String },
     { name: '--message', kind: OptionKind.String },
+    { name: '--no-create-reflog', kind: OptionKind.Flag },
+    { name: '--no-sign', kind: OptionKind.Flag },
+    { name: '--sign', kind: OptionKind.Flag },
+    { name: '--verify', kind: OptionKind.Flag },
   ]],
   ['version', [
     { name: '--build-options', kind: OptionKind.Flag },
@@ -222,8 +248,16 @@ function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOp
 }
 
 export function getCommandOptions(commandGroup: CommandGroup, commandName: string): CommandOption[] {
-  if (commandGroup === CommandGroup.AnxCommon) {
-    return [...getMapEntry(CommandGroup.Anx, '_common'), ...getMapEntry(CommandGroup.Anx, commandName)];
+  switch (commandGroup) {
+
+    case CommandGroup.AnxCommon:
+      return [...getMapEntry(CommandGroup.Anx, '_common'), ...getMapEntry(CommandGroup.Anx, commandName)];
+
+    case CommandGroup.ListTag:
+      return [...getMapEntry(CommandGroup.Git, '_listTag'), ...getMapEntry(CommandGroup.Git, commandName)];
+
+    default:
+      break;
   }
   return getMapEntry(commandGroup, commandName);
 }

@@ -33,6 +33,16 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.Stuck:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}${cmdOptValue}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'number | string | null';
+            }
+            break;
+
           case OptionKind.KeyValue:
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOpt.name, cmdOptValue[0], cmdOptValue[1]);
@@ -93,11 +103,43 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.OptionalStringParam:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | null';
+            }
+            break;
+
           case OptionKind.CommaDelimitedStrings:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
             } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
               opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else {
+              expectedType = 'string | string[]';
+            }
+            break;
+
+          case OptionKind.OptionalCommaDelimitedStrings:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | string[] | null';
+            }
+            break;
+
+          case OptionKind.RepeatableString:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
             } else {
               expectedType = 'string | string[]';
             }
