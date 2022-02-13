@@ -1,31 +1,30 @@
-### Command
-<!--- The command or method name, if applicable. -->
+### Method
+<!--- The command or method name. -->
+<!--- Delete the line below if not applicable. -->
+1.
 
 ### Expected Behavior
-<!--- Tell us what should happen. -->
+<!--- What should happen? -->
+1.
+1.
+1.
 
 ### Current Behavior
-<!--- Tell us what happens instead of the expected behavior. -->
-
-### Possible Solution
-<!--- Not obligatory, but suggest a fix/reason for the bug. -->
+<!--- What happens instead of the expected behavior? -->
+<!--- Delete the three lines below if not applicable. -->
+1.
+1.
+1.
 
 ### Steps to Reproduce
-<!--- Provide a link to a live example, or an unambiguous set of steps to -->
-<!--- reproduce this bug. Include code to reproduce, if relevant. -->
+<!--- Provide an unambiguous set of steps with links and code. -->
+<!--- Delete the three lines below if not applicable. -->
 1.
 1.
 1.
 
-### Context
+### Use Case
 <!--- What are you trying to accomplish? -->
-<!--- For example, describe a use case. -->
-
-### Detailed Description
-<!--- Provide a detailed description of the change or addition you are proposing. -->
-
-### Possible Implementation
-<!--- Not obligatory, but suggest an idea for implementation. -->
 
 ### System Configuration
 
@@ -33,4 +32,4 @@
 - git-annex version:
 - Git version:
 - Node.js version:
-- Platform(s):
+- Platform:
