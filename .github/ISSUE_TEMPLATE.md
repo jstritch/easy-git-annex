@@ -24,7 +24,7 @@
 1.
 
 ### Use Case
-<!--- What are you trying to accomplish? -->
+<!--- What problem are you trying to solve? -->
 
 ### System Configuration
 
