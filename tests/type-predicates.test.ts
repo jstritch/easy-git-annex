@@ -1,513 +1,316 @@
-import { isAction, isActionProgress, isActionResult, isBoolean, isKeyValue, isKeyValueArray, isNumber, isRecord, isStatusAnx, isString, isStringArray } from '../src/helpers/type-predicates';
+import { isAction, isActionProgress, isActionResult, isBigInt, isBoolean, isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isStatusAnx, isString, isStringArray } from '../src/helpers/type-predicates';
+
+describe('isBigInt', () => {
+
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), true],
+    [new Date(0), false],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
+
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isBigInt(o)).toBe(expected);
+  });
+
+});
 
 describe('isBoolean', () => {
 
-  test('identifies an Error', () => {
-    expect(isBoolean(new Error('boo'))).toBe(false);
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, true],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
+
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isBoolean(o)).toBe(expected);
   });
 
-  test('identifies an empty array', () => {
-    expect(isBoolean([])).toBe(false);
-  });
+});
 
-  test('identifies a heterogeneous array', () => {
-    expect(isBoolean(['Fred', 'Barney', 2.2])).toBe(false);
-  });
+describe('isDate', () => {
 
-  test('identifies a string array', () => {
-    expect(isBoolean(['Fred', 'Barney'])).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), true],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies a KeyValue array', () => {
-    expect(isBoolean([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isBoolean(true)).toBe(true);
-  });
-
-  test('identifies null', () => {
-    expect(isBoolean(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isBoolean(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isBoolean({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isBoolean('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isBoolean(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isDate(o)).toBe(expected);
   });
 
 });
 
 describe('isKeyValue', () => {
 
-  test('identifies an Error', () => {
-    expect(isKeyValue(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], true],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isKeyValue([])).toBe(false);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isKeyValue(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isKeyValue(['Fred', 'Barney'])).toBe(true);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isKeyValue([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isKeyValue(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isKeyValue(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isKeyValue(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isKeyValue({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isKeyValue('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isKeyValue(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isKeyValue(o)).toBe(expected);
   });
 
 });
 
 describe('isKeyValueArray', () => {
 
-  test('identifies an Error', () => {
-    expect(isKeyValueArray(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], true],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], true],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isKeyValueArray([])).toBe(true);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isKeyValueArray(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isKeyValueArray(['Fred', 'Barney'])).toBe(false);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isKeyValueArray([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(true);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isKeyValueArray(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isKeyValueArray(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isKeyValueArray(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isKeyValueArray({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isKeyValueArray('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isKeyValueArray(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isKeyValueArray(o)).toBe(expected);
   });
 
 });
 
 describe('isNumber', () => {
 
-  test('identifies an Error', () => {
-    expect(isNumber(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, true],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isNumber([])).toBe(false);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isNumber(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isNumber(['Fred', 'Barney'])).toBe(false);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isNumber([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isNumber(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isNumber(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isNumber(5)).toBe(true);
-  });
-
-  test('identifies an object', () => {
-    expect(isNumber({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isNumber('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isNumber(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isNumber(o)).toBe(expected);
   });
 
 });
 
 describe('isRecord', () => {
 
-  test('identifies an Error', () => {
-    expect(isRecord(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, true],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isRecord([])).toBe(false);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isRecord(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isRecord(['Fred', 'Barney'])).toBe(false);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isRecord([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isRecord(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isRecord(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isRecord(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isRecord({})).toBe(true);
-  });
-
-  test('identifies a string', () => {
-    expect(isRecord('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isRecord(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isRecord(o)).toBe(expected);
   });
 
 });
 
 describe('isString', () => {
 
-  test('identifies an Error', () => {
-    expect(isString(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', true],
+    [[], false],
+    [['A'], false],
+    [['A', 'B'], false],
+    [['A', 'B', 'C'], false],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isString([])).toBe(false);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isString(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isString(['Fred', 'Barney'])).toBe(false);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isString([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isString(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isString(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isString(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isString({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isString('foo')).toBe(true);
-  });
-
-  test('identifies undefined', () => {
-    expect(isString(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isString(o)).toBe(expected);
   });
 
 });
 
 describe('isStringArray', () => {
 
-  test('identifies an Error', () => {
-    expect(isStringArray(new Error('boo'))).toBe(false);
-  });
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{}, false],
+    [true, false],
+    [7, false],
+    [BigInt(0), false],
+    [new Date(0), false],
+    ['A', false],
+    [[], true],
+    [['A'], true],
+    [['A', 'B'], true],
+    [['A', 'B', 'C'], true],
+    [[['A', 'B'], ['C', 'D']], false],
+    [['A', 'B', 3.3], false],
+  ];
 
-  test('identifies an empty array', () => {
-    expect(isStringArray([])).toBe(true);
-  });
-
-  test('identifies a heterogeneous array', () => {
-    expect(isStringArray(['Fred', 'Barney', 2.2])).toBe(false);
-  });
-
-  test('identifies a string array', () => {
-    expect(isStringArray(['Fred', 'Barney'])).toBe(true);
-  });
-
-  test('identifies a KeyValue array', () => {
-    expect(isStringArray([['Fred', 'Barney'], ['Wilma', 'Betty']])).toBe(false);
-  });
-
-  test('identifies a boolean', () => {
-    expect(isStringArray(true)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isStringArray(null)).toBe(false);
-  });
-
-  test('identifies a number', () => {
-    expect(isStringArray(5)).toBe(false);
-  });
-
-  test('identifies an object', () => {
-    expect(isStringArray({})).toBe(false);
-  });
-
-  test('identifies a string', () => {
-    expect(isStringArray('foo')).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isStringArray(undefined)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isStringArray(o)).toBe(expected);
   });
 
 });
 
 describe('isAction', () => {
 
-  test('identifies an Action', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{ command: 'add', file: 'file one.jpg', input: ['file one.jpg'] }, true],
+    [{ command: ['add'], file: 'file one.jpg', input: ['file one.jpg'] }, false],
+    [{ command: 'add', file: ['file one.jpg'], input: ['file one.jpg'] }, false],
+    [{ command: 'add', file: 'file one.jpg', input: 'file one.jpg' }, false],
+    [{ file: 'file one.jpg', input: ['file one.jpg'] }, false],
+    [{ command: 'add', input: ['file one.jpg'] }, false],
+    [{ command: 'add', file: 'file one.jpg' }, false],
+  ];
 
-    expect(isAction(a)).toBe(true);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isAction(o)).toBe(expected);
   });
 
-  test('identifies null', () => {
-    expect(isAction(null)).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isAction(undefined)).toBe(false);
-  });
-
-  test('identifies an Action with bad command', () => {
-    const a = { command: ['add'], file: 'file one.jpg', input: ['file one.jpg'] };
-
-    expect(isAction(a)).toBe(false);
-  });
-
-  test('identifies an Action with bad file', () => {
-    const a = { command: 'add', file: ['file one.jpg'], input: ['file one.jpg'] };
-
-    expect(isAction(a)).toBe(false);
-  });
-
-  test('identifies an Action with bad input', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
-
-    expect(isAction(a)).toBe(false);
-  });
 });
 
 describe('isActionProgress', () => {
+  const passAction = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+  const failAction = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
 
-  test('identifies a ActionProgress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{ action: passAction, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' }, true],
+    [{ action: failAction, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'byte-progress': '6405', 'total-size': 6405, 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'byte-progress': 6405, 'total-size': '6405', 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': 100 }, false],
+    [{ 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'total-size': 6405, 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'byte-progress': 6405, 'percent-progress': '100%' }, false],
+    [{ action: passAction, 'byte-progress': 6405, 'total-size': 6405 }, false],
+  ];
 
-    expect(isActionProgress(o)).toBe(true);
-  });
-
-  test('identifies null', () => {
-    expect(isActionProgress(null)).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isActionProgress(undefined)).toBe(false);
-  });
-
-  test('identifies a ActionProgress with bad Action', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' };
-
-    expect(isActionProgress(o)).toBe(false);
-  });
-
-  test('identifies a ActionProgress with bad byte-progress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': '6405', 'total-size': 6405, 'percent-progress': '100%' };
-
-    expect(isActionProgress(o)).toBe(false);
-  });
-
-  test('identifies a ActionProgress with bad total-size', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': '6405', 'percent-progress': '100%' };
-
-    expect(isActionProgress(o)).toBe(false);
-  });
-
-  test('identifies a ActionProgress with bad percent-progress', () => {
-    const a = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-    const o = { action: a, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': 100 };
-
-    expect(isActionProgress(o)).toBe(false);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isActionProgress(o)).toBe(expected);
   });
 
 });
 
 describe('isActionResult', () => {
+  const passAction = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+  const failAction = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
 
-  test('identifies an ActionResult with required properties', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [] };
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [Object.assign({ success: true, 'error-messages': [] }, passAction), true],
+    [Object.assign({ success: true, 'error-messages': [], key: 'SHA256E-s6405--88ae7e65f53feb9f06e334d7c1f5e8ec9ae30e66f7075fa97b22b14280dc338a.jpg' }, passAction), true],
+    [Object.assign({ success: true, 'error-messages': [], note: 'non-large file; adding content to git repository' }, passAction), true],
+    [Object.assign({ success: 'true', 'error-messages': [] }, passAction), false],
+    [Object.assign({ success: true, 'error-messages': '' }, passAction), false],
+    [Object.assign({ success: true, 'error-messages': [] }, failAction), false],
+    [Object.assign({ success: true, 'error-messages': [], key: [['SHA256E-s6405--88ae7e65f53feb9f06e334d7c1f5e8ec9ae30e66f7075fa97b22b14280dc338a.jpg']] }, passAction), false],
+    [Object.assign({ success: true, 'error-messages': [], note: [['non-large file; adding content to git repository']] }, passAction), false],
+    [Object.assign({ 'error-messages': '' }, passAction), false],
+    [Object.assign({ success: true }, passAction), false],
+    [Object.assign({ success: true, 'error-messages': [] }, {}), false],
+  ];
 
-    expect(isActionResult(o)).toBe(true);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isActionResult(o)).toBe(expected);
   });
 
-  test('identifies an ActionResult with optional key', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [], key: 'SHA256E-s6405--88ae7e65f53feb9f06e334d7c1f5e8ec9ae30e66f7075fa97b22b14280dc338a.jpg' };
-
-    expect(isActionResult(o)).toBe(true);
-  });
-
-  test('identifies an ActionResult with bad key', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [], key: ['SHA256E-s6405--88ae7e65f53feb9f06e334d7c1f5e8ec9ae30e66f7075fa97b22b14280dc338a.jpg'] };
-
-    expect(isActionResult(o)).toBe(false);
-  });
-
-  test('identifies an ActionResult with optional note', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [], note: 'non-large file; adding content to git repository' };
-
-    expect(isActionResult(o)).toBe(true);
-  });
-
-  test('identifies an ActionResult with bad note', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [], note: ['non-large file; adding content to git repository'] };
-
-    expect(isActionResult(o)).toBe(false);
-  });
-
-  test('identifies null', () => {
-    expect(isActionResult(null)).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isActionResult(undefined)).toBe(false);
-  });
-
-  test('identifies an ActionResult with bad Action', () => {
-    const o = { command: ['add'], file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': [] };
-
-    expect(isActionResult(o)).toBe(false);
-  });
-
-  test('identifies an Action with bad success', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: 'true', 'error-messages': [] };
-
-    expect(isActionResult(o)).toBe(false);
-  });
-
-  test('identifies an Action with bad error-messages', () => {
-    const o = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'], success: true, 'error-messages': '' };
-
-    expect(isActionResult(o)).toBe(false);
-  });
 });
 
 describe('isStatusAnx', () => {
 
-  test('identifies a StatusAnx', () => {
-    const o = { status: 'add', file: 'file one.jpg', 'error-messages': ['file one.jpg'] };
+  const tests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{ status: 'add', file: 'file one.jpg', 'error-messages': ['file one.jpg'] }, true],
+    [{ status: ['add'], file: 'file one.jpg', 'error-messages': ['file one.jpg'] }, false],
+    [{ status: 'add', file: ['file one.jpg'], 'error-messages': ['file one.jpg'] }, false],
+    [{ status: 'add', file: 'file one.jpg', 'error-messages': 'file one.jpg' }, false],
+    [{ file: 'file one.jpg', 'error-messages': ['file one.jpg'] }, false],
+    [{ status: 'add', 'error-messages': ['file one.jpg'] }, false],
+    [{ status: 'add', file: 'file one.jpg' }, false],
+  ];
 
-    expect(isStatusAnx(o)).toBe(true);
+  test.each(tests)('examine %o', (o, expected) => {
+    expect(isStatusAnx(o)).toBe(expected);
   });
 
-  test('identifies null', () => {
-    expect(isStatusAnx(null)).toBe(false);
-  });
-
-  test('identifies undefined', () => {
-    expect(isStatusAnx(undefined)).toBe(false);
-  });
-
-  test('identifies a StatusAnx with bad status', () => {
-    const o = { status: ['add'], file: 'file one.jpg', 'error-messages': ['file one.jpg'] };
-
-    expect(isStatusAnx(o)).toBe(false);
-  });
-
-  test('identifies a StatusAnx with bad file', () => {
-    const o = { status: 'add', file: ['file one.jpg'], 'error-messages': ['file one.jpg'] };
-
-    expect(isStatusAnx(o)).toBe(false);
-  });
-
-  test('identifies a StatusAnx with bad error-messages', () => {
-    const o = { status: 'add', file: 'file one.jpg', 'error-messages': 'file one.jpg' };
-
-    expect(isStatusAnx(o)).toBe(false);
-  });
 });

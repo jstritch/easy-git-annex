@@ -4,6 +4,16 @@ import { ActionResult } from '../interfaces/action-result';
 import { StatusAnx } from '../interfaces/status-anx';
 
 /**
+ * Determines if an object is a bigint.
+ * @param o The object to examine.
+ * @returns True if o is a bigint; otherwise, false.
+ * @category Type Predicate
+ */
+export function isBigInt(o: unknown): o is bigint {
+  return typeof o === 'bigint';
+}
+
+/**
  * Determines if an object is a boolean.
  * @param o The object to examine.
  * @returns True if o is a boolean; otherwise, false.
@@ -11,6 +21,16 @@ import { StatusAnx } from '../interfaces/status-anx';
  */
 export function isBoolean(o: unknown): o is boolean {
   return typeof o === 'boolean';
+}
+
+/**
+ * Determines if an object is a Date.
+ * @param o The object to examine.
+ * @returns True if o is a Date; otherwise, false.
+ * @category Type Predicate
+ */
+export function isDate(o: unknown): o is Date {
+  return o instanceof Date;
 }
 
 /**
