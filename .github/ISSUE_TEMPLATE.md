@@ -1,6 +1,5 @@
 ### Method
-<!--- The command or method name. -->
-<!--- Delete the line below if not applicable. -->
+<!--- The command or method name, one per line. -->
 1.
 
 ### Expected Behavior
