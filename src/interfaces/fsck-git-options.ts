@@ -1,5 +1,5 @@
 /**
- * FsckGitOptions defines the supported options for the git fsck command.
+ * FsckGitOptions defines the supported options for the Git fsck command.
  * @category Command Options
  */
 export interface FsckGitOptions {
