@@ -1,50 +1,60 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
-import { promises as fs } from 'fs';
-
-const projectPath = process.cwd();
-const binaryFile1 = 'file one.jpg';
-const binaryFile1Path = path.join(projectPath, 'tests', 'data', binaryFile1);
-const binaryFile2 = 'file two.jpg';
-const binaryFile2Path = path.join(projectPath, 'tests', 'data', binaryFile2);
-const textFile1 = 'file one.txt';
-const textFile1Path = path.join(projectPath, 'tests', 'data', textFile1);
-const textFile2 = 'file two.txt';
-const textFile2Path = path.join(projectPath, 'tests', 'data', textFile2);
+import { allTestFiles, copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
 
 describe('fsckGit', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
     await setRepositoryAuthor(repositoryPath);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await deleteDirectory(repositoryPath);
   });
 
   test('checks the repository reporting progress', async () => {
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.runGit(['add', '.']);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit(undefined, { '--message': 'add all four files' });
-
-    expect(commitResult.exitCode).toBe(0);
-
-    const fsckResult = await myAnx.fsckGit(undefined, { '--progress': null });
-
-    expect(fsckResult.exitCode).toBe(0);
-    expect(fsckResult.err).toContain('100%');
+    await copyAddGitCommit(allTestFiles, repositoryPath, 'add test files for fsckGit');
+    const rslt = await myAnx.fsckGit(undefined, { '--progress': null });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.err).toContain('100%');
   });
 
+});
+
+describe('FsckGitOptions', () => {
+  let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
+
+  beforeAll(() => {
+    repositoryPath = process.cwd();
+    myAnx = anx.createAccessor(repositoryPath);
+  });
+
+  const tests: [anx.FsckGitOptions, string[]][] = [
+    [{ '--cache': null }, ['--cache']],
+    [{ '--connectivity-only': null }, ['--connectivity-only']],
+    [{ '--dangling': null }, ['--dangling']],
+    [{ '--full': null }, ['--full']],
+    [{ '--lost-found': null }, ['--lost-found']],
+    [{ '--name-objects': null }, ['--name-objects']],
+    [{ '--no-dangling': null }, ['--no-dangling']],
+    [{ '--no-full': null }, ['--no-full']],
+    [{ '--no-progress': null }, ['--no-progress']],
+    [{ '--no-reflogs': null }, ['--no-reflogs']],
+    [{ '--progress': null }, ['--progress']],
+    [{ '--root': null }, ['--root']],
+    [{ '--strict': null }, ['--strict']],
+    [{ '--tags': null }, ['--tags']],
+    [{ '--unreachable': null }, ['--unreachable']],
+    [{ '--verbose': null }, ['--verbose']],
+  ];
+
+  test.each(tests)('FsckGitOptions "%o"', async (gitOptions, expected) => {
+    const rslt = await myAnx.fsckGit(undefined, gitOptions, { noOp: true });
+    expect(rslt.exitCode).toBeNaN();
+    expect(rslt.args).toEqual(expect.arrayContaining(expected));
+  });
 });

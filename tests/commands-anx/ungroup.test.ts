@@ -17,23 +17,19 @@ describe('ungroup', () => {
 
   test('removes the repository from a group', async () => {
     const groupname = 'client';
-    const result = await myAnx.group('here', groupname);
+    let rslt = await myAnx.group('here', groupname);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(result.exitCode).toBe(0);
+    rslt = await myAnx.group('here');
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(groupname);
 
-    const getResult = await myAnx.group('here');
+    rslt = await myAnx.ungroup('here', groupname);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toContain(groupname);
-
-    const ungroupResult = await myAnx.ungroup('here', groupname);
-
-    expect(ungroupResult.exitCode).toBe(0);
-
-    const getAgainResult = await myAnx.group('here');
-
-    expect(getAgainResult.exitCode).toBe(0);
-    expect(getAgainResult.out).not.toContain(groupname);
+    rslt = await myAnx.group('here');
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).not.toContain(groupname);
   });
 
 });

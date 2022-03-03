@@ -17,14 +17,12 @@ describe('wanted', () => {
 
   test('sets and gets the wanted expression', async () => {
     const expression = 'include=*.mp3 or include=*.ogg';
-    const result = await myAnx.wanted('here', expression);
+    let rslt = await myAnx.wanted('here', expression);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(result.exitCode).toBe(0);
-
-    const getResult = await myAnx.wanted('here');
-
-    expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toContain(expression);
+    rslt = await myAnx.wanted('here');
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(expression);
   });
 
 });

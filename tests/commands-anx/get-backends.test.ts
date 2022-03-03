@@ -9,7 +9,6 @@ describe('getBackends', () => {
 
   test('returns the array', async () => {
     const backends = await myAnx.getBackends();
-
     expect(backends.length).toBeGreaterThan(0);
   });
 

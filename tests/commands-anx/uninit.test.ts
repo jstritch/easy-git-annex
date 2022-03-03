@@ -1,11 +1,14 @@
 import * as anx from '../../src/index';
-import { createDirectory, createRepository, deleteDirectory } from '../helpers';
+import { createRepository, deleteDirectory } from '../helpers';
 
 describe('uninit', () => {
   let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
 
   beforeEach(async () => {
-    repositoryPath = await createDirectory();
+    repositoryPath = await createRepository();
+    myAnx = anx.createAccessor(repositoryPath);
+    await myAnx.initAnx();
   });
 
   afterEach(async () => {
@@ -13,30 +16,10 @@ describe('uninit', () => {
   });
 
   test('uninitializes a git repository', async () => {
-    await createRepository(repositoryPath);
-    const myAnx = anx.createAccessor(repositoryPath);
-    const description = 'anx repository test description';
-    const result = await myAnx.initAnx(description);
-
-    expect(result.exitCode).toBe(0);
-
-    const uninitResult = await myAnx.uninit();
-
-    expect(uninitResult.exitCode).toBe(0);
-
+    const rslt = await myAnx.uninit();
+    expect(rslt.exitCode).toBe(0);
     const repositoryInfos = await myAnx.getRepositories();
-
     expect(repositoryInfos).toHaveLength(0);
-  });
-
-  test('reports a directory is not a git annex', async () => {
-    await createRepository(repositoryPath);
-    const myAnx = anx.createAccessor(repositoryPath);
-
-    const result = await myAnx.uninit();
-
-    expect(result.exitCode).not.toBe(0);
-    expect(result.err).toBe('git-annex: First run: git-annex init\n');
   });
 
 });
