@@ -1,5 +1,5 @@
 import * as anx from '../../src/index';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory, TestFile } from '../helpers';
+import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers';
 
 describe('list', () => {
   let repositoryPath: string;
@@ -21,9 +21,6 @@ describe('list', () => {
     await copyAddAnxCommit(allTestFiles, repositoryPath, 'add test files for list');
     const rslt = await myAnx.list();
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toContain(TestFile.JPG1);
-    expect(rslt.out).toContain(TestFile.JPG2);
-    expect(rslt.out).toContain(TestFile.JPG3);
   });
 
 });
