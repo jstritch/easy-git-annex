@@ -25,7 +25,7 @@ export interface SyncOptions extends AnnexOptions {
   /**
    * The complement of [[--no-commit]].
    */
-  '--commit'?: string;
+  '--commit'?: null;
 
   /**
    * Causes the content of annexed files to also be uploaded and downloaded as necessary.

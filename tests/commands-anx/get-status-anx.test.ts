@@ -1,11 +1,5 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory } from '../helpers';
-import { promises as fs } from 'fs';
-
-const projectPath = process.cwd();
-const binaryFile1 = 'file one.jpg';
-const binaryFile1Path = path.join(projectPath, 'tests', 'data', binaryFile1);
+import { copyFile, createRepository, deleteDirectory, TestFile } from '../helpers';
 
 describe('getStatusAnx', () => {
   let repositoryPath: string;
@@ -23,12 +17,10 @@ describe('getStatusAnx', () => {
   });
 
   test('returns the array', async () => {
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
+    await copyFile(TestFile.JPG1, repositoryPath);
     const statusAnx = await myAnx.getStatusAnx();
-
     expect(statusAnx).toHaveLength(1);
-    expect(statusAnx[0].file).toContain(binaryFile1);
+    expect(statusAnx[0].file).toContain(TestFile.JPG1);
   });
 
 });

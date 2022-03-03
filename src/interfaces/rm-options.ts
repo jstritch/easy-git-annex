@@ -1,8 +1,13 @@
 /**
- * RmOptions defines the supported options for the git rm command.
+ * RmOptions defines the supported options for the Git rm command.
  * @category Command Options
  */
 export interface RmOptions {
+
+  /**
+   * Unstages and removes paths only from the index.
+   */
+  '--cached'?: null;
 
   /**
    * Includes files with updated contents.
@@ -23,4 +28,9 @@ export interface RmOptions {
    * Enables recursive removal when a leading directory name is given.
    */
   '-r'?: null;
+
+  /**
+   * Updates index entries outside of the sparse-checkout cone.
+   */
+  '--sparse'?: null;
 }
