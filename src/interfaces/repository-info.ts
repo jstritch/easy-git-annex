@@ -31,5 +31,5 @@ export interface RepositoryInfo {
   /**
    * The repository trust level.
    */
-  trustLevel: TrustLevel;
+  trustLevel?: TrustLevel;
 }

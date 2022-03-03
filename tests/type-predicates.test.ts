@@ -1,8 +1,8 @@
-import { isAction, isActionProgress, isActionResult, isBigInt, isBoolean, isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isStatusAnx, isString, isStringArray } from '../src/helpers/type-predicates';
+import { isAction, isActionProgress, isActionResult, isBigInt, isBoolean, isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isRepositoryInfo, isStatusAnx, isStatusGit, isString, isStringArray } from '../src/helpers/type-predicates';
 
-describe('isBigInt', () => {
+describe('type predicates', () => {
 
-  const tests: [unknown, boolean][] = [
+  const isBigIntTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -19,15 +19,11 @@ describe('isBigInt', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isBigIntTests)('isBigInt(%o)', (o, expected) => {
     expect(isBigInt(o)).toBe(expected);
   });
 
-});
-
-describe('isBoolean', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isBooleanTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -44,15 +40,11 @@ describe('isBoolean', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isBooleanTests)('isBoolean(%o)', (o, expected) => {
     expect(isBoolean(o)).toBe(expected);
   });
 
-});
-
-describe('isDate', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isDateTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -69,15 +61,11 @@ describe('isDate', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isDateTests)('isDate(%o)', (o, expected) => {
     expect(isDate(o)).toBe(expected);
   });
 
-});
-
-describe('isKeyValue', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isKeyValueTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -94,15 +82,11 @@ describe('isKeyValue', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isKeyValueTests)('isKeyValue(%o)', (o, expected) => {
     expect(isKeyValue(o)).toBe(expected);
   });
 
-});
-
-describe('isKeyValueArray', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isKeyValueArrayTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -119,15 +103,11 @@ describe('isKeyValueArray', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isKeyValueArrayTests)('isKeyValueArray(%o)', (o, expected) => {
     expect(isKeyValueArray(o)).toBe(expected);
   });
 
-});
-
-describe('isNumber', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isNumberTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -144,15 +124,11 @@ describe('isNumber', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isNumberTests)('isNumber(%o)', (o, expected) => {
     expect(isNumber(o)).toBe(expected);
   });
 
-});
-
-describe('isRecord', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isRecordTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, true],
@@ -169,15 +145,11 @@ describe('isRecord', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isRecordTests)('isRecord(%o)', (o, expected) => {
     expect(isRecord(o)).toBe(expected);
   });
 
-});
-
-describe('isString', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isStringTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -194,15 +166,11 @@ describe('isString', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isStringTests)('isString(%o)', (o, expected) => {
     expect(isString(o)).toBe(expected);
   });
 
-});
-
-describe('isStringArray', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isStringArrayTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{}, false],
@@ -219,37 +187,30 @@ describe('isStringArray', () => {
     [['A', 'B', 3.3], false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isStringArrayTests)('isStringArray(%o)', (o, expected) => {
     expect(isStringArray(o)).toBe(expected);
   });
 
-});
+  const passAction = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
+  const failAction = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
 
-describe('isAction', () => {
-
-  const tests: [unknown, boolean][] = [
+  const isActionTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
-    [{ command: 'add', file: 'file one.jpg', input: ['file one.jpg'] }, true],
+    [passAction, true],
     [{ command: ['add'], file: 'file one.jpg', input: ['file one.jpg'] }, false],
     [{ command: 'add', file: ['file one.jpg'], input: ['file one.jpg'] }, false],
-    [{ command: 'add', file: 'file one.jpg', input: 'file one.jpg' }, false],
+    [failAction, false],
     [{ file: 'file one.jpg', input: ['file one.jpg'] }, false],
     [{ command: 'add', input: ['file one.jpg'] }, false],
     [{ command: 'add', file: 'file one.jpg' }, false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isActionTests)('isAction(%o)', (o, expected) => {
     expect(isAction(o)).toBe(expected);
   });
 
-});
-
-describe('isActionProgress', () => {
-  const passAction = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-  const failAction = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
-
-  const tests: [unknown, boolean][] = [
+  const isActionProgressTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{ action: passAction, 'byte-progress': 6405, 'total-size': 6405, 'percent-progress': '100%' }, true],
@@ -263,17 +224,11 @@ describe('isActionProgress', () => {
     [{ action: passAction, 'byte-progress': 6405, 'total-size': 6405 }, false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isActionProgressTests)('isActionProgress(%o)', (o, expected) => {
     expect(isActionProgress(o)).toBe(expected);
   });
 
-});
-
-describe('isActionResult', () => {
-  const passAction = { command: 'add', file: 'file one.jpg', input: ['file one.jpg'] };
-  const failAction = { command: 'add', file: 'file one.jpg', input: 'file one.jpg' };
-
-  const tests: [unknown, boolean][] = [
+  const isActionResultTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [Object.assign({ success: true, 'error-messages': [] }, passAction), true],
@@ -289,15 +244,33 @@ describe('isActionResult', () => {
     [Object.assign({ success: true, 'error-messages': [] }, {}), false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isActionResultTests)('isActionResult(%o)', (o, expected) => {
     expect(isActionResult(o)).toBe(expected);
   });
 
-});
+  const isRepositoryInfoTests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{ uuid: 'A', description: 'B', here: true }, true],
+    [{ uuid: 'A', description: 'B', here: false }, true],
+    [{ uuid: ['A'], description: 'B', here: true }, false],
+    [{ uuid: 'A', description: ['B'], here: true }, false],
+    [{ uuid: 'A', description: 'B', here: 1 }, false],
+    [{ uuid: 'A', description: 'B', here: true, trustLevel: 'trusted' }, true],
+    [{ uuid: 'A', description: 'B', here: true, trustLevel: 'semitrusted' }, true],
+    [{ uuid: 'A', description: 'B', here: true, trustLevel: 'untrusted' }, true],
+    [{ uuid: 'A', description: 'B', here: true, trustLevel: 'Untrusted' }, false],
+    [{ uuid: 'A', description: 'B', here: true, trustLevel: 1 }, false],
+    [{ description: 'B', here: true }, false],
+    [{ uuid: 'A', here: true }, false],
+    [{ uuid: 'A', description: 'B' }, false],
+  ];
 
-describe('isStatusAnx', () => {
+  test.each(isRepositoryInfoTests)('isRepositoryInfo(%o)', (o, expected) => {
+    expect(isRepositoryInfo(o)).toBe(expected);
+  });
 
-  const tests: [unknown, boolean][] = [
+  const isStatusAnxTests: [unknown, boolean][] = [
     [undefined, false],
     [null, false],
     [{ status: 'add', file: 'file one.jpg', 'error-messages': ['file one.jpg'] }, true],
@@ -309,8 +282,26 @@ describe('isStatusAnx', () => {
     [{ status: 'add', file: 'file one.jpg' }, false],
   ];
 
-  test.each(tests)('examine %o', (o, expected) => {
+  test.each(isStatusAnxTests)('isStatusAnx(%o)', (o, expected) => {
     expect(isStatusAnx(o)).toBe(expected);
+  });
+
+  const isStatusGitTests: [unknown, boolean][] = [
+    [undefined, false],
+    [null, false],
+    [{ x: 'X', y: 'Y', path: 'file one.jpg' }, true],
+    [{ x: ['X'], y: 'Y', path: 'file one.jpg' }, false],
+    [{ x: 'X', y: ['Y'], path: 'file one.jpg' }, false],
+    [{ x: 'X', y: 'Y', path: ['file one.jpg'] }, false],
+    [{ x: 'X', y: 'Y', path: 'file one.jpg', origPath: 'file two.jpg' }, true],
+    [{ x: 'X', y: 'Y', path: 'file one.jpg', origPath: ['file two.jpg'] }, false],
+    [{ y: 'Y', path: 'file one.jpg' }, false],
+    [{ x: 'X', path: 'file one.jpg' }, false],
+    [{ x: 'X', y: 'Y' }, false],
+  ];
+
+  test.each(isStatusGitTests)('isStatusGit(%o)', (o, expected) => {
+    expect(isStatusGit(o)).toBe(expected);
   });
 
 });
