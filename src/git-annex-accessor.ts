@@ -295,7 +295,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   public async tag(tagname?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
-    const args = this.makeArgs(CommandGroup.ListTag, 'tag', gitOptions);
+    const args = this.makeArgs(CommandGroup.Git, 'tag', gitOptions);
     this.pushIfString(args, tagname);
     return this.runGit(args, apiOptions);
   }

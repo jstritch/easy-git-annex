@@ -50,6 +50,8 @@ export class CommandParameters {
 
   public outHandler: ConsoleDataHandler | null;
 
+  public noOp: boolean;
+
   public constructor(repositoryPath: string, exeName: string, args: string[], apiOptions?: ApiOptions) {
     this.repositoryPath = repositoryPath;
     this.exeName = exeName;
@@ -57,6 +59,7 @@ export class CommandParameters {
     this.env = apiOptions && 'env' in apiOptions ? apiOptions.env : process.env;
     this.errHandler = apiOptions && 'errHandler' in apiOptions ? apiOptions.errHandler : null;
     this.outHandler = apiOptions && 'outHandler' in apiOptions ? apiOptions.outHandler : null;
+    this.noOp = apiOptions && 'noOp' in apiOptions ? apiOptions.noOp : false;
   }
 }
 
@@ -66,6 +69,10 @@ export class CommandParameters {
  */
 export async function runCommand(cmd: CommandParameters): Promise<CommandResult> {
   return new Promise((resolve, reject) => {
+    if (cmd.noOp) {
+      resolve(new RunCommandResult(cmd.repositoryPath, cmd.exeName, cmd.args, Number.NaN, '', ''));
+      return;
+    }
     let out = '';
     let err = '';
     const outHandler = cmd.outHandler;
@@ -106,7 +113,7 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
       }
     });
 
-    prc.on('error', (e: Error) => {
+    prc.on('error', (e: unknown) => {
       const msg = formatError(cmd.repositoryPath, cmd.exeName, cmd.args, cmd.env, out, err, e);
       reject(new Error(msg));
     });
@@ -120,9 +127,10 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
   });
 }
 
-function formatError(repositoryPath: string, exeName: string, args: string[], env: NodeJS.ProcessEnv, out: string, err: string, error: string | Error): string {
+function formatError(repositoryPath: string, exeName: string, args: string[], env: NodeJS.ProcessEnv, out: string, err: string, error: unknown): string {
+  const errMsg = typeof error === 'object' && error !== null ? error.toString() : typeof error;
   let msg = `The command: ${exeName} ${args.join(' ')}\nfor repository ${repositoryPath}\n`;
-  msg += `reported ${error.toString()}\nstdout: ${out}\nstderr: ${err}\nenv:`;
+  msg += `reported ${errMsg}\nstdout: ${out}\nstderr: ${err}\nenv:`;
   Object.entries(env).forEach(([key, value]) => {
     msg += `\n${key}: ${isString(value) ? value : typeof value}`;
   });

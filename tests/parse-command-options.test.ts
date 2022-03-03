@@ -3,413 +3,117 @@ import { parseCommandOptions } from '../src/helpers/parse-command-options';
 
 describe('parseCommandOptions', () => {
 
-  test('parses an empty argument', () => {
-    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', {});
+  const tests: [[CommandGroup, string, unknown], string[]][] = [
+    [[CommandGroup.AnxCommon, 'version', undefined], []],
+    [[CommandGroup.AnxCommon, 'version', {}], []],
+    [[CommandGroup.AnxCommon, 'version', ['foo', 'bar', 'baz', 'quux']], ['foo', 'bar', 'baz', 'quux']],
+    [['' as unknown as CommandGroup, 'version', {}], []],
+    [[CommandGroup.AnxCommon, '', {}], []],
+    [[CommandGroup.AnxCommon, '9ab5dece-8dcc-11ec-b9c3-976782f8999a', {}], []],
+    [[CommandGroup.Git, 'version', ['foo', 'bar', 'baz', 'quux']], ['foo', 'bar', 'baz', 'quux']],
+    [[CommandGroup.Git, '9ab5dece-8dcc-11ec-b9c3-976782f8999a', {}], []],
+    // OptionKind.Flag
+    [[CommandGroup.AnxCommon, 'version', { '--raw': null }], ['--raw']],
+    // OptionKind.Stuck
+    [[CommandGroup.Git, 'tag', { '-n': 2 }], ['-n2']],
+    [[CommandGroup.Git, 'tag', { '-n': 'Arg' }], ['-nArg']],
+    [[CommandGroup.Git, 'tag', { '-n': null }], ['-n']],
+    // OptionKind.KeyValue
+    [[CommandGroup.AnxCommon, 'config', { '--set': ['annex.largefiles', 'include=*.m4a'] }], ['--set', 'annex.largefiles', 'include=*.m4a']],
+    // OptionKind.CommaDelimitedKeyValue
+    [[CommandGroup.Git, 'clone', { '--config': ['name', 'value'] }], ['--config', 'name=value']],
+    [[CommandGroup.Git, 'clone', { '--config': [['name0', 'value0'], ['name1', 'value1']] }], ['--config', 'name0=value0,name1=value1']],
+    // OptionKind.RepeatableKeyValue
+    [[CommandGroup.AnxCommon, 'version', { '--c': ['name', 'value'] }], ['--c', 'name=value']],
+    [[CommandGroup.AnxCommon, 'version', { '--c': [['name0', 'value0'], ['name1', 'value1']] }], ['--c', 'name0=value0', '--c', 'name1=value1']],
+    // OptionKind.AnonymousKeyValue
+    [[CommandGroup.Git, 'config', { set: ['easy-git-annex.test', 'true'] }], ['easy-git-annex.test', 'true']],
+    // OptionKind.Numeric
+    [[CommandGroup.AnxCommon, 'version', { '--numcopies': 2 }], ['--numcopies=2']],
+    [[CommandGroup.AnxCommon, 'version', { '--numcopies': '3' }], ['--numcopies=3']],
+    // OptionKind.NumericParam
+    [[CommandGroup.Git, 'clone', { '--jobs': 2 }], ['--jobs', '2']],
+    [[CommandGroup.Git, 'clone', { '--jobs': '3' }], ['--jobs', '3']],
+    // OptionKind.String
+    [[CommandGroup.AnxCommon, 'version', { '--time-limit': '30m' }], ['--time-limit=30m']],
+    // OptionKind.OptionalString
+    [[CommandGroup.Git, 'status', { '--porcelain': 'v1' }], ['--porcelain=v1']],
+    [[CommandGroup.Git, 'status', { '--porcelain': null }], ['--porcelain']],
+    // OptionKind.StringParam
+    [[CommandGroup.Git, 'clone', { '--origin': 'nodeName' }], ['--origin', 'nodeName']],
+    // OptionKind.OptionalStringParam
+    [[CommandGroup.Git, 'tag', { '--merged': 'merged' }], ['--merged', 'merged']],
+    [[CommandGroup.Git, 'tag', { '--merged': null }], ['--merged']],
+    // OptionKind.CommaDelimitedStrings
+    [[CommandGroup.AnxCommon, 'version', { '--debugfilter': 'Process' }], ['--debugfilter=Process']],
+    [[CommandGroup.AnxCommon, 'version', { '--debugfilter': ['Process'] }], ['--debugfilter=Process']],
+    [[CommandGroup.AnxCommon, 'version', { '--debugfilter': ['Process', 'External'] }], ['--debugfilter=Process,External']],
+    // OptionKind.OptionalCommaDelimitedStrings
+    [[CommandGroup.Git, 'tag', { '--column': 'never' }], ['--column=never']],
+    [[CommandGroup.Git, 'tag', { '--column': ['always'] }], ['--column=always']],
+    [[CommandGroup.Git, 'tag', { '--column': ['column', 'dense'] }], ['--column=column,dense']],
+    [[CommandGroup.Git, 'tag', { '--column': null }], ['--column']],
+    // OptionKind.RepeatableString
+    [[CommandGroup.Git, 'tag', { '--sort': 'col' }], ['--sort=col']],
+    [[CommandGroup.Git, 'tag', { '--sort': ['col0', 'col1'] }], ['--sort=col0', '--sort=col1']],
+    // OptionKind.AnonymousStrings
+    [[CommandGroup.AnxCommon, 'list', { matching: '--include=*.mp3' }], ['--include=*.mp3']],
+    [[CommandGroup.AnxCommon, 'list', { matching: ['--include=*.mp3', '--or', '--include=*.ogg'] }], ['--include=*.mp3', '--or', '--include=*.ogg']],
+    // OptionKind.RepeatablePath
+    [[CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa/bbb/ccc' }], ['--content-of=aaa/bbb/ccc']],
+    [[CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa/bbb/ccc', 'xxx/yyy/zzz'] }], ['--content-of=aaa/bbb/ccc', '--content-of=xxx/yyy/zzz']],
+  ];
 
-    expect(opts).toHaveLength(0);
+  test.each(tests)('parseCommandOptions(%o)', ([grp, cmd, opts], expected) => {
+    expect(parseCommandOptions(grp, cmd, opts)).toEqual(expected);
   });
 
-  test('parses a string[4]', () => {
-    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', ['foo', 'bar', 'baz', 'quux']);
+  const throws: [[CommandGroup, string, unknown], string][] = [
+    [[CommandGroup.AnxCommon, 'version', 3], 'The type number is not supported for commandOptions, use object | string[] instead'],
+    // OptionKind.Flag
+    [[CommandGroup.AnxCommon, 'version', { '--raw': true }], 'Value type boolean is not supported for version option --raw, use null instead'],
+    // OptionKind.Stuck
+    [[CommandGroup.Git, 'tag', { '-n': true }], 'Value type boolean is not supported for tag option -n, use number | string | null instead'],
+    // OptionKind.KeyValue
+    [[CommandGroup.AnxCommon, 'config', { '--set': 'key=value' }], 'Value type string is not supported for config option --set, use [string, string] instead'],
+    // OptionKind.CommaDelimitedKeyValue
+    [[CommandGroup.Git, 'clone', { '--config': ['name'] }], 'Value type object is not supported for clone option --config, use [string, string] | [string, string][] instead'],
+    // OptionKind.RepeatableKeyValue
+    [[CommandGroup.AnxCommon, 'version', { '--c': [] }], 'Value type object is not supported for version option --c, use [string, string] | [string, string][] instead'],
+    [[CommandGroup.AnxCommon, 'version', { '--c': {} }], 'Value type object is not supported for version option --c, use [string, string] | [string, string][] instead'],
+    // OptionKind.AnonymousKeyValue
+    [[CommandGroup.Git, 'config', { set: 'key=value' }], 'Value type string is not supported for config option set, use [string, string] instead'],
+    // OptionKind.Numeric
+    [[CommandGroup.AnxCommon, 'version', { '--numcopies': null }], 'Value type object is not supported for version option --numcopies, use number | string instead'],
+    // OptionKind.NumericParam
+    [[CommandGroup.Git, 'clone', { '--jobs': ['A', 'B'] }], 'Value type object is not supported for clone option --jobs, use number | string instead'],
+    // OptionKind.String
+    [[CommandGroup.AnxCommon, 'version', { '--time-limit': 30 }], 'Value type number is not supported for version option --time-limit, use string instead'],
+    // OptionKind.OptionalString
+    [[CommandGroup.Git, 'status', { '--porcelain': 1 }], 'Value type number is not supported for status option --porcelain, use string | null instead'],
+    // OptionKind.StringParam
+    [[CommandGroup.Git, 'clone', { '--origin': 30 }], 'Value type number is not supported for clone option --origin, use string instead'],
+    // OptionKind.OptionalStringParam
+    [[CommandGroup.Git, 'tag', { '--merged': 30 }], 'Value type number is not supported for tag option --merged, use string | null instead'],
+    // OptionKind.CommaDelimitedStrings
+    [[CommandGroup.AnxCommon, 'version', { '--debugfilter': [] }], 'Value type object is not supported for version option --debugfilter, use string | string[] instead'],
+    [[CommandGroup.AnxCommon, 'version', { '--debugfilter': true }], 'Value type boolean is not supported for version option --debugfilter, use string | string[] instead'],
+    // OptionKind.OptionalCommaDelimitedStrings
+    [[CommandGroup.Git, 'tag', { '--column': [] }], 'Value type object is not supported for tag option --column, use string | string[] | null instead'],
+    [[CommandGroup.Git, 'tag', { '--column': true }], 'Value type boolean is not supported for tag option --column, use string | string[] | null instead'],
+    // OptionKind.RepeatableString
+    [[CommandGroup.Git, 'tag', { '--sort': [] }], 'Value type object is not supported for tag option --sort, use string | string[] instead'],
+    // OptionKind.AnonymousStrings
+    [[CommandGroup.AnxCommon, 'list', { matching: [] }], 'Value type object is not supported for list option matching, use string | string[] instead'],
+    [[CommandGroup.AnxCommon, 'list', { matching: 3 }], 'Value type number is not supported for list option matching, use string | string[] instead'],
+    // OptionKind.RepeatablePath
+    [[CommandGroup.AnxCommon, 'sync', { '--content-of': [] }], 'Value type object is not supported for sync option --content-of, use string | string[] instead'],
+  ];
 
-    expect(opts).toEqual(['foo', 'bar', 'baz', 'quux']);
-  });
-
-  test('identifies an undefined argument', () => {
-    const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', undefined);
-
-    expect(opts).toHaveLength(0);
-  });
-
-  test('identifies a number argument', () => {
+  test.each(throws)('parseCommandOptions(%o)', ([grp, cmd, opts], expected) => {
     expect(() => {
-      parseCommandOptions(CommandGroup.AnxCommon, 'version', 3);
-    }).toThrow('The type number is not supported for commandOptions, use object | string[] instead');
-  });
-
-  test('identifies an unsupported command', () => {
-    expect(() => {
-      parseCommandOptions(CommandGroup.AnxCommon, 'foo', {});
-    }).toThrow('The Anx command foo is not recognized');
-  });
-
-  describe('OptionKind.Flag', () => {
-
-    test('parses a null', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--raw': null });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--raw');
-    });
-
-    test('identifies a non-null value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--raw': true });
-      }).toThrow('Value type boolean is not supported for version option --raw, use null instead');
-    });
-
-  });
-
-  describe('OptionKind.Stuck', () => {
-
-    test('parses a number', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '-n': 2 });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('-n2');
-    });
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '-n': 'Arg' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('-nArg');
-    });
-
-    test('parses a null', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '-n': null });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('-n');
-    });
-
-    test('identifies an unexpected Stuck value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '-n': true });
-      }).toThrow('Value type boolean is not supported for _listTag option -n, use number | string | null instead');
-    });
-
-  });
-
-  describe('OptionKind.KeyValue', () => {
-
-    test('parses a [string, string]', () => {
-      const key = 'annex.largefiles';
-      const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'config', { '--set': [key, value] });
-
-      expect(opts).toEqual(['--set', key, value]);
-    });
-
-    test('identifies an unexpected KeyValue value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'config', { '--set': 'key=value' });
-      }).toThrow('Value type string is not supported for config option --set, use [string, string] instead');
-    });
-
-  });
-
-  describe('OptionKind.RepeatableKeyValue', () => {
-
-    test('parses a [string, string]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': ['name', 'value'] });
-
-      expect(opts).toEqual(['--c', 'name=value']);
-    });
-
-    test('parses a [string, string][2]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': [['name0', 'value0'], ['name1', 'value1']] });
-
-      expect(opts).toEqual(['--c', 'name0=value0', '--c', 'name1=value1']);
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': [] });
-      }).toThrow('Value type object is not supported for version option --c, use [string, string] | [string, string][] instead');
-    });
-
-    test('identifies an unexpected RepeatableKeyValue value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--c': {} });
-      }).toThrow('Value type object is not supported for version option --c, use [string, string] | [string, string][] instead');
-    });
-
-  });
-
-  describe('OptionKind.AnonymousKeyValue', () => {
-
-    test('parses a [string, string]', () => {
-      const key = 'easy-git-annex.test';
-      const value = 'true';
-      const opts = parseCommandOptions(CommandGroup.Git, 'config', { set: [key, value] });
-
-      expect(opts).toEqual([key, value]);
-    });
-
-    test('identifies an unexpected AnonymousKeyValue value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, 'config', { set: 'key=value' });
-      }).toThrow('Value type string is not supported for config option set, use [string, string] instead');
-    });
-
-  });
-
-  describe('OptionKind.Numeric', () => {
-
-    test('parses a number', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--numcopies': 2 });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--numcopies=2');
-    });
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--numcopies': '3' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--numcopies=3');
-    });
-
-    test('identifies an unexpected Numeric value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--numcopies': null });
-      }).toThrow('Value type object is not supported for version option --numcopies, use number | string instead');
-    });
-
-  });
-
-  describe('OptionKind.String', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--time-limit': '30m' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--time-limit=30m');
-    });
-
-    test('identifies an unexpected string value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--time-limit': 30 });
-      }).toThrow('Value type number is not supported for version option --time-limit, use string instead');
-    });
-
-  });
-
-  describe('OptionKind.OptionalString', () => {
-
-    test('parses a string value', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, 'status', { '--porcelain': 'v1' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--porcelain=v1');
-    });
-
-    test('parses a null value', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, 'status', { '--porcelain': null });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--porcelain');
-    });
-
-    test('identifies an unexpected OptionalString value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, 'status', { '--porcelain': 1 });
-      }).toThrow('Value type number is not supported for status option --porcelain, use string | null instead');
-    });
-
-  });
-
-  describe('OptionKind.StringParam', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, 'clone', { '--origin': 'nodeName' });
-
-      expect(opts).toEqual(['--origin', 'nodeName']);
-    });
-
-    test('identifies an unexpected StringParam value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, 'clone', { '--origin': 30 });
-      }).toThrow('Value type number is not supported for clone option --origin, use string instead');
-    });
-
-  });
-
-  describe('OptionKind.OptionalStringParam', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--merged': 'merged' });
-
-      expect(opts).toEqual(['--merged', 'merged']);
-    });
-
-    test('parses a null', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--merged': null });
-
-      expect(opts).toEqual(['--merged']);
-    });
-
-    test('identifies an unexpected OptionalStringParam value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '--merged': 30 });
-      }).toThrow('Value type number is not supported for _listTag option --merged, use string | null instead');
-    });
-
-  });
-
-  describe('OptionKind.CommaDelimitedStrings', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': 'Process' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--debugfilter=Process');
-    });
-
-    test('parses a string[1]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': ['Process'] });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--debugfilter=Process');
-    });
-
-    test('parses a string[2]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': ['Process', 'External'] });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--debugfilter=Process,External');
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': [] });
-      }).toThrow('Value type object is not supported for version option --debugfilter, use string | string[] instead');
-    });
-
-    test('identifies an unexpected CommaDelimitedStrings value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'version', { '--debugfilter': true });
-      }).toThrow('Value type boolean is not supported for version option --debugfilter, use string | string[] instead');
-    });
-
-  });
-
-  describe('OptionKind.OptionalCommaDelimitedStrings', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': 'Process' });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--column=Process');
-    });
-
-    test('parses a string[1]', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': ['Process'] });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--column=Process');
-    });
-
-    test('parses a string[2]', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': ['Process', 'External'] });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--column=Process,External');
-    });
-
-    test('parses a null', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': null });
-
-      expect(opts).toHaveLength(1);
-      expect(opts).toContain('--column');
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': [] });
-      }).toThrow('Value type object is not supported for _listTag option --column, use string | string[] | null instead');
-    });
-
-    test('identifies an unexpected CommaDelimitedStrings value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '--column': true });
-      }).toThrow('Value type boolean is not supported for _listTag option --column, use string | string[] | null instead');
-    });
-
-  });
-
-  describe('OptionKind.RepeatableString', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--sort': 'col' });
-
-      expect(opts).toEqual(['--sort=col']);
-    });
-
-    test('parses a string[2]', () => {
-      const opts = parseCommandOptions(CommandGroup.Git, '_listTag', { '--sort': ['col0', 'col1'] });
-
-      expect(opts).toEqual(['--sort=col0', '--sort=col1']);
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '--sort': [] });
-      }).toThrow('Value type object is not supported for _listTag option --sort, use string | string[] instead');
-    });
-
-    test('identifies an unexpected RepeatableString value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.Git, '_listTag', { '--sort': {} });
-      }).toThrow('Value type object is not supported for _listTag option --sort, use string | string[] instead');
-    });
-
-  });
-
-  describe('OptionKind.AnonymousStrings', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: '--exclude=\'*.mp3\'' });
-
-      expect(opts).toEqual(['--exclude=\'*.mp3\'']);
-    });
-
-    test('parses astring[3]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: ['--exclude=\'*.mp3\'', '--or', '--include=\'*.ogg\''] });
-
-      expect(opts).toEqual(['--exclude=\'*.mp3\'', '--or', '--include=\'*.ogg\'']);
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: [] });
-      }).toThrow('Value type object is not supported for list option matching, use string | string[] instead');
-    });
-
-    test('identifies an unexpected AnonymousStrings value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'list', { matching: 3 });
-      }).toThrow('Value type number is not supported for list option matching, use string | string[] instead');
-    });
-
-  });
-
-  describe('OptionKind.RepeatablePath', () => {
-
-    test('parses a string', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa/bbb/ccc' });
-
-      expect(opts).toEqual(['--content-of=aaa/bbb/ccc']);
-    });
-
-    test('parses a string[2]', () => {
-      const opts = parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa/bbb/ccc', 'xxx/yyy/zzz'] });
-
-      expect(opts).toEqual(['--content-of=aaa/bbb/ccc', '--content-of=xxx/yyy/zzz']);
-    });
-
-    test('identifies an empty array', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': [] });
-      }).toThrow('Value type object is not supported for sync option --content-of, use string | string[] instead');
-    });
-
-    test('identifies an unexpected RepeatablePath value', () => {
-      expect(() => {
-        parseCommandOptions(CommandGroup.AnxCommon, 'sync', { '--content-of': {} });
-      }).toThrow('Value type object is not supported for sync option --content-of, use string | string[] instead');
-    });
+      parseCommandOptions(grp, cmd, opts);
+    }).toThrow(expected);
 
   });
 

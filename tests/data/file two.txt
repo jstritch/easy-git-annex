@@ -1,1 +1,1 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing git annex typescript
+Lorem ipsum dolor sit amet, consectetur adipiscing easy git annex

@@ -1,0 +1,1 @@
+easy-git-annex verification file tests/data/file two 3.txt

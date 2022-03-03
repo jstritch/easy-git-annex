@@ -51,6 +51,16 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.CommaDelimitedKeyValue:
+            if (isKeyValue(cmdOptValue)) {
+              opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
+            } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
+              opts.push(cmdOpt.name, cmdOptValue.map((e) => { return `${e[0]}=${e[1]}`; }).join(','));
+            } else {
+              expectedType = '[string, string] | [string, string][]';
+            }
+            break;
+
           case OptionKind.RepeatableKeyValue:
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
@@ -72,6 +82,14 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.Numeric:
             if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else {
+              expectedType = 'number | string';
+            }
+            break;
+
+          case OptionKind.NumericParam:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue.toString());
             } else {
               expectedType = 'number | string';
             }

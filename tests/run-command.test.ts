@@ -2,14 +2,12 @@ import { CommandParameters, runCommand, RunCommandResult } from '../src/helpers/
 import { cloneEnv } from './helpers';
 import { CommandResult } from '../src/interfaces/command-result';
 
-describe('toCommandResultString', () => {
+describe('CommandResult', () => {
 
-  test('reports the member variables', () => {
-
+  test('toCommandResultString()', () => {
     const commandResult = new RunCommandResult('someDir', 'someExe', ['foo', 'bar', 'baz'], 42, 'good stuff', 'other stuff');
     const resultString = commandResult.toCommandResultString();
     const expected = 'The command: someExe foo bar baz\nfor repository someDir\nreturned exit code: 42\nout: good stuff\nerr: other stuff';
-
     expect(resultString).toBe(expected);
   });
 
@@ -199,12 +197,12 @@ describe('runCommand', () => {
 
   function onConsoleOut(data: string): void {
     conOut += data;
-    throw new Error('Boo from stdout!');
+    throw new Error('This is a test error from stdout. No need to diagnose below here.');
   }
 
   function onConsoleErr(data: string): void {
     conErr += data;
-    throw new Error('Boo from stderr!');
+    throw new Error('This is a test error from stderr. No need to diagnose below here.');
   }
 
   test('invokes a user-supplied stdout handler', async () => {
