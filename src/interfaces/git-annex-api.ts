@@ -7,6 +7,7 @@ import { CommandResult } from './command-result';
 import { CommitOptions } from './commit-options';
 import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
+import { ForEachRefOptions } from './for-each-ref-options';
 import { FsckAnxOptions } from './fsck-anx-options';
 import { FsckGitOptions } from './fsck-git-options';
 import { InfoOptions } from './info-options';
@@ -447,6 +448,21 @@ export interface GitAnnexAPI {
   configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Reports information about each ref.
+   *
+   * Consult the
+   * [git for-each-ref documentation](https://git-scm.com/docs/git-for-each-ref)
+   * for additional information.
+   * @param gitOptions The ForEachRefOptions for the command.
+   * @param pattern Filters refs using either fnmatch(3) or
+   * matching completely or from the beginning up to a slash.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git tag result.
+   * @category Inspection
+   */
+  forEachRef(gitOptions?: ForEachRefOptions | string[], pattern?: string | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Verifies the connectivity and validity of objects in git.
    *
    * Consult the
@@ -541,7 +557,6 @@ export interface GitAnnexAPI {
 
   /**
    * Creates, deletes, or lists tag objects.
-   * When called without parameters all tags are listed.
    *
    * Consult the
    * [git tag documentation](https://git-scm.com/docs/git-tag)
@@ -616,4 +631,15 @@ export interface GitAnnexAPI {
    * @category Contents
    */
   getStatusGit(relativePaths?: string | string[]): Promise<StatusGit[]>;
+
+  /**
+   * Obtains an array of tag names.
+   * @param pattern Filters tags using either fnmatch(3) or
+   * matching completely or from the beginning up to a slash.
+   * @param ignoreCase Specify true to make sorting and filtering tags case insensitive.
+   * @returns An array containing the tag names.
+   * The array elements are ordered by `*refname`.
+   * @category Contents
+   */
+  getTagNames(pattern?: string, ignoreCase?: boolean): Promise<string[]>;
 }
