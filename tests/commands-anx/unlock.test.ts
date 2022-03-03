@@ -17,12 +17,10 @@ describe('unlock', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('produces --json output', async () => {
+  test('unlocks files', async () => {
     await copyAddAnxCommit(allTestFiles, repositoryPath, 'add test files for unlock');
-    const rslt = await myAnx.unlock(allTestFiles, { '--json': null });
+    const rslt = await myAnx.unlock(allTestFiles);
     expect(rslt.exitCode).toBe(0);
-    const actionResults = anx.safeParseToArray(anx.isActionResult, rslt.out);
-    expect(actionResults).toHaveLength(3);
   });
 
 });
