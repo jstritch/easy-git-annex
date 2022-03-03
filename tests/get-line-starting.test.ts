@@ -11,40 +11,40 @@ upgrade supported from repository versions: 0 1 2 3 4 5 6 7`;
 
 describe('getLineStarting', () => {
 
-  test('returns the entire line', () => {
-    expect(anx.getLineStarting(versionOutput, 'git-annex version: ', true)).toBe('git-annex version: 8.20211118-g23ee48898');
-  });
+  const tests: [[string, string, boolean], unknown][] = [
+    [[versionOutput, 'git-annex version:', true], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, 'git-annex version:', false], ' 8.20211118-g23ee48898'],
+    [[versionOutput, 'git-annex version: ', true], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, 'git-annex version: ', false], '8.20211118-g23ee48898'],
+    [[versionOutput, 'git-annex version: 8.20211118-g23ee48898', true], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, 'git-annex version: 8.20211118-g23ee48898', false], ''],
+    [[versionOutput, '', true], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, '', false], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, 'lorem ipsum', true], undefined],
+    [[versionOutput, 'lorem ipsum', false], undefined],
+    [['', '', true], ''],
+    [['', '', false], ''],
+  ];
 
-  test('returns the entire line when nothing follows the prefix', () => {
-    expect(anx.getLineStarting(versionOutput, 'git-annex version: 8.20211118-g23ee48898', true)).toBe('git-annex version: 8.20211118-g23ee48898');
-  });
-
-  test('removes the prefix', () => {
-    expect(anx.getLineStarting(versionOutput, 'remote types: ', false)).toBe('git gcrypt p2p S3 bup directory rsync web bittorrent webdav adb tahoe glacier ddar git-lfs httpalso borg hook external');
-  });
-
-  test('returns an empty string when nothing follows the prefix', () => {
-    expect(anx.getLineStarting(versionOutput, 'operating system: linux x86_64', false)).toBe('');
-  });
-
-  test('returns undefined when the prefix does not exist', () => {
-    expect(anx.getLineStarting(versionOutput, 'REMOTE TYPES: ', false)).toBeUndefined();
+  test.each(tests)('getLineStarting(%o)', ([str, prefix, includePrefix], expected) => {
+    const line = anx.getLineStarting(str, prefix, includePrefix);
+    expect(line).toEqual(expected);
   });
 
 });
 
 describe('getLineStartingAsArray', () => {
 
-  test('returns the array', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'upgrade supported from repository versions:')).toHaveLength(8);
-  });
+  const tests: [[string, string], string[]][] = [
+    [[versionOutput, 'upgrade supported from repository versions:'], ['0', '1', '2', '3', '4', '5', '6', '7']],
+    [[versionOutput, 'upgrade supported from repository versions: '], ['0', '1', '2', '3', '4', '5', '6', '7']],
+    [[versionOutput, 'operating system: linux x86_64'], []],
+    [[versionOutput, 'REMOTE TYPES:'], []],
+  ];
 
-  test('returns an empty string[] when nothing follows the prefix', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'operating system: linux x86_64')).toHaveLength(0);
-  });
-
-  test('returns an empty string[] when the prefix does not exist', () => {
-    expect(anx.getLineStartingAsArray(versionOutput, 'REMOTE TYPES: ')).toHaveLength(0);
+  test.each(tests)('getLineStartingAsArray(%o)', ([str, prefix], expected) => {
+    const a = anx.getLineStartingAsArray(str, prefix);
+    expect(a).toEqual(expect.arrayContaining(expected));
   });
 
 });

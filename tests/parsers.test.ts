@@ -1,8 +1,8 @@
-import { parseBigInt, parseNumber, parseUnixDate } from '../src/helpers/parsers';
+import { parseBigInt, parseNumber, parseOptionalString, parseUnixDate } from '../src/helpers/parsers';
 
-describe('parseBigInt', () => {
+describe('parsers', () => {
 
-  const tests: [string, unknown][] = [
+  const bigIntTests: [string, unknown][] = [
     ['0', BigInt(0)],
     ['42', BigInt(42)],
     ['-42', BigInt(-42)],
@@ -21,15 +21,11 @@ describe('parseBigInt', () => {
     ['0b1010', undefined],
   ];
 
-  test.each(tests)('parse "%s"', (s, want) => {
-    expect(parseBigInt(s)).toEqual(want);
+  test.each(bigIntTests)('parseBigInt(%s)', (s, expected) => {
+    expect(parseBigInt(s)).toEqual(expected);
   });
 
-});
-
-describe('parseNumber', () => {
-
-  const tests: [string, unknown][] = [
+  const numberTests: [string, unknown][] = [
     ['0', 0],
     ['42', 42],
     ['-42', -42],
@@ -78,15 +74,20 @@ describe('parseNumber', () => {
     ['0b1010', 10],
   ];
 
-  test.each(tests)('parse "%s"', (s, want) => {
-    expect(parseNumber(s)).toEqual(want);
+  test.each(numberTests)('parseNumber(%s)', (s, expected) => {
+    expect(parseNumber(s)).toEqual(expected);
   });
 
-});
+  const optionalStringTests: [string, string | undefined][] = [
+    ['a', 'a'],
+    ['', undefined],
+  ];
 
-describe('parseUnixDate', () => {
+  test.each(optionalStringTests)('parseOptionalString(%s)', (s, expected) => {
+    expect(parseOptionalString(s)).toEqual(expected);
+  });
 
-  const tests: [string, unknown][] = [
+  const unixDateTests: [string, unknown][] = [
     ['1643998240', new Date('2022-02-04T18:10:40Z')],
     ['1644327988', new Date('2022-02-08T13:46:28Z')],
     [' 1644327988', new Date('2022-02-08T13:46:28Z')],
@@ -103,8 +104,8 @@ describe('parseUnixDate', () => {
     ['0b1010', undefined],
   ];
 
-  test.each(tests)('parse "%s"', (s, want) => {
-    expect(parseUnixDate(s)).toEqual(want);
+  test.each(unixDateTests)('parseUnixDate(%s)', (s, expected) => {
+    expect(parseUnixDate(s)).toEqual(expected);
   });
 
 });

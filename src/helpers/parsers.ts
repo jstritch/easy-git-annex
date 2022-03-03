@@ -1,18 +1,4 @@
 /**
- * Parser defines the signature of a string parsing function.
- * Parser functions return undefined when the string fails to convert.
- * @category Helper
- */
-
-export interface Parser {
-  /**
-   * @param s The string to parse.
-   * @returns The parsed value if successful; otherwise, undefined.
-   */
-  (s: string): unknown;
-}
-
-/**
  * Converts a string to a bigint.
  * @param s The string to parse.
  * @returns A bigint representation of s if successful; otherwise, undefined.
@@ -45,6 +31,16 @@ export function parseNumber(s: string): number | undefined {
   } catch {
     return undefined;
   }
+}
+
+/**
+ * Converts a string to an optional string.
+ * @param s The string to parse.
+ * @returns If s has non-zero length, s; otherwise, undefined.
+ * @category Helper
+ */
+export function parseOptionalString(s: string): string | undefined {
+  return s.length > 0 ? s : undefined;
 }
 
 /**
