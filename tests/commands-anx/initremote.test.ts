@@ -20,25 +20,12 @@ describe('initremote', () => {
 
   test('adds a remote', async () => {
     const remoteName = 'annex-remote';
-    const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
-
-    expect(initResult.exitCode).toBe(0);
-
-    const enableRemoteResult = await myAnx.enableremote();
-
-    expect(enableRemoteResult.err).toContain(remoteName);
+    const rslt = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
+    expect(rslt.exitCode).toBe(0);
 
     const remoteNames = await myAnx.getRemoteNames();
-
     expect(remoteNames).toHaveLength(1);
     expect(remoteNames).toContain(remoteName);
-  });
-
-  test('reports missing remote configuration', async () => {
-    const remoteName = 'annex-remote';
-    const initResult = await myAnx.initremote(remoteName, 'directory', ['directory', remotePath]);
-
-    expect(initResult.exitCode).not.toBe(0);
   });
 
 });

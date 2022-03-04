@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { createRepository, deleteDirectory } from '../helpers';
 
-describe('reinit', () => {
+describe('describeAnx()', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -14,15 +14,18 @@ describe('reinit', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('reinitializes a git repository', async () => {
-    const uuid = '73c6cc5e-4d37-11ec-b03c-4728df437afb';
-    const rslt = await myAnx.reinit(uuid);
+  test('changes the description of a git repository', async () => {
+    const description = 'anx repository test description';
+    let rslt = await myAnx.initAnx(description);
+    expect(rslt.exitCode).toBe(0);
+
+    const newDescription = 'anx repository test new description';
+    rslt = await myAnx.describeAnx('here', newDescription);
     expect(rslt.exitCode).toBe(0);
 
     const repositoryInfos = await myAnx.getRepositories();
     const here = repositoryInfos.find((repository) => { return repository.here; });
-    expect(repositoryInfos).toHaveLength(3);
-    expect(here?.uuid).toBe(uuid);
+    expect(here?.description).toBe(newDescription);
   });
 
 });

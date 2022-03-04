@@ -88,7 +88,7 @@ export interface GitAnnexAPI {
    * @returns The git-annex describe result.
    * @category Setup
    */
-  describe(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  describeAnx(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Enables use of an existing remote in the current repository.

@@ -118,7 +118,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async describe(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async describeAnx(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'describe', anxOptions, repository, description);
     return this.runAnx(args, apiOptions);
   }

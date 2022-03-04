@@ -19,27 +19,33 @@ describe('remote', () => {
 
   test('adds a remote', async () => {
     const remoteName = 'fountainhead';
-    const addResult = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+    let rslt = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(addResult.exitCode).toBe(0);
-
-    const remoteNames = await myAnx.getRemoteNames();
-
-    expect(remoteNames).toHaveLength(1);
-    expect(remoteNames).toContain(remoteName);
+    rslt = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(remoteName);
+    expect(rslt.out).toContain(remotePath);
   });
 
-  test('accepts only the --verbose option', async () => {
-    const remoteName = 'fountainhead';
-    const addResult = await myAnx.remote(anx.RemoteCommand.Add, [remoteName, remotePath]);
+});
 
-    expect(addResult.exitCode).toBe(0);
+describe('RemoteOptions', () => {
+  let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
 
-    const showResult = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
-
-    expect(showResult.exitCode).toBe(0);
-    expect(showResult.out).toContain(remoteName);
-    expect(showResult.out).toContain(remotePath);
+  beforeAll(() => {
+    repositoryPath = process.cwd();
+    myAnx = anx.createAccessor(repositoryPath);
   });
 
+  const tests: [anx.RemoteOptions, string[]][] = [
+    [{ '--verbose': null }, ['--verbose']],
+  ];
+
+  test.each(tests)('RemoteOptions "%o"', async (gitOptions, expected) => {
+    const rslt = await myAnx.remote(undefined, undefined, gitOptions, { noOp: true });
+    expect(rslt.exitCode).toBeNaN();
+    expect(rslt.args).toEqual(expect.arrayContaining(expected));
+  });
 });

@@ -1,12 +1,5 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
-import { promises as fs } from 'fs';
-
-const projectPath = process.cwd();
-const textFile1 = 'file one.txt';
-const textFile1Path = path.join(projectPath, 'tests', 'data', textFile1);
-const textFile2 = 'file two.txt';
+import { copyAddGitCommit, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 
 describe('getStatusGit', () => {
   let repositoryPath: string;
@@ -23,39 +16,27 @@ describe('getStatusGit', () => {
   });
 
   test('shows an untracked file', async () => {
+    await copyFile(TestFile.TXT1, repositoryPath);
 
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
     const statusGit = await myAnx.getStatusGit();
-
     expect(statusGit).toHaveLength(1);
     expect(statusGit[0].x).toBe('?');
     expect(statusGit[0].y).toBe('?');
-    expect(statusGit[0].path).toContain(textFile1);
+    expect(statusGit[0].path).toContain(TestFile.TXT1);
     expect(statusGit[0].origPath).toBeUndefined();
   });
 
   test('includes origPath for a renamed file', async () => {
-
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    const addResult = await myAnx.runGit(['add', textFile1]);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit(textFile1, { '--message': 'add one text file' });
-
-    expect(commitResult.exitCode).toBe(0);
-
-    const mvResult = await myAnx.mv(textFile1, textFile2);
-
-    expect(mvResult.exitCode).toBe(0);
+    await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add one text file for getStatusGit');
+    const rslt = await myAnx.mv(TestFile.TXT1, TestFile.TXT2);
+    expect(rslt.exitCode).toBe(0);
 
     const statusGit = await myAnx.getStatusGit();
-
     expect(statusGit).toHaveLength(1);
     expect(statusGit[0].x).toBe('R');
     expect(statusGit[0].y).toBe(' ');
-    expect(statusGit[0].path).toContain(textFile2);
-    expect(statusGit[0]?.origPath).toContain(textFile1);
+    expect(statusGit[0].path).toContain(TestFile.TXT2);
+    expect(statusGit[0]?.origPath).toContain(TestFile.TXT1);
   });
 
 });

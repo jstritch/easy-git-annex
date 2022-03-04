@@ -17,14 +17,12 @@ describe('group', () => {
 
   test('places the repository in a group', async () => {
     const groupname = 'client';
-    const result = await myAnx.group('here', groupname);
+    let rslt = await myAnx.group('here', groupname);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(result.exitCode).toBe(0);
-
-    const getResult = await myAnx.group('here');
-
-    expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toContain(groupname);
+    rslt = await myAnx.group('here');
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(groupname);
   });
 
 });

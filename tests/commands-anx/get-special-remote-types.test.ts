@@ -9,7 +9,6 @@ describe('getSpecialRemoteTypes', () => {
 
   test('returns the array', async () => {
     const remoteTypes = await myAnx.getSpecialRemoteTypes();
-
     expect(remoteTypes.length).toBeGreaterThan(0);
   });
 

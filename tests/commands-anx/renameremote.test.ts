@@ -21,22 +21,14 @@ describe('renameremote', () => {
   test('renames a remote', async () => {
     const remoteName = 'annex-remote';
     const newName = 'annex-renamed';
-    const initResult = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
+    let rslt = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
+    expect(rslt.exitCode).toBe(0);
+    rslt = await myAnx.renameremote(remoteName, newName);
+    expect(rslt.exitCode).toBe(0);
 
-    expect(initResult.exitCode).toBe(0);
-
-    const enableRemoteResult1 = await myAnx.enableremote();
-
-    expect(enableRemoteResult1.err).toContain(remoteName);
-    expect(enableRemoteResult1.err).not.toContain(newName);
-
-    const renameRemoteResult = await myAnx.renameremote(remoteName, newName);
-
-    expect(renameRemoteResult.exitCode).toBe(0);
-
-    const enableRemoteResult2 = await myAnx.enableremote();
-
-    expect(enableRemoteResult2.err).toContain(newName);
+    rslt = await myAnx.enableremote(newName, ['directory', remotePath]);
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(`enableremote ${newName} ok`);
   });
 
 });

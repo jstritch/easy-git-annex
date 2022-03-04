@@ -19,23 +19,19 @@ describe('configAnx', () => {
     const key = 'annex.largefiles';
     const value = 'include=*.m4a or include=*.jpg or include=*.itl or include=*.db';
 
-    const result = await myAnx.configAnx({ '--set': [key, value] });
+    let rslt = await myAnx.configAnx({ '--set': [key, value] });
+    expect(rslt.exitCode).toBe(0);
 
-    expect(result.exitCode).toBe(0);
+    rslt = await myAnx.configAnx({ '--get': key });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(value);
 
-    const getResult = await myAnx.configAnx({ '--get': key });
+    rslt = await myAnx.configAnx({ '--unset': key });
+    expect(rslt.exitCode).toBe(0);
 
-    expect(getResult.exitCode).toBe(0);
-    expect(getResult.out).toContain(value);
-
-    const unsetResult = await myAnx.configAnx({ '--unset': key });
-
-    expect(unsetResult.exitCode).toBe(0);
-
-    const getResult2 = await myAnx.configAnx({ '--get': key });
-
-    expect(getResult2.exitCode).toBe(0);
-    expect(getResult2.out).toBe('');
+    rslt = await myAnx.configAnx({ '--get': key });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toBe('');
   });
 
 });
