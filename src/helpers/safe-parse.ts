@@ -1,7 +1,6 @@
 /**
  * Parses a JSON string to the specified type.
  * @param guard The type predicate to validate the deserialized object.
- * Application defined type predicates may be passed to safeParse.
  * @param json The JSON string to parse.
  * @returns The desrialized object, if the type guard function returns true; otherwise, undefined.
  * @category Helper
@@ -19,7 +18,6 @@ export function safeParse<T>(guard: (o: unknown) => o is T, json: string): T | u
  * Parses a multi-line string with one JSON object per line to an array of the specified type.
  * Objects not passing the type guard are silently filtered out of the result set.
  * @param guard The type predicate to validate each deserialized object.
- * Application defined type predicates may be passed to safeParseToArray.
  * @param text The JSON strings to parse.
  * @returns An array containing the desrialized objects passing the type guard function.
  * @category Helper

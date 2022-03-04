@@ -1,5 +1,5 @@
 /**
- * RemoteCommand defines the subcommands recognized by the git remote command.
+ * RemoteCommand defines the subcommands recognized by the Git remote command.
  */
 export enum RemoteCommand {
   Add = 'add',
@@ -15,13 +15,13 @@ export enum RemoteCommand {
 }
 
 /**
- * RemoteOptions defines the supported options for the git remote command.
+ * RemoteOptions defines the supported options for the Git remote command.
  * @category Command Options
  */
 export interface RemoteOptions {
 
   /**
-   * Be a little more verbose and show remote url after name.
+   * Shows the remote url after the name.
    */
   '--verbose'?: null;
 }
