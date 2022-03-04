@@ -1,32 +1,32 @@
 ## vNext
 * Add GitAnnexAPI methods
-  * forEachRef
-  * getTagNames
+    * forEachRef
+    * getTagNames
 * Add generic functions to return application-defined JavaScript objects
-  * getRefs
-  * getTags
+    * getRefs
+    * getTags
 * Add Parser interface and implementations
-  * parseBigInt
-  * parseNumber
-  * parseOptionalString
-  * parseUnixDate
+    * parseBigInt
+    * parseNumber
+    * parseOptionalString
+    * parseUnixDate
 * Add type predicates
-  * isBigInt
-  * isDate
-  * isRepositoryInfo
-  * isStatusGit
+    * isBigInt
+    * isDate
+    * isRepositoryInfo
+    * isStatusGit
 * Additional command options in
-  * AddAnxOptions
-  * CloneOptions
-  * CommitOptions
-  * InfoOptions
-  * InitGitOptions
-  * LockOptions
-  * RmOptions
-  * StatusAnxOptions
-  * SyncOptions
-  * TagOptions
-  * UnlockOptions
+    * AddAnxOptions
+    * CloneOptions
+    * CommitOptions
+    * InfoOptions
+    * InitGitOptions
+    * LockOptions
+    * RmOptions
+    * StatusAnxOptions
+    * SyncOptions
+    * TagOptions
+    * UnlockOptions
 * Add ApiOptions.noOp flag
 * Rename GitAnnexAPI.describe to describeAnx
 * Made RepositoryInfo.trustLevel optional
