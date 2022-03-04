@@ -1,7 +1,19 @@
+import { RepositoryInfo, TrustLevel } from '../interfaces/repository-info';
 import { Action } from '../interfaces/action';
 import { ActionProgress } from '../interfaces/action-progress';
 import { ActionResult } from '../interfaces/action-result';
 import { StatusAnx } from '../interfaces/status-anx';
+import { StatusGit } from '../interfaces/status-git';
+
+/**
+ * Determines if an object is a bigint.
+ * @param o The object to examine.
+ * @returns True if o is a bigint; otherwise, false.
+ * @category Type Predicate
+ */
+export function isBigInt(o: unknown): o is bigint {
+  return typeof o === 'bigint';
+}
 
 /**
  * Determines if an object is a boolean.
@@ -11,6 +23,16 @@ import { StatusAnx } from '../interfaces/status-anx';
  */
 export function isBoolean(o: unknown): o is boolean {
   return typeof o === 'boolean';
+}
+
+/**
+ * Determines if an object is a Date.
+ * @param o The object to examine.
+ * @returns True if o is a Date; otherwise, false.
+ * @category Type Predicate
+ */
+export function isDate(o: unknown): o is Date {
+  return o instanceof Date;
 }
 
 /**
@@ -119,6 +141,21 @@ export function isActionResult(o: unknown): o is ActionResult {
 }
 
 /**
+ * Determines if an object is a [[RepositoryInfo]].
+ * @param o The object to examine.
+ * @returns True if o is a RepositoryInfo; otherwise, false.
+ * @category Type Predicate
+ */
+export function isRepositoryInfo(o: unknown): o is RepositoryInfo {
+  if (!isRecord(o)) { return false; }
+  if (!isString(o['uuid'])) { return false; }
+  if (!isString(o['description'])) { return false; }
+  if (!isBoolean(o['here'])) { return false; }
+  if ('trustLevel' in o && !Object.values(TrustLevel).includes(o['trustLevel'] as TrustLevel)) { return false; }
+  return true;
+}
+
+/**
  * Determines if an object is a [[StatusAnx]].
  * @param o The object to examine.
  * @returns True if o is a StatusAnx; otherwise, false.
@@ -129,5 +166,20 @@ export function isStatusAnx(o: unknown): o is StatusAnx {
   if (!isString(o['file'])) { return false; }
   if (!isString(o['status'])) { return false; }
   if (!isStringArray(o['error-messages'])) { return false; }
+  return true;
+}
+
+/**
+ * Determines if an object is a [[StatusGit]].
+ * @param o The object to examine.
+ * @returns True if o is a StatusGit; otherwise, false.
+ * @category Type Predicate
+ */
+export function isStatusGit(o: unknown): o is StatusGit {
+  if (!isRecord(o)) { return false; }
+  if (!isString(o['x'])) { return false; }
+  if (!isString(o['y'])) { return false; }
+  if (!isString(o['path'])) { return false; }
+  if ('origPath' in o && !isString(o['origPath'])) { return false; }
   return true;
 }
