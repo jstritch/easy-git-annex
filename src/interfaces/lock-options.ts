@@ -13,6 +13,11 @@ export interface LockOptions extends AnnexOptions {
   '--json'?: null;
 
   /**
+   * Includes error messages in the json instead of sending them to standard error.
+   */
+  '--json-error-messages'?: null;
+
+  /**
   * Specifies the file matching options.
   *
   * Matching is an anonymous option. The name `matching` is not presented to the git-annex command.

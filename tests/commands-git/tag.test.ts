@@ -1,25 +1,17 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
-import { promises as fs } from 'fs';
-
-const projectPath = process.cwd();
-const file1 = 'file one.jpg';
-const file1Path = path.join(projectPath, 'tests', 'data', file1);
-const file2 = 'file one.txt';
-const file2Path = path.join(projectPath, 'tests', 'data', file2);
+import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 
 describe('tag', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
     await setRepositoryAuthor(repositoryPath);
   });
 
-  afterEach(async () => {
+  afterAll(async () => {
     await deleteDirectory(repositoryPath);
   });
 
@@ -28,57 +20,86 @@ describe('tag', () => {
     const tag2 = 'v1.1';
     const tag3 = 'v2.0';
 
-    await fs.copyFile(file1Path, path.join(repositoryPath, file1));
-    const addResult1 = await myAnx.runGit(['add', file1]);
+    await copyAddGitCommit(TestFile.JPG1, repositoryPath, 'add first file');
 
-    expect(addResult1.exitCode).toBe(0);
+    let rslt = await myAnx.tag(tag1);
+    expect(rslt.exitCode).toBe(0);
 
-    const commitResult1 = await myAnx.commit(file1, { '--message': 'add first file' });
+    rslt = await myAnx.tag(tag2, { '--annotate': null, '--message': 'the second tag' });
+    expect(rslt.exitCode).toBe(0);
 
-    expect(commitResult1.exitCode).toBe(0);
+    rslt = await myAnx.tag(tag3, { '--message': 'the third tag' });
+    expect(rslt.exitCode).toBe(0);
 
-    const result1 = await myAnx.tag(tag1);
+    rslt = await myAnx.tag();
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(tag1);
+    expect(rslt.out).toContain(tag2);
+    expect(rslt.out).toContain(tag3);
 
-    expect(result1.exitCode).toBe(0);
+    await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add second file');
 
-    const result2 = await myAnx.tag(tag2, { '--annotate': null, '--message': 'the second release' });
+    rslt = await myAnx.tag(tag3, { '--force': null, '--message': 'the third tag, revised' });
+    expect(rslt.exitCode).toBe(0);
 
-    expect(result2.exitCode).toBe(0);
+    rslt = await myAnx.tag(tag1, { '--delete': null });
+    expect(rslt.exitCode).toBe(0);
 
-    const result3 = await myAnx.tag(tag3, { '--message': 'the third release' });
-
-    expect(result3.exitCode).toBe(0);
-
-    const listCreatedResult = await myAnx.tag();
-
-    expect(listCreatedResult.exitCode).toBe(0);
-    expect(listCreatedResult.out).toContain(tag1);
-    expect(listCreatedResult.out).toContain(tag2);
-    expect(listCreatedResult.out).toContain(tag3);
-
-    await fs.copyFile(file2Path, path.join(repositoryPath, file2));
-    const addResult2 = await myAnx.runGit(['add', file2]);
-
-    expect(addResult2.exitCode).toBe(0);
-
-    const commitResult2 = await myAnx.commit(file2, { '--message': 'add second file' });
-
-    expect(commitResult2.exitCode).toBe(0);
-
-    const result4 = await myAnx.tag(tag3, { '--force': null, '--message': 'the third release, revised' });
-
-    expect(result4.exitCode).toBe(0);
-
-    const result5 = await myAnx.tag(tag2, { '--delete': null });
-
-    expect(result5.exitCode).toBe(0);
-
-    const listRevisedResult = await myAnx.tag();
-
-    expect(listRevisedResult.exitCode).toBe(0);
-    expect(listRevisedResult.out).toContain(tag1);
-    expect(listRevisedResult.out).not.toContain(tag2);
-    expect(listRevisedResult.out).toContain(tag3);
+    rslt = await myAnx.tag();
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).not.toContain(tag1);
+    expect(rslt.out).toContain(tag2);
+    expect(rslt.out).toContain(tag3);
   });
 
+});
+
+describe('TagOptions', () => {
+  let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
+
+  beforeAll(() => {
+    repositoryPath = process.cwd();
+    myAnx = anx.createAccessor(repositoryPath);
+  });
+
+  const tests: [anx.TagOptions, string[]][] = [
+    [{ '-n': null }, ['-n']],
+    [{ '-n': 3 }, ['-n3']],
+    [{ '-n': '7' }, ['-n7']],
+    [{ '--annotate': null }, ['--annotate']],
+    [{ '--cleanup': 'strip' }, ['--cleanup=strip']],
+    [{ '--column': null }, ['--column']],
+    [{ '--column': ['always', 'nodense'] }, ['--column=always,nodense']],
+    [{ '--contains': null }, ['--contains']],
+    [{ '--contains': 'HEAD' }, ['--contains', 'HEAD']],
+    [{ '--create-reflog': null }, ['--create-reflog']],
+    [{ '--delete': null }, ['--delete']],
+    [{ '--force': null }, ['--force']],
+    [{ '--format': '%(taggerdate:unix)' }, ['--format=%(taggerdate:unix)']],
+    [{ '--ignore-case': null }, ['--ignore-case']],
+    [{ '--list': null }, ['--list']],
+    [{ '--local-user': 'keyid' }, ['--local-user=keyid']],
+    [{ '--merged': null }, ['--merged']],
+    [{ '--merged': 'HEAD' }, ['--merged', 'HEAD']],
+    [{ '--message': 'tag contents' }, ['--message=tag contents']],
+    [{ '--no-column': null }, ['--no-column']],
+    [{ '--no-contains': null }, ['--no-contains']],
+    [{ '--no-contains': 'HEAD' }, ['--no-contains', 'HEAD']],
+    [{ '--no-create-reflog': null }, ['--no-create-reflog']],
+    [{ '--no-merged': null }, ['--no-merged']],
+    [{ '--no-merged': 'HEAD' }, ['--no-merged', 'HEAD']],
+    [{ '--no-sign': null }, ['--no-sign']],
+    [{ '--points-at': null }, ['--points-at']],
+    [{ '--points-at': 'HEAD' }, ['--points-at', 'HEAD']],
+    [{ '--sign': null }, ['--sign']],
+    [{ '--sort': 'key' }, ['--sort=key']],
+    [{ '--verify': null }, ['--verify']],
+  ];
+
+  test.each(tests)('TagOptions "%o"', async (gitOptions, expected) => {
+    const rslt = await myAnx.tag(undefined, gitOptions, { noOp: true });
+    expect(rslt.exitCode).toBeNaN();
+    expect(rslt.args).toEqual(expect.arrayContaining(expected));
+  });
 });

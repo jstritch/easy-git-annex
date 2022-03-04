@@ -1,18 +1,5 @@
 import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
-import { promises as fs } from 'fs';
-
-const projectPath = process.cwd();
-const nonexistentFile = 'lorem ipsum.txt';
-const binaryFile1 = 'file one.jpg';
-const binaryFile1Path = path.join(projectPath, 'tests', 'data', binaryFile1);
-const binaryFile2 = 'file two.jpg';
-const binaryFile2Path = path.join(projectPath, 'tests', 'data', binaryFile2);
-const textFile1 = 'file one.txt';
-const textFile1Path = path.join(projectPath, 'tests', 'data', textFile1);
-const textFile2 = 'file two.txt';
-const textFile2Path = path.join(projectPath, 'tests', 'data', textFile2);
+import { copyAddGit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 
 describe('commit', () => {
   let repositoryPath: string;
@@ -29,76 +16,47 @@ describe('commit', () => {
   });
 
   test('commits one binary file', async () => {
+    await copyAddGit(TestFile.JPG1, repositoryPath);
 
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    const addResult = await myAnx.runGit(['add', binaryFile1]);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit(binaryFile1, { '--message': 'add one binary file' });
-
-    expect(commitResult.exitCode).toBe(0);
-    expect(commitResult.out).toContain(binaryFile1);
+    const rslt = await myAnx.commit(TestFile.JPG1, { '--message': 'add one binary file for commit' });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(TestFile.JPG1);
   });
 
   test('commits an array of files', async () => {
+    await copyAddGit(TestFile.JPG1, repositoryPath);
+    await copyAddGit(TestFile.TXT1, repositoryPath);
 
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    const addResult = await myAnx.runGit(['add', binaryFile1, textFile1]);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit([binaryFile1, textFile1], { '--message': 'add one binary and one text file' });
-
-    expect(commitResult.exitCode).toBe(0);
-    expect(commitResult.out).toContain(binaryFile1);
-    expect(commitResult.out).toContain(textFile1);
+    const rslt = await myAnx.commit([TestFile.JPG1, TestFile.TXT1], { '--message': 'add one binary and one text file for commit' });
+    expect(rslt.exitCode).toBe(0);
+    expect(rslt.out).toContain(TestFile.JPG1);
+    expect(rslt.out).toContain(TestFile.TXT1);
   });
 
-  test('commits all files', async () => {
+});
 
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.runGit(['add', '.']);
+describe('CommitOptions', () => {
+  let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
 
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit(undefined, { '--message': 'add all four files' });
-
-    expect(commitResult.exitCode).toBe(0);
-    expect(commitResult.out).toContain(binaryFile1);
-    expect(commitResult.out).toContain(binaryFile2);
-    expect(commitResult.out).toContain(textFile1);
-    expect(commitResult.out).toContain(textFile2);
+  beforeAll(() => {
+    repositoryPath = process.cwd();
+    myAnx = anx.createAccessor(repositoryPath);
   });
 
-  test('reports a nonexistent file', async () => {
+  const tests: [anx.CommitOptions, string[]][] = [
+    [{ '--all': null }, ['--all']],
+    [{ '--amend': null }, ['--amend']],
+    [{ '--gpg-sign': null }, ['--gpg-sign']],
+    [{ '--gpg-sign': 'A' }, ['--gpg-sign=A']],
+    [{ '--message': 'A B' }, ['--message=A B']],
+    [{ '--no-gpg-sign': null }, ['--no-gpg-sign']],
+    [{ '--quiet': null }, ['--quiet']],
+  ];
 
-    const commitResult = await myAnx.commit(nonexistentFile, { '--message': 'add nonexistent file' });
-
-    expect(commitResult.exitCode).not.toBe(0);
-    expect(commitResult.err).toContain(nonexistentFile);
-    expect(commitResult.out).toBe('');
+  test.each(tests)('CommitOptions "%o"', async (gitOptions, expected) => {
+    const rslt = await myAnx.commit(TestFile.JPG1, gitOptions, { noOp: true });
+    expect(rslt.exitCode).toBeNaN();
+    expect(rslt.args).toEqual(expect.arrayContaining(expected));
   });
-
-  test('reports a nonexistent file in an array of files', async () => {
-
-    await fs.copyFile(binaryFile1Path, path.join(repositoryPath, binaryFile1));
-    await fs.copyFile(binaryFile2Path, path.join(repositoryPath, binaryFile2));
-    await fs.copyFile(textFile1Path, path.join(repositoryPath, textFile1));
-    await fs.copyFile(textFile2Path, path.join(repositoryPath, textFile2));
-    const addResult = await myAnx.runGit(['add', '.']);
-
-    expect(addResult.exitCode).toBe(0);
-
-    const commitResult = await myAnx.commit([binaryFile1, textFile1, nonexistentFile, binaryFile2, textFile2], { '--message': 'add array with missing file' });
-
-    expect(commitResult.exitCode).not.toBe(0);
-    expect(commitResult.err).toContain(nonexistentFile);
-    expect(commitResult.out).toBe('');
-  });
-
 });

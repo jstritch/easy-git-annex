@@ -30,11 +30,26 @@ export interface AddAnxOptions extends AnnexOptions {
   '--json'?: null;
 
   /**
+   * Includes error messages in the json instead of sending them to standard error.
+   */
+  '--json-error-messages'?: null;
+
+  /**
    * Includes progress objects in JSON output.
    * Specifying --json-progress automatically enables [[--json]].
    * Type predicate [[isActionProgress]] may be passed to [[safeParse]] or [[safeParseToArray]] when processing the output.
    */
   '--json-progress'?: null;
+
+  /**
+   * Adds gitignored files.
+   */
+  '--no-check-gitignore'?: null;
+
+  /**
+  * Updates to tracked files are added to the index.
+  */
+  '--update'?: null;
 
   /**
   * Specifies the file matching options.
