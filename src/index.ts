@@ -41,6 +41,7 @@ export * from './interfaces/info-options';
 export * from './interfaces/init-git-options';
 export * from './interfaces/initremote-options';
 export * from './interfaces/list-options';
+export * from './interfaces/list-tag-options';
 export * from './interfaces/lock-options';
 export * from './interfaces/mv-options';
 export * from './interfaces/remote-options';

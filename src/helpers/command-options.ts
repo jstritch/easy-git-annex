@@ -6,14 +6,20 @@ export enum CommandGroup {
 
 export enum OptionKind {
   Flag,
+  Stuck,
   KeyValue,
+  CommaDelimitedKeyValue,
   RepeatableKeyValue,
   AnonymousKeyValue,
   Numeric,
+  NumericParam,
   String,
   OptionalString,
   StringParam,
+  OptionalStringParam,
   CommaDelimitedStrings,
+  OptionalCommaDelimitedStrings,
+  RepeatableString,
   AnonymousStrings,
   RepeatablePath,
 }
@@ -44,7 +50,10 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--force-small', kind: OptionKind.Flag },
     { name: '--jobs', kind: OptionKind.Numeric },
     { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--json-progress', kind: OptionKind.Flag },
+    { name: '--no-check-gitignore', kind: OptionKind.Flag },
+    { name: '--update', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['config', [
@@ -72,6 +81,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['info', [
     { name: '--bytes', kind: OptionKind.Flag },
     { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['init', []],
@@ -86,12 +96,16 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['lock', [
     { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['reinit', []],
   ['renameremote', []],
+  ['repair', []],
   ['status', [
+    { name: '--ignore-submodules', kind: OptionKind.OptionalString },
     { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
   ]],
   ['sync', [
     { name: '--all', kind: OptionKind.Flag },
@@ -118,6 +132,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['uninit', []],
   ['unlock', [
     { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['version', [
@@ -128,13 +143,48 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
 
 const gitCommandOptions: Map<string, CommandOption[]> = new Map([
   ['clone', [
+    { name: '--bare', kind: OptionKind.Flag },
+    { name: '--branch', kind: OptionKind.StringParam },
+    { name: '--config', kind: OptionKind.CommaDelimitedKeyValue },
+    { name: '--depth', kind: OptionKind.Numeric },
+    { name: '--dissociate', kind: OptionKind.Flag },
+    { name: '--filter', kind: OptionKind.String },
+    { name: '--jobs', kind: OptionKind.NumericParam },
+    { name: '--local', kind: OptionKind.Flag },
+    { name: '--mirror', kind: OptionKind.Flag },
+    { name: '--no-checkout', kind: OptionKind.Flag },
+    { name: '--no-hardlinks', kind: OptionKind.Flag },
+    { name: '--no-reject-shallow', kind: OptionKind.Flag },
+    { name: '--no-remote-submodules', kind: OptionKind.Flag },
+    { name: '--no-shallow-submodules', kind: OptionKind.Flag },
+    { name: '--no-single-branch', kind: OptionKind.Flag },
+    { name: '--no-tags', kind: OptionKind.Flag },
     { name: '--origin', kind: OptionKind.StringParam },
     { name: '--progress', kind: OptionKind.Flag },
     { name: '--quiet', kind: OptionKind.Flag },
+    { name: '--recurse-submodules', kind: OptionKind.RepeatablePath },
+    { name: '--reference', kind: OptionKind.StringParam },
+    { name: '--reference-if-able', kind: OptionKind.StringParam },
+    { name: '--reject-shallow', kind: OptionKind.Flag },
+    { name: '--remote-submodules', kind: OptionKind.Flag },
+    { name: '--separate-git-dir', kind: OptionKind.String },
+    { name: '--server-option', kind: OptionKind.RepeatableString },
+    { name: '--shallow-exclude', kind: OptionKind.RepeatableString },
+    { name: '--shallow-since', kind: OptionKind.String },
+    { name: '--shallow-submodules', kind: OptionKind.Flag },
+    { name: '--shared', kind: OptionKind.Flag },
+    { name: '--single-branch', kind: OptionKind.Flag },
+    { name: '--sparse', kind: OptionKind.Flag },
+    { name: '--template', kind: OptionKind.String },
+    { name: '--upload-pack', kind: OptionKind.StringParam },
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
   ['commit', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--amend', kind: OptionKind.Flag },
+    { name: '--gpg-sign', kind: OptionKind.OptionalString },
     { name: '--message', kind: OptionKind.String },
+    { name: '--no-gpg-sign', kind: OptionKind.Flag },
     { name: '--quiet', kind: OptionKind.Flag },
   ]],
   ['config', [  // option order is important to Git
@@ -165,8 +215,24 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--unreachable', kind: OptionKind.Flag },
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
+  ['for-each-ref', [
+    { name: '--contains', kind: OptionKind.OptionalStringParam },
+    { name: '--count', kind: OptionKind.Numeric },
+    { name: '--format', kind: OptionKind.String },
+    { name: '--ignore-case', kind: OptionKind.Flag },
+    { name: '--merged', kind: OptionKind.OptionalStringParam },
+    { name: '--no-contains', kind: OptionKind.OptionalStringParam },
+    { name: '--no-merged', kind: OptionKind.OptionalStringParam },
+    { name: '--points-at', kind: OptionKind.OptionalStringParam },
+    { name: '--sort', kind: OptionKind.RepeatableString },
+  ]],
   ['init', [
     { name: '--bare', kind: OptionKind.Flag },
+    { name: '--initial-branch', kind: OptionKind.String },
+    { name: '--quiet', kind: OptionKind.Flag },
+    { name: '--separate-git-dir', kind: OptionKind.String },
+    { name: '--shared', kind: OptionKind.OptionalString },
+    { name: '--template', kind: OptionKind.String },
   ]],
   ['mv', [
     { name: '--force', kind: OptionKind.Flag },
@@ -177,9 +243,11 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
   ['rm', [
+    { name: '--cached', kind: OptionKind.Flag },
     { name: '--force', kind: OptionKind.Flag },
     { name: '--ignore-unmatch', kind: OptionKind.Flag },
     { name: '--quiet', kind: OptionKind.Flag },
+    { name: '--sparse', kind: OptionKind.Flag },
     { name: '-r', kind: OptionKind.Flag },
   ]],
   ['status', [
@@ -202,10 +270,29 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '-z', kind: OptionKind.Flag },
   ]],
   ['tag', [
+    { name: '-n', kind: OptionKind.Stuck },
     { name: '--annotate', kind: OptionKind.Flag },
+    { name: '--cleanup', kind: OptionKind.String },
+    { name: '--column', kind: OptionKind.OptionalCommaDelimitedStrings },
+    { name: '--contains', kind: OptionKind.OptionalStringParam },
+    { name: '--create-reflog', kind: OptionKind.Flag },
     { name: '--delete', kind: OptionKind.Flag },
     { name: '--force', kind: OptionKind.Flag },
+    { name: '--format', kind: OptionKind.String },
+    { name: '--ignore-case', kind: OptionKind.Flag },
+    { name: '--list', kind: OptionKind.Flag },
+    { name: '--local-user', kind: OptionKind.String },
+    { name: '--merged', kind: OptionKind.OptionalStringParam },
     { name: '--message', kind: OptionKind.String },
+    { name: '--no-column', kind: OptionKind.Flag },
+    { name: '--no-contains', kind: OptionKind.OptionalStringParam },
+    { name: '--no-create-reflog', kind: OptionKind.Flag },
+    { name: '--no-merged', kind: OptionKind.OptionalStringParam },
+    { name: '--no-sign', kind: OptionKind.Flag },
+    { name: '--points-at', kind: OptionKind.OptionalStringParam },
+    { name: '--sign', kind: OptionKind.Flag },
+    { name: '--sort', kind: OptionKind.RepeatableString },
+    { name: '--verify', kind: OptionKind.Flag },
   ]],
   ['version', [
     { name: '--build-options', kind: OptionKind.Flag },
@@ -213,17 +300,26 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
 ]);
 
 function getMapEntry(commandGroup: CommandGroup, commandName: string): CommandOption[] {
-  const cmdMap = commandGroup === CommandGroup.Anx ? anxCommandOptions : gitCommandOptions;
-  const cmdOptions = cmdMap.get(commandName);
-  if (cmdOptions === undefined) {
-    throw new Error(`The ${CommandGroup[commandGroup]} command ${commandName} is not recognized`);
+  switch (commandGroup) {
+
+    case CommandGroup.Anx:
+      return anxCommandOptions.get(commandName) ?? [];
+
+    case CommandGroup.Git:
+      return gitCommandOptions.get(commandName) ?? [];
+
+    default:
+      return [];
   }
-  return cmdOptions;
 }
 
 export function getCommandOptions(commandGroup: CommandGroup, commandName: string): CommandOption[] {
-  if (commandGroup === CommandGroup.AnxCommon) {
-    return [...getMapEntry(CommandGroup.Anx, '_common'), ...getMapEntry(CommandGroup.Anx, commandName)];
+  switch (commandGroup) {
+
+    case CommandGroup.AnxCommon:
+      return [...getMapEntry(CommandGroup.Anx, '_common'), ...getMapEntry(CommandGroup.Anx, commandName)];
+
+    default:
+      return getMapEntry(commandGroup, commandName);
   }
-  return getMapEntry(commandGroup, commandName);
 }

@@ -33,11 +33,31 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.Stuck:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}${cmdOptValue}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'number | string | null';
+            }
+            break;
+
           case OptionKind.KeyValue:
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOpt.name, cmdOptValue[0], cmdOptValue[1]);
             } else {
               expectedType = '[string, string]';
+            }
+            break;
+
+          case OptionKind.CommaDelimitedKeyValue:
+            if (isKeyValue(cmdOptValue)) {
+              opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
+            } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
+              opts.push(cmdOpt.name, cmdOptValue.map((e) => { return `${e[0]}=${e[1]}`; }).join(','));
+            } else {
+              expectedType = '[string, string] | [string, string][]';
             }
             break;
 
@@ -62,6 +82,14 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.Numeric:
             if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else {
+              expectedType = 'number | string';
+            }
+            break;
+
+          case OptionKind.NumericParam:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue.toString());
             } else {
               expectedType = 'number | string';
             }
@@ -93,11 +121,43 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.OptionalStringParam:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | null';
+            }
+            break;
+
           case OptionKind.CommaDelimitedStrings:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
             } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
               opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else {
+              expectedType = 'string | string[]';
+            }
+            break;
+
+          case OptionKind.OptionalCommaDelimitedStrings:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | string[] | null';
+            }
+            break;
+
+          case OptionKind.RepeatableString:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
             } else {
               expectedType = 'string | string[]';
             }

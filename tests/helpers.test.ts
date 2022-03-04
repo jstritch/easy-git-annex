@@ -13,15 +13,12 @@ describe('cloneEnv', () => {
 
 });
 
-describe('createDirectory, deleteDirectory, pathExists', () => {
+describe('createDirectory, deleteDirectory, and pathExists', () => {
 
   test('creates and deletes a directory', async () => {
     const repositoryPath = await createDirectory();
-
     expect(await pathExists(repositoryPath)).toBe(true);
-
     await deleteDirectory(repositoryPath);
-
     expect(await pathExists(repositoryPath)).toBe(false);
   });
 
