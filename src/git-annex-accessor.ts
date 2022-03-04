@@ -12,6 +12,7 @@ import { CommandResult } from './interfaces/command-result';
 import { CommitOptions } from './interfaces/commit-options';
 import { ConfigAnxOptions } from './interfaces/config-anx-options';
 import { ConfigGitOptions } from './interfaces/config-git-options';
+import { ForEachRefOptions } from './interfaces/for-each-ref-options';
 import { FsckAnxOptions } from './interfaces/fsck-anx-options';
 import { FsckGitOptions } from './interfaces/fsck-git-options';
 import { getLineStartingAsArray } from './helpers/get-line-starting';
@@ -39,8 +40,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   private readonly repositoryPath: string;
 
-  public constructor(repositoryPath: string) {
+  private constructor(repositoryPath: string) {
     this.repositoryPath = repositoryPath;
+  }
+
+  public static create(repositoryPath: string): GitAnnexAccessor {
+    return new GitAnnexAccessor(repositoryPath);
   }
 
   //
@@ -68,10 +73,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   private pushIfStringOrStringArray(args: string[], value?: string | string[], prependMarker = false): void {
-    if (this.pushIfString(args, value, prependMarker)) {
-      return;
-    }
-    if (isStringArray(value)) {
+    if (!this.pushIfString(args, value, prependMarker) && isStringArray(value)) {
       if (prependMarker) {  // end-of-options marker wanted?
         args.push('--');
       }
@@ -257,6 +259,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runGit(args, apiOptions);
   }
 
+  public async forEachRef(gitOptions?: ForEachRefOptions | string[], pattern?: string | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'for-each-ref', gitOptions);
+    this.pushIfStringOrStringArray(args, pattern);
+    return this.runGit(args, apiOptions);
+  }
+
   public async fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'fsck', gitOptions);
     this.pushIfString(args, object);
@@ -372,5 +380,16 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       });
     }
     return status;
+  }
+
+  public async getTagNames(pattern?: string, ignoreCase?: boolean): Promise<string[]> {
+    const options: ForEachRefOptions = {
+      '--format': '%(refname:lstrip=2)',
+      '--sort': ['*refname'],
+      ...ignoreCase === true && { '--ignore-case': null }
+    };
+
+    const result = await this.forEachRef(options, pattern ? `refs/tags/${pattern}` : 'refs/tags');
+    return result.out.split('\n').filter((name) => { return name; });
   }
 }

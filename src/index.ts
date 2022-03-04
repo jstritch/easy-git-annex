@@ -15,11 +15,14 @@ import { GitAnnexAPI } from './interfaces/git-annex-api';
  * @category Entry Point
  */
 export function createAccessor(repositoryPath: string): GitAnnexAPI {
-  return new GitAnnexAccessor(repositoryPath);
+  return GitAnnexAccessor.create(repositoryPath);
 }
 
 export * from './helpers/git-path';
 export * from './helpers/get-line-starting';
+export * from './helpers/get-refs';
+export * from './helpers/get-tags';
+export * from './helpers/parsers';
 export * from './helpers/safe-parse';
 export * from './helpers/type-predicates';
 
@@ -34,6 +37,7 @@ export * from './interfaces/command-result';
 export * from './interfaces/commit-options';
 export * from './interfaces/config-anx-options';
 export * from './interfaces/config-git-options';
+export * from './interfaces/for-each-ref-options';
 export * from './interfaces/fsck-anx-options';
 export * from './interfaces/fsck-git-options';
 export * from './interfaces/git-annex-api';
@@ -43,6 +47,7 @@ export * from './interfaces/initremote-options';
 export * from './interfaces/list-options';
 export * from './interfaces/lock-options';
 export * from './interfaces/mv-options';
+export * from './interfaces/parser';
 export * from './interfaces/remote-options';
 export * from './interfaces/repository-info';
 export * from './interfaces/rm-options';
