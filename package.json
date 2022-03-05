@@ -49,7 +49,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jest": "^26.1.1",
     "eslint-plugin-jest-formatting": "^3.1.0",
-    "eslint-plugin-jsonc": "^2.1.0",
+    "eslint-plugin-jsonc": "^2.2.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^27.5.1",
