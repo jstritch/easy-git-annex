@@ -1,4 +1,5 @@
 import * as anx from '../../src/index';
+import * as path from 'path';
 import { createRepository, deleteDirectory } from '../helpers';
 
 describe('revParse', () => {
@@ -17,7 +18,7 @@ describe('revParse', () => {
   test('merges from a branch', async () => {
     const rslt = await myAnx.revParse(undefined, { '--show-toplevel': null });
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toContain(repositoryPath);
+    expect(rslt.out).toContain(path.basename(repositoryPath));
   });
 
 });

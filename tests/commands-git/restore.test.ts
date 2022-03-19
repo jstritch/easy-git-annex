@@ -21,7 +21,7 @@ describe('restore', () => {
     await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add one text file for restore');
     const fullPath = path.join(repositoryPath, TestFile.TXT1);
     expect(await pathExists(fullPath)).toBe(true);
-    await fs.rm(fullPath);
+    await fs.unlink(fullPath);
     expect(await pathExists(fullPath)).toBe(false);
     const rslt = await myAnx.restore(TestFile.TXT1);
     expect(rslt.exitCode).toBe(0);
