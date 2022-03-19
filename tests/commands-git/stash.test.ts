@@ -1,5 +1,5 @@
 import * as anx from '../../src/index';
-import { copyAddGitCommit, copyFile, createRepository, deleteDirectory, TestFile } from '../helpers';
+import { copyAddGitCommit, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 
 describe('stash', () => {
   let repositoryPath: string;
@@ -8,6 +8,7 @@ describe('stash', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await setRepositoryAuthor(repositoryPath);
   });
 
   afterEach(async () => {
