@@ -12,6 +12,7 @@
     "Setup",
     "Configuration",
     "Contents",
+    "Branching",
     "Remotes",
     "Inspection",
     "Maintenance",
@@ -26,5 +27,9 @@
   "defaultCategory": "Uncategorized",
   "disableSources": true,
   "hideGenerator": true,
-  "hideLegend": true
+  "hideLegend": true,
+  "validation": {
+    "invalidLink": true,
+    "notExported": true
+  }
 }
