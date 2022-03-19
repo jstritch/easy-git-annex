@@ -1,9 +1,31 @@
 ## vNext
 * Add GitAnnexAPI methods
+    * addGit
+    * branch
+    * checkout
+    * cherryPick
+    * diff
+    * fetch
     * forEachRef
+    * getBranchNames
     * getTagNames
+    * log
+    * merge
+    * pull
+    * push
+    * rebase
+    * reset
+    * restore
+    * revert
+    * revParse
+    * show
+    * stash
+    * switch
 * Add generic functions to return application-defined JavaScript objects
+    * getBranches
+    * getLogs
     * getRefs
+    * getShows
     * getTags
 * Add Parser interface and implementations
     * parseBigInt
@@ -29,7 +51,7 @@
     * UnlockOptions
 * Add ApiOptions.noOp flag
 * Rename GitAnnexAPI.describe to describeAnx
-* Made RepositoryInfo.trustLevel optional
+* Make RepositoryInfo.trustLevel optional
 
 ## v1.0.0 released 2022-02-08
 * Initial command set
