@@ -90,7 +90,7 @@ export interface StatusGitOptions {
   /**
    * Includes the textual changes that are staged to be committed.
    */
-  '--verbose'?: null;
+  '--verbose'?: null | [null, null?];
 
   /**
    * Terminates entries with NUL, instead of LF.

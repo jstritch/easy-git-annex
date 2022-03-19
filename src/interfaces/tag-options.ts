@@ -24,7 +24,7 @@ export interface TagOptions {
    * Lists tags which contain the specified commit; HEAD if not specified.
    * See also [[--no-contains]].
    */
-  '--contains'?: string | null;
+  '--contains'?: string | string[] | null;
 
   /**
    * Creates a reflog for the tag.
@@ -66,7 +66,7 @@ export interface TagOptions {
    * Lists tags whose commits are reachable from the specified commit; HEAD if not specified.
    * See also [[--no-merged]].
    */
-  '--merged'?: string | null;
+  '--merged'?: string | string[] | null;
 
   /**
    * Specifies the tag message.
@@ -83,7 +83,7 @@ export interface TagOptions {
    * Lists tags which don't contain the specified commit; HEAD if not specified.
    * See also [[--contains]].
    */
-  '--no-contains'?: string | null;
+  '--no-contains'?: string | string[] | null;
 
   /**
    * Overrides an earlier --create-reflog.
@@ -95,7 +95,7 @@ export interface TagOptions {
    * Lists tags whose commits are not reachable from the specified commit; HEAD if not specified.
    * See also [[--merged]].
    */
-  '--no-merged'?: string | null;
+  '--no-merged'?: string | string[] | null;
 
   /**
    * Overrides the tag.gpgSign configuration variable.

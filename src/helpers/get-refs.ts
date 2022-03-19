@@ -19,7 +19,7 @@ import { Parser } from '../interfaces/parser';
  * @returns An array containing objects passing the type guard function.
  * @category Inspection
  */
-export async function getRefs<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, gitOptions: ForEachRefOptions, pattern?: string, columnDelimiter?: string): Promise<T[]> {
+export async function getRefs<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, gitOptions: ForEachRefOptions | string[], pattern?: string, columnDelimiter?: string): Promise<T[]> {
   const myAnx = GitAnnexAccessor.create(repositoryPath);
   const result = await myAnx.forEachRef(gitOptions, pattern);
   return result.exitCode === 0 ? createFromTextLines(guard, columns, result.out, columnDelimiter) : [];

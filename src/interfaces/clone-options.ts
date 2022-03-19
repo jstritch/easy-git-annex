@@ -70,7 +70,7 @@ export interface CloneOptions {
   '--no-remote-submodules'?: null;
 
   /**
-   * The complement of [[--shalow-submodules]].
+   * The complement of [[--shallow-submodules]].
    */
   '--no-shallow-submodules'?: null;
 
@@ -146,11 +146,11 @@ export interface CloneOptions {
   /**
    * Creates a shallow clone with history after the specified time.
    */
-  '--shallow-since'?: string;
+  '--shallow-since'?: Date | string;
 
   /**
    * Clones submodules with a depth of 1.
-   * See also [[--no-shalow-submodules]].
+   * See also [[--no-shallow-submodules]].
    */
   '--shallow-submodules'?: null;
 
