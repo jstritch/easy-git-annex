@@ -76,6 +76,7 @@ export async function copyAddGit(testFile: TestFile | TestFile[], destinationDir
 export async function commitFile(testFile: TestFile | TestFile[], destinationDir: string, message: string): Promise<void> {
   const myAnx = anx.createAccessor(destinationDir);
   const commitResult = await myAnx.commit(testFile, { '--message': message });
+  expect(commitResult).toBeNull();
   expect(commitResult.exitCode).toBe(0);
 }
 
