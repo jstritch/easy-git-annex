@@ -74,6 +74,8 @@ describe('StatusGitOptions', () => {
     [{ '--untracked-files': null }, ['--untracked-files']],
     [{ '--untracked-files': 'all' }, ['--untracked-files=all']],
     [{ '--verbose': null }, ['--verbose']],
+    [{ '--verbose': [null] }, ['--verbose']],
+    [{ '--verbose': [null, null] }, ['--verbose', '--verbose']],
     [{ '-z': null }, ['-z']],
   ];
 

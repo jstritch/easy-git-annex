@@ -18,6 +18,6 @@ import { Parser } from '../interfaces/parser';
  * @returns An array containing objects passing the type guard function.
  * @category Inspection
  */
-export async function getTags<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, listOptions: ForEachRefOptions, pattern?: string, columnDelimiter?: string): Promise<T[]> {
-  return getRefs(guard, columns, repositoryPath, listOptions, pattern ? `refs/tags/${pattern}` : 'refs/tags', columnDelimiter);
+export async function getTags<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, gitOptions: ForEachRefOptions | string[], pattern?: string, columnDelimiter?: string): Promise<T[]> {
+  return getRefs(guard, columns, repositoryPath, gitOptions, pattern ? `refs/tags/${pattern}` : 'refs/tags', columnDelimiter);
 }
