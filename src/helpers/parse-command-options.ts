@@ -1,5 +1,5 @@
 import { CommandGroup, getCommandOptions, OptionKind } from './command-options';
-import { isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates';
+import { isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates';
 import { gitPath } from './git-path';
 
 /**
@@ -33,7 +33,25 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.RepeatableFlag:
+            if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else if (Array.isArray(cmdOptValue) && cmdOptValue.every((e) => { return e === null; })) {
+              cmdOptValue.forEach(() => { opts.push(cmdOpt.name); });
+            } else {
+              expectedType = 'null | [null, null?]';
+            }
+            break;
+
           case OptionKind.Stuck:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}${cmdOptValue}`);
+            } else {
+              expectedType = 'number | string';
+            }
+            break;
+
+          case OptionKind.OptionalStuck:
             if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}${cmdOptValue}`);
             } else if (cmdOptValue === null) {
@@ -54,8 +72,10 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.CommaDelimitedKeyValue:
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
-            } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
-              opts.push(cmdOpt.name, cmdOptValue.map((e) => { return `${e[0]}=${e[1]}`; }).join(','));
+            } else if (isKeyValueArray(cmdOptValue)) {
+              if (cmdOptValue.length > 0) {
+                opts.push(cmdOpt.name, cmdOptValue.map((e) => { return `${e[0]}=${e[1]}`; }).join(','));
+              }
             } else {
               expectedType = '[string, string] | [string, string][]';
             }
@@ -66,7 +86,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
               opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
             } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
               cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, `${element[0]}=${element[1]}`); });
-            } else {
+            } else if (!(Array.isArray(cmdOptValue) && cmdOptValue.length === 0)) {
               expectedType = '[string, string] | [string, string][]';
             }
             break;
@@ -87,11 +107,31 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.OptionalNumeric:
+            if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'number | string | null';
+            }
+            break;
+
           case OptionKind.NumericParam:
             if (isNumber(cmdOptValue) || isString(cmdOptValue)) {
               opts.push(cmdOpt.name, cmdOptValue.toString());
             } else {
               expectedType = 'number | string';
+            }
+            break;
+
+          case OptionKind.Date:
+            if (isDate(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue.toISOString().slice(0, 19)}Z`);
+            } else if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else {
+              expectedType = 'Date | string';
             }
             break;
 
@@ -134,8 +174,10 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.CommaDelimitedStrings:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
-            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
-              opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else if (isStringArray(cmdOptValue)) {
+              if (cmdOptValue.length > 0) {
+                opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+              }
             } else {
               expectedType = 'string | string[]';
             }
@@ -144,8 +186,10 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.OptionalCommaDelimitedStrings:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
-            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
-              opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+            } else if (isStringArray(cmdOptValue)) {
+              if (cmdOptValue.length > 0) {
+                opts.push(`${cmdOpt.name}=${cmdOptValue.join(',')}`);
+              }
             } else if (cmdOptValue === null) {
               opts.push(cmdOpt.name);
             } else {
@@ -156,18 +200,56 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.RepeatableString:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
-            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
-              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
+            } else if (isStringArray(cmdOptValue)) {
+              if (cmdOptValue.length > 0) {
+                cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
+              }
             } else {
               expectedType = 'string | string[]';
+            }
+            break;
+
+          case OptionKind.RepeatableOptionalString:
+            if (isString(cmdOptValue)) {
+              opts.push(`${cmdOpt.name}=${cmdOptValue}`);
+            } else if (isStringArray(cmdOptValue)) {
+              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | string[] | null';
+            }
+            break;
+
+          case OptionKind.RepeatableOptionalStringParam:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue);
+            } else if (isStringArray(cmdOptValue)) {
+              cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, element); });
+            } else if (cmdOptValue === null) {
+              opts.push(cmdOpt.name);
+            } else {
+              expectedType = 'string | string[] | null';
             }
             break;
 
           case OptionKind.AnonymousStrings:
             if (isString(cmdOptValue)) {
               opts.push(cmdOptValue);
-            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+            } else if (isStringArray(cmdOptValue)) {
               opts.push(...cmdOptValue);
+            } else {
+              expectedType = 'string | string[]';
+            }
+            break;
+
+          case OptionKind.NamedStrings:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, cmdOptValue);
+            } else if (isStringArray(cmdOptValue)) {
+              if (cmdOptValue.length > 0) {
+                opts.push(cmdOpt.name, ...cmdOptValue);
+              }
             } else {
               expectedType = 'string | string[]';
             }
@@ -176,7 +258,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           case OptionKind.RepeatablePath:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${gitPath(cmdOptValue)}`);
-            } else if (isStringArray(cmdOptValue) && cmdOptValue.length > 0) {
+            } else if (isStringArray(cmdOptValue)) {
               cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${gitPath(element)}`); });
             } else {
               expectedType = 'string | string[]';

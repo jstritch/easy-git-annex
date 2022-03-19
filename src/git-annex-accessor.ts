@@ -3,15 +3,22 @@ import { gitPath, gitPaths } from './helpers/git-path';
 import { isKeyValue, isKeyValueArray, isStatusAnx, isString, isStringArray } from './helpers/type-predicates';
 import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
 import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
+import { StashCommand, StashOptions } from './interfaces/stash-options';
 import { AddAnxOptions } from './interfaces/add-anx-options';
+import { AddGitOptions } from './interfaces/add-git-options';
 import { AnnexOptions } from './interfaces/annex-options';
 import { ApiOptions } from './interfaces/api-options';
+import { BranchOptions } from './interfaces/branch-options';
+import { CheckoutOptions } from './interfaces/checkout-options';
+import { CherryPickOptions } from './interfaces/cherry-pick-options';
 import { CloneOptions } from './interfaces/clone-options';
 import { CommandGroup } from './helpers/command-options';
 import { CommandResult } from './interfaces/command-result';
 import { CommitOptions } from './interfaces/commit-options';
 import { ConfigAnxOptions } from './interfaces/config-anx-options';
 import { ConfigGitOptions } from './interfaces/config-git-options';
+import { DiffOptions } from './interfaces/diff-options';
+import { FetchOptions } from './interfaces/fetch-options';
 import { ForEachRefOptions } from './interfaces/for-each-ref-options';
 import { FsckAnxOptions } from './interfaces/fsck-anx-options';
 import { FsckGitOptions } from './interfaces/fsck-git-options';
@@ -22,14 +29,25 @@ import { InitGitOptions } from './interfaces/init-git-options';
 import { InitremoteOptions } from './interfaces/initremote-options';
 import { ListOptions } from './interfaces/list-options';
 import { LockOptions } from './interfaces/lock-options';
+import { LogOptions } from './interfaces/log-options';
+import { MergeOptions } from './interfaces/merge-options';
 import { MvOptions } from './interfaces/mv-options';
 import { parseCommandOptions } from './helpers/parse-command-options';
+import { PullOptions } from './interfaces/pull-options';
+import { PushOptions } from './interfaces/push-options';
+import { RebaseOptions } from './interfaces/rebase-options';
+import { ResetOptions } from './interfaces/reset-options';
+import { RestoreOptions } from './interfaces/restore-options';
+import { RevertOptions } from './interfaces/revert-options';
+import { RevParseOptions } from './interfaces/rev-parse-options';
 import { RmOptions } from './interfaces/rm-options';
 import { safeParseToArray } from './helpers/safe-parse';
+import { ShowOptions } from './interfaces/show-options';
 import { StatusAnx } from './interfaces/status-anx';
 import { StatusAnxOptions } from './interfaces/status-anx-options';
 import { StatusGit } from './interfaces/status-git';
 import { StatusGitOptions } from './interfaces/status-git-options';
+import { SwitchOptions } from './interfaces/switch-options';
 import { SyncOptions } from './interfaces/sync-options';
 import { TagOptions } from './interfaces/tag-options';
 import { UnlockOptions } from './interfaces/unlock-options';
@@ -59,6 +77,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   private makeArgs(commandGroup: CommandGroup, commandName: string, commandOptions: unknown, ...parameters: string[]): string[] {
     return [commandName, ...parseCommandOptions(commandGroup, commandName, commandOptions), ...parameters];
+  }
+
+  private insertAtIfString(args: string[], index: number, value?: string): void {
+    if (isString(value)) {
+      args.splice(index, 0, value);
+    }
   }
 
   private pushIfString(args: string[], value?: string | string[], prependMarker = false): boolean {
@@ -242,6 +266,31 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runCommand('git', args, apiOptions);
   }
 
+  public async addGit(relativePaths?: string | string[], gitOptions?: AddGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'add', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async branch(commandParameters?: string | string[], gitOptions?: BranchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'branch', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async checkout(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: CheckoutOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'checkout', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async cherryPick(commandParameters?: string | string[], gitOptions?: CherryPickOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'cherry-pick', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
   public async clone(repository: string, repositoryPath?: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'clone', gitOptions, '--', repository);
     args.push(isString(repositoryPath) ? repositoryPath : this.repositoryPath);
@@ -256,6 +305,19 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
   public async configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'config', gitOptions);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async diff(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: DiffOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitDiff, 'diff', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async fetch(commandParameters?: string | string[], gitOptions?: FetchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitFetch, 'fetch', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
     return this.runGit(args, apiOptions);
   }
 
@@ -276,10 +338,41 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runGit(args, apiOptions);
   }
 
+  public async log(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: LogOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitDiff, 'log', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async merge(commandParameters?: string | string[], gitOptions?: MergeOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'merge', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
   public async mv(relativePaths: string | string[], destination: string, gitOptions?: MvOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'mv', gitOptions);
     this.pushIfRelativePaths(args, relativePaths);
     args.push(gitPath(destination));
+    return this.runGit(args, apiOptions);
+  }
+
+  public async pull(commandParameters?: string | string[], gitOptions?: PullOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitFetch, 'pull', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async push(commandParameters?: string | string[], gitOptions?: PushOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'push', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async rebase(commandParameters?: string | string[], gitOptions?: RebaseOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'rebase', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
     return this.runGit(args, apiOptions);
   }
 
@@ -290,8 +383,47 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runGit(args, apiOptions);
   }
 
+  public async reset(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: ResetOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'reset', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async restore(relativePaths?: string | string[], gitOptions?: RestoreOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'restore', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async revert(commandParameters?: string | string[], gitOptions?: RevertOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'revert', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async revParse(commandParameters?: string | string[], gitOptions?: RevParseOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'rev-parse', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
   public async rm(relativePaths: string | string[], gitOptions?: RmOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'rm', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async show(commandParameters?: string | string[], gitOptions?: ShowOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitDiff, 'show', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async stash(subCommand?: StashCommand, commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: StashOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'stash', gitOptions);
+    this.insertAtIfString(args, 1, subCommand);
+    this.pushIfStringOrStringArray(args, commandParameters);
     this.pushIfRelativePaths(args, relativePaths, true);
     return this.runGit(args, apiOptions);
   }
@@ -299,6 +431,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'status', gitOptions);
     this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async switch(commandParameters?: string | string[], gitOptions?: SwitchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'switch', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
     return this.runGit(args, apiOptions);
   }
 
@@ -320,6 +458,18 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async getBackends(): Promise<string[]> {
     const versionResult = await this.versionAnx();
     return getLineStartingAsArray(versionResult.out, 'key/value backends: ');
+  }
+
+  public async getBranchNames(pattern?: string, ignoreCase?: boolean): Promise<string[]> {
+    const options: BranchOptions = {
+      '--format': '%(refname:lstrip=2)',
+      '--sort': ['*refname'],
+      '--list': null,
+      ...ignoreCase === true && { '--ignore-case': null }
+    };
+
+    const result = await this.branch(pattern && pattern.length > 0 ? pattern : undefined, options);
+    return result.out.split('\n').filter((name) => { return name; });
   }
 
   public async getRemoteNames(): Promise<string[]> {

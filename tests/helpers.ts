@@ -70,11 +70,7 @@ export async function copyAddAnx(testFile: TestFile | TestFile[], destinationDir
 export async function copyAddGit(testFile: TestFile | TestFile[], destinationDir: string): Promise<void> {
   await copyFile(testFile, destinationDir);
   const myAnx = anx.createAccessor(destinationDir);
-  if (!Array.isArray(testFile)) {
-    await myAnx.runGit(['add', testFile]);
-  } else {
-    await myAnx.runGit(['add', ...testFile]);
-  }
+  await myAnx.addGit(testFile);
 }
 
 export async function commitFile(testFile: TestFile | TestFile[], destinationDir: string, message: string): Promise<void> {
