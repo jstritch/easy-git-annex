@@ -35,7 +35,7 @@ export async function createDirectory(): Promise<string> {
 }
 
 export async function deleteDirectory(repositoryPath: string): Promise<void> {
-  await fs.rmdir(repositoryPath, { recursive: true });
+  await fs.rm(repositoryPath, { recursive: true });
 }
 
 export async function createRepository(repositoryPath?: string): Promise<string> {
