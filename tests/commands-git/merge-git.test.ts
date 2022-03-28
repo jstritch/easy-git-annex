@@ -1,7 +1,7 @@
 import * as anx from '../../src/index';
 import { commitFile, copyAddGitCommit, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 
-describe('merge', () => {
+describe('mergeGit', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -16,7 +16,7 @@ describe('merge', () => {
   });
 
   test('merges from a branch', async () => {
-    await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add one text file for merge');
+    await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add one text file for mergeGit');
     const branchName = 'new-branch-name';
     let rslt = await myAnx.switch(undefined, { '--create': branchName });
     expect(rslt.exitCode).toBe(0);
@@ -24,14 +24,14 @@ describe('merge', () => {
     await commitFile(TestFile.TXT1, repositoryPath, 'modify file on the branch');
     rslt = await myAnx.switch('-');
     expect(rslt.exitCode).toBe(0);
-    rslt = await myAnx.merge(branchName);
+    rslt = await myAnx.mergeGit(branchName);
     expect(rslt.exitCode).toBe(0);
     expect(rslt.out).toContain('1 file changed, 1 insertion(+), 1 deletion(-)');
   });
 
 });
 
-describe('MergeOptions', () => {
+describe('MergeGitOptions', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -40,7 +40,7 @@ describe('MergeOptions', () => {
     myAnx = anx.createAccessor(repositoryPath);
   });
 
-  const tests: [anx.MergeOptions, string[]][] = [
+  const tests: [anx.MergeGitOptions, string[]][] = [
     [{ '--abort': null }, ['--abort']],
     [{ '--allow-unrelated-histories': null }, ['--allow-unrelated-histories']],
     [{ '--autostash': null }, ['--autostash']],
@@ -87,8 +87,8 @@ describe('MergeOptions', () => {
     [{ '-m': 'A' }, ['-m', 'A']],
   ];
 
-  test.each(tests)('MergeOptions "%o"', async (gitOptions, expected) => {
-    const rslt = await myAnx.merge(undefined, gitOptions, { noOp: true });
+  test.each(tests)('MergeGitOptions "%o"', async (gitOptions, expected) => {
+    const rslt = await myAnx.mergeGit(undefined, gitOptions, { noOp: true });
     expect(rslt.exitCode).toBeNaN();
     expect(rslt.args).toEqual(expect.arrayContaining(expected));
   });
