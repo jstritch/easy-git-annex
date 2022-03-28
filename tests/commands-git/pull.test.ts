@@ -24,7 +24,7 @@ describe('pull', () => {
     await commitFile(TestFile.TXT1, repositoryPath, 'modify file on the branch');
     rslt = await myAnx.switch('-');
     expect(rslt.exitCode).toBe(0);
-    rslt = await myAnx.merge(branchName);
+    rslt = await myAnx.mergeGit(branchName);
     expect(rslt.exitCode).toBe(0);
     expect(rslt.out).toContain('1 file changed, 1 insertion(+), 1 deletion(-)');
   });

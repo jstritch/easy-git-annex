@@ -1,13 +1,13 @@
 import * as anx from '../../src/index';
 
-interface FooTag {
+export interface FooTag {
   name: string;
   objectName: string;
   taggerDate?: Date;
   contents?: string;
 }
 
-function isFooTag(o: unknown): o is FooTag {
+export function isFooTag(o: unknown): o is FooTag {
   if (!anx.isRecord(o)) { return false; }
   if (!anx.isString(o['name'])) { return false; }
   if (!anx.isString(o['objectName'])) { return false; }
@@ -16,7 +16,7 @@ function isFooTag(o: unknown): o is FooTag {
   return true;
 }
 
-export async function getFooTags(repositoryPath: string, tagname?: string, ignoreCase?: boolean): Promise<FooTag[]> {
+export async function getFooTags(repositoryPath: string, tagName?: string, ignoreCase?: boolean): Promise<FooTag[]> {
 
   const columns: [string, anx.Parser?][] = [
     ['name'],
@@ -31,5 +31,5 @@ export async function getFooTags(repositoryPath: string, tagname?: string, ignor
     ...ignoreCase === true && { '--ignore-case': null }
   };
 
-  return anx.getTags(isFooTag, columns, repositoryPath, options, tagname);
+  return anx.getTags(isFooTag, columns, repositoryPath, options, tagName);
 }

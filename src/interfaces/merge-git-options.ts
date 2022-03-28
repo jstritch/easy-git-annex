@@ -1,8 +1,8 @@
 /**
- * MergeOptions defines the supported options for the Git merge command.
+ * MergeGitOptions defines the supported options for the Git merge command.
  * @category Command Options
  */
-export interface MergeOptions {
+export interface MergeGitOptions {
 
   /**
    * Aborts the current conflict resolution process, and attempts to reconstruct the pre-merge state.
