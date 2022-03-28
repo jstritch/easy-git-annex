@@ -1,32 +1,52 @@
 ## vNext
 * Add GitAnnexAPI methods
     * addGit
+    * adjust
     * branch
     * checkout
     * cherryPick
+    * copy
+    * dead
     * diff
+    * drop
+    * dropunused
     * fetch
+    * find
     * forEachRef
+    * get
     * getBranchNames
     * getTagNames
     * log
-    * merge
+    * mergeAnx
+    * mergeGit
+    * mincopies
+    * move
+    * numcopies
     * pull
     * push
     * rebase
+    * required
     * reset
     * restore
     * revert
     * revParse
+    * semitrust
     * show
     * stash
     * switch
+    * unannex
+    * untrust
+    * unused
+    * whereis
+    * whereused
 * Add generic functions to return application-defined JavaScript objects
     * getBranches
+    * getFinds
     * getLogs
     * getRefs
     * getShows
     * getTags
+    * getWhereis
 * Add Parser interface and implementations
     * parseBigInt
     * parseNumber
