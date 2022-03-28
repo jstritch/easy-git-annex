@@ -2,6 +2,7 @@ import { RemoteCommand, RemoteOptions } from './remote-options';
 import { StashCommand, StashOptions } from './stash-options';
 import { AddAnxOptions } from './add-anx-options';
 import { AddGitOptions } from './add-git-options';
+import { AdjustOptions } from './adjust-options';
 import { AnnexOptions } from './annex-options';
 import { ApiOptions } from './api-options';
 import { BranchOptions } from './branch-options';
@@ -13,17 +14,23 @@ import { CommitOptions } from './commit-options';
 import { ConfigAnxOptions } from './config-anx-options';
 import { ConfigGitOptions } from './config-git-options';
 import { DiffOptions } from './diff-options';
+import { DropOptions } from './drop-options';
+import { DropunusedOptions } from './dropunused-options';
 import { FetchOptions } from './fetch-options';
+import { FindOptions } from './find-options';
 import { ForEachRefOptions } from './for-each-ref-options';
 import { FsckAnxOptions } from './fsck-anx-options';
 import { FsckGitOptions } from './fsck-git-options';
+import { GetOptions } from './get-options';
 import { InfoOptions } from './info-options';
 import { InitGitOptions } from './init-git-options';
 import { InitremoteOptions } from './initremote-options';
 import { ListOptions } from './list-options';
 import { LockOptions } from './lock-options';
 import { LogOptions } from './log-options';
-import { MergeOptions } from './merge-options';
+import { MergeAnxOptions } from './merge-anx-options';
+import { MergeGitOptions } from './merge-git-options';
+import { MoveOptions } from './move-options';
 import { MvOptions } from './mv-options';
 import { PullOptions } from './pull-options';
 import { PushOptions } from './push-options';
@@ -42,9 +49,13 @@ import { StatusGitOptions } from './status-git-options';
 import { SwitchOptions } from './switch-options';
 import { SyncOptions } from './sync-options';
 import { TagOptions } from './tag-options';
+import { UnannexOptions } from './unannex-options';
 import { UnlockOptions } from './unlock-options';
+import { UnusedOptions } from './unused-options';
 import { VersionAnxOptions } from './version-anx-options';
 import { VersionGitOptions } from './version-git-options';
+import { WhereisOptions } from './whereis-options';
+import { WhereusedOptions } from './whereused-options';
 
 /**
  * The GitAnnexAPI interface defines the git-annex commands.
@@ -79,6 +90,19 @@ export interface GitAnnexAPI {
   addAnx(relativePaths?: string | string[], anxOptions?: AddAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Enters an adjusted branch.
+   *
+   * Consult the
+   * [git-annex adjust documentation](https://git-annex.branchable.com/git-annex-adjust/)
+   * for additional information.
+   * @param anxOptions The AdjustOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex adjust result.
+   * @category Branching
+   */
+  adjust(anxOptions: AdjustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Gets or set git-annex configuration settings.
    *
    * Consult the
@@ -91,6 +115,37 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   configAnx(anxOptions: ConfigAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Copies file content to or from another repository.
+   *
+   * Consult the
+   * [git-annex copy documentation](https://git-annex.branchable.com/git-annex-copy/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The CopyOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex copy result.
+   * @category Contents
+   */
+  copy(relativePaths?: string | string[], anxOptions?: MoveOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Hides a lost repository.
+   *
+   * Consult the
+   * [git-annex dead documentation](https://git-annex.branchable.com/git-annex-dead)
+   * for additional information.
+   * @param repository The name, uuid, or description of the repository.
+   * The string `here` may be used to specify the current repository.
+   * Method [[getRepositories]] returns an array of repositories.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex dead result.
+   * @category Remotes
+   */
+  dead(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Changes the description of a repository.
@@ -110,6 +165,35 @@ export interface GitAnnexAPI {
   describeAnx(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Removes file content from a repository.
+   *
+   * Consult the
+   * [git-annex drop documentation](https://git-annex.branchable.com/git-annex-drop/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The DropOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex drop result.
+   * @category Contents
+   */
+  drop(relativePaths?: string | string[], anxOptions?: DropOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Drops unused file content.
+   *
+   * Consult the
+   * [git-annex dropunused documentation](https://git-annex.branchable.com/git-annex-dropunused/)
+   * for additional information.
+   * @param indices The indicies to drop.
+   * @param anxOptions The DropunusedOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex dropunused result.
+   * @category Contents
+   */
+  dropunused(indices: string | string[], anxOptions?: DropunusedOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Enables use of an existing remote in the current repository.
    *
    * Consult the
@@ -126,6 +210,21 @@ export interface GitAnnexAPI {
   enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Lists available files.
+   *
+   * Consult the
+   * [git-annex find documentation](https://git-annex.branchable.com/git-annex-find/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The FindOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex find result.
+   * @category Contents
+   */
+  find(relativePaths?: string | string[], anxOptions?: FindOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Verifies the validity of objects in git-annex.
    *
    * Consult the
@@ -133,12 +232,27 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param relativePaths The files to check.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
-   * @param anxOptions The LockOptions for the command.
+   * @param anxOptions The FsckAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex fsck result.
    * @category Maintenance
    */
   fsckAnx(relativePaths?: string | string[], anxOptions?: FsckAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Makes content of annexed files available.
+   *
+   * Consult the
+   * [git-annex get documentation](https://git-annex.branchable.com/git-annex-get/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The GetOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex get result.
+   * @category Contents
+   */
+  get(relativePaths?: string | string[], anxOptions?: GetOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or sets the group association of a repository.
@@ -256,6 +370,63 @@ export interface GitAnnexAPI {
   lock(relativePaths?: string | string[], anxOptions?: LockOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   *  Joins two or more development histories.
+   *
+   * Consult the
+   * [git-annex merge documentation](https://git-annex.branchable.com/git-annex-lock/)
+   * for additional information.
+   * @param branchName The name of the branch to merge.
+   * @param anxOptions The MergeAnxOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex merge result.
+   * @category Branching
+   */
+  mergeAnx(branchName?: string, anxOptions?: MergeAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Gets or sets the minimum number of copies.
+   *
+   * Consult the
+   * [git-annex mincopies documentation](https://git-annex.branchable.com/git-annex-mincopies/)
+   * for additional information.
+   * @param n The value to set. If omitted, the  current value is returned.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex mincopies result.
+   * @category Configuration
+   */
+  mincopies(n?: number | string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Moves file content to or from another repository.
+   *
+   * Consult the
+   * [git-annex move documentation](https://git-annex.branchable.com/git-annex-move/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The MoveOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex move result.
+   * @category Contents
+   */
+  move(relativePaths?: string | string[], anxOptions?: MoveOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Gets or sets the desired number of copies.
+   *
+   * Consult the
+   * [git-annex numcopies documentation](https://git-annex.branchable.com/git-annex-numcopies/)
+   * for additional information.
+   * @param n The value to set. If omitted, the  current value is returned.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex numcopies result.
+   * @category Configuration
+   */
+  numcopies(n?: number | string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Initializes a repository for use with git-annex specifying the uuid.
    *
    * The reinit command may be used to begin replacement of an irretrievably lost repository.
@@ -301,6 +472,42 @@ export interface GitAnnexAPI {
   repair(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Gets or sets the wanted required content expression of a repository.
+   *
+   * Consult the
+   * [git-annex required documentation](https://git-annex.branchable.com/git-annex-required)
+   * for additional information.
+   * @param repository The name, uuid, or description of the repository.
+   * The string `here` may be used to specify the current repository.
+   * Method [[getRepositories]] returns an array of repositories.
+   * @param expression The
+   * [preferred content expression](https://git-annex.branchable.com/git-annex-preferred-content/)
+   * to set for the repository.
+   * If omitted, the current required content expression is returned.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex required result.
+   * @category Configuration
+   */
+  required(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Sets a repository to the default trust level.
+   *
+   * Consult the
+   * [git-annex semitrust documentation](https://git-annex.branchable.com/git-annex-semitrust)
+   * for additional information.
+   * @param repository The name, uuid, or description of the repository.
+   * The string `here` may be used to specify the current repository.
+   * Method [[getRepositories]] returns an array of repositories.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex semitrust result.
+   * @category Remotes
+   */
+  semitrust(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Shows the working tree status.
    *
    * Consult the
@@ -329,6 +536,21 @@ export interface GitAnnexAPI {
    * @category Remotes
    */
   sync(remotes: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Undoes a git-annex add command.
+   *
+   * Consult the
+   * [git-annex unannex documentation](https://git-annex.branchable.com/git-annex-unannex/)
+   * for additional information.
+   * @param relativePaths The files to unannex.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The UnannexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex unannex result.
+   * @category Contents
+   */
+  unannex(relativePaths?: string | string[], anxOptions?: UnannexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Removes a repository from a group previously set by the [[group]] command.
@@ -376,6 +598,35 @@ export interface GitAnnexAPI {
   unlock(relativePaths?: string | string[], anxOptions?: UnlockOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Records that a repository is not trusted and could lose content at any time.
+   *
+   * Consult the
+   * [git-annex untrust documentation](https://git-annex.branchable.com/git-annex-untrust)
+   * for additional information.
+   * @param repository The name, uuid, or description of the repository.
+   * The string `here` may be used to specify the current repository.
+   * Method [[getRepositories]] returns an array of repositories.
+   * @param anxOptions The AnnexOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex untrust result.
+   * @category Remotes
+   */
+  untrust(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Looks for unused file content.
+   *
+   * Consult the
+   * [git-annex unused documentation](https://git-annex.branchable.com/git-annex-unused/)
+   * for additional information.
+   * @param anxOptions The UnusedOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex unused result.
+   * @category Contents
+   */
+  unused(anxOptions?: UnusedOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Obtains build information about the local git-annex installation.
    *
    * Consult the
@@ -407,6 +658,34 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   wanted(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Lists repositories containing files.
+   *
+   * Consult the
+   * [git-annex whereis documentation](https://git-annex.branchable.com/git-annex-whereis/)
+   * for additional information.
+   * @param relativePaths The files of interest.
+   * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+   * @param anxOptions The WhereisOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex whereis result.
+   * @category Contents
+   */
+  whereis(relativePaths?: string | string[], anxOptions?: WhereisOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Finds files use or used a key.
+   *
+   * Consult the
+   * [git-annex whereused documentation](https://git-annex.branchable.com/git-annex-whereused/)
+   * for additional information.
+   * @param anxOptions The WhereusedOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex whereused result.
+   * @category Contents
+   */
+  whereused(anxOptions?: WhereusedOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Provides the ability to run any Git command.
@@ -621,12 +900,12 @@ export interface GitAnnexAPI {
    * [git merge documentation](https://git-scm.com/docs/git-merge)
    * for additional information.
    * @param commandParameters The parameters for the merge command.
-   * @param gitOptions The MergeOptions for the command.
+   * @param gitOptions The MergeGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git merge result.
    * @category Branching
    */
-  merge(commandParameters?: string | string[], gitOptions?: MergeOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  mergeGit(commandParameters?: string | string[], gitOptions?: MergeGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Moves or renames a file, a directory, or a symlink.
