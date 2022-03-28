@@ -18,9 +18,10 @@ describe('get', () => {
   });
 
   test('reports unknown file', async () => {
-    const rslt = await myAnx.get('file0.jpg');
+    const nonexistentFile = 'file0.jpg';
+    const rslt = await myAnx.get(nonexistentFile);
     expect(rslt.exitCode).not.toBe(0);
-    expect(rslt.err).toContain('error: pathspec \'file0.jpg\' did not match any file(s) known to git\nDid you forget to \'git add\'?\nget: 1 failed');
+    expect(rslt.err).toContain(nonexistentFile);
   });
 
 });

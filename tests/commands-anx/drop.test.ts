@@ -21,7 +21,6 @@ describe('drop', () => {
   test('drops a file', async () => {
     const rslt = await myAnx.drop(TestFile.JPG1, { '--force': null });
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toContain(`drop ${TestFile.JPG1} ok`);
   });
 
 });

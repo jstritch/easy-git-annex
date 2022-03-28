@@ -21,7 +21,7 @@ describe('unannex', () => {
     await copyFile(allTestFiles, repositoryPath);
     let rslt = await myAnx.addAnx(allTestFiles);
     expect(rslt.exitCode).toBe(0);
-    rslt = await myAnx.uninit(allTestFiles);
+    rslt = await myAnx.unannex(allTestFiles);
     expect(rslt.exitCode).toBe(0);
     expect(rslt.out).toContain(TestFile.JPG1);
     expect(rslt.out).toContain(TestFile.JPG2);

@@ -26,7 +26,7 @@ describe('mincopies', () => {
 
     rslt = await myAnx.mincopies();
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toBe('1\n');
+    expect(rslt.out).toContain('1');
   });
 
 });

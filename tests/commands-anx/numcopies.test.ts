@@ -26,7 +26,7 @@ describe('numcopies', () => {
 
     rslt = await myAnx.numcopies();
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toBe('2\n');
+    expect(rslt.out).toContain('2');
   });
 
 });
