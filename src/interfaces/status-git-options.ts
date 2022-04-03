@@ -1,5 +1,5 @@
 /**
- * StatusGitOptions defines the supported options for the git status command.
+ * StatusGitOptions defines the supported options for the Git status command.
  * @category Command Options
  */
 export interface StatusGitOptions {

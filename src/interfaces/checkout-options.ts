@@ -27,7 +27,7 @@ export interface CheckoutOptions {
   '--force'?: null;
 
   /**
-   * Ignores the sparse patterns and adds back any files in replativePaths.
+   * Ignores the sparse patterns and adds back any files in relativePaths.
    */
   '--ignore-skip-worktree-bits'?: null;
 

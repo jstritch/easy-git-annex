@@ -40,7 +40,7 @@ export interface RevParseOptions {
   '--exclude'?: string | string[];
 
   /**
-   * Does not output flags and parameters not meant for git rev-list command.
+   * Does not output non flag parameters.
    */
   '--flags'?: null;
 
@@ -90,12 +90,12 @@ export interface RevParseOptions {
   '--local-env-vars'?: null;
 
   /**
-   * Does not output flags and parameters not meant for git rev-list command.
+   * Does not output flag parameters.
    */
   '--no-flags'?: null;
 
   /**
-   * Does not output flags and parameters not meant for git rev-list command.
+   * Does not output flags and parameters meant for Git rev-list command.
    */
   '--no-revs'?: null;
 
@@ -110,7 +110,7 @@ export interface RevParseOptions {
   '--path-format'?: string;
 
   /**
-   * Behaves as if git rev-parse was invoked from the arg subdirectory of the working tree.
+   * Behaves as if Git rev-parse was invoked from the arg subdirectory of the working tree.
    */
   '--prefix'?: string;
 
@@ -130,7 +130,7 @@ export interface RevParseOptions {
   '--resolve-git-dir'?: string;
 
   /**
-   * Does not output flags and parameters not meant for git rev-list command.
+   * Does not output flags and parameters not meant for Git rev-list command.
    */
   '--revs-only'?: null;
 

@@ -5,6 +5,7 @@ import { ShowOptions } from '../interfaces/show-options';
 
 /**
  * Returns information about Git objects in application-defined JavaScript objects.
+ * The JavaScript objects are created from the return of the [[GitAnnexAPI.show]] method.
  *
  * @param guard The type predicate to validate each object.
  * @param columns Maps the columns returned by the --format option
@@ -16,7 +17,7 @@ import { ShowOptions } from '../interfaces/show-options';
  * @param columnDelimiter The column delimiter used by the --format option.
  * If unspecified, `\t` is used to split at `%x09` in --format.
  * @returns An array containing objects passing the type guard function.
- * @category Inspection
+ * @category Generic
  */
 export async function getShows<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, commandParameters?: string | string[], gitOptions?: ShowOptions | string[], columnDelimiter?: string): Promise<T[]> {
   const myAnx = GitAnnexAccessor.create(repositoryPath);

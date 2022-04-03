@@ -82,7 +82,7 @@ export interface LogOptions extends DiffCommonOptions {
   '--children'?: null;
 
   /**
-   * Limits the commits those with committer header lines matching the specified regular expression.
+   * Limits the commits to those with committer header lines matching the specified regular expression.
    */
   '--committer'?: string | string[];
 

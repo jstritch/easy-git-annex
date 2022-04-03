@@ -75,12 +75,12 @@ export interface GitAnnexAPI {
   runAnx(args: string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Adds files to git and git-annex.
+   * Adds files to Git and git-annex.
    *
    * Consult the
    * [git-annex add documentation](https://git-annex.branchable.com/git-annex-add/)
    * for additional information.
-   * @param relativePaths The files to add to git and git-annex.
+   * @param relativePaths The files to add to Git and git-annex.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param anxOptions The AddAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
@@ -211,6 +211,7 @@ export interface GitAnnexAPI {
 
   /**
    * Lists available files.
+   * Consider using generic function [[getFinds]] if JavaScript objects are desired.
    *
    * Consult the
    * [git-annex find documentation](https://git-annex.branchable.com/git-annex-find/)
@@ -459,7 +460,7 @@ export interface GitAnnexAPI {
   renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Recovers a broken git repository.
+   * Recovers a broken Git repository.
    *
    * Consult the
    * [git-annex repair documentation](https://git-annex.branchable.com/git-annex-repair/)
@@ -472,7 +473,7 @@ export interface GitAnnexAPI {
   repair(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Gets or sets the wanted required content expression of a repository.
+   * Gets or sets the required content expression of a repository.
    *
    * Consult the
    * [git-annex required documentation](https://git-annex.branchable.com/git-annex-required)
@@ -640,7 +641,7 @@ export interface GitAnnexAPI {
   versionAnx(anxOptions?: VersionAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Gets or sets the wanted preferred content expression of a repository.
+   * Gets or sets the wanted content expression of a repository.
    *
    * Consult the
    * [git-annex wanted documentation](https://git-annex.branchable.com/git-annex-wanted)
@@ -661,6 +662,7 @@ export interface GitAnnexAPI {
 
   /**
    * Lists repositories containing files.
+   * Consider using generic function [[getWhereis]] if JavaScript objects are desired.
    *
    * Consult the
    * [git-annex whereis documentation](https://git-annex.branchable.com/git-annex-whereis/)
@@ -675,7 +677,7 @@ export interface GitAnnexAPI {
   whereis(relativePaths?: string | string[], anxOptions?: WhereisOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Finds files use or used a key.
+   * Finds which files use or used a key.
    *
    * Consult the
    * [git-annex whereused documentation](https://git-annex.branchable.com/git-annex-whereused/)
@@ -693,7 +695,7 @@ export interface GitAnnexAPI {
    * The application is responsible for calling [[gitPath]] and [[gitPaths]]
    * for all relative paths when constructing the argument list.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git command result.
+   * @returns The Git command result.
    * @category Low-level
    */
   runGit(args: string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -702,28 +704,29 @@ export interface GitAnnexAPI {
    * Adds file contents to the index.
    *
    * Consult the
-   * [git add documentation](https://git-scm.com/docs/git-add)
+   * [Git add documentation](https://git-scm.com/docs/git-add)
    * for additional information.
    * @param relativePaths The files to record in git.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The AddGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git add result.
+   * @returns The Git add result.
    * @category Contents
    */
   addGit(relativePaths?: string | string[], gitOptions?: AddGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Manages branches.
-   * Consider using method [[getBranchNames]] if a list of remote names is required.
+   * Consider using method [[getBranchNames]] if a list of remote names is required
+   * or generic function [[getBranches]] if JavaScript objects are desired.
    *
    * Consult the
-   * [git branch documentation](https://git-scm.com/docs/git-branch)
+   * [Git branch documentation](https://git-scm.com/docs/git-branch)
    * for additional information.
    * @param commandParameters The parameters for the branch command.
    * @param gitOptions The BranchOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git branch result.
+   * @returns The Git branch result.
    * @category Branching
    */
   branch(commandParameters?: string | string[], gitOptions?: BranchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -732,14 +735,14 @@ export interface GitAnnexAPI {
    * Switches branches or restores working tree files.
    *
    * Consult the
-   * [git checkout documentation](https://git-scm.com/docs/git-checkout)
+   * [Git checkout documentation](https://git-scm.com/docs/git-checkout)
    * for additional information.
    * @param commandParameters The parameters for the checkout command.
    * @param relativePaths The files for the checkout command.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The CheckoutOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git checkout result.
+   * @returns The Git checkout result.
    * @category Branching
    */
   checkout(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: CheckoutOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -748,12 +751,12 @@ export interface GitAnnexAPI {
    *  Applies changes introduced by existing commits.
    *
    * Consult the
-   * [git cherry-pick documentation](https://git-scm.com/docs/git-cherry-pick)
+   * [Git cherry-pick documentation](https://git-scm.com/docs/git-cherry-pick)
    * for additional information.
    * @param commandParameters The parameters for the cherry-pick command.
    * @param gitOptions The CherryPickOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git cherry-pick result.
+   * @returns The Git cherry-pick result.
    * @category Branching
    */
   cherryPick(commandParameters?: string | string[], gitOptions?: CherryPickOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -762,14 +765,14 @@ export interface GitAnnexAPI {
    * Clones a repository into an empty directory.
    *
    * Consult the
-   * [git clone documentation](https://git-scm.com/docs/git-clone)
+   * [Git clone documentation](https://git-scm.com/docs/git-clone)
    * for additional information.
    * @param repository The (possibly remote) repository to be cloned.
    * @param repositoryPath The destination directory of the clone.
    * If omitted, the repositoryPath passed to createAccessor is used.
    * @param gitOptions The CloneOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git clone result.
+   * @returns The Git clone result.
    * @category Setup
    */
   clone(repository: string, repositoryPath?: string, gitOptions?: CloneOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -778,28 +781,28 @@ export interface GitAnnexAPI {
    * Records changes to the repository.
    *
    * Consult the
-   * [git commit documentation](https://git-scm.com/docs/git-commit)
+   * [Git commit documentation](https://git-scm.com/docs/git-commit)
    * for additional information.
-   * @param relativePaths The files to record in git and git-annex.
+   * @param relativePaths The files to record in Git and git-annex.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The CommitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git commit result.
+   * @returns The Git commit result.
    * @category Contents
    */
   commit(relativePaths?: string | string[], gitOptions?: CommitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Gets or set git configuration settings.
+   * Gets or set Git configuration settings.
    *
    * Consult the
-   * [git config documentation](https://git-scm.com/docs/git-config/)
+   * [Git config documentation](https://git-scm.com/docs/git-config/)
    * for additional information.
    * @param gitOptions The ConfigGitOptions for the command.
    * One of [[ConfigGitOptions.--get]], [[ConfigGitOptions.set]],
    * [[ConfigGitOptions.--unset]], or [[ConfigGitOptions.--list]] must be specified.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git config result.
+   * @returns The Git config result.
    * @category Configuration
    */
   configGit(gitOptions: ConfigGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -808,29 +811,30 @@ export interface GitAnnexAPI {
    * Shows changes between commits, commit and working tree, etc.
    *
    * Consult the
-   * [git diff documentation](https://git-scm.com/docs/git-diff)
+   * [Git diff documentation](https://git-scm.com/docs/git-diff)
    * for additional information.
    * @param commandParameters The parameters for the diff command.
    * @param relativePaths The files for the diff command.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The DiffOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git diff result.
+   * @returns The Git diff result.
    * @category Contents
    */
   diff(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: DiffOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Reports information about each ref.
+   * Consider using generic function [[getRefs]] if JavaScript objects are desired.
    *
    * Consult the
-   * [git for-each-ref documentation](https://git-scm.com/docs/git-for-each-ref)
+   * [Git for-each-ref documentation](https://git-scm.com/docs/git-for-each-ref)
    * for additional information.
    * @param gitOptions The ForEachRefOptions for the command.
    * @param pattern Filters refs using either fnmatch(3) or
    * matching completely or from the beginning up to a slash.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git tag result.
+   * @returns The Git for-each-ref result.
    * @category Inspection
    */
   forEachRef(gitOptions?: ForEachRefOptions | string[], pattern?: string | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -839,27 +843,27 @@ export interface GitAnnexAPI {
    * Downloads objects and refs from another repository.
    *
    * Consult the
-   * [git fetch documentation](https://git-scm.com/docs/git-fetch)
+   * [Git fetch documentation](https://git-scm.com/docs/git-fetch)
    * for additional information.
    * @param commandParameters The parameters for the fetch command.
    * @param gitOptions The FetchOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git fetch result.
+   * @returns The Git fetch result.
    * @category Remotes
    */
   fetch(commandParameters?: string | string[], gitOptions?: FetchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Verifies the connectivity and validity of objects in git.
+   * Verifies the connectivity and validity of objects in Git.
    *
    * Consult the
-   * [git fsck documentation](https://git-scm.com/docs/git-fsck)
+   * [Git fsck documentation](https://git-scm.com/docs/git-fsck)
    * for additional information.
    * @param object An object to treat as the head of an unreachability trace.
    * If omitted, the index file, all SHA-1 references in refs namespace, and all reflogs are used.
    * @param gitOptions The FsckGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git fsck result.
+   * @returns The Git fsck result.
    * @category Maintenance
    */
   fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -868,27 +872,28 @@ export interface GitAnnexAPI {
    * Creates an empty Git repository or reinitializes an existing one.
    *
    * Consult the
-   * [git init documentation](https://git-scm.com/docs/git-init)
+   * [Git init documentation](https://git-scm.com/docs/git-init)
    * for additional information.
    * @param gitOptions The InitGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git init result.
+   * @returns The Git init result.
    * @category Setup
    */
   initGit(gitOptions?: InitGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Shows commit log entries.
+   * Consider using generic function [[getLogs]] if JavaScript objects are desired.
    *
    * Consult the
-   * [git log documentation](https://git-scm.com/docs/git-log)
+   * [Git log documentation](https://git-scm.com/docs/git-log)
    * for additional information.
    * @param commandParameters The parameters for the log command.
    * @param relativePaths The files for the log command.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The LogOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git log result.
+   * @returns The Git log result.
    * @category Branching
    */
   log(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: LogOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -897,12 +902,12 @@ export interface GitAnnexAPI {
    *  Joins two or more development histories.
    *
    * Consult the
-   * [git merge documentation](https://git-scm.com/docs/git-merge)
+   * [Git merge documentation](https://git-scm.com/docs/git-merge)
    * for additional information.
    * @param commandParameters The parameters for the merge command.
    * @param gitOptions The MergeGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git merge result.
+   * @returns The Git merge result.
    * @category Branching
    */
   mergeGit(commandParameters?: string | string[], gitOptions?: MergeGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -911,7 +916,7 @@ export interface GitAnnexAPI {
    * Moves or renames a file, a directory, or a symlink.
    *
    * Consult the
-   * [git mv documentation](https://git-scm.com/docs/git-mv)
+   * [Git mv documentation](https://git-scm.com/docs/git-mv)
    * for additional information.
    * @param relativePaths The files to move.
    * The helper function [[gitPath]] or [[gitPaths]] is called internally.
@@ -920,7 +925,7 @@ export interface GitAnnexAPI {
    * The helper function [[gitPath]] is called internally.
    * @param gitOptions The MvOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git mv result.
+   * @returns The Git mv result.
    * @category Contents
    */
   mv(relativePaths: string | string[], destination: string, gitOptions?: MvOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -929,12 +934,12 @@ export interface GitAnnexAPI {
    * Fetches from and integrates with another repository or a local branch.
    *
    * Consult the
-   * [git pull documentation](https://git-scm.com/docs/git-pull)
+   * [Git pull documentation](https://git-scm.com/docs/git-pull)
    * for additional information.
    * @param commandParameters The parameters for the pull command.
    * @param gitOptions The PullOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git pull result.
+   * @returns The Git pull result.
    * @category Remotes
    */
   pull(commandParameters?: string | string[], gitOptions?: PullOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -943,12 +948,12 @@ export interface GitAnnexAPI {
    * Updates remote refs along with associated objects.
    *
    * Consult the
-   * [git push documentation](https://git-scm.com/docs/git-push)
+   * [Git push documentation](https://git-scm.com/docs/git-push)
    * for additional information.
    * @param commandParameters The parameters for the push command.
    * @param gitOptions The PushOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git push result.
+   * @returns The Git push result.
    * @category Remotes
    */
   push(commandParameters?: string | string[], gitOptions?: PushOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -957,12 +962,12 @@ export interface GitAnnexAPI {
    * Reapplies commits on top of another base tip.
    *
    * Consult the
-   * [git rebase documentation](https://git-scm.com/docs/git-rebase)
+   * [Git rebase documentation](https://git-scm.com/docs/git-rebase)
    * for additional information.
    * @param commandParameters The parameters for the rebase command.
    * @param gitOptions The RebaseOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git rebase result.
+   * @returns The Git rebase result.
    * @category Branching
    */
   rebase(commandParameters?: string | string[], gitOptions?: RebaseOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -972,14 +977,14 @@ export interface GitAnnexAPI {
    * Consider using method [[getRemoteNames]] if a list of remote names is required.
    *
    * Consult the
-   * [git remote documentation](https://git-scm.com/docs/git-remote)
+   * [Git remote documentation](https://git-scm.com/docs/git-remote)
    * for additional information.
    * @param subCommand The remote subcommand to run.
    * If omitted, a list of existing remotes is returned.
    * @param commandParameters The options and arguments for the subCommand.
    * @param gitOptions The RemoteOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git remote result.
+   * @returns The Git remote result.
    * @category Remotes
    */
   remote(subCommand?: RemoteCommand, commandParameters?: string | string[], gitOptions?: RemoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -988,14 +993,14 @@ export interface GitAnnexAPI {
    * Resets the current HEAD to the specified state.
    *
    * Consult the
-   * [git reset documentation](https://git-scm.com/docs/git-reset)
+   * [Git reset documentation](https://git-scm.com/docs/git-reset)
    * for additional information.
    * @param commandParameters The parameters for the reset command.
    * @param relativePaths The files affected by the operation.
    * The helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The ResetOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git reset result.
+   * @returns The Git reset result.
    * @category Branching
    */
   reset(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: ResetOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1004,13 +1009,13 @@ export interface GitAnnexAPI {
    * Restores working tree files.
    *
    * Consult the
-   * [git restore documentation](https://git-scm.com/docs/git-restore)
+   * [Git restore documentation](https://git-scm.com/docs/git-restore)
    * for additional information.
    * @param relativePaths The files to restore.
    * The helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The RestoreOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git restore result.
+   * @returns The Git restore result.
    * @category Branching
    */
   restore(relativePaths?: string | string[], gitOptions?: RestoreOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1019,12 +1024,12 @@ export interface GitAnnexAPI {
    *  Reverts existing commits.
    *
    * Consult the
-   * [git revert documentation](https://git-scm.com/docs/git-revert)
+   * [Git revert documentation](https://git-scm.com/docs/git-revert)
    * for additional information.
    * @param commandParameters The parameters for the revert command.
    * @param gitOptions The RevertOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git revert result.
+   * @returns The Git revert result.
    * @category Branching
    */
   revert(commandParameters?: string | string[], gitOptions?: RevertOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1033,12 +1038,12 @@ export interface GitAnnexAPI {
    * Picks out and massages parameters.
    *
    * Consult the
-   * [git rev-parse documentation](https://git-scm.com/docs/git-rev-parse)
+   * [Git rev-parse documentation](https://git-scm.com/docs/git-rev-parse)
    * for additional information.
    * @param commandParameters The parameters for the rev-parse command.
    * @param gitOptions The RevParseOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git rev-parse result.
+   * @returns The Git rev-parse result.
    * @category Inspection
    */
   revParse(commandParameters?: string | string[], gitOptions?: RevParseOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1047,25 +1052,26 @@ export interface GitAnnexAPI {
    * Removes file content from the repository.
    *
    * Consult the
-   * [git rm documentation](https://git-scm.com/docs/git-rm)
+   * [Git rm documentation](https://git-scm.com/docs/git-rm)
    * for additional information.
    * @param gitOptions The RmOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git rm result.
+   * @returns The Git rm result.
    * @category Contents
    */
   rm(relativePaths: string | string[], gitOptions?: RmOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   *  Displays various types of objects.
+   * Displays various types of objects.
+   * Consider using generic function [[getShows]] if JavaScript objects are desired.
    *
    * Consult the
-   * [git show documentation](https://git-scm.com/docs/git-show)
+   * [Git show documentation](https://git-scm.com/docs/git-show)
    * for additional information.
    * @param commandParameters The parameters for the show command.
    * @param gitOptions The ShowOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git show result.
+   * @returns The Git show result.
    * @category Inspection
    */
   show(commandParameters?: string | string[], gitOptions?: ShowOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1074,7 +1080,7 @@ export interface GitAnnexAPI {
    * Saves the changes in a dirty working directory.
    *
    * Consult the
-   * [git stash documentation](https://git-scm.com/docs/git-stash)
+   * [Git stash documentation](https://git-scm.com/docs/git-stash)
    * for additional information.
    * @param subCommand The stash subcommand to run.
    * If omitted, a list of existing stashes is returned.
@@ -1083,7 +1089,7 @@ export interface GitAnnexAPI {
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The StashOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git stash result.
+   * @returns The Git stash result.
    * @category Branching
    */
   stash(subCommand?: StashCommand, commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: StashOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1092,13 +1098,13 @@ export interface GitAnnexAPI {
    * Shows the working tree status.
    *
    * Consult the
-   * [git status documentation](https://git-scm.com/docs/git-status)
+   * [Git status documentation](https://git-scm.com/docs/git-status)
    * for additional information.
    * @param relativePaths The files of interest.
    * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
    * @param gitOptions The StatusGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git status result.
+   * @returns The Git status result.
    * @category Contents
    */
   statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
@@ -1107,39 +1113,40 @@ export interface GitAnnexAPI {
    * Shows changes between commits, commit and working tree, etc.
    *
    * Consult the
-   * [git switch documentation](https://git-scm.com/docs/git-switch)
+   * [Git switch documentation](https://git-scm.com/docs/git-switch)
    * for additional information.
    * @param commandParameters The parameters for the switch command.
    * @param gitOptions The SwitchOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git switch result.
+   * @returns The Git switch result.
    * @category Branching
    */
   switch(commandParameters?: string | string[], gitOptions?: SwitchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Creates, deletes, or lists tag objects.
+   * Consider using generic function [[getTags]] if JavaScript objects are desired.
    *
    * Consult the
-   * [git tag documentation](https://git-scm.com/docs/git-tag)
+   * [Git tag documentation](https://git-scm.com/docs/git-tag)
    * for additional information.
-   * @param tagname The name of the tag to create, delete, or describe.
+   * @param tagName The name of the tag to create, delete, or describe.
    * @param gitOptions The TagOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git tag result.
+   * @returns The Git tag result.
    * @category Branching
    */
-  tag(tagname?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  tag(tagName?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
-   * Obtains build information about the local git installation.
+   * Obtains build information about the local Git installation.
    *
    * Consult the
-   * [git version documentation](https://git-scm.com/docs/git-version)
+   * [Git version documentation](https://git-scm.com/docs/git-version)
    * for additional information.
    * @param gitOptions The VersionGitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
-   * @returns The git version result.
+   * @returns The Git version result.
    * @category Version
    */
   versionGit(gitOptions?: VersionGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;

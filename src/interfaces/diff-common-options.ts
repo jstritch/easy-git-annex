@@ -115,12 +115,12 @@ export interface DiffCommonOptions {
   '--histogram'?: null;
 
   /**
-   * gnores whitespace when comparing lines.
+   * Ignores whitespace when comparing lines.
    */
   '--ignore-all-space'?: null;
 
   /**
-   * gnores whitespace when comparing lines.
+   * Ignores changes whose lines are all blank.
    */
   '--ignore-blank-lines'?: null;
 
@@ -220,7 +220,7 @@ export interface DiffCommonOptions {
   '--no-renames'?: null;
 
   /**
-   * Does noy use empty blobs as rename source.
+   * Does not use empty blobs as rename source.
    */
   '--no-rename-empty'?: null;
 

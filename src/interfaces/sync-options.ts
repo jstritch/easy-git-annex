@@ -89,7 +89,7 @@ export interface SyncOptions extends AnnexOptions {
   '--not-only-annex'?: null;
 
   /**
-   * Syncs only the git-annex branch and annexed content, not other git branches.
+   * Syncs only the git-annex branch and annexed content, not other Git branches.
    * See also [[--not-only-annex]].
    */
   '--only-annex'?: null;

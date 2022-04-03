@@ -5,6 +5,7 @@ import { Parser } from '../interfaces/parser';
 
 /**
  * Returns information about available files in application-defined JavaScript objects.
+ * The JavaScript objects are created from the return of the [[GitAnnexAPI.find]] method.
  *
  * @param guard The type predicate to validate each file.
  * @param columns Maps the columns returned by the --format option
@@ -14,10 +15,11 @@ import { Parser } from '../interfaces/parser';
  * @param relativePaths The files for the find command.
  * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
  * @param gitOptions The FindOptions for the command.
+ * The --format option must end with `\\n`.
  * @param columnDelimiter The column delimiter used by the --format option.
  * If unspecified, `\t` is used to split at `\\t` in --format.
  * @returns An array containing objects passing the type guard function.
- * @category Inspection
+ * @category Generic
  */
 export async function getFinds<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, relativePaths?: string | string[], gitOptions?: FindOptions | string[], columnDelimiter?: string): Promise<T[]> {
   const myAnx = GitAnnexAccessor.create(repositoryPath);

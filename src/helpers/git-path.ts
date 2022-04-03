@@ -1,5 +1,5 @@
 /**
-* Converts an operating-system relative path to a git relative path.
+* Converts an operating-system relative path to a Git relative path.
 *
 * Git and git-annex commands use forward slash path separators
 * regardless of platform.
@@ -16,7 +16,7 @@ export function gitPath(relativePath: string): string {
 }
 
 /**
- * Converts an array of operating-system relative paths to git relative paths.
+ * Converts an array of operating-system relative paths to Git relative paths.
  *
  * Git and git-annex commands use forward slash path separators
  * regardless of platform.

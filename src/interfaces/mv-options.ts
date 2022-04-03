@@ -1,5 +1,5 @@
 /**
- * MvOptions defines the supported options for the git mv command.
+ * MvOptions defines the supported options for the Git mv command.
  * @category Command Options
  */
 export interface MvOptions {

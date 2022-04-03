@@ -49,7 +49,7 @@ export interface ShowOptions extends DiffCommonOptions {
 
   /**
    * Shows the full object name.
-   * See also [[--no-abbrev-commit]].
+   * See also [[--abbrev-commit]].
    */
   '--no-abbrev-commit'?: null;
 

@@ -1,6 +1,9 @@
 /**
  * Parser defines the signature of a string parsing function.
  * Parser functions return undefined when the string fails to convert.
+ *
+ * The following Parser implementations are included with easy-git-annex:
+ * [[parseBigInt]], [[parseNumber]], [[parseOptionalString]], and [[parseUnixDate]].
  * @category Helper
  */
 

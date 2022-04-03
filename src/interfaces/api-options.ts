@@ -58,8 +58,8 @@ export interface ApiOptions {
 
   /**
    * Stops processing before actually running the command.
-   * The CommandResult is returned with an exitCode of NaN and
-   * the repositoryPath, exeName, and args properties may be examined.
+   * The CommandResult is returned with an exitCode of `Number.NaN`.
+   * The repositoryPath, exeName, and args properties may be examined.
    */
   noOp?: boolean;
 }

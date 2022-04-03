@@ -1,5 +1,5 @@
 /**
- * ConfigGitOptions defines the supported options for the git config command.
+ * ConfigGitOptions defines the supported options for the Git config command.
  * @category Command Options
  */
 export interface ConfigGitOptions {
@@ -29,9 +29,9 @@ export interface ConfigGitOptions {
   * Sets a configuration value.
   * Provide the key and value strings to set.
   *
-  * Set is an anonymous option. The name `set` is not presented to the git config command.
+  * Set is an anonymous option. The name `set` is not presented to the Git config command.
   * The values passed to the set option are passed as the parameters
-  * `name` and `value` to the git config command.
+  * `name` and `value` to the Git config command.
   */
   set?: [string, string];
 

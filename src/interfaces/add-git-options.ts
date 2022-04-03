@@ -20,7 +20,7 @@ export interface AddGitOptions {
   '--force'?: null;
 
   /**
-   * If some files can not be added because of errors indexing them, continue adding the others.
+   * Continues adding files even if some files can not be added because of errors indexing them.
    */
   '--ignore-errors'?: null;
 

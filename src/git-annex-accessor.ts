@@ -384,7 +384,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   //
-  // git methods
+  // Git methods
   //
 
   public async runGit(args: string[], apiOptions?: ApiOptions): Promise<CommandResult> {
@@ -565,9 +565,9 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runGit(args, apiOptions);
   }
 
-  public async tag(tagname?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async tag(tagName?: string, gitOptions?: TagOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'tag', gitOptions);
-    this.pushIfString(args, tagname);
+    this.pushIfString(args, tagName);
     return this.runGit(args, apiOptions);
   }
 

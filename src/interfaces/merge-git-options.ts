@@ -102,7 +102,7 @@ export interface MergeGitOptions {
   '--no-progress'?: null;
 
   /**
-   * The complement of [[--no-rerere-autoupdate]].
+   * The complement of [[--rerere-autoupdate]].
    */
   '--no-rerere-autoupdate'?: null;
 

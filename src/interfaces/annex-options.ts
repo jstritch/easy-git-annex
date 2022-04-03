@@ -14,7 +14,7 @@ export interface AnnexOptions {
   '--backend'?: string;
 
   /**
-   * Overrides git configuration settings.
+   * Overrides Git configuration settings.
    * To override one value, specify `['name', 'value']`.
    * Use a [string, string][] to specify multiple values.
    */

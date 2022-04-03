@@ -68,12 +68,12 @@ export interface RebaseOptions {
   '--keep-empty'?: null;
 
   /**
-   * Using merging strategies to rebase.
+   * Uses merging strategies to rebase.
    */
   '--merge'?: null;
 
   /**
-   * The complement of [[--no-autosquash]].
+   * The complement of [[--autosquash]].
    */
   '--no-autosquash'?: null;
 
@@ -104,7 +104,7 @@ export interface RebaseOptions {
   '--no-reapply-cherry-picks'?: null;
 
   /**
-   * The complement of [[--no-rerere-autoupdate]].
+   * The complement of [[--rerere-autoupdate]].
    */
   '--no-rerere-autoupdate'?: null;
 
@@ -195,7 +195,7 @@ export interface RebaseOptions {
   '--verify'?: null;
 
   /**
-   * Passed to the git apply program.
+   * Passed to the Git apply program.
    */
   '--whitespace'?: string;
 

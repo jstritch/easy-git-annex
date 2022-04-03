@@ -41,7 +41,7 @@ export interface RevertOptions {
   '--no-gpg-sign'?: null;
 
   /**
-   * The complement of [[--no-rerere-autoupdate]].
+   * The complement of [[--rerere-autoupdate]].
    */
   '--no-rerere-autoupdate'?: null;
 
