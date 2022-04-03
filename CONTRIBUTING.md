@@ -1,31 +1,40 @@
+Here are some suggestions to help you get started.
+
 # Code
 
-Read .github/PULL_REQUEST_TEMPLATE.md before you begin.
-Start your work on a new branch.
-Run the linter, `npm run lint`, frequently.
-When you're done, submit a pull request.
-I'll work with you to prepare for release.
+1. Please read .github/PULL_REQUEST_TEMPLATE.md before you begin.
+1. Start your work on a new branch.
+1. The linter, `npm run lint`, is your friend.
+1. When you're done, submit a pull request.
+1. I'll work with you to prepare for release.
 
 # Tests
 
-Update the tests as necessary.
-The script `npm run test:ci` skips the git-annex tests.
-To view test coverage, use the command
-`npm run test:coverage`.
+1. Update the tests as necessary.
+1. The script `npm run test` runs all tests.
+1. The script `npm run test:ci` skips the git-annex tests.
+1. To view test coverage, use the command `npm run test:coverage`.
 
 # Documentation
 
-Running typedoc identifies missing exports.
-To run typedoc, use the command
-`npm run typedoc`.
+1. To regenerate the documentation, use the command `npm run typedoc`.
 
-# Yalc
+# How to add a command
 
-[Yalc](https://www.npmjs.com/package/yalc)
-may be installed globally to test your changes in your application.
-After building easy-git-annex, use the command
-`npm run yalc` to push the build.
-Then rebuild your application.
+1. Add an empty entry for the foo command in the appropriate src/helpers/command-options.ts map.
+1. If the foo command has options, add interface FooOptions stub in src/interfaces/FooOptions.ts and export the interface in src/index.ts.
+1. Add the foo method signature to src/interfaces/git-annex-api.ts.
+1. Create the necessary stub test file(s) under tests/commands-*.
+1. Implement the foo method in src/git-annex-accessor.ts.
+1. One at a time, add any command options to FooOptions.ts, command-options.ts, and foo.test.ts (in the ApiOptions.noOp list).
+1. Write tests to demonstrate the other parameters are correctly connected to the actual foo command.
+
+# Testing easy-git-annex changes in your application
+
+1. [Yalc](https://www.npmjs.com/package/yalc) may be installed globally to test your easy-git-annex changes in your application.
+1. After building easy-git-annex wit the `npm run build` command, use the command `npm run yalc` to push the build.
+1. Run `yalc add easy-git-annex` in your dependent project.
+1. Rebuild your application and test normally.
 
 # License
 
