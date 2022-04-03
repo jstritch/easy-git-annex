@@ -171,6 +171,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['merge', [
     { name: '--allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--no-allow-unrelated-histories', kind: OptionKind.Flag },
   ]],
   ['mincopies', []],
   ['move', [

@@ -11,6 +11,7 @@ describe('MergeAnxOptions', () => {
 
   const tests: [anx.MergeAnxOptions, string[]][] = [
     [{ '--allow-unrelated-histories': null }, ['--allow-unrelated-histories']],
+    [{ '--no-allow-unrelated-histories': null }, ['--no-allow-unrelated-histories']],
   ];
 
   test.each(tests)('MergeAnxOptions "%o"', async (anxOptions, expected) => {
