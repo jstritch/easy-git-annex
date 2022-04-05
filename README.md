@@ -16,7 +16,7 @@ Each command is run asynchronously without blocking the Node.js event loop.
 The Promise returned from every command has the same structure and
 includes the command and its arguments, repository path, exit code, stdout, and stderr.
 
-Helper functions assist your :application with parsing command responses.
+Helper functions assist your application with parsing command responses.
 
 Callbacks for stdout and stderr are available to show progress of time-consuming commands.
 Environment variables may also be specified.
@@ -52,7 +52,7 @@ An application may hold multiple accessors simultaneously.
 ### Commands
 
 Git and git-annex commands are exposed by methods on the
-[GitAnnexAPI interface](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html).
+[GitAnnexAPI](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html) interface.
 Frequently used commands, such as commit, have a specific method to invoke the command.
 Low-level methods runGit and runAnx are capable of invoking any Git or git-annex command.
 
@@ -399,7 +399,7 @@ The outHandler establishes the reportProgress function to be called as informati
   let rslt = await myAnx.addAnx(relativePaths, { '--json-progress': null }, { outHandler: reportProgress });
 ```
 
-When the example is run, progress messages appear on the console for each annexed files before the command completes.
+When the example is run, progress messages appear on the console for each annexed file before the command completes.
 
 ### Get application-defined JavaScript objects
 
