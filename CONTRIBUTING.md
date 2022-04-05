@@ -24,7 +24,7 @@ Here are some suggestions to help you get started.
 
 1. Add an empty entry for the foo command in the appropriate src/helpers/command-options.ts map.
 1. If the foo command has options, add interface FooOptions stub in src/interfaces/FooOptions.ts and export the interface in src/index.ts.
-1. Add the foo method signature to src/interfaces/git-annex-api.ts.
+1. Add the foo method to src/interfaces/git-annex-api.ts.
 1. Create the necessary stub test file(s) under tests/commands-*.
 1. Implement the foo method in src/git-annex-accessor.ts.
 1. One at a time, add any command options to FooOptions.ts, command-options.ts, and foo.test.ts (in the ApiOptions.noOp list).
