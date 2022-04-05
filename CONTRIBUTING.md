@@ -1,3 +1,4 @@
+Thanks for taking an interest in improving easy-git-annex.
 Here are some suggestions to help you get started.
 
 # Code
@@ -28,11 +29,12 @@ Here are some suggestions to help you get started.
 1. Implement the foo method in src/git-annex-accessor.ts.
 1. One at a time, add any command options to FooOptions.ts, command-options.ts, and foo.test.ts (in the ApiOptions.noOp list).
 1. Write tests to demonstrate the other parameters are correctly connected to the actual foo command.
+1. Add a link and description line to the Documentation section of README.md.
 
 # Testing easy-git-annex changes in your application
 
 1. [Yalc](https://www.npmjs.com/package/yalc) may be installed globally to test your easy-git-annex changes in your application.
-1. After building easy-git-annex wit the `npm run build` command, use the command `npm run yalc` to push the build.
+1. After building easy-git-annex with the `npm run build` command, use the command `npm run yalc` to push the build.
 1. Run `yalc add easy-git-annex` in your dependent project.
 1. Rebuild your application and test normally.
 
