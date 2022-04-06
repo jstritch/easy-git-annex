@@ -1,4 +1,4 @@
-## vNext
+## v2.0.0 released 2022-04-06
 * Add GitAnnexAPI methods
     * addGit
     * adjust
