@@ -17,6 +17,8 @@ The Promise returned from every command has the same structure and
 includes the command and its arguments, repository path, exit code, stdout, and stderr.
 
 Helper functions assist your application with parsing command responses.
+Additional methods return JavaScript objects for tasks common to many applications,
+for example getStatusAnx and getStatusGit.
 
 Callbacks for stdout and stderr are available to show progress of time-consuming commands.
 Environment variables may also be specified.
@@ -58,9 +60,6 @@ Low-level methods runGit and runAnx are capable of invoking any Git or git-annex
 
 A process is spawned to run each command asynchronously.
 The ApiOptions parameter, described below, may be used to influence process creation.
-
-Additional methods return JavaScript objects for tasks common to many applications,
-for example getStatusAnx and getStatusGit.
 
 ### Command options
 
@@ -306,7 +305,7 @@ This example illustrates one way to create a git-annex repository and add some f
 The example may be copied and run on your machine.
 When you invoke runExampleClick from a test application, it creates a temporary directory,
 prepares the directory for Git and git-annex,
-and adds one large and one small file to a subdirectory,
+adds one large and one small file to a subdirectory,
 and reports success or failure.
 The repository remains on your system for study.
 
@@ -380,7 +379,7 @@ export async function runExampleClick(): Promise<void> {
 
 ### Show progress of long-running commands
 
-To enhance the addFiles function, above, to display progress as files are added to git-annex, add the reportProgress function shown below.
+To make the addFiles function, above, display progress as files are added to git-annex, add the reportProgress function shown below.
 The safeParseToArray function converts the received string to an array of JavaScript objects meeting the ActionProgress interface.
 Each object is then written to console.info.
 
@@ -405,10 +404,10 @@ When the example is run, progress messages appear on the console for each annexe
 
 Several generic methods are included in easy-git-annex.
 These methods return JavaScript objects meeting the requirements of application-defined interfaces.
-This example uses the generic method getTags get custom tag objects.
+This example uses the generic method getTags to get custom tag objects.
 The pattern is similar for the other generic methods.
 
-First declare the interface you desrire.
+First declare the interface you need.
 
 ```typescript
 export interface FooTag {
