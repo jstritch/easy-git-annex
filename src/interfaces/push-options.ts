@@ -31,7 +31,7 @@ export interface PushOptions {
 
   /**
    * Forces an update only if the tip of the remote-tracking ref has been integrated locally.
-   * See also [[--no-force-if-includes]].
+   * See also {@link --no-force-if-includes}.
    */
   '--force-if-includes'?: null;
 
@@ -61,7 +61,7 @@ export interface PushOptions {
   '--no-atomic'?: null;
 
   /**
-   * The complement of [[--force-if-includes]].
+   * The complement of {@link --force-if-includes}.
    */
   '--no-force-if-includes'?: null;
 
@@ -81,7 +81,7 @@ export interface PushOptions {
   '--no-signed'?: null;
 
   /**
-   * The complement of [[--thin]].
+   * The complement of {@link --thin}.
    */
   '--no-thin'?: null;
 
@@ -142,7 +142,7 @@ export interface PushOptions {
 
   /**
    * A thin transfer significantly reduces the amount of sent data when the sender and receiver share many of the same objects in common.
-   * See also [[--no-thin]].
+   * See also {@link --no-thin}.
    */
   '--thin'?: null;
 

@@ -1,8 +1,8 @@
 /**
 * ConsoleDataHandler defines the callback signature required to
 * obtain data from a command's stdout or stderr streams as it executes.
-* ConsoleDataHandler callbacks are specified by [[ApiOptions.outHandler]]
-* and [[ApiOptions.errHandler]].
+* ConsoleDataHandler callbacks are specified by {@link ApiOptions.outHandler}
+* and {@link ApiOptions.errHandler}.
 *
 * Uncaught Errors thrown by ConsoleDataHandler functions are
 * logged to console.error by easy-git-annex.
@@ -45,14 +45,14 @@ export interface ApiOptions {
   /**
    * The callback to receive stderr data as it becomes available.
    * If unspecified, no stderr callback is invoked.
-   * Refer to [[ConsoleDataHandler]] for implementation details.
+   * Refer to {@link ConsoleDataHandler} for implementation details.
    */
   errHandler?: ConsoleDataHandler;
 
   /**
    * The callback to receive stdout data as it becomes available.
    * If unspecified, no stdout callback is invoked.
-   * Refer to [[ConsoleDataHandler]] for implementation details.
+   * Refer to {@link ConsoleDataHandler} for implementation details.
    */
   outHandler?: ConsoleDataHandler;
 

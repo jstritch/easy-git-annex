@@ -18,7 +18,7 @@ export interface FetchOptions extends FetchCommonOptions {
 
   /**
    * Does not write a commit-graph after fetching.
-   * See also [[--write-commit-graph]].
+   * See also {@link --write-commit-graph}.
    */
   '--no-write-commit-graph'?: null;
   /**
@@ -58,7 +58,7 @@ export interface FetchOptions extends FetchCommonOptions {
 
   /**
    * Writes a commit-graph after fetching.
-   * See also [[--no-write-commit-graph]].
+   * See also {@link --no-write-commit-graph}.
    */
   '--write-commit-graph'?: null;
 }

@@ -21,7 +21,7 @@ export interface RevertOptions {
 
   /**
    * GPG-sign commits.
-   * See also [[--no-gpg-sign]].
+   * See also {@link --no-gpg-sign}.
    */
   '--gpg-sign'?: string | null;
 
@@ -36,12 +36,12 @@ export interface RevertOptions {
   '--no-commit'?: null;
 
   /**
-   * The complement of [[--gpg-sign]].
+   * The complement of {@link --gpg-sign}.
    */
   '--no-gpg-sign'?: null;
 
   /**
-   * The complement of [[--rerere-autoupdate]].
+   * The complement of {@link --rerere-autoupdate}.
    */
   '--no-rerere-autoupdate'?: null;
 
@@ -52,13 +52,12 @@ export interface RevertOptions {
 
   /**
    * Allows the rerere mechanism to update the index with the result of auto-conflict resolution.
-   * See also [[--no-rerere-autoupdate]].
+   * See also {@link --no-rerere-autoupdate}.
    */
   '--rerere-autoupdate'?: null;
 
   /**
    * Adds a Signed-off-by trailer by the committer at the end of the commit log message.
-   * See also [[--no-signoff]].
    */
   '--signoff'?: null;
 

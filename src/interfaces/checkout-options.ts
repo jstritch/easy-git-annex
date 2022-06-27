@@ -38,13 +38,13 @@ export interface CheckoutOptions {
 
   /**
    * Suppresses progress reports to the standard error stream.
-   * See also [[--progress]].
+   * See also {@link --progress}.
    */
   '--no-progress'?: null;
 
   /**
    * Does not set up "upstream" configuration.
-   * See also [[--track]].
+   * See also {@link --track}.
    */
   '--no-track'?: null;
 
@@ -57,13 +57,13 @@ export interface CheckoutOptions {
 
   /**
    * Checks out stage #2 for unmerged paths when checking out paths from the index.
-   * See also [[--thiers]].
+   * See also {@link --thiers}.
    */
   '--ours'?: null;
 
   /**
    * Forces progress reports to the standard error stream.
-   * See also [[--no-progress]].
+   * See also {@link --no-progress}.
    */
   '--progress'?: null;
 
@@ -74,13 +74,13 @@ export interface CheckoutOptions {
 
   /**
    * Checks out stage #3 for unmerged paths when checking out paths from the index.
-   * See also [[--ours]].
+   * See also {@link --ours}.
    */
   '--thiers'?: null;
 
   /**
    * Sets "upstream" tracking configuration for the new branch.
-   * See also [[--no-track]].
+   * See also {@link --no-track}.
    */
   '--track'?: string | null;
 }

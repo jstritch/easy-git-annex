@@ -28,7 +28,6 @@
   "defaultCategory": "Uncategorized",
   "disableSources": true,
   "hideGenerator": true,
-  "hideLegend": true,
   "validation": {
     "invalidLink": true,
     "notExported": true

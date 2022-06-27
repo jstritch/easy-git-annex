@@ -6,7 +6,7 @@ export interface BranchListOptions {
 
   /**
    * Show the shortest prefix that is at least <n> hexdigits long that uniquely identifies the object.
-   * See also [[--no-abbrev]].
+   * See also {@link --no-abbrev}.
    */
   '--abbrev'?: number | string;
 
@@ -17,13 +17,13 @@ export interface BranchListOptions {
 
   /**
    * Displays the tag listing in columns.
-   * See also [[--no-column]].
+   * See also {@link --no-column}.
    */
   '--column'?: string | string[] | null;
 
   /**
    * Lists branches which contain the specified commit; HEAD if not specified.
-   * See also [[--no-contains]].
+   * See also {@link --no-contains}.
    */
   '--contains'?: string | string[] | null;
 
@@ -44,7 +44,7 @@ export interface BranchListOptions {
 
   /**
    * Lists branches whose commits are reachable from the specified commit; HEAD if not specified.
-   * See also [[--no-merged]].
+   * See also {@link --no-merged}.
    */
   '--merged'?: string | string[] | null;
 
@@ -55,25 +55,25 @@ export interface BranchListOptions {
 
   /**
    * Displays full sha1s in the output.
-   * See also [[--abbrev]].
+   * See also {@link --abbrev}.
    */
   '--no-abbrev'?: null;
 
   /**
    * Does not display the tag listing in columns.
-   * See also [[--column]].
+   * See also {@link --column}.
    */
   '--no-column'?: null;
 
   /**
    * Lists branches which don't contain the specified commit; HEAD if not specified.
-   * See also [[--contains]].
+   * See also {@link --contains}.
    */
   '--no-contains'?: string | string[] | null;
 
   /**
    * Lists refs whose commits are not reachable from the specified commit; HEAD if not specified.
-   * See also [[--merged]].
+   * See also {@link --merged}.
    */
   '--no-merged'?: string | string[] | null;
 

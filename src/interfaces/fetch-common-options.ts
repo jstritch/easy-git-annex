@@ -66,7 +66,7 @@ export interface FetchCommonOptions {
 
   /**
    * Does not check if a branch is force-updated during fetch.
-   * See also [[--show-forced-updates]]
+   * See also {@link --show-forced-updates}.
    */
   '--no-show-forced-updates'?: null;
 
@@ -117,7 +117,7 @@ export interface FetchCommonOptions {
 
   /**
    * Checks if a branch is force-updated during fetch.
-   * See also [[--no-show-forced-updates]]
+   * See also {@link --no-show-forced-updates}.
    */
   '--show-forced-updates'?: null;
 

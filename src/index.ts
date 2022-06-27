@@ -6,7 +6,7 @@ import { GitAnnexAccessor } from './git-annex-accessor';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 
 /**
- * The createAccessor function obtains an implementation of the [[GitAnnexAPI]] interface.
+ * The createAccessor function obtains an implementation of the {@link GitAnnexAPI} interface.
  * The returned accessor exposes Git and git-annex behavior.
  *
  * @param repositoryPath The path to the repository root directory.

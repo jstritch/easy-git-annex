@@ -4,7 +4,7 @@ import { Parser } from '../interfaces/parser';
 
 /**
  * Returns information about Git tags in application-defined JavaScript objects.
- * The JavaScript objects are created from the return of the [[GitAnnexAPI.forEachRef]] method.
+ * The JavaScript objects are created from the return of the {@link GitAnnexAPI.forEachRef} method.
  *
  * @param guard The type predicate to validate each tag.
  * @param columns Maps the columns returned by the --format option

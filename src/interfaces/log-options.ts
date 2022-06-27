@@ -7,7 +7,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Shows a prefix that names the object uniquely.
-   * See also [[--no-abbrev-commit]].
+   * See also {@link --no-abbrev-commit}.
    */
   '--abbrev-commit'?: null;
 
@@ -17,7 +17,7 @@ export interface LogOptions extends DiffCommonOptions {
   '--all'?: null;
 
   /**
-   * Limits the commits those matching all specified [[--grep]] expressions.
+   * Limits the commits those matching all specified {@link --grep} expressions.
    */
   '--all-match'?: null;
 
@@ -67,7 +67,7 @@ export interface LogOptions extends DiffCommonOptions {
   '--cherry'?: null;
 
   /**
-   * Like [[--cherry-pick]] but marks equivalent commits with `=` rather than omitting them, and inequivalent ones with `+`.
+   * Like {@link --cherry-pick} but marks equivalent commits with `=` rather than omitting them, and inequivalent ones with `+`.
    */
   '--cherry-mark'?: null;
 
@@ -98,19 +98,19 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Prints the ref names of any commits.
-   * See also [[--no-decorate]].
+   * See also {@link --no-decorate}.
    */
   '--decorate'?: string | null;
 
   /**
    * Overrides a match in log.excludeDecoration.
-   * See also [[--decorate-refs-exclude]].
+   * See also {@link --decorate-refs-exclude}.
    */
   '--decorate-refs'?: string;
 
   /**
    * Specifies the refs to exclude.
-   * See also [[--decorate-refs]].
+   * See also {@link --decorate-refs}.
    */
   '--decorate-refs-exclude'?: string;
 
@@ -131,7 +131,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Performs tab expansion.
-   * See also [[--no-expand-tabs]].
+   * See also {@link --no-expand-tabs}.
    */
   '--expand-tabs'?: number | string | null;
 
@@ -196,13 +196,13 @@ export interface LogOptions extends DiffCommonOptions {
   '--ignore-missing'?: null;
 
   /**
-   * Limits the commits those not matching [[--grep]] expressions.
+   * Limits the commits those not matching {@link --grep} expressions.
    */
   '--invert-grep'?: null;
 
   /**
    * Lists only commits on the left side of a symmetric difference.
-   * See also [[--right-only]].
+   * See also {@link --right-only}.
    */
   '--left-only'?: null;
 
@@ -218,7 +218,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Uses the mailmap file to map author and committer names and email addresses to canonical real names and email addresses.
-   * See also [[--no-mailmap]].
+   * See also {@link --no-mailmap}.
    */
   '--mailmap'?: null;
 
@@ -229,7 +229,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Limits the number of commits to those with at most the specified number of parents.
-   * See also [[--no-max-parents]].
+   * See also {@link --no-max-parents}.
    */
   '--max-parents'?: number | string;
 
@@ -240,7 +240,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Prints only merge commits.
-   * See also [[--no-merges]].
+   * See also {@link --no-merges}.
    */
   '--merges'?: null;
 
@@ -251,43 +251,43 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Shows the full object name.
-   * See also [[--no-abbrev-commit]].
+   * See also {@link --no-abbrev-commit}.
    */
   '--no-abbrev-commit'?: null;
 
   /**
-   * The complement of [[--decorate]].
+   * The complement of {@link --decorate}.
    */
   '--no-decorate'?: null;
 
   /**
-   * The complement of [[--expand-tabs]].
+   * The complement of {@link --expand-tabs}.
    */
   '--no-expand-tabs'?: number | null;
 
   /**
-   * The complement of [[--no-mailmap]].
+   * The complement of {@link --no-mailmap}.
    */
   '--no-mailmap'?: null;
 
   /**
-   * The complement of [[--max-parents]].
+   * The complement of {@link --max-parents}.
    */
   '--no-max-parents'?: null;
 
   /**
    * Does not print merge commits.
-   * See also [[--merges]].
+   * See also {@link --merges}.
    */
   '--no-merges'?: null;
 
   /**
-   * The complement of [[--min-parents]].
+   * The complement of {@link --min-parents}.
    */
   '--no-min-parents'?: null;
 
   /**
-   * The complement of [[--notes]].
+   * The complement of {@link --notes}.
    */
   '--no-notes'?: null;
 
@@ -298,7 +298,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Shows notes with an optional ref value to filter notes.
-   * See also [[--no-notes]].
+   * See also {@link --no-notes}.
    */
   '--notes'?: string | string[] | null;
 
@@ -339,7 +339,7 @@ export interface LogOptions extends DiffCommonOptions {
 
   /**
    * Lists only commits on the right side of a symmetric difference.
-   * See also [[--left-only]].
+   * See also {@link --left-only}.
    */
   '--right-only'?: null;
 
@@ -371,7 +371,7 @@ export interface LogOptions extends DiffCommonOptions {
   /**
    * Shows commits after the specified timestamp.
    * Relative dates, such as `yesterday`, may be used.
-   * See also [[--until]].
+   * See also {@link --until}.
    */
   '--since'?: Date | string;
 
@@ -408,7 +408,7 @@ export interface LogOptions extends DiffCommonOptions {
   /**
    * Shows commits before the specified timestamp.
    * Relative dates, such as `yesterday`, may be used.
-   * See also [[--since]].
+   * See also {@link --since}.
    */
   '--until'?: Date | string;
 

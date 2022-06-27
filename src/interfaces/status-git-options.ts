@@ -6,7 +6,7 @@ export interface StatusGitOptions {
 
   /**
    * Displays detailed ahead/behind counts for the branch relative to its upstream branch.
-   * See also [[--no-ahead-behind]].
+   * See also {@link --no-ahead-behind}.
    */
   '--ahead-behind'?: null;
 
@@ -17,7 +17,7 @@ export interface StatusGitOptions {
 
   /**
    * Displays untracked files in columns.
-   * See also [[--no-column]].
+   * See also {@link --no-column}.
    */
   '--column'?: string | null;
 
@@ -43,37 +43,37 @@ export interface StatusGitOptions {
 
   /**
    * Does not display detailed ahead/behind counts for the branch relative to its upstream branch.
-   * See also [[--ahead-behind]].
+   * See also {@link --ahead-behind}.
    */
   '--no-ahead-behind'?: null;
 
   /**
    * Does not display untracked files in columns.
-   * See also [[--column]].
+   * See also {@link --column}.
    */
   '--no-column'?: null;
 
   /**
    * Turns off rename detection regardless of user configuration.
-   * See also [[--renames]].
+   * See also {@link --renames}.
    */
   '--no-renames'?: null;
 
   /**
    * Gives the output in an easy-to-parse format for scripts.
-   * Consider using method [[getStatusGit]] which returns objects.
+   * Consider using method {@link GitAnnexAPI.getStatusGit} which returns objects.
    */
   '--porcelain'?: string | null;
 
   /**
    * Turns on rename detection regardless of user configuration.
-   * See also [[--no-renames]].
+   * See also {@link --no-renames}.
    */
   '--renames'?: null;
 
   /**
    * Gives the output in the short-format.
-   * Consider using method [[getStatusGit]] which returns objects.
+   * Consider using method {@link GitAnnexAPI.getStatusGit} which returns objects.
    */
   '--short'?: null;
 

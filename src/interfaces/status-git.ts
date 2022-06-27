@@ -1,5 +1,5 @@
 /**
- * StatusGit defines an object returned by method [[getStatusGit]].
+ * StatusGit defines an object returned by method {@link GitAnnexAPI.getStatusGit}.
  * Consult the
  * [Git status documentation](https://git-scm.com/docs/git-status)
  * for a description of the fields.

@@ -6,7 +6,7 @@ import { Parser } from '../interfaces/parser';
 
 /**
  * Returns information about Git branches in application-defined JavaScript objects.
- * The JavaScript objects are created from the return of the [[GitAnnexAPI.branch]] method.
+ * The JavaScript objects are created from the return of the {@link GitAnnexAPI.branch} method.
  *
  * @param guard The type predicate to validate each branch.
  * @param columns Maps the columns returned by the --format option

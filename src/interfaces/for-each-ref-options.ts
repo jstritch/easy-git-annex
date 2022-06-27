@@ -6,7 +6,7 @@ export interface ForEachRefOptions {
 
   /**
    * Lists refs which contain the specified commit; HEAD if not specified.
-   * See also [[--no-contains]].
+   * See also {@link --no-contains}.
    */
   '--contains'?: string | string[] | null;
 
@@ -27,19 +27,19 @@ export interface ForEachRefOptions {
 
   /**
    * Lists refs whose commits are reachable from the specified commit; HEAD if not specified.
-   * See also [[--no-merged]].
+   * See also {@link --no-merged}.
    */
   '--merged'?: string | string[] | null;
 
   /**
    * Lists refs which don't contain the specified commit; HEAD if not specified.
-   * See also [[--contains]].
+   * See also {@link --contains}.
    */
   '--no-contains'?: string | string[] | null;
 
   /**
    * Lists refs whose commits are not reachable from the specified commit; HEAD if not specified.
-   * See also [[--merged]].
+   * See also {@link --merged}.
    */
   '--no-merged'?: string | string[] | null;
 

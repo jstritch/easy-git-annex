@@ -12,7 +12,7 @@ export interface BranchOptions extends BranchListOptions {
 
   /**
    * Creates the branch’s reflog.
-   * See also [[--no-create-reflog]].
+   * See also {@link --no-create-reflog}.
    */
   '--create-reflog'?: null;
 
@@ -38,13 +38,13 @@ export interface BranchOptions extends BranchListOptions {
 
   /**
    * Overrides an earlier --create-reflog.
-   * See also [[--create-reflog]].
+   * See also {@link --create-reflog}.
    */
   '--no-create-reflog'?: null;
 
   /**
    * Does not set up "upstream" configuration.
-   * See also [[--track]].
+   * See also {@link --track}.
    */
   '--no-track'?: null;
 
@@ -60,7 +60,7 @@ export interface BranchOptions extends BranchListOptions {
 
   /**
    * Sets "upstream" tracking configuration for the new branch.
-   * See also [[--no-track]].
+   * See also {@link --no-track}.
    */
   '--track'?: string | null;
 

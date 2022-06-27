@@ -25,7 +25,7 @@ export interface CloneOptions {
   '--depth'?: number | string;
 
   /**
-   * Stops the borrowing initiated by [[--reference]].
+   * Stops the borrowing initiated by {@link --reference}.
    */
   '--dissociate'?: null;
 
@@ -60,22 +60,22 @@ export interface CloneOptions {
   '--no-hardlinks'?: null;
 
   /**
-   * The complement of [[--reject-shallow]].
+   * The complement of {@link --reject-shallow}.
    */
   '--no-reject-shallow'?: null;
 
   /**
-   * The complement of [[--remote-submodules]].
+   * The complement of {@link --remote-submodules}.
    */
   '--no-remote-submodules'?: null;
 
   /**
-   * The complement of [[--shallow-submodules]].
+   * The complement of {@link --shallow-submodules}.
    */
   '--no-shallow-submodules'?: null;
 
   /**
-   * The complement of [[--single-branch]].
+   * The complement of {@link --single-branch}.
    */
   '--no-single-branch'?: null;
 
@@ -111,14 +111,14 @@ export interface CloneOptions {
   '--reference'?: string;
 
   /**
-   * Performs a [[--reference]] if the reference exists;
+   * Performs a {@link --reference} if the reference exists;
    * otherwise, ignores with a warning.
    */
   '--reference-if-able'?: string;
 
   /**
    * Fails if the source is a shallow repository.
-   * See also [[--no-reject-shallow]].
+   * See also {@link --no-reject-shallow}.
    */
   '--reject-shallow'?: null;
 
@@ -150,7 +150,7 @@ export interface CloneOptions {
 
   /**
    * Clones submodules with a depth of 1.
-   * See also [[--no-shallow-submodules]].
+   * See also {@link --no-shallow-submodules}.
    */
   '--shallow-submodules'?: null;
 
@@ -161,7 +161,7 @@ export interface CloneOptions {
 
   /**
    * Clones only the history leading to the tip of a single branch.
-   * See also [[--no-single-branch]].
+   * See also {@link --no-single-branch}.
    */
   '--single-branch'?: null;
 
@@ -182,7 +182,7 @@ export interface CloneOptions {
 
   /**
    * Sends additional progress information to the standard error stream.
-   * The --verbose option is independent of [[--progress]] and [[--quiet]].
+   * The --verbose option is independent of {@link --progress} and {@link --quiet}.
    */
   '--verbose'?: null;
 }

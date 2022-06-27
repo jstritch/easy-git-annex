@@ -16,7 +16,7 @@ export interface CommitOptions {
 
   /**
    * GPG-sign commits.
-   * See also [[--no-gpg-sign]].
+   * See also {@link --no-gpg-sign}.
    */
   '--gpg-sign'?: string | null;
 
@@ -26,7 +26,7 @@ export interface CommitOptions {
   '--message'?: string;
 
   /**
-   * The complement of [[--gpg-sign]].
+   * The complement of {@link --gpg-sign}.
    */
   '--no-gpg-sign'?: null;
 

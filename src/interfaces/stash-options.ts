@@ -27,7 +27,7 @@ export interface StashOptions {
 
   /**
    * Includes untracked files.
-   * See also [[--no-include-untracked]].
+   * See also {@link --no-include-untracked}.
    */
   '--include-untracked'?: null;
 
@@ -38,18 +38,18 @@ export interface StashOptions {
 
   /**
    * Changes already added to the index are left intact.
-   * See also [[--no-keep-index]].
+   * See also {@link --no-keep-index}.
    */
   '--keep-index'?: null;
 
   /**
    * Excludes untracked files.
-   * See also [[--include-untracked]].
+   * See also {@link --include-untracked}.
    */
   '--no-include-untracked'?: null;
 
   /**
-   * The complement of [[--keep-index]].
+   * The complement of {@link --keep-index}.
    */
   '--no-keep-index'?: null;
 

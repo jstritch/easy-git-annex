@@ -41,7 +41,7 @@ export interface SwitchOptions {
 
   /**
    * Suppresses progress reports to the standard error stream.
-   * See also [[--progress]].
+   * See also {@link --progress}.
    */
   '--no-progress'?: null;
 
@@ -52,7 +52,7 @@ export interface SwitchOptions {
 
   /**
    * Does not set up "upstream" configuration.
-   * See also [[--track]].
+   * See also {@link --track}.
    */
   '--no-track'?: null;
 
@@ -63,7 +63,7 @@ export interface SwitchOptions {
 
   /**
    * Forces progress reports to the standard error stream.
-   * See also [[--no-progress]].
+   * See also {@link --no-progress}.
    */
   '--progress'?: null;
 
@@ -79,7 +79,7 @@ export interface SwitchOptions {
 
   /**
    * Sets "upstream" tracking configuration for the new branch.
-   * See also [[--no-track]].
+   * See also {@link --no-track}.
    */
   '--track'?: string | null;
 }

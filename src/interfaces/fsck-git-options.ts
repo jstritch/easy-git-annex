@@ -16,13 +16,13 @@ export interface FsckGitOptions {
 
   /**
    * Prints objects that exist but are never directly used.
-   * See also [[--no-dangling]].
+   * See also {@link --no-dangling}.
    */
   '--dangling'?: null;
 
   /**
    * Includes objects in pack subdirectories and alternate object pools.
-   * See also [[--no-full]].
+   * See also {@link --no-full}.
    */
   '--full'?: null;
 
@@ -38,19 +38,19 @@ export interface FsckGitOptions {
 
   /**
    * Suppresses printing of objects that exist but are never direcConsiders any object recorded in the index also as a head node for an unreachability tracetly used.
-   * See also [[--dangling]].
+   * See also {@link --dangling}.
    */
   '--no-dangling'?: null;
 
   /**
    * Excludes objects in pack subdirectories and alternate object pools.
-   * See also [[--full]].
+   * See also {@link --full}.
    */
   '--no-full'?: null;
 
   /**
    * Suppresses progress reports to the standard error stream.
-   * See also [[--progress]].
+   * See also {@link --progress}.
    */
   '--no-progress'?: null;
 
@@ -61,7 +61,7 @@ export interface FsckGitOptions {
 
   /**
    * Forces progress reports to the standard error stream.
-   * See also [[--no-progress]].
+   * See also {@link --no-progress}.
    */
   '--progress'?: null;
 
