@@ -28,7 +28,7 @@
   "bugs": {
     "url": "https://github.com/jstritch/easy-git-annex/issues"
   },
-  "homepage": "https://github.com/jstritch/easy-git-annex#readme",
+  "homepage": "https://jstritch.github.io/easy-git-annex/",
   "scripts": {
     "build": "npx tsc",
     "lint": "npx eslint --ext .ts,.js,.json --ignore-path .gitignore .",
