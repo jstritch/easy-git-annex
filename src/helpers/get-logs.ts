@@ -5,7 +5,7 @@ import { Parser } from '../interfaces/parser';
 
 /**
  * Returns information about Git commits in application-defined JavaScript objects.
- * The JavaScript objects are created from the return of the [[GitAnnexAPI.log]] method.
+ * The JavaScript objects are created from the return of the {@link GitAnnexAPI.log} method.
  *
  * @param guard The type predicate to validate each commit.
  * @param columns Maps the columns returned by the --format option
@@ -14,7 +14,7 @@ import { Parser } from '../interfaces/parser';
  * @param repositoryPath The path of the repository to interrogate.
  * @param commandParameters The parameters for the log command.
  * @param relativePaths The files for the log command.
- * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+ * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param gitOptions The LogOptions for the command.
  * @param columnDelimiter The column delimiter used by the --format option.
  * If unspecified, `\t` is used to split at `%x09` in --format.

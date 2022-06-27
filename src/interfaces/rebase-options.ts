@@ -16,7 +16,7 @@ export interface RebaseOptions {
 
   /**
    * Special handling for commits with log messages beginning "squash!" or "fixup!" or "amend!".
-   * See also [[--no-autosquash]].
+   * See also {@link --no-autosquash}.
    */
   '--autosquash'?: null;
 
@@ -37,13 +37,13 @@ export interface RebaseOptions {
 
   /**
    * Uses reflog to find a better common ancestor.
-   * See also [[--no-fork-point]].
+   * See also {@link --no-fork-point}.
    */
   '--fork-point'?: null;
 
   /**
    * GPG-sign commits.
-   * See also [[--no-gpg-sign]].
+   * See also {@link --no-gpg-sign}.
    */
   '--gpg-sign'?: string | null;
 
@@ -63,7 +63,7 @@ export interface RebaseOptions {
   '--keep-base'?: null;
 
   /**
-   * The complement of [[--no-keep-empty]].
+   * The complement of {@link --no-keep-empty}.
    */
   '--keep-empty'?: null;
 
@@ -73,7 +73,7 @@ export interface RebaseOptions {
   '--merge'?: null;
 
   /**
-   * The complement of [[--autosquash]].
+   * The complement of {@link --autosquash}.
    */
   '--no-autosquash'?: null;
 
@@ -83,40 +83,40 @@ export interface RebaseOptions {
   '--no-ff'?: null;
 
   /**
-   * The complement of [[--fork-point]].
+   * The complement of {@link --fork-point}.
    */
   '--no-fork-point'?: null;
 
   /**
-   * The complement of [[--gpg-sign]].
+   * The complement of {@link --gpg-sign}.
    */
   '--no-gpg-sign'?: null;
 
   /**
    * Does not keep commits that start empty before the rebase.
-   * See also [[--keep-empty]].
+   * See also {@link --keep-empty}.
    */
   '--no-keep-empty'?: null;
 
   /**
-   * The complement of [[--reapply-cherry-picks]].
+   * The complement of {@link --reapply-cherry-picks}.
    */
   '--no-reapply-cherry-picks'?: null;
 
   /**
-   * The complement of [[--rerere-autoupdate]].
+   * The complement of {@link --rerere-autoupdate}.
    */
   '--no-rerere-autoupdate'?: null;
 
   /**
    * Does not show a diffstat of what changed upstream since the last rebase.
-   * See also [[--stat]].
+   * See also {@link --stat}.
    */
   '--no-stat'?: null;
 
   /**
    * Bypasses the pre-rebase hook to run.
-   * See also [[--verify]].
+   * See also {@link --verify}.
    */
   '--no-verify'?: null;
 
@@ -137,7 +137,7 @@ export interface RebaseOptions {
 
   /**
    * Reapplies all clean cherry-picks of any upstream commit instead of preemptively dropping them.
-   * See also [[--no-reapply-cherry-picks]].
+   * See also {@link --no-reapply-cherry-picks}.
    */
   '--reapply-cherry-picks'?: null;
 
@@ -148,7 +148,7 @@ export interface RebaseOptions {
 
   /**
    * Allows the rerere mechanism to update the index with the result of auto-conflict resolution.
-   * See also [[--no-rerere-autoupdate]].
+   * See also {@link --no-rerere-autoupdate}.
    */
   '--rerere-autoupdate'?: null;
 
@@ -169,7 +169,7 @@ export interface RebaseOptions {
 
   /**
    * Shows a diffstat of what changed upstream since the last rebase.
-   * See also [[--no-stat]].
+   * See also {@link --no-stat}.
    */
   '--stat'?: null;
 
@@ -190,7 +190,7 @@ export interface RebaseOptions {
 
   /**
    * Allows the pre-rebase hook to run.
-   * See also [[--no-verify]].
+   * See also {@link --no-verify}.
    */
   '--verify'?: null;
 

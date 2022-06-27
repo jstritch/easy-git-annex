@@ -9,7 +9,7 @@ export interface AnnexOptions {
 
   /**
    * Specifies the key-value backend to use.
-   * Method [[getBackends]] obtains a list of backend names.
+   * Method {@link GitAnnexAPI.getBackends} obtains a list of backend names.
    */
   '--backend'?: string;
 

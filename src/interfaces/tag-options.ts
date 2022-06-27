@@ -16,19 +16,19 @@ export interface TagOptions {
 
   /**
    * Displays the tag listing in columns.
-   * See also [[--no-column]].
+   * See also {@link --no-column}.
    */
   '--column'?: string | string[] | null;
 
   /**
    * Lists tags which contain the specified commit; HEAD if not specified.
-   * See also [[--no-contains]].
+   * See also {@link --no-contains}.
    */
   '--contains'?: string | string[] | null;
 
   /**
    * Creates a reflog for the tag.
-   * See also [[--no-create-reflog]].
+   * See also {@link --no-create-reflog}.
    */
   '--create-reflog'?: null;
 
@@ -64,7 +64,7 @@ export interface TagOptions {
 
   /**
    * Lists tags whose commits are reachable from the specified commit; HEAD if not specified.
-   * See also [[--no-merged]].
+   * See also {@link --no-merged}.
    */
   '--merged'?: string | string[] | null;
 
@@ -75,31 +75,31 @@ export interface TagOptions {
 
   /**
    * Does not display the tag listing in columns.
-   * See also [[--column]].
+   * See also {@link --column}.
    */
   '--no-column'?: null;
 
   /**
    * Lists tags which don't contain the specified commit; HEAD if not specified.
-   * See also [[--contains]].
+   * See also {@link --contains}.
    */
   '--no-contains'?: string | string[] | null;
 
   /**
    * Overrides an earlier --create-reflog.
-   * See also [[--create-reflog]].
+   * See also {@link --create-reflog}.
    */
   '--no-create-reflog'?: null;
 
   /**
    * Lists tags whose commits are not reachable from the specified commit; HEAD if not specified.
-   * See also [[--merged]].
+   * See also {@link --merged}.
    */
   '--no-merged'?: string | string[] | null;
 
   /**
    * Overrides the tag.gpgSign configuration variable.
-   * See also [[--sign]].
+   * See also {@link --sign}.
    */
   '--no-sign'?: null;
 
@@ -110,7 +110,7 @@ export interface TagOptions {
 
   /**
    * Makes a GPG-signed tag.
-   * See also [[--no-sign]].
+   * See also {@link --no-sign}.
    */
   '--sign'?: null;
 

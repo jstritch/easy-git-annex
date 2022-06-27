@@ -26,13 +26,13 @@ export interface RestoreOptions {
 
   /**
    * Removes tracked files that do not appear in the --source tree.
-   * See also [[--overlay]].
+   * See also {@link --overlay}.
    */
   '--no-overlay'?: null;
 
   /**
    * Suppresses progress reports to the standard error stream.
-   * See also [[--progress]].
+   * See also {@link --progress}.
    */
   '--no-progress'?: null;
 
@@ -43,19 +43,19 @@ export interface RestoreOptions {
 
   /**
    * Uses stage #2 for unmerged paths when restoring files in the working tree from the index.
-   * See also [[--thiers]].
+   * See also {@link --thiers}.
    */
   '--ours'?: null;
 
   /**
    * Never removes files when restoring.
-   * See also [[--no-overlay]].
+   * See also {@link --no-overlay}.
    */
   '--overlay'?: null;
 
   /**
    * Forces progress reports to the standard error stream.
-   * See also [[--no-progress]].
+   * See also {@link --no-progress}.
    */
   '--progress'?: null;
 
@@ -76,19 +76,19 @@ export interface RestoreOptions {
 
   /**
    * Restores files to the index.
-   * See also [[--worktree]].
+   * See also {@link --worktree}.
    */
   '--staged'?: null;
 
   /**
    * Uses stage #3 for unmerged paths when restoring files in the working tree from the index.
-   * See also [[--ours]].
+   * See also {@link --ours}.
    */
   '--thiers'?: null;
 
   /**
    * Restores files to the working tree.
-   * See also [[--staged]].
+   * See also {@link --staged}.
    */
   '--worktree'?: null;
 }

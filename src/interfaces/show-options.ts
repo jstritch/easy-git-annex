@@ -7,7 +7,7 @@ export interface ShowOptions extends DiffCommonOptions {
 
   /**
    * Shows a prefix that names the object uniquely.
-   * See also [[--no-abbrev-commit]].
+   * See also {@link --no-abbrev-commit}.
    */
   '--abbrev-commit'?: null;
 
@@ -28,7 +28,7 @@ export interface ShowOptions extends DiffCommonOptions {
 
   /**
    * Performs tab expansion.
-   * See also [[--no-expand-tabs]].
+   * See also {@link --no-expand-tabs}.
    */
   '--expand-tabs'?: number | string | null;
 
@@ -49,23 +49,23 @@ export interface ShowOptions extends DiffCommonOptions {
 
   /**
    * Shows the full object name.
-   * See also [[--abbrev-commit]].
+   * See also {@link --abbrev-commit}.
    */
   '--no-abbrev-commit'?: null;
 
   /**
-   * The complement of [[--expand-tabs]].
+   * The complement of {@link --expand-tabs}.
    */
   '--no-expand-tabs'?: number | null;
 
   /**
-   * The complement of [[--notes]].
+   * The complement of {@link --notes}.
    */
   '--no-notes'?: null;
 
   /**
    * Shows notes with an optional ref value to filter notes.
-   * See also [[--no-notes]].
+   * See also {@link --no-notes}.
    */
   '--notes'?: string | string[] | null;
 

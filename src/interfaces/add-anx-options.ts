@@ -25,7 +25,7 @@ export interface AddAnxOptions extends AnnexOptions {
 
   /**
    * Produces a JSON object on each line of output.
-   * Type predicate [[isActionResult]] may be passed to [[safeParse]] or [[safeParseToArray]] when processing the output.
+   * Type predicate {@link isActionResult} may be passed to {@link safeParse} or {@link safeParseToArray} when processing the output.
    */
   '--json'?: null;
 
@@ -36,8 +36,8 @@ export interface AddAnxOptions extends AnnexOptions {
 
   /**
    * Includes progress objects in JSON output.
-   * Specifying --json-progress automatically enables [[--json]].
-   * Type predicate [[isActionProgress]] may be passed to [[safeParse]] or [[safeParseToArray]] when processing the output.
+   * Specifying --json-progress automatically enables {@link --json}.
+   * Type predicate {@link isActionProgress} may be passed to {@link safeParse} or {@link safeParseToArray} when processing the output.
    */
   '--json-progress'?: null;
 

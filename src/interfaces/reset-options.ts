@@ -31,13 +31,13 @@ export interface ResetOptions {
   '--no-recurse-submodules'?: null;
 
   /**
-   * The complement of [[--quiet]].
+   * The complement of {@link --quiet}.
    */
   '--no-quiet'?: null;
 
   /**
    * Report errors only.
-   * See also [[--no-quiet]].
+   * See also {@link --no-quiet}.
    */
   '--quiet'?: null;
 

@@ -5,7 +5,7 @@ import { Parser } from '../interfaces/parser';
 
 /**
  * Returns information about available files in application-defined JavaScript objects.
- * The JavaScript objects are created from the return of the [[GitAnnexAPI.find]] method.
+ * The JavaScript objects are created from the return of the {@link GitAnnexAPI.find} method.
  *
  * @param guard The type predicate to validate each file.
  * @param columns Maps the columns returned by the --format option
@@ -13,7 +13,7 @@ import { Parser } from '../interfaces/parser';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param relativePaths The files for the find command.
- * If specified, helper function [[gitPath]] or [[gitPaths]] is called internally.
+ * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param gitOptions The FindOptions for the command.
  * The --format option must end with `\\n`.
  * @param columnDelimiter The column delimiter used by the --format option.

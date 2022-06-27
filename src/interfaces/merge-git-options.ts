@@ -16,7 +16,7 @@ export interface MergeGitOptions {
 
   /**
    * Automatically creates a temporary stash entry before the operation begins.
-   * See also [[--no-autostash]].
+   * See also [{@link --no-autostash}.
    */
   '--autostash'?: null;
 
@@ -37,19 +37,19 @@ export interface MergeGitOptions {
 
   /**
    * Resolves the merge as a fast-forward when possible; otherwise, creates a merge commit.
-   * See also [[--ff-only]] and [[--no-ff]].
+   * See also {@link --ff-only} and {@link --no-ff}.
    */
   '--ff'?: null;
 
   /**
    * Resolves the merge as a fast-forward when possible; otherwise, refuses to merge and exits with a non-zero status.
-   * See also [[--ff]] and [[--no-ff]].
+   * See also {@link --ff} and {@link --no-ff}.
    */
   '--ff-only'?: null;
 
   /**
    * GPG-sign commits.
-   * See also [[--no-gpg-sign]].
+   * See also {@link --no-gpg-sign}.
    */
   '--gpg-sign'?: string | null;
 
@@ -60,12 +60,12 @@ export interface MergeGitOptions {
 
   /**
    * Includes log message with one-line descriptions from at most <n> actual commits that are being merged.
-   * See also [[--no-log]].
+   * See also {@link --no-log}.
    */
   '--log'?: number | string | null;
 
   /**
-   * The complement of [[--autostash]].
+   * The complement of {@link --autostash}.
    */
   '--no-autostash'?: null;
 
@@ -76,75 +76,75 @@ export interface MergeGitOptions {
 
   /**
    * Creates a merge commit in all cases.
-   * See also [[--ff]] and [[--ff-only]].
+   * See also {@link --ff} and {@link --ff-only}.
    */
   '--no-ff'?: null;
 
   /**
-   * The complement of [[--gpg-sign]].
+   * The complement of {@link --gpg-sign}.
    */
   '--no-gpg-sign'?: null;
 
   /**
-   * The complement of [[--log]].
+   * The complement of {@link --log}.
    */
   '--no-log'?: null;
 
   /**
-   * The complement of [[--overwrite-ignore]].
+   * The complement of {@link --overwrite-ignore}.
    */
   '--no-overwrite-ignore'?: null;
 
   /**
    * Suppresses progress reports to the standard error stream.
-   * See also [[--progress]].
+   * See also {@link --progress}.
    */
   '--no-progress'?: null;
 
   /**
-   * The complement of [[--rerere-autoupdate]].
+   * The complement of {@link --rerere-autoupdate}.
    */
   '--no-rerere-autoupdate'?: null;
 
   /**
    * Does not add a Signed-off-by trailer by the committer at the end of the commit log message.
-   * See also [[--signoff]].
+   * See also {@link --signoff}.
    */
   '--no-signoff'?: null;
 
   /**
    * Performs the merge and commit the result.
-   * See also [[--squash]].
+   * See also {@link --squash}.
    */
   '--no-squash'?: null;
 
   /**
    * Does not show a diffstat at the end of the merge.
-   * See also [[--stat]].
+   * See also {@link --stat}.
    */
   '--no-stat'?: null;
 
   /**
    * Bypasses the pre-merge and commit-msg hooks.
-   * See also [[--no-verify]].
+   * See also {@link --no-verify}.
    */
   '--no-verify'?: null;
 
   /**
    * Does not verify the tip commit of the side branch being merged is signed with a valid key.
-   * See also [[--verify-signatures]].
+   * See also {@link --verify-signatures}.
    */
   '--no-verify-signatures'?: null;
 
   /**
    * Silently overwrites ignored files from the merge result.
-   * See also [[--no-overwrite-ignore]].
+   * See also {@link --no-overwrite-ignore}.
    */
   '--overwrite-ignore'?: null;
 
   /**
    * Forces progress reports to the standard error stream.
-   * See also [[--no-progress]].
+   * See also {@link --no-progress}.
    */
   '--progress'?: null;
 
@@ -160,25 +160,25 @@ export interface MergeGitOptions {
 
   /**
    * Allows the rerere mechanism to update the index with the result of auto-conflict resolution.
-   * See also [[--no-rerere-autoupdate]].
+   * See also {@link --no-rerere-autoupdate}.
    */
   '--rerere-autoupdate'?: null;
 
   /**
    * Adds a Signed-off-by trailer by the committer at the end of the commit log message.
-   * See also [[--no-signoff]].
+   * See also {@link --no-signoff}.
    */
   '--signoff'?: null;
 
   /**
    * Produces the working tree and index state as if a real merge happened, but does not actually make a commit.
-   * See also [[--no-squash]].
+   * See also {@link --no-squash}.
    */
   '--squash'?: null;
 
   /**
    * Shows a diffstat at the end of the merge.
-   * See also [[--no-stat]].
+   * See also {@link --no-stat}.
    */
   '--stat'?: null;
 
@@ -198,13 +198,13 @@ export interface MergeGitOptions {
   '--verbose'?: null;
 
   /**
-   * The complement of [[--no-verify]].
+   * The complement of {@link --no-verify}.
    */
   '--verify'?: null;
 
   /**
    * Verifies the tip commit of the side branch being merged is signed with a valid key.
-   * See also [[--no-verify-signatures]].
+   * See also {@link --no-verify-signatures}.
    */
   '--verify-signatures'?: null;
 

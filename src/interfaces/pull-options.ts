@@ -13,7 +13,7 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Automatically creates a temporary stash entry before the operation begins.
-   * See also [[--no-autostash]].
+   * See also {@link --no-autostash}.
    */
   '--autostash'?: null;
 
@@ -29,30 +29,30 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Resolves the merge as a fast-forward when possible; otherwise, creates a merge commit.
-   * See also [[--ff-only]] and [[--no-ff]].
+   * See also {@link --ff-only} and {@link --no-ff}.
    */
   '--ff'?: null;
 
   /**
    * Updates to the new history only if there is no divergent local history.
-   * See also [[--ff]] and [[--no-ff]].
+   * See also {@link --ff} and {@link --no-ff}.
    */
   '--ff-only'?: null;
 
   /**
    * GPG-sign commits.
-   * See also [[--no-gpg-sign]].
+   * See also {@link --no-gpg-sign}.
    */
   '--gpg-sign'?: string | null;
 
   /**
    * Includes log message with one-line descriptions from at most <n> actual commits that are being merged.
-   * See also [[--no-log]].
+   * See also {@link --no-log}.
    */
   '--log'?: number | string | null;
 
   /**
-   * The complement of [[--autostash]].
+   * The complement of {@link --autostash}.
    */
   '--no-autostash'?: null;
 
@@ -63,22 +63,22 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Creates a merge commit in all cases.
-   * See also [[--ff]] and [[--ff-only]].
+   * See also {@link --ff} and {@link --ff-only}.
    */
   '--no-ff'?: null;
 
   /**
-   * The complement of [[--gpg-sign]].
+   * The complement of {@link --gpg-sign}.
    */
   '--no-gpg-sign'?: null;
 
   /**
-   * The complement of [[--log]].
+   * The complement of {@link --log}.
    */
   '--no-log'?: null;
 
   /**
-   * The complement of [[--rebase]].
+   * The complement of {@link --rebase}.
    */
   '--no-rebase'?: string | null;
 
@@ -89,31 +89,31 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Does not add a Signed-off-by trailer by the committer at the end of the commit log message.
-   * See also [[--signoff]].
+   * See also {@link --signoff}.
    */
   '--no-signoff'?: null;
 
   /**
    * Performs the merge and commit the result.
-   * See also [[--squash]].
+   * See also {@link --squash}.
    */
   '--no-squash'?: null;
 
   /**
    * Does not show a diffstat at the end of the merge.
-   * See also [[--stat]].
+   * See also {@link --stat}.
    */
   '--no-stat'?: null;
 
   /**
    * Bypasses the pre-merge and commit-msg hooks.
-   * See also [[--no-verify]].
+   * See also {@link --no-verify}.
    */
   '--no-verify'?: null;
 
   /**
    * Does not verify the tip commit of the side branch being merged is signed with a valid key.
-   * See also [[--verify-signatures]].
+   * See also {@link --verify-signatures}.
    */
   '--no-verify-signatures'?: null;
 
@@ -124,7 +124,7 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Controls rebasing.
-   * See also [[--no-rebase]].
+   * See also {@link --no-rebase}.
    */
   '--rebase'?: string | null;
 
@@ -135,19 +135,19 @@ export interface PullOptions extends FetchCommonOptions {
 
   /**
    * Adds a Signed-off-by trailer by the committer at the end of the commit log message.
-   * See also [[--no-signoff]].
+   * See also {@link --no-signoff}.
    */
   '--signoff'?: null;
 
   /**
    * Produces the working tree and index state as if a real merge happened, but does not actually make a commit.
-   * See also [[--no-squash]].
+   * See also {@link --no-squash}.
    */
   '--squash'?: null;
 
   /**
    * Shows a diffstat at the end of the merge.
-   * See also [[--no-stat]].
+   * See also {@link --no-stat}.
    */
   '--stat'?: null;
 
@@ -167,13 +167,13 @@ export interface PullOptions extends FetchCommonOptions {
   '--verbose'?: null;
 
   /**
-   * The complement of [[--no-verify]].
+   * The complement of {@link --no-verify}.
    */
   '--verify'?: null;
 
   /**
    * Verifies the tip commit of the side branch being merged is signed with a valid key.
-   * See also [[--no-verify-signatures]].
+   * See also {@link --no-verify-signatures}.
    */
   '--verify-signatures'?: null;
 }

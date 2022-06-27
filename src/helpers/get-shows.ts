@@ -5,7 +5,7 @@ import { ShowOptions } from '../interfaces/show-options';
 
 /**
  * Returns information about Git objects in application-defined JavaScript objects.
- * The JavaScript objects are created from the return of the [[GitAnnexAPI.show]] method.
+ * The JavaScript objects are created from the return of the {@link GitAnnexAPI.show} method.
  *
  * @param guard The type predicate to validate each object.
  * @param columns Maps the columns returned by the --format option

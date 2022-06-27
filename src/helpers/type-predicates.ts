@@ -96,7 +96,7 @@ export function isKeyValueArray(o: unknown): o is [string, string][] {
 }
 
 /**
- * Determines if an object is an [[Action]].
+ * Determines if an object is an {@link Action}.
  * @param o The object to examine.
  * @returns True if o is an Action; otherwise, false.
  * @category Type Predicate
@@ -110,7 +110,7 @@ export function isAction(o: unknown): o is Action {
 }
 
 /**
- * Determines if an object is an [[ActionProgress]].
+ * Determines if an object is an {@link ActionProgress}.
  * @param o The object to examine.
  * @returns True if o is an ActionProgress; otherwise, false.
  * @category Type Predicate
@@ -125,7 +125,7 @@ export function isActionProgress(o: unknown): o is ActionProgress {
 }
 
 /**
- * Determines if an object is an [[ActionResult]].
+ * Determines if an object is an {@link ActionResult}.
  * @param o The object to examine.
  * @returns True if o is an ActionResult; otherwise, false.
  * @category Type Predicate
@@ -141,7 +141,7 @@ export function isActionResult(o: unknown): o is ActionResult {
 }
 
 /**
- * Determines if an object is a [[RepositoryInfo]].
+ * Determines if an object is a {@link RepositoryInfo}.
  * @param o The object to examine.
  * @returns True if o is a RepositoryInfo; otherwise, false.
  * @category Type Predicate
@@ -156,7 +156,7 @@ export function isRepositoryInfo(o: unknown): o is RepositoryInfo {
 }
 
 /**
- * Determines if an object is a [[StatusAnx]].
+ * Determines if an object is a {@link StatusAnx}.
  * @param o The object to examine.
  * @returns True if o is a StatusAnx; otherwise, false.
  * @category Type Predicate
@@ -170,7 +170,7 @@ export function isStatusAnx(o: unknown): o is StatusAnx {
 }
 
 /**
- * Determines if an object is a [[StatusGit]].
+ * Determines if an object is a {@link StatusGit}.
  * @param o The object to examine.
  * @returns True if o is a StatusGit; otherwise, false.
  * @category Type Predicate
