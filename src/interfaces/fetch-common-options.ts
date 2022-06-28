@@ -91,6 +91,11 @@ export interface FetchCommonOptions {
   '--prune'?: null;
 
   /**
+   * Fetches all objects as a fresh clone would.
+   */
+  '--refetch'?: null;
+
+  /**
    * Uses the specified refspec to map the refs to remote-tracking branches.
    */
   '--refmap'?: string | string[];

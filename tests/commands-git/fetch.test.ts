@@ -53,6 +53,7 @@ describe('FetchOptions', () => {
     [{ '--prefetch': null }, ['--prefetch']],
     [{ '--progress': null }, ['--progress']],
     [{ '--prune': null }, ['--prune']],
+    [{ '--refetch': null }, ['--refetch']],
     [{ '--refmap': 'A' }, ['--refmap=A']],
     [{ '--refmap': ['A', 'B'] }, ['--refmap=A', '--refmap=B']],
     [{ '--server-option': 'A' }, ['--server-option=A']],

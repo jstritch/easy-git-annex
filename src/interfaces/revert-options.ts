@@ -51,6 +51,11 @@ export interface RevertOptions {
   '--quit'?: null;
 
   /**
+   * Prepares a more human-readable message template for the user.
+   */
+  '--reference'?: null;
+
+  /**
    * Allows the rerere mechanism to update the index with the result of auto-conflict resolution.
    * See also {@link --no-rerere-autoupdate}.
    */

@@ -146,6 +146,7 @@ describe('BranchOptions', () => {
     [{ '--no-create-reflog': null }, ['--no-create-reflog']],
     [{ '--no-track': null }, ['--no-track']],
     [{ '--quiet': null }, ['--quiet']],
+    [{ '--recurse-submodules': null }, ['--recurse-submodules']],
     [{ '--set-upstream-to': 'A' }, ['--set-upstream-to=A']],
     [{ '--track': null }, ['--track']],
     [{ '--track': 'direct' }, ['--track=direct']],

@@ -46,6 +46,7 @@ describe('RevertOptions', () => {
     [{ '--no-gpg-sign': null }, ['--no-gpg-sign']],
     [{ '--no-rerere-autoupdate': null }, ['--no-rerere-autoupdate']],
     [{ '--quit': null }, ['--quit']],
+    [{ '--reference': null }, ['--reference']],
     [{ '--rerere-autoupdate': null }, ['--rerere-autoupdate']],
     [{ '--signoff': null }, ['--signoff']],
     [{ '--skip': null }, ['--skip']],

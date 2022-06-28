@@ -114,6 +114,7 @@ describe('LogOptions', () => {
     [{ '--encoding': 'utf16' }, ['--encoding=utf16']],
     [{ '--exclude': 'A' }, ['--exclude=A']],
     [{ '--exclude': ['A', 'B'] }, ['--exclude=A', '--exclude=B']],
+    [{ '--exclude-first-parent-only': null }, ['--exclude-first-parent-only']],
     [{ '--expand-tabs': null }, ['--expand-tabs']],
     [{ '--expand-tabs': 3 }, ['--expand-tabs=3']],
     [{ '--expand-tabs': '4' }, ['--expand-tabs=4']],

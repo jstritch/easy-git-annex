@@ -130,6 +130,11 @@ export interface LogOptions extends DiffCommonOptions {
   '--exclude'?: string | string[];
 
   /**
+   * Follows only the first parent commit upon seeing a merge commit.
+   */
+  '--exclude-first-parent-only'?: null;
+
+  /**
    * Performs tab expansion.
    * See also {@link --no-expand-tabs}.
    */

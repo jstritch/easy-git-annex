@@ -54,6 +54,11 @@ export interface BranchOptions extends BranchListOptions {
   '--quiet'?: null;
 
   /**
+   * Causes the current command to recurse into submodules.
+   */
+  '--recurse-submodules'?: null;
+
+  /**
    * Sets "upstream" tracking configuration to the specified branch.
    */
   '--set-upstream-to'?: string;
