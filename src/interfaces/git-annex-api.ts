@@ -23,6 +23,7 @@ import { FsckAnxOptions } from './fsck-anx-options';
 import { FsckGitOptions } from './fsck-git-options';
 import { GetOptions } from './get-options';
 import { InfoOptions } from './info-options';
+import { InitAnxOptions } from './init-anx-options';
 import { InitGitOptions } from './init-git-options';
 import { InitremoteOptions } from './initremote-options';
 import { ListOptions } from './list-options';
@@ -316,12 +317,12 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param description The description of the repository.
    * If omitted, a description is generated using the username, hostname, and path.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The InitAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex init result.
    * @category Setup
    */
-  initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  initAnx(description?: string, anxOptions?: InitAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Creates a special remote.

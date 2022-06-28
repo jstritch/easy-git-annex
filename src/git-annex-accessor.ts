@@ -31,6 +31,7 @@ import { getLineStartingAsArray } from './helpers/get-line-starting';
 import { GetOptions } from './interfaces/get-options';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 import { InfoOptions } from './interfaces/info-options';
+import { InitAnxOptions } from './interfaces/init-anx-options';
 import { InitGitOptions } from './interfaces/init-git-options';
 import { InitremoteOptions } from './interfaces/initremote-options';
 import { ListOptions } from './interfaces/list-options';
@@ -241,7 +242,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async initAnx(description?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async initAnx(description?: string, anxOptions?: InitAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'init', anxOptions);
     this.pushIfString(args, description);
     return this.runAnx(args, apiOptions);

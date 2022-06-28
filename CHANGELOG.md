@@ -1,3 +1,7 @@
+## vNext
+* Support git-annex 10.20220526 features
+    * Add InitAnxOptions --autoenable, --no-autoenable, and --version
+
 ## v2.0.0 released 2022-04-06
 * Add GitAnnexAPI methods
     * addGit

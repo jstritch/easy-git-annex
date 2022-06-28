@@ -154,7 +154,11 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
-  ['init', []],
+  ['init', [
+    { name: '--autoenable', kind: OptionKind.Flag },
+    { name: '--no-autoenable', kind: OptionKind.Flag },
+    { name: '--version', kind: OptionKind.Numeric },
+  ]],
   ['initremote', [
     { name: '--private', kind: OptionKind.Flag },
     { name: '--sameas', kind: OptionKind.String },
