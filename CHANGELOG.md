@@ -1,11 +1,12 @@
 ## vNext
+* Add GitAnnexAPI method getBuildFlags
 * Support Git 2.36.0 features
     * Add BranchOptions --recurse-submodules
     * Add FetchCommonOptions --refetch
     * Add LogOptions --exclude-first-parent-only
 * Support Git 2.37.0 features
     * Add RevertOptions --reference
-* Support git-annex 10.20220526 features
+* Support git-annex 10.20220624 features
     * Add InitAnxOptions --autoenable and --no-autoenable and prexisting --version
 
 ## v2.0.0 released 2022-04-06

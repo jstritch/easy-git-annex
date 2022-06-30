@@ -598,6 +598,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return result.out.split('\n').filter((name) => { return name; });
   }
 
+  public async getBuildFlags(): Promise<string[]> {
+    const versionResult = await this.versionAnx();
+    return getLineStartingAsArray(versionResult.out, 'build flags: ');
+  }
+
   public async getRemoteNames(): Promise<string[]> {
     const remoteResult = await this.remote();
     return remoteResult.out.split('\n').filter((name) => { return name; });

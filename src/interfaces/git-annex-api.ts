@@ -1172,6 +1172,14 @@ export interface GitAnnexAPI {
   getBranchNames(pattern?: string, ignoreCase?: boolean): Promise<string[]>;
 
   /**
+   * Obtains an array of the git-annex build flags.
+   * @returns An array containing the git-annex build flags.
+   * The order of the flags returned is indeterminate.
+   * @category Inspection
+   */
+  getBuildFlags(): Promise<string[]>;
+
+  /**
    * Obtains an array of remote names.
    * @returns An array containing the remote names.
    * @category Remotes

@@ -256,6 +256,7 @@ Links to commonly used methods appear below.
 
 * [forEachRef](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#forEachRef) Reports information about each ref.
 * [getBackends](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getBackends) Obtains an array of key-value backends.
+* [getBuildFlags](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getBuildFlags) Obtains an array of the git-annex build flags.
 * [getRepositories](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getRepositories) Obtains an array identifying the current repositories.
 * [getSpecialRemoteTypes](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getSpecialRemoteTypes) Obtains an array of special remote types.
 * [info](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#info) Obtains information about an item or the repository.
