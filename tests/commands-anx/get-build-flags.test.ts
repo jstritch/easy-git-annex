@@ -8,9 +8,8 @@ describe('getBuildFlags', () => {
   });
 
   test('returns the array', async () => {
-    const backends = await myAnx.getBuildFlags();
-    expect(backends.length).toBeGreaterThan(0);
-    expect(backends).toContain('MagicMime');
+    const buildFlags = await myAnx.getBuildFlags();
+    expect(buildFlags.length).toBeGreaterThan(0);
   });
 
 });
