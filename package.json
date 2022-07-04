@@ -24,7 +24,11 @@
   ],
   "author": "John Stritch <easy.git.annex@gmail.com>",
   "license": "MIT",
-  "funding": "https://github.com/sponsors/jstritch",
+  "funding": [
+    "https://liberapay.com/jstritch/donate",
+    "https://www.patreon.com/jstritch",
+    "https://github.com/sponsors/jstritch"
+  ],
   "bugs": {
     "url": "https://github.com/jstritch/easy-git-annex/issues"
   },
