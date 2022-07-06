@@ -1,7 +1,7 @@
 [![Renovate Status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![CI Status](https://github.com/jstritch/easy-git-annex/workflows/CI/badge.svg)](https://github.com/jstritch/easy-git-annex/actions)
 ![Test Coverage](https://github.com/jstritch/easy-git-annex/blob/master/coverage/badge.svg?raw=true)
-[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/jstritch/donate)
+[![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/jstritch)
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/jstritch)
 
 # easy-git-annex
@@ -298,7 +298,7 @@ If you would like to improve the easy-git-annex code, please read CONTRIBUTING.m
 
 I am an independent developer.
 If you find easy-git-annex helpful, please consider donating via
-[Liberapay](https://liberapay.com/jstritch/donate),
+[Liberapay](https://liberapay.com/jstritch),
 [Patreon](https://www.patreon.com/jstritch), or
 [GitHub](https://github.com/sponsors/jstritch).
 
