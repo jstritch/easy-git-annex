@@ -101,7 +101,7 @@ describe('runCommand', () => {
     expect(commandResult?.exeName).toBe(exeName);
     expect(commandResult?.args).toBe(args);
     expect(commandResult?.exitCode).toBe(0);
-    expect(commandResult?.out).toContain('usage: git [--version] [--help]');
+    expect(commandResult?.out).toContain('usage: git');
     expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
     expect(cbErrFn).not.toHaveBeenCalled();
@@ -148,7 +148,7 @@ describe('runCommand', () => {
     expect(commandResult?.exeName).toBe(exeName);
     expect(commandResult?.args).toHaveLength(0);
     expect(commandResult?.exitCode).toBe(1);
-    expect(commandResult?.out).toContain('usage: git [--version] [--help]');
+    expect(commandResult?.out).toContain('usage: git');
     expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
     expect(cbErrFn).not.toHaveBeenCalled();
