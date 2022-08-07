@@ -149,6 +149,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['group', []],
   ['groupwanted', []],
   ['info', [
+    { name: '--autoenable', kind: OptionKind.Flag },
     { name: '--bytes', kind: OptionKind.Flag },
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },

@@ -7,6 +7,11 @@ import { AnnexOptions } from './annex-options';
 export interface InfoOptions extends AnnexOptions {
 
   /**
+   * Displays a list of special remotes that have been configured to autoenable.
+   */
+  '--autoenable'?: null;
+
+  /**
    * Shows file sizes in bytes.
    */
   '--bytes'?: null;

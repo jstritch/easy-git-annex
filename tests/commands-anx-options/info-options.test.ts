@@ -10,6 +10,7 @@ describe('InfoOptions', () => {
   });
 
   const tests: [anx.InfoOptions, string[]][] = [
+    [{ '--autoenable': null }, ['--autoenable']],
     [{ '--bytes': null }, ['--bytes']],
     [{ '--json': null }, ['--json']],
     [{ '--json-error-messages': null }, ['--json-error-messages']],

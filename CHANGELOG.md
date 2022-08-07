@@ -1,3 +1,7 @@
+## vNext
+* Support git-annex 10.20220624 features
+    * Add InfoOptions --autoenable
+
 ## v2.1.0 released 2022-07-07
 * Add GitAnnexAPI method getBuildFlags
 * Support Git 2.36.0 features
