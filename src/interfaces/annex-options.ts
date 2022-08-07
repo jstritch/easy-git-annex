@@ -8,12 +8,6 @@
 export interface AnnexOptions {
 
   /**
-   * Specifies the key-value backend to use.
-   * Method {@link GitAnnexAPI.getBackends} obtains a list of backend names.
-   */
-  '--backend'?: string;
-
-  /**
    * Overrides Git configuration settings.
    * To override one value, specify `['name', 'value']`.
    * Use a [string, string][] to specify multiple values.

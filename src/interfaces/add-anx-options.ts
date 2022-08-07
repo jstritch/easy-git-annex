@@ -7,6 +7,12 @@ import { AnnexOptions } from './annex-options';
 export interface AddAnxOptions extends AnnexOptions {
 
   /**
+   * Specifies the key-value backend to use.
+   * Method {@link GitAnnexAPI.getBackends} obtains a list of backend names.
+   */
+  '--backend'?: string;
+
+  /**
    * Treats all files as large files, ignoring annex.largefiles and
    * annex.dotfiles configuration, and adds to git-annex.
    */

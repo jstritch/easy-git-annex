@@ -10,7 +10,6 @@ describe('AnnexOptions', () => {
   });
 
   const tests: [anx.AnnexOptions, string[]][] = [
-    [{ '--backend': 'A' }, ['--backend=A']],
     [{ '--c': ['A', 'B'] }, ['--c', 'A=B']],
     [{ '--c': [['A', 'B'], ['C', 'D']] }, ['--c', 'A=B', '--c', 'C=D']],
     [{ '--debug': null }, ['--debug']],

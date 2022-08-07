@@ -10,6 +10,7 @@ describe('AddAnxOptions', () => {
   });
 
   const tests: [anx.AddAnxOptions, string[]][] = [
+    [{ '--backend': 'A' }, ['--backend=A']],
     [{ '--force-large': null }, ['--force-large']],
     [{ '--force-small': null }, ['--force-small']],
     [{ '--jobs': 2 }, ['--jobs=2']],

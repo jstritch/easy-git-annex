@@ -18,6 +18,12 @@ export interface SyncOptions extends AnnexOptions {
   '--allow-unrelated-histories'?: null;
 
   /**
+   * Specifies the key-value backend to use when adding files, or when importing from a special remote.
+   * Method {@link GitAnnexAPI.getBackends} obtains a list of backend names.
+   */
+  '--backend'?: string;
+
+  /**
    * Removes the local and remote synced/ branches created and pushed by git-annex sync.
    */
   '--cleanup'?: null;

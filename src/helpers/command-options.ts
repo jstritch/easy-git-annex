@@ -40,7 +40,6 @@ export interface CommandOption {
 
 const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['_common', [
-    { name: '--backend', kind: OptionKind.String },
     { name: '--c', kind: OptionKind.RepeatableKeyValue },
     { name: '--debug', kind: OptionKind.Flag },
     { name: '--debugfilter', kind: OptionKind.CommaDelimitedStrings },
@@ -55,6 +54,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--verbose', kind: OptionKind.Flag },
   ]],
   ['add', [
+    { name: '--backend', kind: OptionKind.String },
     { name: '--force-large', kind: OptionKind.Flag },
     { name: '--force-small', kind: OptionKind.Flag },
     { name: '--jobs', kind: OptionKind.Numeric },
@@ -207,6 +207,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['sync', [
     { name: '--all', kind: OptionKind.Flag },
     { name: '--allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--backend', kind: OptionKind.String },
     { name: '--cleanup', kind: OptionKind.Flag },
     { name: '--commit', kind: OptionKind.Flag },
     { name: '--content', kind: OptionKind.Flag },

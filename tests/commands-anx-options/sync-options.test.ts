@@ -12,6 +12,7 @@ describe('SyncOptions', () => {
   const tests: [anx.SyncOptions, string[]][] = [
     [{ '--all': null }, ['--all']],
     [{ '--allow-unrelated-histories': null }, ['--allow-unrelated-histories']],
+    [{ '--backend': 'A' }, ['--backend=A']],
     [{ '--cleanup': null }, ['--cleanup']],
     [{ '--commit': null }, ['--commit']],
     [{ '--content': null }, ['--content']],
