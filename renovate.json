@@ -14,5 +14,6 @@
   "prConcurrentLimit": 10,
   "rangeStrategy": "bump",
   "timezone": "America/Chicago",
-  "schedule": ["before 5am", "after 7pm"]
+  "schedule": ["before 5am", "after 7pm"],
+  "automergeSchedule": ["before 5am", "after 7pm"]
 }
