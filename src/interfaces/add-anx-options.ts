@@ -13,6 +13,11 @@ export interface AddAnxOptions extends AnnexOptions {
   '--backend'?: string;
 
   /**
+   * Outputs what would be done for each file, but avoids making any changes.
+   */
+  '--dry-run'?: null;
+
+  /**
    * Treats all files as large files, ignoring annex.largefiles and
    * annex.dotfiles configuration, and adds to git-annex.
    */

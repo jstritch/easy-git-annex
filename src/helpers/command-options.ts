@@ -55,6 +55,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['add', [
     { name: '--backend', kind: OptionKind.String },
+    { name: '--dry-run', kind: OptionKind.Flag },
     { name: '--force-large', kind: OptionKind.Flag },
     { name: '--force-small', kind: OptionKind.Flag },
     { name: '--jobs', kind: OptionKind.Numeric },
