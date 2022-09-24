@@ -29,6 +29,7 @@ import { InitremoteOptions } from './initremote-options';
 import { ListOptions } from './list-options';
 import { LockOptions } from './lock-options';
 import { LogOptions } from './log-options';
+import { LsFilesOptions } from './ls-files-options';
 import { MergeAnxOptions } from './merge-anx-options';
 import { MergeGitOptions } from './merge-git-options';
 import { MoveOptions } from './move-options';
@@ -898,6 +899,21 @@ export interface GitAnnexAPI {
    * @category Branching
    */
   log(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: LogOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Shows information about files in the index and the working tree.
+   *
+   * Consult the
+   * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
+   * for additional information.
+   * @param relativePaths The files to show.
+   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param gitOptions The LsFilesOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The Git ls-files result.
+   * @category Contents
+   */
+  lsFiles(relativePaths?: string | string[], gitOptions?: LsFilesOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    *  Joins two or more development histories.

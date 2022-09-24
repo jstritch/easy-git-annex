@@ -68,6 +68,7 @@ export * from './interfaces/initremote-options';
 export * from './interfaces/list-options';
 export * from './interfaces/lock-options';
 export * from './interfaces/log-options';
+export * from './interfaces/ls-files-options';
 export * from './interfaces/merge-anx-options';
 export * from './interfaces/merge-git-options';
 export * from './interfaces/move-options';

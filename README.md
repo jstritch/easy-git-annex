@@ -209,6 +209,7 @@ Links to commonly used methods appear below.
 * [getStatusAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusAnx) Obtains an array describing the working tree status.
 * [getStatusGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusGit) Obtains an array describing the working tree status.
 * [lock](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#lock) Locks files to prevent modification.
+* [lsFiles](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#lsFiles) Shows information about files in the index and the working tree.
 * [move](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#move) Moves file content to or from another repository.
 * [mv](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#mv) Moves or renames a file, a directory, or a symlink.
 * [rm](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#rm) Removes file content from the repository.

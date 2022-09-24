@@ -1,4 +1,6 @@
 ## vNext
+* Add GitAnnexAPI methods
+    * lsFiles
 * Support git-annex 10.20220624 features
     * Add InfoOptions --autoenable
 * Support git-annex 10.20220724 features

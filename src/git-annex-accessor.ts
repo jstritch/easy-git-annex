@@ -37,6 +37,7 @@ import { InitremoteOptions } from './interfaces/initremote-options';
 import { ListOptions } from './interfaces/list-options';
 import { LockOptions } from './interfaces/lock-options';
 import { LogOptions } from './interfaces/log-options';
+import { LsFilesOptions } from './interfaces/ls-files-options';
 import { MergeAnxOptions } from './interfaces/merge-anx-options';
 import { MergeGitOptions } from './interfaces/merge-git-options';
 import { MoveOptions } from './interfaces/move-options';
@@ -467,6 +468,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async log(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: LogOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.GitDiff, 'log', gitOptions);
     this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async lsFiles(relativePaths?: string | string[], gitOptions?: LsFilesOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'ls-files', gitOptions);
     this.pushIfRelativePaths(args, relativePaths, true);
     return this.runGit(args, apiOptions);
   }
