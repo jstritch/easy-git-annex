@@ -514,6 +514,7 @@ export interface GitAnnexAPI {
 
   /**
    * Shows the working tree status.
+   * Consider using method {@link getStatusAnx} if JavaScript objects are desired.
    *
    * Consult the
    * [git-annex status documentation](https://git-annex.branchable.com/git-annex-status/)
@@ -633,6 +634,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains build information about the local git-annex installation.
+   * Consider using method {@link getVersionAnx} if JavaScript objects are desired.
    *
    * Consult the
    * [git-annex version documentation](https://git-annex.branchable.com/git-annex-version)
@@ -1115,6 +1117,7 @@ export interface GitAnnexAPI {
 
   /**
    * Shows the working tree status.
+   * Consider using method {@link getStatusGit} if JavaScript objects are desired.
    *
    * Consult the
    * [Git status documentation](https://git-scm.com/docs/git-status)
@@ -1159,6 +1162,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains build information about the local Git installation.
+   * Consider using method {@link getVersionGit} if JavaScript objects are desired.
    *
    * Consult the
    * [Git version documentation](https://git-scm.com/docs/git-version)
