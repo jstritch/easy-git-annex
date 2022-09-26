@@ -106,7 +106,8 @@ export interface LsFilesOptions {
   '--unmerged'?: null;
 
   /**
-   * \0 line termination on output and does not quote filenames.
+   * Uses NUL, `\0`, line termination on output and does not quote filenames.
+   * Forward slash, `/`, path separators are returned regardless of platform.
    */
   '-z'?: null;
 }
