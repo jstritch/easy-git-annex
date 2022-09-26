@@ -61,7 +61,7 @@ export interface LsFilesOptions {
   '--full-name'?: null;
 
   /**
-   * Shows other (i.e. untracked) files in the output.
+   * Shows only ignored files in the output.
    */
   '--ignored'?: null;
 
