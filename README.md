@@ -285,6 +285,8 @@ Links to commonly used methods appear below.
 
 ### Version methods
 
+* [getVersionAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getVersionAnx) Obtains build information about the local git-annex installation in a JavaScript object.
+* [getVersionGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getVersionGit) Obtains build information about the local Git installation in a JavaScript object.
 * [versionAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#versionAnx) Obtains build information about the local git-annex installation.
 * [versionGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#versionGit) Obtains build information about the local Git installation.
 

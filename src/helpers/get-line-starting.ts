@@ -15,6 +15,21 @@ export function getLineStarting(str: string, prefix: string, includePrefix: bool
 }
 
 /**
+ * Searches a multi-line string and returns the first line begining with the specified prefix.
+ * The prefix may be included with or omitted from the return string.
+ *
+ * @param str The string to be searched.
+ * @param prefix The string to locate at the beginning of a line.
+ * @param includePrefix A flag indicating whether the prefix is to be included in the return value.
+ * @returns The requested line or an empty string if the prefix was not located.
+ * @category Helper
+ */
+export function getLineStartingAsString(str: string, prefix: string, includePrefix: boolean): string {
+  const line = getLineStarting(str, prefix, includePrefix);
+  return line !== undefined ? line : '';
+}
+
+/**
  * Searches a multi-line string and returns the first line begining with the specified prefix as a string array.
  * The return array is created by removing the prefix from the beginning-of-line and
  * splitting the rest of the line at each space character.

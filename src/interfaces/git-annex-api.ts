@@ -54,7 +54,9 @@ import { TagOptions } from './tag-options';
 import { UnannexOptions } from './unannex-options';
 import { UnlockOptions } from './unlock-options';
 import { UnusedOptions } from './unused-options';
+import { VersionAnx } from './version-anx';
 import { VersionAnxOptions } from './version-anx-options';
+import { VersionGit } from './version-git';
 import { VersionGitOptions } from './version-git-options';
 import { WhereisOptions } from './whereis-options';
 import { WhereusedOptions } from './whereused-options';
@@ -1247,4 +1249,18 @@ export interface GitAnnexAPI {
    * @category Branching
    */
   getTagNames(pattern?: string, ignoreCase?: boolean): Promise<string[]>;
+
+  /**
+   * Obtains an object describing the local git-annex version.
+   * @returns An object describing the local git-annex version.
+   * @category Version
+   */
+  getVersionAnx(): Promise<VersionAnx>;
+
+  /**
+   * Obtains an object describing the local Git version.
+   * @returns An object describing the local Git version.
+   * @category Version
+   */
+  getVersionGit(): Promise<VersionGit>;
 }

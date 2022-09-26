@@ -1,4 +1,5 @@
 import { CommandParameters, runCommand } from './helpers/run-command';
+import { getLineStartingAsArray, getLineStartingAsString } from './helpers/get-line-starting';
 import { gitPath, gitPaths } from './helpers/git-path';
 import { isKeyValue, isKeyValueArray, isNumber, isStatusAnx, isString, isStringArray } from './helpers/type-predicates';
 import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
@@ -27,7 +28,6 @@ import { FindOptions } from './interfaces/find-options';
 import { ForEachRefOptions } from './interfaces/for-each-ref-options';
 import { FsckAnxOptions } from './interfaces/fsck-anx-options';
 import { FsckGitOptions } from './interfaces/fsck-git-options';
-import { getLineStartingAsArray } from './helpers/get-line-starting';
 import { GetOptions } from './interfaces/get-options';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
 import { InfoOptions } from './interfaces/info-options';
@@ -63,7 +63,9 @@ import { TagOptions } from './interfaces/tag-options';
 import { UnannexOptions } from './interfaces/unannex-options';
 import { UnlockOptions } from './interfaces/unlock-options';
 import { UnusedOptions } from './interfaces/unused-options';
+import { VersionAnx } from './interfaces/version-anx';
 import { VersionAnxOptions } from './interfaces/version-anx-options';
+import { VersionGit } from './interfaces/version-git';
 import { VersionGitOptions } from './interfaces/version-git-options';
 import { WhereisOptions } from './interfaces/whereis-options';
 import { WhereusedOptions } from './interfaces/whereused-options';
@@ -679,5 +681,32 @@ export class GitAnnexAccessor implements GitAnnexAPI {
 
     const result = await this.forEachRef(options, pattern ? `refs/tags/${pattern}` : 'refs/tags');
     return result.out.split('\n').filter((name) => { return name; });
+  }
+
+  public async getVersionAnx(): Promise<VersionAnx> {
+    const result = await this.versionAnx();
+    const versionAnx: VersionAnx = {
+      version: getLineStartingAsString(result.out, 'git-annex version: ', false),
+      buildFlags: getLineStartingAsArray(result.out, 'build flags: '),
+      dependencyVersions: getLineStartingAsArray(result.out, 'dependency versions: '),
+      keyValueBackends: getLineStartingAsArray(result.out, 'key/value backends: '),
+      remoteTypes: getLineStartingAsArray(result.out, 'remote types: '),
+      operatingSystem: getLineStartingAsString(result.out, 'operating system: ', false),
+      supportsRepositories: getLineStartingAsArray(result.out, 'supported repository versions: '),
+      upgradesRepositories: getLineStartingAsArray(result.out, 'upgrade supported from repository versions: ')
+    };
+    return versionAnx;
+  }
+
+  public async getVersionGit(): Promise<VersionGit> {
+    const result = await this.versionGit({ '--build-options': null });
+    const versionGit: VersionGit = {
+      version: getLineStartingAsString(result.out, 'git version ', false),
+      cpu: getLineStartingAsString(result.out, 'cpu: ', false),
+      longSize: getLineStartingAsString(result.out, 'sizeof-long: ', false),
+      sizeTSize: getLineStartingAsString(result.out, 'sizeof-size_t: ', false),
+      shellPath: getLineStartingAsString(result.out, 'shell-path: ', false)
+    };
+    return versionGit;
   }
 }

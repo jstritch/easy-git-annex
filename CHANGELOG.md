@@ -1,5 +1,7 @@
 ## vNext
 * Add GitAnnexAPI methods
+    * getVersionAnx
+    * getVersionGit
     * lsFiles
 * Support git-annex 10.20220624 features
     * Add InfoOptions --autoenable

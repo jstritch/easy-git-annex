@@ -33,6 +33,20 @@ describe('getLineStarting', () => {
 
 });
 
+describe('getLineStartingAsString', () => {
+
+  const tests: [[string, string, boolean], string][] = [
+    [[versionOutput, 'git-annex version:', true], 'git-annex version: 8.20211118-g23ee48898'],
+    [[versionOutput, 'lorem ipsum', true], ''],
+  ];
+
+  test.each(tests)('getLineStartingAsString(%o)', ([str, prefix, includePrefix], expected) => {
+    const line = anx.getLineStartingAsString(str, prefix, includePrefix);
+    expect(line).toEqual(expected);
+  });
+
+});
+
 describe('getLineStartingAsArray', () => {
 
   const tests: [[string, string], string[]][] = [
