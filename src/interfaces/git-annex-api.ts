@@ -634,7 +634,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains build information about the local git-annex installation.
-   * Consider using method {@link getVersionAnx} if JavaScript objects are desired.
+   * Consider using method {@link getVersionAnx} if a JavaScript object is desired.
    *
    * Consult the
    * [git-annex version documentation](https://git-annex.branchable.com/git-annex-version)
@@ -906,6 +906,7 @@ export interface GitAnnexAPI {
 
   /**
    * Shows information about files in the index and the working tree.
+   * Consider using method {@link getLsFiles} if an array of filenames desired.
    *
    * Consult the
    * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
@@ -1162,7 +1163,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains build information about the local Git installation.
-   * Consider using method {@link getVersionGit} if JavaScript objects are desired.
+   * Consider using method {@link getVersionGit} if a JavaScript object is desired.
    *
    * Consult the
    * [Git version documentation](https://git-scm.com/docs/git-version)
@@ -1200,6 +1201,24 @@ export interface GitAnnexAPI {
    * @category Inspection
    */
   getBuildFlags(): Promise<string[]>;
+
+  /**
+   * Obtains an array of files in the index and the working tree.
+   *
+   * Consult the
+   * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
+   * for additional information.
+   * @param relativePaths The files to show.
+   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param showCached Includes cached files in the output.
+   * @param showDeleted Includes deleted files in the output.
+   * @param showModified Includes modified files in the output.
+   * @param showOthers Includes other (i.e. untracked) files in the output.
+   * @returns A deduplicated array of the requested files.
+   * Forward slash, `/`, path separators are used regardless of platform.
+   * @category Contents
+   */
+  getLsFiles(relativePaths?: string | string[], showCached?: boolean, showDeleted?: boolean, showModified?: boolean, showOthers?: boolean): Promise<string[]>;
 
   /**
    * Obtains an array of remote names.

@@ -1,5 +1,6 @@
 ## vNext
 * Add GitAnnexAPI methods
+    * getLsFiles
     * getVersionAnx
     * getVersionGit
     * lsFiles

@@ -206,6 +206,7 @@ Links to commonly used methods appear below.
 * [dropunused](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#dropunused) Drops unused file content.
 * [find](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#find) Lists available files.
 * [get](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#get) Makes content of annexed files available.
+* [getLsFiles](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getLsFiles) Obtains an array of files in the index and the working tree.
 * [getStatusAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusAnx) Obtains an array describing the working tree status.
 * [getStatusGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusGit) Obtains an array describing the working tree status.
 * [lock](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#lock) Locks files to prevent modification.
