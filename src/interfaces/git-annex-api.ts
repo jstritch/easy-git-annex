@@ -1203,7 +1203,7 @@ export interface GitAnnexAPI {
   getBuildFlags(): Promise<string[]>;
 
   /**
-   * Obtains an array of files in the index and the working tree.
+   * Obtains an array of filenames in the index and the working tree.
    *
    * Consult the
    * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
@@ -1214,7 +1214,7 @@ export interface GitAnnexAPI {
    * @param showDeleted Includes deleted files in the output.
    * @param showModified Includes modified files in the output.
    * @param showOthers Includes other (i.e. untracked) files in the output.
-   * @returns A deduplicated array of the requested files.
+   * @returns A deduplicated array of the requested filenames.
    * Forward slash, `/`, path separators are used regardless of platform.
    * @category Contents
    */
