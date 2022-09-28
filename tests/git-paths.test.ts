@@ -1,22 +1,31 @@
 import * as anx from '../src/index';
-import * as path from 'path';
+import { getPlatform } from '../src/helpers/get-platform';
 
-describe('path separators', () => {
+jest.mock('../src/helpers/get-platform');
 
-  test('gitPath', () => {
-    expect(anx.gitPath(path.sep)).toBe('/');
+describe('path separator conversions', () => {
+
+  afterEach(() => {
+    jest.restoreAllMocks();
   });
 
-  test('gitPaths', () => {
-    expect(anx.gitPaths([path.sep, path.sep])).toEqual(['/', '/']);
-  });
+  const gitSep = '/';
 
-  test('sysPath', () => {
-    expect(anx.sysPath('/')).toEqual(path.sep);
-  });
+  const tests: [string, string][] = [
+    ['darwin', '/'],
+    ['linux', '/'],
+    ['win32', '\\'],
+  ];
 
-  test('sysPaths', () => {
-    expect(anx.sysPaths(['/', '/'])).toEqual([path.sep, path.sep]);
+  test.each(tests)('platform (%o %s)', (platform, sysSep) => {
+
+    (getPlatform as jest.Mock).mockReturnValue(platform);
+
+    expect(anx.gitPath(sysSep)).toEqual(gitSep);
+    expect(anx.gitPaths([sysSep, sysSep])).toEqual([gitSep, gitSep]);
+
+    expect(anx.sysPath(gitSep)).toEqual(sysSep);
+    expect(anx.sysPaths([gitSep, gitSep])).toEqual([sysSep, sysSep]);
   });
 
 });

@@ -1,3 +1,10 @@
+import { getPlatform } from './get-platform';
+
+const slash = '/';
+const slashRegExp = /\//g;
+const backSlash = '\\';
+const backSlashRegExp = /\\/g;
+
 /**
  * Converts an operating-system relative path to a Git relative path.
  * See also {@link gitPaths}, {@link sysPath}, and {@link sysPaths}.
@@ -10,10 +17,10 @@
  * @category Helper
  */
 export function gitPath(relativePath: string): string {
-  if (process.platform !== 'win32') {
+  if (getPlatform() !== 'win32') {
     return relativePath;
   }
-  return relativePath.replace(/\\/g, '/');
+  return relativePath.replace(backSlashRegExp, slash);
 }
 
 /**
@@ -28,10 +35,10 @@ export function gitPath(relativePath: string): string {
  * @category Helper
  */
 export function gitPaths(relativePaths: string[]): string[] {
-  if (process.platform !== 'win32') {
+  if (getPlatform() !== 'win32') {
     return relativePaths;
   }
-  return relativePaths.map((relativePath) => { return relativePath.replace(/\\/g, '/'); });
+  return relativePaths.map((relativePath) => { return relativePath.replace(backSlashRegExp, slash); });
 }
 
 /**
@@ -43,10 +50,10 @@ export function gitPaths(relativePaths: string[]): string[] {
  * @category Helper
  */
 export function sysPath(relativePath: string): string {
-  if (process.platform !== 'win32') {
+  if (getPlatform() !== 'win32') {
     return relativePath;
   }
-  return relativePath.replace(/\//g, '\\');
+  return relativePath.replace(slashRegExp, backSlash);
 }
 
 /**
@@ -58,8 +65,8 @@ export function sysPath(relativePath: string): string {
  * @category Helper
  */
 export function sysPaths(relativePaths: string[]): string[] {
-  if (process.platform !== 'win32') {
+  if (getPlatform() !== 'win32') {
     return relativePaths;
   }
-  return relativePaths.map((relativePath) => { return relativePath.replace(/\//g, '\\'); });
+  return relativePaths.map((relativePath) => { return relativePath.replace(slashRegExp, backSlash); });
 }
