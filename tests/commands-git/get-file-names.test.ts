@@ -3,7 +3,7 @@ import * as path from 'path';
 import { copyAddGitCommit, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 import { promises as fs } from 'fs';
 
-describe('getLsFiles', () => {
+describe('getFileNames', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -32,8 +32,8 @@ describe('getLsFiles', () => {
     [[, , , , true], [TestFile.JPG1]],
   ];
 
-  test.each(tests)('getLsFiles "%o"', async ([relativePaths, showCached, showDeleted, showModified, showOthers], expected) => {
-    const files = await myAnx.getLsFiles(relativePaths, showCached, showDeleted, showModified, showOthers);
+  test.each(tests)('getFileNames "%o"', async ([relativePaths, showCached, showDeleted, showModified, showOthers], expected) => {
+    const files = await myAnx.getFileNames(relativePaths, showCached, showDeleted, showModified, showOthers);
     expect(files).toEqual(expect.arrayContaining(expected));
     expect(files).toHaveLength(expected.length);  // no extra files or empty strings
   });

@@ -906,13 +906,13 @@ export interface GitAnnexAPI {
 
   /**
    * Shows information about files in the index and the working tree.
-   * Consider using method {@link getLsFiles} if an array of filenames desired.
+   * Consider using method {@link getFileNames} if an array of filenames desired.
    *
    * Consult the
    * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
    * for additional information.
    * @param relativePaths The files to show.
-   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
    * @param gitOptions The LsFilesOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The Git ls-files result.
@@ -1019,7 +1019,7 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param commandParameters The parameters for the reset command.
    * @param relativePaths The files affected by the operation.
-   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
    * @param gitOptions The ResetOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The Git reset result.
@@ -1034,7 +1034,7 @@ export interface GitAnnexAPI {
    * [Git restore documentation](https://git-scm.com/docs/git-restore)
    * for additional information.
    * @param relativePaths The files to restore.
-   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
    * @param gitOptions The RestoreOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The Git restore result.
@@ -1148,7 +1148,8 @@ export interface GitAnnexAPI {
 
   /**
    * Creates, deletes, or lists tag objects.
-   * Consider using generic function {@link getTags} if JavaScript objects are desired.
+   * Consider using method {@link getTagNames} if a list of tag names is required
+   * or generic function {@link getTags} if JavaScript objects are desired.
    *
    * Consult the
    * [Git tag documentation](https://git-scm.com/docs/git-tag)
@@ -1209,7 +1210,7 @@ export interface GitAnnexAPI {
    * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)
    * for additional information.
    * @param relativePaths The files to show.
-   * The helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
    * @param showCached Includes cached files in the output.
    * @param showDeleted Includes deleted files in the output.
    * @param showModified Includes modified files in the output.
@@ -1218,7 +1219,7 @@ export interface GitAnnexAPI {
    * Forward slash, `/`, path separators are used regardless of platform.
    * @category Contents
    */
-  getLsFiles(relativePaths?: string | string[], showCached?: boolean, showDeleted?: boolean, showModified?: boolean, showOthers?: boolean): Promise<string[]>;
+  getFileNames(relativePaths?: string | string[], showCached?: boolean, showDeleted?: boolean, showModified?: boolean, showOthers?: boolean): Promise<string[]>;
 
   /**
    * Obtains an array of remote names.

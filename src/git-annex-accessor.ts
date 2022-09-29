@@ -612,7 +612,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return getLineStartingAsArray(versionResult.out, 'build flags: ');
   }
 
-  public async getLsFiles(relativePaths?: string | string[], showCached?: boolean, showDeleted?: boolean, showModified?: boolean, showOthers?: boolean): Promise<string[]> {
+  public async getFileNames(relativePaths?: string | string[], showCached?: boolean, showDeleted?: boolean, showModified?: boolean, showOthers?: boolean): Promise<string[]> {
     const options: LsFilesOptions = {
       '-z': null,
       '--deduplicate': null,
