@@ -44,7 +44,7 @@
     "yalc": "yalc publish --push",
     "preversion": "npm run lint && npm run test:badge",
     "version": "npm run build && npm run typedoc && git add --all .",
-    "postversion": "git push --tags"
+    "postversion": "git push && git push --tags"
   },
   "devDependencies": {
     "@tsconfig/node14": "^1.0.3",
