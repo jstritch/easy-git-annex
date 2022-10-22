@@ -58,7 +58,7 @@
     "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-jsonc": "^2.4.0",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^6.1.0",
+    "eslint-plugin-promise": "^6.1.1",
     "jest": "^29.2.1",
     "make-coverage-badge": "^1.2.0",
     "ts-jest": "^29.0.3",
