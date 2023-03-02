@@ -1,6 +1,6 @@
 import * as anx from '../../src/index';
 import * as path from 'path';
-import { copyAddGitCommit, createRepository, deleteDirectory, pathExists, setRepositoryAuthor, TestFile } from '../helpers';
+import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
 import { promises as fs } from 'fs';
 
 describe('restore', () => {
@@ -20,12 +20,12 @@ describe('restore', () => {
   test('restores a file', async () => {
     await copyAddGitCommit(TestFile.TXT1, repositoryPath, 'add one text file for restore');
     const fullPath = path.join(repositoryPath, TestFile.TXT1);
-    expect(await pathExists(fullPath)).toBe(true);
+    expect(await anx.pathExists(fullPath)).toBe(true);
     await fs.rm(fullPath);
-    expect(await pathExists(fullPath)).toBe(false);
+    expect(await anx.pathExists(fullPath)).toBe(false);
     const rslt = await myAnx.restore(TestFile.TXT1);
     expect(rslt.exitCode).toBe(0);
-    expect(await pathExists(fullPath)).toBe(true);
+    expect(await anx.pathExists(fullPath)).toBe(true);
   });
 
 });

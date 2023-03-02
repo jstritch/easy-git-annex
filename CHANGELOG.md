@@ -1,3 +1,7 @@
+## vNext
+* Add helper functions
+    * pathExists
+
 ## v2.2.0 released 2022-10-04
 * Add GitAnnexAPI methods
     * getFileNames

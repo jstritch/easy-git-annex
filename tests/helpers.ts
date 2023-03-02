@@ -21,15 +21,6 @@ export function cloneEnv(): NodeJS.ProcessEnv {
   return Object.assign({}, process.env);
 }
 
-export async function pathExists(aPath: string): Promise<boolean> {
-  try {
-    await fs.access(aPath);
-  } catch {
-    return false;
-  }
-  return true;
-}
-
 export async function createDirectory(): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), 'anx-'));
 }

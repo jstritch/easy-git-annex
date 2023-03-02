@@ -28,6 +28,7 @@ export * from './helpers/get-shows';
 export * from './helpers/get-tags';
 export * from './helpers/get-whereis';
 export * from './helpers/parsers';
+export * from './helpers/path-exists';
 export * from './helpers/safe-parse';
 export * from './helpers/type-predicates';
 
