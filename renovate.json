@@ -15,5 +15,9 @@
   "rangeStrategy": "bump",
   "timezone": "America/Chicago",
   "schedule": ["before 5am", "after 7pm"],
-  "automergeSchedule": ["before 5am", "after 7pm"]
+  "automergeSchedule": ["before 5am", "after 7pm"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["after 7pm on sunday"]
+  }
 }
