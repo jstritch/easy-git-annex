@@ -153,11 +153,12 @@ const apiOptions = { env: anxEnv };
 
 The JavaScript `bind` function may be used to pass `this` and other parameters
 to a callback as shown in the fragment below.
-The use of callbacks is shown further in the Examples section, below.
 
 ```javascript
 const apiOptions = { outHandler: this.onAnnexOut.bind(this) };
 ```
+
+The use of callbacks is shown in the Examples section, below.
 
 ### Command result
 
