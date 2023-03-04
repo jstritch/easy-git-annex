@@ -9,7 +9,7 @@
 The easy-git-annex package is a JavaScript/TypeScript API for git-annex and Git commands.
 [git-annex](https://git-annex.branchable.com/) is an integrated alternative
 to storing large files in [Git](https://git-scm.com/).
-It is not necessary to install git-annex to use easy-git-annex only with Git.
+Git commands can be used without installing git-annex.
 
 The easy-git-annex API is a wrapper over git-annex and Git commands.
 Applications pass JavaScript objects with command options and parameters
