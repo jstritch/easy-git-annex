@@ -14,10 +14,10 @@
   "prConcurrentLimit": 10,
   "rangeStrategy": "bump",
   "timezone": "America/Chicago",
-  "schedule": ["before 5am", "after 7pm"],
-  "automergeSchedule": ["before 5am", "after 7pm"],
+  "schedule": ["before 7am", "after 5pm"],
+  "automergeSchedule": ["before 7am", "after 5pm"],
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["after 7pm on sunday"]
+    "schedule": ["after 5pm on saturday"]
   }
 }
