@@ -10,14 +10,23 @@
   ],
   "automerge": true,
   "automergeType": "branch",
-  "prHourlyLimit": 5,
+  "prHourlyLimit": 1,
   "prConcurrentLimit": 10,
   "rangeStrategy": "bump",
   "timezone": "America/Chicago",
-  "schedule": ["before 7am", "after 5pm"],
-  "automergeSchedule": ["before 7am", "after 5pm"],
+  "schedule": [
+    "before 7am",
+    "after 5pm"
+  ],
+  "automergeSchedule": [
+    "before 7am",
+    "after 5pm"
+  ],
   "lockFileMaintenance": {
     "enabled": true,
-    "schedule": ["after 5pm on saturday"]
+    "schedule": [
+      "after 5pm on monday",
+      "after 5pm on thursday"
+    ]
   }
 }
