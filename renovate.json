@@ -21,12 +21,5 @@
   "automergeSchedule": [
     "before 7am",
     "after 5pm"
-  ],
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": [
-      "after 5pm on monday",
-      "after 5pm on thursday"
-    ]
-  }
+  ]
 }
