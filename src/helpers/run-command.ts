@@ -44,6 +44,8 @@ export class CommandParameters {
 
   public args: string[];
 
+  public userEnv: boolean;
+
   public env: NodeJS.ProcessEnv;
 
   public errHandler: ConsoleDataHandler | null;
@@ -56,6 +58,7 @@ export class CommandParameters {
     this.repositoryPath = repositoryPath;
     this.exeName = exeName;
     this.args = args;
+    this.userEnv = apiOptions !== undefined && 'env' in apiOptions;
     this.env = apiOptions && 'env' in apiOptions ? apiOptions.env : process.env;
     this.errHandler = apiOptions && 'errHandler' in apiOptions ? apiOptions.errHandler : null;
     this.outHandler = apiOptions && 'outHandler' in apiOptions ? apiOptions.outHandler : null;
@@ -114,7 +117,7 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
     });
 
     prc.on('error', (e: unknown) => {
-      const msg = formatError(cmd.repositoryPath, cmd.exeName, cmd.args, cmd.env, out, err, e);
+      const msg = formatError(cmd.repositoryPath, cmd.exeName, cmd.args, out, err, e, cmd.userEnv ? cmd.env : undefined);
       reject(new Error(msg));
     });
 
@@ -127,12 +130,15 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
   });
 }
 
-function formatError(repositoryPath: string, exeName: string, args: string[], env: NodeJS.ProcessEnv, out: string, err: string, error: unknown): string {
+function formatError(repositoryPath: string, exeName: string, args: string[], out: string, err: string, error: unknown, env?: NodeJS.ProcessEnv): string {
   const errMsg = typeof error === 'object' && error !== null ? error.toString() : typeof error;
   let msg = `The command: ${exeName} ${args.join(' ')}\nfor repository ${repositoryPath}\n`;
-  msg += `reported ${errMsg}\nstdout: ${out}\nstderr: ${err}\nenv:`;
-  Object.entries(env).forEach(([key, value]) => {
-    msg += `\n${key}: ${isString(value) ? value : typeof value}`;
-  });
+  msg += `reported ${errMsg}\nstdout: ${out}\nstderr: ${err}`;
+  if (env) {
+    msg += '\nenv:';
+    Object.entries(env).forEach(([key, value]) => {
+      msg += `\n${key}: ${isString(value) ? value : typeof value}`;
+    });
+  }
   return msg;
 }

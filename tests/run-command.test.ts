@@ -39,6 +39,7 @@ describe('new CommandParameters', () => {
     expect(commandParameters.repositoryPath).toBe('someDir');
     expect(commandParameters.exeName).toBe('someExe');
     expect(commandParameters.args).toBe(args);
+    expect(commandParameters.userEnv).toBe(false);
     expect(commandParameters.env).toBe(process.env);
     expect(commandParameters.errHandler).toBeNull();
     expect(commandParameters.outHandler).toBeNull();
@@ -53,6 +54,7 @@ describe('new CommandParameters', () => {
     expect(commandParameters.repositoryPath).toBe('someDir');
     expect(commandParameters.exeName).toBe('someExe');
     expect(commandParameters.args).toBe(args);
+    expect(commandParameters.userEnv).toBe(true);
     expect(commandParameters.env).toBe(env);
     expect(commandParameters.errHandler).toBe(onConsoleErr);
     expect(commandParameters.outHandler).toBe(onConsoleOut);
@@ -193,6 +195,20 @@ describe('runCommand', () => {
 
     expect(error?.message).toContain('annexTest: someValue');
     expect(error?.message).toContain('annexTestUndefined: undefined');
+  });
+
+  test('does not include the default environment variables on an error condition', async () => {
+    let error: Error | null = null;
+
+    try {
+      const apiOptions = {};
+      const cmd = new CommandParameters(process.cwd(), 'foobar', [], apiOptions);
+      await runCommand(cmd);
+    } catch (e: unknown) {
+      error = e as Error;
+    }
+
+    expect(error?.message).not.toContain('\nenv:\n');
   });
 
   function onConsoleOut(data: string): void {

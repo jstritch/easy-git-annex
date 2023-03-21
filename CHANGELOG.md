@@ -1,6 +1,7 @@
 ## vNext
 * Add helper functions
     * pathExists
+* The spawn error message includes environment variables only when env is supplied in ApiOptions.
 
 ## v2.2.0 released 2022-10-04
 * Add GitAnnexAPI methods
