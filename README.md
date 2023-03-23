@@ -18,6 +18,7 @@ to easy-git-annex which generates the appropriate command line and runs the comm
 Each command is run asynchronously without blocking the Node.js event loop.
 The Promise returned from every command has the same structure and
 includes the command and its arguments, repository path, exit code, stdout, and stderr.
+All Promise behavior, including chaining and concurrency, can be used normally.
 
 Helper functions assist your application with parsing command responses.
 Additional methods return JavaScript objects for tasks common to many applications,
