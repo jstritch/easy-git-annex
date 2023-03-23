@@ -656,6 +656,7 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--error-unmatch', kind: OptionKind.Flag },
     { name: '--exclude', kind: OptionKind.String },
     { name: '--exclude-standard', kind: OptionKind.Flag },
+    { name: '--format', kind: OptionKind.String },
     { name: '--full-name', kind: OptionKind.Flag },
     { name: '--ignored', kind: OptionKind.Flag },
     { name: '--killed', kind: OptionKind.Flag },

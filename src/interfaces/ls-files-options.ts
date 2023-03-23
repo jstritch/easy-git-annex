@@ -56,6 +56,11 @@ export interface LsFilesOptions {
   '--exclude-standard'?: null;
 
   /**
+   * Interpolates %(fieldname) from the result being shown.
+   */
+  '--format'?: string;
+
+  /**
    * Forces paths to be output relative to the project top directory.
    */
   '--full-name'?: null;

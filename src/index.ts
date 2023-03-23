@@ -18,7 +18,6 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return GitAnnexAccessor.create(repositoryPath);
 }
 
-export * from './helpers/git-path';
 export * from './helpers/get-branches';
 export * from './helpers/get-finds';
 export * from './helpers/get-line-starting';
@@ -27,6 +26,8 @@ export * from './helpers/get-refs';
 export * from './helpers/get-shows';
 export * from './helpers/get-tags';
 export * from './helpers/get-whereis';
+export * from './helpers/git-path';
+export * from './helpers/list-files';
 export * from './helpers/parsers';
 export * from './helpers/path-exists';
 export * from './helpers/safe-parse';

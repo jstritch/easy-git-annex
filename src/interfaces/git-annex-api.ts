@@ -906,7 +906,8 @@ export interface GitAnnexAPI {
 
   /**
    * Shows information about files in the index and the working tree.
-   * Consider using method {@link getFileNames} if an array of filenames desired.
+   * Consider using method {@link getFileNames} if an array of filenames desired
+   * or generic function {@link listFiles} if JavaScript objects are required.
    *
    * Consult the
    * [Git ls-files documentation](https://git-scm.com/docs/git-ls-files)

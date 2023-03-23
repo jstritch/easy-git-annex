@@ -1,5 +1,7 @@
 import * as anx from '../../src/index';
-import { allTestFiles, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
+import * as path from 'path';
+import { allTestFiles, copyAddGitCommit, copyFile, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
+import { promises as fs } from 'fs';
 
 describe('lsFiles', () => {
   let repositoryPath: string;
@@ -68,6 +70,60 @@ describe('LsFilesOptions', () => {
     const rslt = await myAnx.lsFiles(undefined, gitOptions, { noOp: true });
     expect(rslt.exitCode).toBeNaN();
     expect(rslt.args).toEqual(expect.arrayContaining(expected));
+  });
+
+});
+
+interface FooFile {
+  path: string;
+  objectName: string;
+  objectMode: string;
+  stage: string;
+}
+
+function isFooFile(o: unknown): o is FooFile {
+  if (!anx.isRecord(o)) { return false; }
+  if (!anx.isString(o['path'])) { return false; }
+  if (!anx.isString(o['objectName'])) { return false; }
+  if (!anx.isString(o['objectMode'])) { return false; }
+  if (!anx.isString(o['stage'])) { return false; }
+  return true;
+}
+
+describe('listFiles', () => {
+  let repositoryPath: string;
+
+  beforeAll(async () => {
+    repositoryPath = await createRepository();
+    await setRepositoryAuthor(repositoryPath);
+    await copyAddGitCommit([TestFile.TXT1, TestFile.TXT2, TestFile.TXT3], repositoryPath, 'add three test files for gitLsFiles');
+    await fs.rm(path.join(repositoryPath, TestFile.TXT2));        // a deleted file
+    await copyFile(TestFile.TXT2, repositoryPath, TestFile.TXT3); // a modified file
+  });
+
+  afterAll(async () => {
+    await deleteDirectory(repositoryPath);
+  });
+
+  const columns: [string, anx.Parser?][] = [
+    ['path'],
+    ['objectName'],
+    ['objectMode'],
+    ['stage'],
+  ];
+
+  const gitOptions: anx.LsFilesOptions = {
+    '--format': '%(path)%x09%(objectname)%x09%(objectmode)%x09%(stage)'
+  };
+
+  const tests: [[(string | string[])?], number][] = [
+    [[], 3],
+    [[TestFile.TXT2], 1],
+  ];
+
+  test.each(tests)('listFiles "%o"', async ([relativePaths], expected) => {
+    const files = await anx.listFiles(isFooFile, columns, repositoryPath, gitOptions, relativePaths);
+    expect(files).toHaveLength(expected);  // no extra files or empty strings
   });
 
 });

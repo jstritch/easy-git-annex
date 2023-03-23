@@ -1,6 +1,10 @@
 ## vNext
+* Add generic functions to return application-defined JavaScript objects
+    * listFiles
 * Add helper functions
     * pathExists
+* Support Git 2.38.0 features
+    * Add LsFilesOptions --format
 * The spawn error message includes environment variables only when env is supplied in ApiOptions.
 
 ## v2.2.0 released 2022-10-04

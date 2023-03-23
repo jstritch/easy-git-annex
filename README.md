@@ -271,13 +271,14 @@ Links to commonly used methods appear below.
 
 ### Generic functions
 
-* [getBranches](https://jstritch.github.io/easy-git-annex/modules.html#getBranches) Returns information about Git branches in application-defined JavaScript objects.
-* [getFinds](https://jstritch.github.io/easy-git-annex/modules.html#getFinds) Returns information about available files in application-defined JavaScript objects.
-* [getLogs](https://jstritch.github.io/easy-git-annex/modules.html#getLogs) Returns information about Git commits in application-defined JavaScript objects.
-* [getRefs](https://jstritch.github.io/easy-git-annex/modules.html#getRefs) Returns information about Git refs in application-defined JavaScript objects.
-* [getShows](https://jstritch.github.io/easy-git-annex/modules.html#getShows) Returns information about Git objects in application-defined JavaScript objects.
-* [getTags](https://jstritch.github.io/easy-git-annex/modules.html#getTags) Returns information about Git tags in application-defined JavaScript objects.
-* [getWhereis](https://jstritch.github.io/easy-git-annex/modules.html#getWhereis) Returns information about repositories containing files in application-defined JavaScript objects.
+* [getBranches](https://jstritch.github.io/easy-git-annex/functions/getBranches) Returns information about Git branches in application-defined JavaScript objects.
+* [getFinds](https://jstritch.github.io/easy-git-annex/functions/getFinds) Returns information about available files in application-defined JavaScript objects.
+* [getLogs](https://jstritch.github.io/easy-git-annex/functions/getLogs) Returns information about Git commits in application-defined JavaScript objects.
+* [getRefs](https://jstritch.github.io/easy-git-annex/functions/getRefs) Returns information about Git refs in application-defined JavaScript objects.
+* [getShows](https://jstritch.github.io/easy-git-annex/functions/getShows) Returns information about Git objects in application-defined JavaScript objects.
+* [getTags](https://jstritch.github.io/easy-git-annex/functions/getTags) Returns information about Git tags in application-defined JavaScript objects.
+* [getWhereis](https://jstritch.github.io/easy-git-annex/functions/getWhereis) Returns information about repositories containing files in application-defined JavaScript objects.
+* [listFiles](https://jstritch.github.io/easy-git-annex/functions/listFiles) Returns information about files in the index and the working tree in application-defined JavaScript objects.
 
 ### Maintenance Methods
 
