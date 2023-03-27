@@ -2,12 +2,6 @@
   "extends": [
     "config:base"
   ],
-  "packageRules": [
-    {
-      "matchDatasources": ["npm"],
-      "stabilityDays": 3
-    }
-  ],
   "automerge": true,
   "automergeType": "branch",
   "prHourlyLimit": 1,
