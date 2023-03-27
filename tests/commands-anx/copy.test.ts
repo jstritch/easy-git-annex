@@ -20,7 +20,7 @@ describe('copy', () => {
   afterEach(async () => {
     await myAnx.uninit();
     await deleteDirectory(repositoryPath);
-    // await deleteDirectory(remotePath); // => "EACCES: permission denied, unlink"; recursive async chmod, ugh
+    await deleteDirectory(remotePath, true);
   });
 
   test('copies one file', async () => {

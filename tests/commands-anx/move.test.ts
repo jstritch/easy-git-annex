@@ -20,7 +20,7 @@ describe('move', () => {
   afterEach(async () => {
     await myAnx.uninit();
     await deleteDirectory(repositoryPath);
-    // await deleteDirectory(remotePath); // => "EACCES: permission denied, unlink"; recursive async chmod, ugh
+    await deleteDirectory(remotePath, true);
   });
 
   test('moves one file', async () => {
