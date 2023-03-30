@@ -158,6 +158,7 @@ export function isRepositoryInfo(o: unknown): o is RepositoryInfo {
 /**
  * Determines if an object is a {@link StatusAnx}.
  * @param o The object to examine.
+ * @deprecated The git-annex status command was deprecated in version 10.20230321, use {@link isStatusGit} instead.
  * @returns True if o is a StatusAnx; otherwise, false.
  * @category Type Predicate
  */

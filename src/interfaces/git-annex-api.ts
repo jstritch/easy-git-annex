@@ -523,6 +523,7 @@ export interface GitAnnexAPI {
    * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
    * @param anxOptions The StatusAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
+   * @deprecated The git-annex status command was deprecated in version 10.20230321, use {@link statusGit} instead.
    * @returns The git-annex status result.
    * @category Contents
    */
@@ -1250,6 +1251,7 @@ export interface GitAnnexAPI {
    * Obtains an array describing the working tree status.
    * @param relativePaths The files of interest.
    * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @deprecated The git-annex status command was deprecated in version 10.20230321, use {@link getStatusGit} instead.
    * @returns An array describing the working tree.
    * @category Contents
    */

@@ -2,6 +2,7 @@ import { AnnexOptions } from './annex-options';
 
 /**
  * StatusAnxOptions defines the supported options for the git-annex status command.
+ * @deprecated The git-annex status command was deprecated in version 10.20230321, use {@link StatusGitOptions} instead.
  * @category Command Options
  */
 export interface StatusAnxOptions extends AnnexOptions {

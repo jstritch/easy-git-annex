@@ -5,6 +5,8 @@
     * pathExists
 * Support Git 2.38.0 features
     * Add LsFilesOptions --format
+* Support git-annex 10.20230321 features
+    * Deprecate getStatusAnx, isStatusAnx, statusAnx, StatusAnx, and StatusAnxOptions (documentation change only).
 * The spawn error message includes environment variables only when env is supplied in ApiOptions.
 
 ## v2.2.0 released 2022-10-04

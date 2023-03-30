@@ -21,8 +21,8 @@ includes the command and its arguments, repository path, exit code, stdout, and 
 All Promise behavior, including chaining and concurrency, can be used normally.
 
 Helper functions assist your application with parsing command responses.
-Additional methods return JavaScript objects for tasks common to many applications,
-for example getStatusAnx and getStatusGit.
+Additional methods, such as getRepositories and getStatusGit, return JavaScript objects
+for tasks common to many applications.
 
 Callbacks for stdout and stderr are available to show progress of time-consuming commands.
 Environment variables may also be specified.

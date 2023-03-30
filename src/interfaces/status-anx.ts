@@ -3,6 +3,7 @@
  * Consult the
  * [git-annex status documentation](https://git-annex.branchable.com/git-annex-status/)
  * for a description of the fields.
+ * @deprecated The git-annex status command was deprecated in version 10.20230321, use {@link StatusGit} instead.
  * @category Returned Objects
  */
 export interface StatusAnx {
