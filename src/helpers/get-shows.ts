@@ -8,14 +8,14 @@ import { ShowOptions } from '../interfaces/show-options';
  * The JavaScript objects are created from the return of the {@link GitAnnexAPI.show} method.
  *
  * @param guard The type predicate to validate each object.
- * @param columns Maps the columns returned by the --format option
+ * @param columns Maps the columns returned by gitOptions.{@link ShowOptions.--format}
  * to property names. A parser to convert the string to another data
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param commandParameters The parameters for the show command.
  * @param gitOptions The ShowOptions for the command.
- * @param columnDelimiter The column delimiter used by the --format option.
- * If unspecified, `\t` is used to split at `%x09` in --format.
+ * @param columnDelimiter The column delimiter used by gitOptions.{@link ShowOptions.--format}.
+ * If unspecified, `\t` is used to split at `%x09` in gitOptions.{@link ShowOptions.--format}.
  * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic

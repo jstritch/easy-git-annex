@@ -8,7 +8,7 @@ import { WhereisOptions } from '../interfaces/whereis-options';
  * The JavaScript objects are created from the return of the {@link GitAnnexAPI.whereis} method.
  *
  * @param guard The type predicate to validate each file.
- * @param columns Maps the columns returned by the --format option
+ * @param columns Maps the columns returned by anxOptions.{@link WhereisOptions.--format}
  * to property names. A parser to convert the string to another data
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
@@ -16,8 +16,8 @@ import { WhereisOptions } from '../interfaces/whereis-options';
  * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param anxOptions The WhereisOptions for the command.
  * The --format option must end with `\\n`.
- * @param columnDelimiter The column delimiter used by the --format option.
- * If unspecified, `\t` is used to split at `\\t` in --format.
+ * @param columnDelimiter The column delimiter used by anxOptions.{@link WhereisOptions.--format}.
+ * If unspecified, `\t` is used to split at `\\t` in anxOptions.{@link WhereisOptions.--format}.
  * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic

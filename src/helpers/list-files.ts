@@ -8,7 +8,7 @@ import { Parser } from '../interfaces/parser';
  * The JavaScript objects are created from the return of the {@link GitAnnexAPI.lsFiles} method.
  *
  * @param guard The type predicate to validate each file.
- * @param columns Maps the columns returned by the --format option
+ * @param columns Maps the columns returned by gitOptions.{@link LsFilesOptions.--format}
  * to property names. A parser to convert the string to another data
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
@@ -16,8 +16,8 @@ import { Parser } from '../interfaces/parser';
  * The {@link LsFilesOptions.--format} option is required.
  * @param relativePaths The files for the find command.
  * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
- * @param columnDelimiter The column delimiter used by the --format option.
- * If unspecified, `\t` is used to split at `%x09` in --format.
+ * @param columnDelimiter The column delimiter used by gitOptions.{@link LsFilesOptions.--format}.
+ * If unspecified, `\t` is used to split at `%x09` in gitOptions.{@link LsFilesOptions.--format}.
  * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic
