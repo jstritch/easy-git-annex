@@ -18,6 +18,7 @@ import { WhereisOptions } from '../interfaces/whereis-options';
  * The --format option must end with `\\n`.
  * @param columnDelimiter The column delimiter used by the --format option.
  * If unspecified, `\t` is used to split at `\\t` in --format.
+ * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic
  */

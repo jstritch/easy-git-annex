@@ -16,6 +16,7 @@ import { ShowOptions } from '../interfaces/show-options';
  * @param gitOptions The ShowOptions for the command.
  * @param columnDelimiter The column delimiter used by the --format option.
  * If unspecified, `\t` is used to split at `%x09` in --format.
+ * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic
  */
