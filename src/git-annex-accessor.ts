@@ -23,6 +23,7 @@ import { CopyOptions } from './interfaces/copy-options';
 import { DiffOptions } from './interfaces/diff-options';
 import { DropOptions } from './interfaces/drop-options';
 import { DropunusedOptions } from './interfaces/dropunused-options';
+import { ExpireOptions } from './interfaces/expire-options';
 import { FetchOptions } from './interfaces/fetch-options';
 import { FindOptions } from './interfaces/find-options';
 import { ForEachRefOptions } from './interfaces/for-each-ref-options';
@@ -206,6 +207,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'enableremote', anxOptions);
     this.pushIfString(args, name);
     this.pushIfKeyValuePairs(args, parameters);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async expire(expirations: string | string[], anxOptions?: ExpireOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'expire', anxOptions);
+    this.pushIfStringOrStringArray(args, expirations);
     return this.runAnx(args, apiOptions);
   }
 

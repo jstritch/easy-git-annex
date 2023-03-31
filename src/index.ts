@@ -55,6 +55,7 @@ export * from './interfaces/diff-common-options';
 export * from './interfaces/diff-options';
 export * from './interfaces/drop-options';
 export * from './interfaces/dropunused-options';
+export * from './interfaces/expire-options';
 export * from './interfaces/for-each-ref-options';
 export * from './interfaces/fetch-common-options';
 export * from './interfaces/fetch-options';

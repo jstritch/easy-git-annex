@@ -16,6 +16,7 @@ import { ConfigGitOptions } from './config-git-options';
 import { DiffOptions } from './diff-options';
 import { DropOptions } from './drop-options';
 import { DropunusedOptions } from './dropunused-options';
+import { ExpireOptions } from './expire-options';
 import { FetchOptions } from './fetch-options';
 import { FindOptions } from './find-options';
 import { ForEachRefOptions } from './for-each-ref-options';
@@ -212,6 +213,20 @@ export interface GitAnnexAPI {
    * @category Remotes
    */
   enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Expires inactive repositories.
+   *
+   * Consult the
+   * [git-annex expire documentation](https://git-annex.branchable.com/git-annex-expire/)
+   * for additional information.
+   * @param expirations The expiration specifiers.
+   * @param anxOptions The ExpireOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex expire result.
+   * @category Remotes
+   */
+  expire(expirations: string, anxOptions?: ExpireOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Lists available files.

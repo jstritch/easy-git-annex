@@ -111,7 +111,10 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--from', kind: OptionKind.String },
   ]],
   ['enableremote', []],
-  ['expire', []],
+  ['expire', [
+    { name: '--activity', kind: OptionKind.String },
+    { name: '--no-act', kind: OptionKind.Flag },
+  ]],
   ['find', [
     { name: '--branch', kind: OptionKind.String },
     { name: '--format', kind: OptionKind.String },

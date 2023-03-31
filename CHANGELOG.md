@@ -1,4 +1,6 @@
 ## vNext
+* Add GitAnnexAPI methods
+    * expire
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
 * Add helper functions

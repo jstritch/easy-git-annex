@@ -247,6 +247,7 @@ Links to commonly used methods appear below.
 
 * [dead](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#dead) Hides a lost repository.
 * [enableremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#enableremote) Enables use of an existing remote in the current repository.
+* [expire](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#expire) Expires inactive repositories.
 * [fetch](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#fetch) Downloads objects and refs from another repository.
 * [getRemoteNames](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getRemoteNames) Obtains an array of remote names.
 * [initremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#initremote) Creates a special remote.
