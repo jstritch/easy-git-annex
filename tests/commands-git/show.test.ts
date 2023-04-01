@@ -56,9 +56,9 @@ describe('show', () => {
     expect(rslt.out).toContain(expected);
   });
 
-  const getShowsTests: [[string[]?, anx.ShowOptions?], number][] = [
-    [[[tag1], options], 1],
-    [[, options], 1],
+  const getShowsTests: [[anx.ShowOptions, string[]?], number][] = [
+    [[options, [tag1]], 1],
+    [[options], 1],
   ];
 
   const columns: [string, anx.Parser?][] = [
@@ -68,8 +68,8 @@ describe('show', () => {
     ['contents', anx.parseOptionalString],
   ];
 
-  test.each(getShowsTests)('getShows(%o)', async ([commandParameters, gitOptions], expected) => {
-    const shows = await anx.getShows(isFooShow, columns, repositoryPath, commandParameters, gitOptions);
+  test.each(getShowsTests)('getShows(%o)', async ([gitOptions, commandParameters], expected) => {
+    const shows = await anx.getShows(isFooShow, columns, repositoryPath, gitOptions, commandParameters);
     expect(shows).toHaveLength(expected);
   });
 

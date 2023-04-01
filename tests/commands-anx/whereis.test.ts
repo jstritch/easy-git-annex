@@ -60,7 +60,7 @@ describe('whereis', () => {
   ];
 
   test.each(getTests)('getWhereis(%o)', async ([gitOptions, columnDelimiter], expected) => {
-    const whereis = await anx.getWhereis(isFooWhereis, columns, repositoryPath, undefined, gitOptions, columnDelimiter);
+    const whereis = await anx.getWhereis(isFooWhereis, columns, repositoryPath, gitOptions, undefined, columnDelimiter);
     expect(whereis).toHaveLength(expected);
   });
 

@@ -12,17 +12,17 @@ import { Parser } from '../interfaces/parser';
  * to property names. A parser to convert the string to another data
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
- * @param relativePaths The files for the find command.
- * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param anxOptions The FindOptions for the command.
  * The --format option must end with `\\n`.
+ * @param relativePaths The files for the find command.
+ * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param columnDelimiter The column delimiter used by anxOptions.{@link FindOptions.--format}.
  * If unspecified, `\t` is used to split at `\\t` in anxOptions.{@link FindOptions.--format}.
  * @typeParam T - The application-defined type of the returned objects.
  * @returns An array containing objects passing the type guard function.
  * @category Generic
  */
-export async function getFinds<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, relativePaths?: string | string[], anxOptions?: FindOptions | string[], columnDelimiter?: string): Promise<T[]> {
+export async function getFinds<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, anxOptions: FindOptions | string[], relativePaths?: string | string[], columnDelimiter?: string): Promise<T[]> {
   const myAnx = GitAnnexAccessor.create(repositoryPath);
   const result = await myAnx.find(relativePaths, anxOptions);
   return createFromTextLines(guard, columns, result.out, columnDelimiter);

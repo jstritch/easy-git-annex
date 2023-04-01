@@ -56,10 +56,10 @@ describe('log', () => {
     expect(rslt.out).toContain(expected);
   });
 
-  const getLogsTests: [[string[]?, string[]?, anx.LogOptions?], number][] = [
-    [[[tag1],, options], 1],
-    [[, [TestFile.TXT2], options], 1],
-    [[,, options], 3],
+  const getLogsTests: [[anx.LogOptions, string[]?, string[]?], number][] = [
+    [[options, [tag1]], 1],
+    [[options, , [TestFile.TXT2]], 1],
+    [[options, ,], 3],
   ];
 
   const columns: [string, anx.Parser?][] = [
@@ -69,8 +69,8 @@ describe('log', () => {
     ['contents', anx.parseOptionalString],
   ];
 
-  test.each(getLogsTests)('getLogs(%o)', async ([commandParameters, relativePaths, gitOptions], expected) => {
-    const logs = await anx.getLogs(isFooLog, columns, repositoryPath, commandParameters, relativePaths, gitOptions);
+  test.each(getLogsTests)('getLogs(%o)', async ([gitOptions, commandParameters, relativePaths], expected) => {
+    const logs = await anx.getLogs(isFooLog, columns, repositoryPath, gitOptions, commandParameters, relativePaths);
     expect(logs).toHaveLength(expected);
   });
 

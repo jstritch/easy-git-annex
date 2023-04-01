@@ -57,7 +57,7 @@ describe('find', () => {
   ];
 
   test.each(getTests)('getFinds(%o)', async ([gitOptions, columnDelimiter], expected) => {
-    const whereis = await anx.getFinds(isFooFind, columns, repositoryPath, undefined, gitOptions, columnDelimiter);
+    const whereis = await anx.getFinds(isFooFind, columns, repositoryPath, gitOptions, undefined, columnDelimiter);
     expect(whereis).toHaveLength(expected);
   });
 
