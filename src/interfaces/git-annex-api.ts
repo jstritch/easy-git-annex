@@ -63,8 +63,8 @@ import { WhereisOptions } from './whereis-options';
 import { WhereusedOptions } from './whereused-options';
 
 /**
- * The GitAnnexAPI interface defines the git-annex commands.
- * @category Annex Commands
+ * The GitAnnexAPI interface defines the Git and git-annex commands.
+ * @category Git and git-annex Commands
  */
 export interface GitAnnexAPI {
 
@@ -846,6 +846,20 @@ export interface GitAnnexAPI {
   diff(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: DiffOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Downloads objects and refs from another repository.
+   *
+   * Consult the
+   * [Git fetch documentation](https://git-scm.com/docs/git-fetch)
+   * for additional information.
+   * @param commandParameters The parameters for the fetch command.
+   * @param gitOptions The FetchOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The Git fetch result.
+   * @category Remotes
+   */
+  fetch(commandParameters?: string | string[], gitOptions?: FetchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Reports information about each ref.
    * Consider using generic function {@link getRefs} if JavaScript objects are desired.
    *
@@ -860,20 +874,6 @@ export interface GitAnnexAPI {
    * @category Inspection
    */
   forEachRef(gitOptions?: ForEachRefOptions | string[], pattern?: string | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
-
-  /**
-   * Downloads objects and refs from another repository.
-   *
-   * Consult the
-   * [Git fetch documentation](https://git-scm.com/docs/git-fetch)
-   * for additional information.
-   * @param commandParameters The parameters for the fetch command.
-   * @param gitOptions The FetchOptions for the command.
-   * @param apiOptions The ApiOptions for the command.
-   * @returns The Git fetch result.
-   * @category Remotes
-   */
-  fetch(commandParameters?: string | string[], gitOptions?: FetchOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Verifies the connectivity and validity of objects in Git.

@@ -7,7 +7,7 @@
   "categorizeByGroup": true,
   "categoryOrder": [
     "Returned Objects",
-    "Annex Commands",
+    "Git and git-annex Commands",
     "Setup",
     "Configuration",
     "Contents",
