@@ -445,7 +445,8 @@ export function isFooTag(o: unknown): o is FooTag {
 ```
 
 Write a function to return your tag objects.
-The getFooTags function takes it's caller's arguments, sets up a getTags call, and returns the result.
+The getFooTags function takes it's caller's arguments, 
+sets up a [getTags](https://jstritch.github.io/easy-git-annex/functions/getTags) call, and returns the result.
 
 ```typescript
 export async function getFooTags(repositoryPath: string, tagName?: string, ignoreCase?: boolean): Promise<FooTag[]> {
