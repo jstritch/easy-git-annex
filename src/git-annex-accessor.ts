@@ -137,9 +137,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     } else if (isStringArray(value)) {
       paths = gitPaths(value);
     }
-    if (paths) {
-      this.pushIfStringOrStringArray(args, paths, prependMarker);
-    }
+    this.pushIfStringOrStringArray(args, paths, prependMarker);
   }
 
   private pushIfKeyValuePairs(args: string[], value?: [string, string] | [string, string][]): void {
