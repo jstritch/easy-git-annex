@@ -415,12 +415,12 @@ When the example is run, progress messages appear on the console for each annexe
 
 ### Get application-defined JavaScript objects
 
-Several generic methods are included in easy-git-annex.
-These methods return JavaScript objects meeting the requirements of application-defined interfaces.
-This example uses the generic method getTags to get custom tag objects.
-The pattern is similar for the other generic methods.
+Several generic functions are included in easy-git-annex.
+These functions return JavaScript objects defined by your application.
+This example uses the generic function getTags to obtain tag objects.
+The pattern is similar for the other generic functions.
 
-First declare the interface you need.
+First declare the interface your application requires.
 
 ```typescript
 export interface FooTag {
@@ -431,7 +431,7 @@ export interface FooTag {
 }
 ```
 
-Then write the type predicate to determine if an object meets the interface requirements.
+Then write a type predicate to determine if an object meets the interface requirements.
 
 ```typescript
 export function isFooTag(o: unknown): o is FooTag {
@@ -444,8 +444,8 @@ export function isFooTag(o: unknown): o is FooTag {
 }
 ```
 
-Write the method to return the tags.
-The getFooTags method takes it's caller's arguments, sets up a getTags call, and returns the result.
+Write a function to return your tag objects.
+The getFooTags function takes it's caller's arguments, sets up a getTags call, and returns the result.
 
 ```typescript
 export async function getFooTags(repositoryPath: string, tagName?: string, ignoreCase?: boolean): Promise<FooTag[]> {
@@ -467,7 +467,7 @@ export async function getFooTags(repositoryPath: string, tagName?: string, ignor
 }
 ```
 
-Make the following call to get a list of all tags beginning with the letter `v`:
+Your application can make the following call to get a list of all tags beginning with the letter `v`:
 
 ```typescript
 const fooTags = await getFooTags(repositoryPath, 'v*');
