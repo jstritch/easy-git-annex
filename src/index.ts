@@ -45,6 +45,7 @@ export * from './interfaces/branch-list-options';
 export * from './interfaces/branch-options';
 export * from './interfaces/checkout-options';
 export * from './interfaces/cherry-pick-options';
+export * from './interfaces/clean-options';
 export * from './interfaces/clone-options';
 export * from './interfaces/command-result';
 export * from './interfaces/commit-options';

@@ -350,6 +350,15 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--strategy-option', kind: OptionKind.String },
     { name: '-x', kind: OptionKind.Flag },
   ]],
+  ['clean', [
+    { name: '--dry-run', kind: OptionKind.Flag },
+    { name: '--exclude', kind: OptionKind.String },
+    { name: '--force', kind: OptionKind.Flag },
+    { name: '--quiet', kind: OptionKind.Flag },
+    { name: '-d', kind: OptionKind.Flag },
+    { name: '-x', kind: OptionKind.Flag },
+    { name: '-X', kind: OptionKind.Flag },
+  ]],
   ['clone', [
     { name: '--bare', kind: OptionKind.Flag },
     { name: '--branch', kind: OptionKind.StringParam },

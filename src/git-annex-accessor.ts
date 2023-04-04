@@ -13,6 +13,7 @@ import { ApiOptions } from './interfaces/api-options';
 import { BranchOptions } from './interfaces/branch-options';
 import { CheckoutOptions } from './interfaces/checkout-options';
 import { CherryPickOptions } from './interfaces/cherry-pick-options';
+import { CleanOptions } from './interfaces/clean-options';
 import { CloneOptions } from './interfaces/clone-options';
 import { CommandGroup } from './helpers/command-options';
 import { CommandResult } from './interfaces/command-result';
@@ -422,6 +423,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async cherryPick(commandParameters?: string | string[], gitOptions?: CherryPickOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'cherry-pick', gitOptions);
     this.pushIfStringOrStringArray(args, commandParameters);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async clean(relativePaths?: string | string[], gitOptions?: CleanOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'clean', gitOptions);
+    this.pushIfRelativePaths(args, relativePaths, true);
     return this.runGit(args, apiOptions);
   }
 

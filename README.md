@@ -201,6 +201,7 @@ Links to commonly used methods appear below.
 
 * [addAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#addAnx) Adds files to Git and git-annex.
 * [addGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#addGit) Adds file contents to the index.
+* [clean](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#clean) Removes untracked files from the working tree.
 * [commit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#commit) Records changes to the repository.
 * [copy](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#copy) Copies file content to or from another repository.
 * [diff](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#diff) Shows changes between commits, commit and working tree, etc.
@@ -280,7 +281,7 @@ Links to commonly used methods appear below.
 * [getShows](https://jstritch.github.io/easy-git-annex/functions/getShows) Returns information about Git objects in application-defined JavaScript objects.
 * [getTags](https://jstritch.github.io/easy-git-annex/functions/getTags) Returns information about Git tags in application-defined JavaScript objects.
 * [getWhereis](https://jstritch.github.io/easy-git-annex/functions/getWhereis) Returns information about repositories containing files in application-defined JavaScript objects.
-* [listFiles](https://jstritch.github.io/easy-git-annex/functions/listFiles) Returns information about files in the index and the working tree in application-defined JavaScript objects.
+* [listFiles](https://jstritch.github.io/easy-git-annex/functions/listFiles) Returns information about index and working tree files in application-defined JavaScript objects.
 
 ### Maintenance Methods
 

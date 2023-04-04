@@ -8,6 +8,7 @@ import { ApiOptions } from './api-options';
 import { BranchOptions } from './branch-options';
 import { CheckoutOptions } from './checkout-options';
 import { CherryPickOptions } from './cherry-pick-options';
+import { CleanOptions } from './clean-options';
 import { CloneOptions } from './clone-options';
 import { CommandResult } from './command-result';
 import { CommitOptions } from './commit-options';
@@ -782,6 +783,21 @@ export interface GitAnnexAPI {
    * @category Branching
    */
   cherryPick(commandParameters?: string | string[], gitOptions?: CherryPickOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Removes untracked files from the working tree.
+   *
+   * Consult the
+   * [Git clean documentation](https://git-scm.com/docs/git-clean)
+   * for additional information.
+   * @param relativePaths The paths for the clean command.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param gitOptions The CleanOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The Git clean result.
+   * @category Contents
+   */
+  clean(relativePaths?: string | string[], gitOptions?: CleanOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Clones a repository into an empty directory.
