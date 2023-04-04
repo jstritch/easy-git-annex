@@ -16,8 +16,9 @@ export interface CleanOptions {
 
   /**
    * Satisfies Git configuration variable clean.requireForce.
+   * May be repeated to modify untracked nested Git repositories.
    */
-  '--force'?: null;
+  '--force'?: null | [null, null?];
 
   /**
    * Reports errors but not the files successfully removed.

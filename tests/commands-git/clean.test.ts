@@ -38,6 +38,8 @@ describe('CleanOptions', () => {
     [{ '--dry-run': null }, ['--dry-run']],
     [{ '--exclude': 'A' }, ['--exclude=A']],
     [{ '--force': null }, ['--force']],
+    [{ '--force': [null] }, ['--force']],
+    [{ '--force': [null, null] }, ['--force', '--force']],
     [{ '--quiet': null }, ['--quiet']],
     [{ '-d': null }, ['-d']],
     [{ '-x': null }, ['-x']],

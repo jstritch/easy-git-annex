@@ -353,7 +353,7 @@ const gitCommandOptions: Map<string, CommandOption[]> = new Map([
   ['clean', [
     { name: '--dry-run', kind: OptionKind.Flag },
     { name: '--exclude', kind: OptionKind.String },
-    { name: '--force', kind: OptionKind.Flag },
+    { name: '--force', kind: OptionKind.RepeatableFlag },
     { name: '--quiet', kind: OptionKind.Flag },
     { name: '-d', kind: OptionKind.Flag },
     { name: '-x', kind: OptionKind.Flag },
