@@ -1,5 +1,6 @@
 import { RemoteCommand, RemoteOptions } from './remote-options';
 import { StashCommand, StashOptions } from './stash-options';
+import { SubmoduleCommand, SubmoduleOptions } from './submodule-options';
 import { AddAnxOptions } from './add-anx-options';
 import { AddGitOptions } from './add-git-options';
 import { AdjustOptions } from './adjust-options';
@@ -1164,6 +1165,28 @@ export interface GitAnnexAPI {
    * @category Contents
    */
   statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Initializes, updates, or inspects submodules.
+   *
+   * Consult the
+   * [Git submodule documentation](https://git-scm.com/docs/git-submodule)
+   * for additional information.
+   * @param subCommand The submodule subcommand to run.
+   * If omitted, the status of existing submodules is returned.
+   * @param relativePaths The files for the submodule command.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param commandParameter The parameter for the submodule command.
+   * If subCommand is {@link SubmoduleCommand.Add}, commandParameter is `repository`.
+   * If subCommand is {@link SubmoduleCommand.ForEach}, commandParameter is `command`.
+   * If subCommand is {@link SubmoduleCommand.SetUrl}, commandParameter is `newurl`.
+   * If subCommand is {@link SubmoduleCommand.Summary}, commandParameter is `commit`.
+   * @param gitOptions The SubmoduleOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The Git submodule result.
+   * @category Setup
+   */
+  submodule(subCommand?: SubmoduleCommand, relativePaths?: string | string[], commandParameter?: string, gitOptions?: SubmoduleOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Shows changes between commits, commit and working tree, etc.

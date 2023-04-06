@@ -183,6 +183,7 @@ Links to commonly used methods appear below.
 * [initAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#initAnx) Initializes a repository for use with git-annex.
 * [initGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#initGit) Creates an empty Git repository or reinitializes an existing one.
 * [reinit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#reinit) Initializes a repository for use with git-annex specifying the uuid.
+* [submodule](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#submodule) Manages submodules.
 * [uninit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#uninit) Stops the use of git-annex in a repository.
 
 ### Configuration Methods

@@ -94,6 +94,7 @@ export * from './interfaces/status-anx';
 export * from './interfaces/status-anx-options';
 export * from './interfaces/status-git';
 export * from './interfaces/status-git-options';
+export * from './interfaces/submodule-options';
 export * from './interfaces/switch-options';
 export * from './interfaces/sync-options';
 export * from './interfaces/tag-options';

@@ -5,6 +5,7 @@ import { isKeyValue, isKeyValueArray, isNumber, isStatusAnx, isString, isStringA
 import { RemoteCommand, RemoteOptions } from './interfaces/remote-options';
 import { RepositoryInfo, TrustLevel } from './interfaces/repository-info';
 import { StashCommand, StashOptions } from './interfaces/stash-options';
+import { SubmoduleCommand, SubmoduleOptions } from './interfaces/submodule-options';
 import { AddAnxOptions } from './interfaces/add-anx-options';
 import { AddGitOptions } from './interfaces/add-git-options';
 import { AdjustOptions } from './interfaces/adjust-options';
@@ -578,6 +579,25 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async statusGit(relativePaths?: string | string[], gitOptions?: StatusGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'status', gitOptions);
     this.pushIfRelativePaths(args, relativePaths, true);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async submodule(subCommand?: SubmoduleCommand, relativePaths?: string | string[], commandParameter?: string, gitOptions?: SubmoduleOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.Git, 'submodule', gitOptions);
+    const quietIndex = args.indexOf('--quiet');
+    this.insertAtIfString(args, quietIndex > 0 ? quietIndex + 1 : 1, subCommand);
+    this.pushIfRelativePaths(args, relativePaths, true);
+    if (subCommand === SubmoduleCommand.Add) {
+      const markerIndex = args.indexOf('--');
+      this.insertAtIfString(args, markerIndex > 0 ? markerIndex + 1 : args.length, commandParameter);
+    } else if (subCommand === SubmoduleCommand.ForEach) {
+      this.pushIfString(args, commandParameter);
+    } else if (subCommand === SubmoduleCommand.SetUrl) {
+      this.pushIfString(args, commandParameter);
+    } else if (subCommand === SubmoduleCommand.Summary) {
+      const markerIndex = args.indexOf('--');
+      this.insertAtIfString(args, markerIndex > 0 ? markerIndex : args.length, commandParameter);
+    }
     return this.runGit(args, apiOptions);
   }
 
