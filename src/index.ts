@@ -65,6 +65,7 @@ export * from './interfaces/fsck-anx-options';
 export * from './interfaces/fsck-git-options';
 export * from './interfaces/get-options';
 export * from './interfaces/git-annex-api';
+export * from './interfaces/grep-options';
 export * from './interfaces/info-options';
 export * from './interfaces/init-anx-options';
 export * from './interfaces/init-git-options';

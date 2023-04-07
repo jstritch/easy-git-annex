@@ -33,6 +33,7 @@ import { FsckAnxOptions } from './interfaces/fsck-anx-options';
 import { FsckGitOptions } from './interfaces/fsck-git-options';
 import { GetOptions } from './interfaces/get-options';
 import { GitAnnexAPI } from './interfaces/git-annex-api';
+import { GrepOptions } from './interfaces/grep-options';
 import { InfoOptions } from './interfaces/info-options';
 import { InitAnxOptions } from './interfaces/init-anx-options';
 import { InitGitOptions } from './interfaces/init-git-options';
@@ -472,6 +473,13 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.Git, 'fsck', gitOptions);
     this.pushIfString(args, object);
+    return this.runGit(args, apiOptions);
+  }
+
+  public async grep(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: GrepOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.GitDiff, 'grep', gitOptions);
+    this.pushIfStringOrStringArray(args, commandParameters);
+    this.pushIfRelativePaths(args, relativePaths, true);
     return this.runGit(args, apiOptions);
   }
 

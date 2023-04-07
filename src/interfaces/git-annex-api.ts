@@ -25,6 +25,7 @@ import { ForEachRefOptions } from './for-each-ref-options';
 import { FsckAnxOptions } from './fsck-anx-options';
 import { FsckGitOptions } from './fsck-git-options';
 import { GetOptions } from './get-options';
+import { GrepOptions } from './grep-options';
 import { InfoOptions } from './info-options';
 import { InitAnxOptions } from './init-anx-options';
 import { InitGitOptions } from './init-git-options';
@@ -906,6 +907,22 @@ export interface GitAnnexAPI {
    * @category Maintenance
    */
   fsckGit(object?: string, gitOptions?: FsckGitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Finds lines matching a pattern.
+   *
+   * Consult the
+   * [Git grep documentation](https://git-scm.com/docs/git-grep)
+   * for additional information.
+   * @param commandParameters If specified, searches blobs in the given trees.
+   * @param relativePaths The paths for the grep command.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param gitOptions The GrepOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The Git grep result.
+   * @category Contents
+   */
+  grep(commandParameters?: string | string[], relativePaths?: string | string[], gitOptions?: GrepOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Creates an empty Git repository or reinitializes an existing one.
