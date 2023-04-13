@@ -14,7 +14,7 @@ import { Parser } from '../interfaces/parser';
  * @param repositoryPath The path of the repository to interrogate.
  * @param gitOptions The LsFilesOptions for the command.
  * The {@link LsFilesOptions.--format} option is required.
- * @param relativePaths The files for the find command.
+ * @param relativePaths The files for the ls-files command.
  * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param columnDelimiter The column delimiter used by gitOptions.{@link LsFilesOptions.--format}.
  * If unspecified, `\t` is used to split at `%x09` in gitOptions.{@link LsFilesOptions.--format}.
