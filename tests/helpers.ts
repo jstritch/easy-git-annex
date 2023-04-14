@@ -41,7 +41,7 @@ export async function deleteDirectory(repositoryPath: string, chmod = false): Pr
   if (chmod) {
     await chmodR(repositoryPath, 0o777);
   }
-  await fs.rm(repositoryPath, { recursive: true });
+  await fs.rm(repositoryPath, { recursive: true, force: true });
 }
 
 export async function createRepository(repositoryPath?: string): Promise<string> {
