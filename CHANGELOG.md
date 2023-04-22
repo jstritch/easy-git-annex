@@ -7,6 +7,7 @@
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
 * Add helper functions
+    * chmodR
     * pathExists
 * Support Git 2.38.0 features
     * Add LsFilesOptions --format

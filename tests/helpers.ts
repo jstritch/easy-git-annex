@@ -1,7 +1,7 @@
 import * as anx from '../src/index';
 import * as os from 'os';
 import * as path from 'path';
-import chmodr from 'chmodr';
+import { chmodR } from '../src/helpers/chmodr';
 import { promises as fs } from 'fs';
 
 export enum TestFile {
@@ -24,17 +24,6 @@ export function cloneEnv(): NodeJS.ProcessEnv {
 
 export async function createDirectory(): Promise<string> {
   return fs.mkdtemp(path.join(os.tmpdir(), 'anx-'));
-}
-
-async function chmodR(fullPath: string, mode: number): Promise<void> {
-  return new Promise((resolve, reject) => {
-    chmodr(fullPath, mode, (err: NodeJS.ErrnoException | null) => { // eslint-disable-line promise/prefer-await-to-callbacks
-      if (err) {
-        reject(err);
-      }
-      resolve();
-    });
-  });
 }
 
 export async function deleteDirectory(repositoryPath: string, chmod = false): Promise<void> {

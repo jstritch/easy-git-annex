@@ -18,6 +18,7 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return GitAnnexAccessor.create(repositoryPath);
 }
 
+export * from './helpers/chmodr';
 export * from './helpers/get-branches';
 export * from './helpers/get-finds';
 export * from './helpers/get-line-starting';
