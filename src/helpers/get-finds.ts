@@ -13,7 +13,7 @@ import { Parser } from '../interfaces/parser';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param anxOptions The FindOptions for the command.
- * The --format option must end with `\\n`.
+ * The {@link FindOptions.--format} option is required and must end with `\\n`.
  * @param relativePaths The files for the find command.
  * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
  * @param columnDelimiter The column delimiter used by anxOptions.{@link FindOptions.--format}.

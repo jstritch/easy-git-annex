@@ -4,7 +4,7 @@
  *
  * The following Parser implementations are included with easy-git-annex:
  * {@link parseBigInt}, {@link parseNumber}, {@link parseOptionalString}, and {@link parseUnixDate}.
- * @category Helper
+ * @category Parser
  */
 
 export interface Parser {

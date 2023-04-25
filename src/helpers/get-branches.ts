@@ -14,6 +14,7 @@ import { Parser } from '../interfaces/parser';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param gitOptions The BranchListOptions for the command.
+ * The {@link BranchListOptions.--format} option is required.
  * @param pattern Filters branches using either fnmatch(3) or
  * matching completely or from the beginning up to a slash.
  * @param columnDelimiter The column delimiter used by gitOptions.{@link BranchListOptions.--format}.

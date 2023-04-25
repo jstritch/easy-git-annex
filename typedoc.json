@@ -19,8 +19,9 @@
     "Low-level",
     "Command Options",
     "API Options",
-    "Generic",
+    "Parser",
     "Type Predicate",
+    "Generic",
     "Helper",
     "Entry Point",
     "*"

@@ -2,7 +2,7 @@
  * Converts a string to a bigint.
  * @param s A string to parse.
  * @returns A bigint representation of s if successful; otherwise, undefined.
- * @category Helper
+ * @category Parser
  */
 export function parseBigInt(s: string): bigint | undefined {
   try {
@@ -21,7 +21,7 @@ export function parseBigInt(s: string): bigint | undefined {
  * Converts a string to a number.
  * @param s A string to parse.
  * @returns A number representation of s if successful; otherwise, undefined.
- * @category Helper
+ * @category Parser
  */
 export function parseNumber(s: string): number | undefined {
   try {
@@ -37,7 +37,7 @@ export function parseNumber(s: string): number | undefined {
  * Converts a string to an optional string.
  * @param s A string to parse.
  * @returns If s has non-zero length, s; otherwise, undefined.
- * @category Helper
+ * @category Parser
  */
 export function parseOptionalString(s: string): string | undefined {
   return s.length > 0 ? s : undefined;
@@ -47,7 +47,7 @@ export function parseOptionalString(s: string): string | undefined {
  * Converts a string to a Date.
  * @param s A string representing seconds since 1 January 1970 UTC.
  * @returns A Date representation of s if successful; otherwise, undefined.
- * @category Helper
+ * @category Parser
  */
 export function parseUnixDate(s: string): Date | undefined {
   try {

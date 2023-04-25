@@ -13,6 +13,7 @@ import { Parser } from '../interfaces/parser';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param gitOptions The LogOptions for the command.
+ * The {@link LogOptions.--format} option is required.
  * @param commandParameters The parameters for the log command.
  * @param relativePaths The files for the log command.
  * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.

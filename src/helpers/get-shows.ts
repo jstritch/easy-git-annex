@@ -13,6 +13,7 @@ import { ShowOptions } from '../interfaces/show-options';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param gitOptions The ShowOptions for the command.
+ * The {@link ShowOptions.--format} option is required.
  * @param commandParameters The parameters for the show command.
  * @param columnDelimiter The column delimiter used by gitOptions.{@link ShowOptions.--format}.
  * If unspecified, `\t` is used to split at `%x09` in gitOptions.{@link ShowOptions.--format}.

@@ -13,6 +13,7 @@ import { Parser } from '../interfaces/parser';
  * type may be provided for each column.
  * @param repositoryPath The path of the repository to interrogate.
  * @param gitOptions The ForEachRefOptions for the command.
+ * The {@link ForEachRefOptions.--format} option is required.
  * @param pattern Filters refs using either fnmatch(3) or
  * matching completely or from the beginning up to a slash.
  * @param columnDelimiter The column delimiter used by gitOptions.{@link ForEachRefOptions.--format}.
