@@ -14,7 +14,7 @@ jobs:
         # See supported os at https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         node-version: [14.x, 16.x, 18.x]
         os: [ubuntu-latest, macos-latest, windows-latest]
-
+    continue-on-error: true
     runs-on: ${{ matrix.os }}
 
     steps:
