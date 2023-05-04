@@ -38,7 +38,7 @@
     "lint": "npx eslint --ext .ts,.js,.json --ignore-path .gitignore .",
     "test": "npx jest",
     "test:badge": "npm run test:coverage && npx make-coverage-badge",
-    "test:ci": "npx jest --testPathIgnorePatterns=/tests/commands-anx/",
+    "test:noanx": "npx jest --testPathIgnorePatterns=/tests/commands-anx/",
     "test:coverage": "npx jest --collectCoverage",
     "typedoc": "npx typedoc && git checkout --quiet HEAD ./docs/_config.yml",
     "yalc": "yalc publish --no-scripts --push",

@@ -13,7 +13,7 @@ Here are some suggestions to help you get started.
 
 1. Update the tests as necessary.
 1. The script `npm run test` runs all tests.
-1. The script `npm run test:ci` skips the git-annex tests.
+1. The script `npm run test:noanx` skips the git-annex tests.
 1. To view test coverage, use the command `npm run test:coverage`.
 
 # Documentation

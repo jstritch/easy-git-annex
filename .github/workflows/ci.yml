@@ -24,6 +24,8 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
+    - name: Install git-annex
+      uses: jstritch/setup-git-annex@master
     - name: Install easy-git-annex
       run: npm ci
     - name: Lint the source
@@ -31,6 +33,6 @@ jobs:
     - name: Build
       run: npm run build
     - name: Run automated tests
-      run: npm run test:ci
+      run: npm run test
     - name: Generate documentation
       run: npm run typedoc
