@@ -1,5 +1,5 @@
 import * as anx from '../../src/index';
-import { createRepository, deleteDirectory } from '../helpers';
+import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
 
 describe('reinit', () => {
   let repositoryPath: string;
@@ -8,6 +8,7 @@ describe('reinit', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await setRepositoryAuthor(repositoryPath);
   });
 
   afterEach(async () => {
