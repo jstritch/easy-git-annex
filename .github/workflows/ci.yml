@@ -10,7 +10,6 @@ on:
 jobs:
   
   build:
-
     strategy:
       matrix:
         node-version: # Release schedule at https://nodejs.org/en/about/releases
@@ -28,7 +27,7 @@ jobs:
     steps:
       
       - name: Checkout easy-git-annex
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v3
       
       - name: Install Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
         uses: actions/setup-node@v3
