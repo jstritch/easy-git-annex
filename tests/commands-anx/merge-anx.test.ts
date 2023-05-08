@@ -17,20 +17,17 @@ describe('mergeAnx', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  // git-annex merge is inoperative in Windows, run test on other platforms
-  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
-  const testFunc = process.platform !== 'win32' ? test : xtest;
-  testFunc('merges an adjusted branch', async () => {
+  test('merges a branch', async () => {
     await copyAddAnxCommit(TestFile.JPG1, repositoryPath, 'add one binary file for mergeGit');
-    let rslt = await myAnx.adjust({ '--unlock': null });
+    let rslt = await myAnx.checkout(undefined, undefined, { '-b': 'new-file' });
     expect(rslt.exitCode).toBe(0);
     await copyAddAnxCommit(TestFile.JPG2, repositoryPath, 'add another binary file for mergeGit');
 
     rslt = await myAnx.checkout('master');
     expect(rslt.exitCode).toBe(0);
-    rslt = await myAnx.mergeAnx('adjusted/master(unlocked)');
+    rslt = await myAnx.mergeAnx('new-file');
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toContain('merge adjusted/master(unlocked)');
+    expect(rslt.out).toContain('merge new-file');
   });
 
 });
