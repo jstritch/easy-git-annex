@@ -3,7 +3,6 @@ Here are some suggestions to help you get started.
 
 # Code
 
-1. Please read .github/PULL_REQUEST_TEMPLATE.md before you begin.
 1. Start your work on a new branch.
 1. The linter, `npm run lint`, is your friend.
 1. When you're done, submit a pull request.
