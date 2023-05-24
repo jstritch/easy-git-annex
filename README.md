@@ -41,19 +41,21 @@ Installation of easy-git-annex may be performed with the command
 
 The easy-git-annex package is an ECMAScript module.
 It can be used by ECMAScript and CommonJS applications.
-Your code can reference the library statically.
+Your code can reference the library statically
 
 ```typescript
 import * as anx from 'easy-git-annex';
 ```
 
-Or a dynamic import can be used instead.
+or use a dynamic import.
 
 ```typescript
 const anx = await import('easy-git-annex');
 ```
 
-Obtain an accessor to use the GitAnnexAPI interface with the desired repository.
+Obtain an accessor to use the
+[GitAnnexAPI](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html)
+interface with the desired repository.
 The directory passed to createAccessor must exist but may be empty.
 
 ```typescript
