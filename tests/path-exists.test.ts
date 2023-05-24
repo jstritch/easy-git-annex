@@ -1,5 +1,5 @@
-import * as anx from '../src/index';
-import * as path from 'path';
+import * as anx from '../src/index.ts';
+import * as path from 'node:path';
 
 describe('pathExists', () => {
 

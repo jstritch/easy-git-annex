@@ -1,7 +1,7 @@
-import { createFromTextLines } from '../helpers/creators';
-import { ForEachRefOptions } from '../interfaces/for-each-ref-options';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { Parser } from '../interfaces/parser';
+import { createFromTextLines } from '../helpers/creators.js';
+import { ForEachRefOptions } from '../interfaces/for-each-ref-options.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { Parser } from '../interfaces/parser.js';
 
 /**
  * Returns information about Git refs in application-defined JavaScript objects.

@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers.ts';
 
 const message1 = 'add first file for show';
 const message2 = 'add second file for show';

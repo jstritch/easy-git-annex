@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers.ts';
 
 const submoduleSource = 'https://github.com/jstritch/easy-git-annex.git';
 

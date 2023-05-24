@@ -1,4 +1,4 @@
-import { AnnexOptions } from './annex-options';
+import { AnnexOptions } from './annex-options.js';
 
 /**
  * SyncOptions defines the supported options for the git-annex sync command.

@@ -1,7 +1,7 @@
-import * as anx from '../../src/index';
-import * as path from 'path';
-import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
-import { promises as fs } from 'fs';
+import * as anx from '../../src/index.ts';
+import * as path from 'node:path';
+import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers.ts';
+import { promises as fs } from 'node:fs';
 
 describe('restore', () => {
   let repositoryPath: string;

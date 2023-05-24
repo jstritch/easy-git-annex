@@ -1,4 +1,4 @@
-import { AnnexOptions } from './annex-options';
+import { AnnexOptions } from './annex-options.js';
 
 /**
  * LockOptions defines the supported options for the git-annex lock command.

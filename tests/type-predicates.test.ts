@@ -1,4 +1,4 @@
-import { isAction, isActionProgress, isActionResult, isBigInt, isBoolean, isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isRepositoryInfo, isStatusAnx, isStatusGit, isString, isStringArray } from '../src/helpers/type-predicates';
+import { isAction, isActionProgress, isActionResult, isBigInt, isBoolean, isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isRepositoryInfo, isStatusAnx, isStatusGit, isString, isStringArray } from '../src/helpers/type-predicates.ts';
 
 describe('isBigInt', () => {
 

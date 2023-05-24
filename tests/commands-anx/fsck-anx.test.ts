@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers.ts';
 
 describe('fsckAnx', () => {
   let repositoryPath: string;

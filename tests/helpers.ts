@@ -1,8 +1,8 @@
-import * as anx from '../src/index';
-import * as os from 'os';
-import * as path from 'path';
-import { chmodR } from '../src/helpers/chmodr';
-import { promises as fs } from 'fs';
+import * as anx from '../src/index.ts';
+import * as os from 'node:os';
+import * as path from 'node:path';
+import { chmodR } from '../src/helpers/chmodr.ts';
+import { promises as fs } from 'node:fs';
 
 export enum TestFile {
   JPG1 = 'file one.jpg',

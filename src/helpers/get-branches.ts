@@ -1,8 +1,8 @@
-import { BranchListOptions } from '../interfaces/branch-list-options';
-import { createFromTextLines } from '../helpers/creators';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { isStringArray } from '../helpers/type-predicates';
-import { Parser } from '../interfaces/parser';
+import { BranchListOptions } from '../interfaces/branch-list-options.js';
+import { createFromTextLines } from '../helpers/creators.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { isStringArray } from '../helpers/type-predicates.js';
+import { Parser } from '../interfaces/parser.js';
 
 /**
  * Returns information about Git branches in application-defined JavaScript objects.

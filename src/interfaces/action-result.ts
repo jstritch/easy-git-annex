@@ -1,4 +1,4 @@
-import { Action } from './action';
+import { Action } from './action.js';
 /**
  * ActionResult defines an object returned by various git-annex commands.
  * @category Returned Objects

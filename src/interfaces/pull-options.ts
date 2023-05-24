@@ -1,4 +1,4 @@
-import { FetchCommonOptions } from './fetch-common-options';
+import { FetchCommonOptions } from './fetch-common-options.js';
 
 /**
  * PullOptions defines the supported options for the Git pull command.

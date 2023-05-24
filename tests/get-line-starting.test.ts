@@ -1,4 +1,4 @@
-import * as anx from '../src/index';
+import * as anx from '../src/index.ts';
 
 const versionOutput = `git-annex version: 8.20211118-g23ee48898
 build flags: Assistant Webapp Pairing Inotify DBus DesktopNotify TorrentParser MagicMime Feeds Testsuite S3 WebDAV

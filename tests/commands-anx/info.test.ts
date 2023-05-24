@@ -1,6 +1,6 @@
-import * as anx from '../../src/index';
-import * as path from 'path';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers';
+import * as anx from '../../src/index.ts';
+import * as path from 'node:path';
+import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers.ts';
 
 describe('info', () => {
   let repositoryPath: string;

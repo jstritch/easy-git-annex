@@ -1,4 +1,4 @@
-import { getPlatform } from './get-platform';
+import { ProcessHelper } from './process-helper.js';
 
 const slash = '/';
 const slashRegExp = /\//g;
@@ -17,7 +17,7 @@ const backSlashRegExp = /\\/g;
  * @category Helper
  */
 export function gitPath(relativePath: string): string {
-  if (getPlatform() !== 'win32') {
+  if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePath;
   }
   return relativePath.replace(backSlashRegExp, slash);
@@ -35,7 +35,7 @@ export function gitPath(relativePath: string): string {
  * @category Helper
  */
 export function gitPaths(relativePaths: string[]): string[] {
-  if (getPlatform() !== 'win32') {
+  if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePaths;
   }
   return relativePaths.map((relativePath) => { return relativePath.replace(backSlashRegExp, slash); });
@@ -50,7 +50,7 @@ export function gitPaths(relativePaths: string[]): string[] {
  * @category Helper
  */
 export function sysPath(relativePath: string): string {
-  if (getPlatform() !== 'win32') {
+  if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePath;
   }
   return relativePath.replace(slashRegExp, backSlash);
@@ -65,7 +65,7 @@ export function sysPath(relativePath: string): string {
  * @category Helper
  */
 export function sysPaths(relativePaths: string[]): string[] {
-  if (getPlatform() !== 'win32') {
+  if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePaths;
   }
   return relativePaths.map((relativePath) => { return relativePath.replace(slashRegExp, backSlash); });

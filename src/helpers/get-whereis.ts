@@ -1,7 +1,7 @@
-import { createFromTextLines } from '../helpers/creators';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { Parser } from '../interfaces/parser';
-import { WhereisOptions } from '../interfaces/whereis-options';
+import { createFromTextLines } from '../helpers/creators.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { Parser } from '../interfaces/parser.js';
+import { WhereisOptions } from '../interfaces/whereis-options.js';
 
 /**
  * Returns information about repositories containing files in application-defined JavaScript objects.

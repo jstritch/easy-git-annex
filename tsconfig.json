@@ -1,9 +1,13 @@
 {
-  "extends": "@tsconfig/node14/tsconfig.json",
+  "extends": "@tsconfig/node18/tsconfig.json",
   "compilerOptions": {
-    "types": ["node", "jest"],
+    "types": [
+      "node",
+      "jest"
+    ],
     "declaration": true,
     "declarationDir": "./dist",
+    "moduleResolution": "node16",
     "outDir": "./dist",
     "removeComments": true,
     "sourceMap": true,

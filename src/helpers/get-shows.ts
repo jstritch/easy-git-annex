@@ -1,7 +1,7 @@
-import { createFromTextLines } from '../helpers/creators';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { Parser } from '../interfaces/parser';
-import { ShowOptions } from '../interfaces/show-options';
+import { createFromTextLines } from '../helpers/creators.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { Parser } from '../interfaces/parser.js';
+import { ShowOptions } from '../interfaces/show-options.js';
 
 /**
  * Returns information about Git objects in application-defined JavaScript objects.

@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { copyFile, createRepository, deleteDirectory, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { copyFile, createRepository, deleteDirectory, TestFile } from '../helpers.ts';
 
 describe('addGit', () => {
   let repositoryPath: string;

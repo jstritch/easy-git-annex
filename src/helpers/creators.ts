@@ -1,4 +1,4 @@
-import { Parser } from '../interfaces/parser';
+import { Parser } from '../interfaces/parser.js';
 
 export function createFromColumns<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], row: string[]): T | undefined {
   const o: Record<string, unknown> = {};

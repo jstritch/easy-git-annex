@@ -1,4 +1,5 @@
 ## vNext
+* Convert the package to an ECMAScript module from CommonJS
 * Add GitAnnexAPI methods
     * clean
     * expire
@@ -12,13 +13,13 @@
 * Support Git 2.38.0 features
     * Add LsFilesOptions --format
 * Support git-annex 10.20230321 features
-    * Deprecate getStatusAnx, isStatusAnx, statusAnx, StatusAnx, and StatusAnxOptions (documentation change only).
+    * Deprecate getStatusAnx, isStatusAnx, statusAnx, StatusAnx, and StatusAnxOptions (documentation change only)
 * Make options the fourth generic function argument
     * getFinds
     * getLogs
     * getShows
     * getWhereis
-* The spawn error message includes environment variables only when env is supplied in ApiOptions.
+* The spawn error message includes environment variables only when env is supplied in ApiOptions
 
 ## v2.2.0 released 2022-10-04
 * Add GitAnnexAPI methods

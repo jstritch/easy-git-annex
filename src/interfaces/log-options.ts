@@ -1,4 +1,4 @@
-import { DiffCommonOptions } from './diff-common-options';
+import { DiffCommonOptions } from './diff-common-options.js';
 /**
  * LogOptions defines the supported options for the Git log command.
  * @category Command Options

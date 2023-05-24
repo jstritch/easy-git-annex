@@ -1,4 +1,4 @@
-import { DiffCommonOptions } from './diff-common-options';
+import { DiffCommonOptions } from './diff-common-options.js';
 /**
  * ShowOptions defines the supported options for the Git show command.
  * @category Command Options

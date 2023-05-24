@@ -1,7 +1,8 @@
-import { ApiOptions, ConsoleDataHandler } from '../interfaces/api-options';
-import { CommandResult } from '../interfaces/command-result';
-import { isString } from '../helpers/type-predicates';
-import { spawn } from 'child_process';
+import { ApiOptions, ConsoleDataHandler } from '../interfaces/api-options.js';
+import { CommandResult } from '../interfaces/command-result.js';
+import { ConsoleHelper } from '../helpers/console-helper.js';
+import { isString } from '../helpers/type-predicates.js';
+import { spawn } from 'node:child_process';
 
 export class RunCommandResult implements CommandResult {
 
@@ -96,7 +97,7 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
           try {
             outHandler(s);
           } catch (e: unknown) {
-            console.error('Error from outHandler: ', e);  // eslint-disable-line no-console
+            ConsoleHelper.writeError('Error from outHandler: ', e);
           }
         });
       }
@@ -110,7 +111,7 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
           try {
             errHandler(s);
           } catch (e: unknown) {
-            console.error('Error from errHandler: ', e);  // eslint-disable-line no-console
+            ConsoleHelper.writeError('Error from errHandler: ', e);
           }
         });
       }

@@ -1,6 +1,6 @@
-import { CommandGroup, getCommandOptions, OptionKind } from './command-options';
-import { isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates';
-import { gitPath } from './git-path';
+import { CommandGroup, getCommandOptions, OptionKind } from './command-options.js';
+import { isDate, isKeyValue, isKeyValueArray, isNumber, isRecord, isString, isStringArray } from './type-predicates.js';
+import { gitPath } from './git-path.js';
 
 /**
  * Converts the commandOptions supplied by the application to a string array.

@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { copyAddAnxCommit, createRepository, deleteDirectory, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { copyAddAnxCommit, createRepository, deleteDirectory, TestFile } from '../helpers.ts';
 
 describe('mergeAnx', () => {
   let repositoryPath: string;

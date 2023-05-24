@@ -1,6 +1,6 @@
-import { ForEachRefOptions } from '../interfaces/for-each-ref-options';
-import { getRefs } from './get-refs';
-import { Parser } from '../interfaces/parser';
+import { ForEachRefOptions } from '../interfaces/for-each-ref-options.js';
+import { getRefs } from './get-refs.js';
+import { Parser } from '../interfaces/parser.js';
 
 /**
  * Returns information about Git tags in application-defined JavaScript objects.

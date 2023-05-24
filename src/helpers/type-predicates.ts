@@ -1,9 +1,9 @@
-import { RepositoryInfo, TrustLevel } from '../interfaces/repository-info';
-import { Action } from '../interfaces/action';
-import { ActionProgress } from '../interfaces/action-progress';
-import { ActionResult } from '../interfaces/action-result';
-import { StatusAnx } from '../interfaces/status-anx';
-import { StatusGit } from '../interfaces/status-git';
+import { RepositoryInfo, TrustLevel } from '../interfaces/repository-info.js';
+import { Action } from '../interfaces/action.js';
+import { ActionProgress } from '../interfaces/action-progress.js';
+import { ActionResult } from '../interfaces/action-result.js';
+import { StatusAnx } from '../interfaces/status-anx.js';
+import { StatusGit } from '../interfaces/status-git.js';
 
 /**
  * Determines if an object is a bigint.

@@ -1,4 +1,4 @@
-import { DiffCommonOptions } from './diff-common-options';
+import { DiffCommonOptions } from './diff-common-options.js';
 /**
  * DiffOptions defines the supported options for the Git diff command.
  * @category Command Options

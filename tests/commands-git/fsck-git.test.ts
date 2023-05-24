@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { allTestFiles, copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { allTestFiles, copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers.ts';
 
 describe('fsckGit', () => {
   let repositoryPath: string;

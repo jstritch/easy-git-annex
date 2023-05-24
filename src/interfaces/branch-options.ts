@@ -1,4 +1,4 @@
-import { BranchListOptions } from './branch-list-options';
+import { BranchListOptions } from './branch-list-options.js';
 /**
  * BranchOptions defines the supported options for the Git branch command.
  * @category Command Options

@@ -1,5 +1,8 @@
 {
-  "ignorePatterns": ["/coverage/**", "/docs/**"],
+  "ignorePatterns": [
+    "/coverage/**",
+    "/docs/**"
+  ],
   "env": {
     "es2021": true,
     "node": true,
@@ -11,6 +14,7 @@
     "ecmaVersion": 2021
   },
   "plugins": [
+    "import",
     "promise"
   ],
   "extends": [
@@ -21,7 +25,15 @@
     "plugin:promise/recommended"
   ],
   "settings": {
-    "node": { "tryExtensions": [".ts"] }
+    "import/parsers": {
+      "@typescript-eslint/parser": [".ts", ".tsx"]
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "src/"]
+      }
+    }
   },
   "rules": {
     "array-bracket-newline": ["error", "consistent"],
@@ -92,8 +104,10 @@
     "switch-colon-spacing": "error",
     "template-curly-spacing": ["error", "never"],
 
-    "node/file-extension-in-import": ["error", "never"],
-    "node/no-unsupported-features/es-syntax": ["error", { "ignores": ["modules"] }],
+    "import/no-unresolved": "error",
+
+    "node/no-missing-import": ["off"],
+    "node/no-unsupported-features/es-syntax": ["error"],
     "node/prefer-promises/fs": ["error"],
 
     "promise/prefer-await-to-then": "error",
@@ -113,7 +127,7 @@
     {
       "files": ["src/**/*.ts"],
       "parserOptions": {
-        "project": "./tsconfig.json",
+        "project": "./tsconfig-eslint.json",
         "sourceType": "module"
       }
     },
@@ -161,6 +175,12 @@
         "plugin:@typescript-eslint/recommended",
         "plugin:@typescript-eslint/recommended-requiring-type-checking"
       ],
+      "settings": {
+        "import/resolver": {
+          "typescript": true,
+          "node": true
+        }
+      },
       "rules": {
         "@typescript-eslint/array-type": ["error", { "default": "array" }],
         "@typescript-eslint/consistent-type-assertions": ["error"],
@@ -174,7 +194,6 @@
         "@typescript-eslint/no-confusing-void-expression": ["error"],
         "@typescript-eslint/no-dynamic-delete": ["error"],
         "@typescript-eslint/no-explicit-any": ["error"],
-        "@typescript-eslint/no-extraneous-class": ["error"],
         "@typescript-eslint/no-implicit-any-catch": ["error"],
         "@typescript-eslint/no-invalid-void-type": ["error"],
         "@typescript-eslint/no-meaningless-void-operator": ["error", { "checkNever": true }],

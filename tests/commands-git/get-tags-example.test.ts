@@ -1,5 +1,5 @@
-import { createRepository, deleteDirectory } from '../helpers';
-import { getFooTags } from './get-tags-example';
+import { createRepository, deleteDirectory } from '../helpers.ts';
+import { getFooTags } from './get-tags-example.ts';
 
 describe('getFooTags', () => {
   let repositoryPath: string;

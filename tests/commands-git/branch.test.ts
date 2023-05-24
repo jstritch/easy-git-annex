@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers.ts';
 
 const branch1 = 'v1.0-dev';
 const branch2 = 'v2.0-dev';

@@ -14,9 +14,8 @@ jobs:
     strategy:
       matrix:
         node-version: # Release schedule at https://nodejs.org/en/about/releases
-          - 14.x
-          - 16.x
           - 18.x
+          - 20.x
         os:
           - ubuntu-latest
           - macos-latest

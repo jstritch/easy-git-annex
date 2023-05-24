@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { allTestFiles, copyFile, createRepository, deleteDirectory, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { allTestFiles, copyFile, createRepository, deleteDirectory, TestFile } from '../helpers.ts';
 
 describe('unannex', () => {
   let repositoryPath: string;

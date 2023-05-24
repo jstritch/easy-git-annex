@@ -1,6 +1,8 @@
-import { CommandParameters, runCommand, RunCommandResult } from '../src/helpers/run-command';
-import { cloneEnv } from './helpers';
-import { CommandResult } from '../src/interfaces/command-result';
+import { CommandParameters, runCommand, RunCommandResult } from '../src/helpers/run-command.ts';
+import { cloneEnv } from './helpers.ts';
+import { CommandResult } from '../src/interfaces/command-result.ts';
+import { ConsoleHelper } from '../src/helpers/console-helper.ts';
+import { jest } from '@jest/globals'; // eslint-disable-line node/no-extraneous-import
 
 describe('CommandResult', () => {
 
@@ -65,17 +67,20 @@ describe('new CommandParameters', () => {
 
 describe('runCommand', () => {
 
-  const exeName = 'git';  // git is installed in CI environments, git-annex is not
+  const exeName = 'git';
   let conOut: string;
   let conErr: string;
-  let cbErrFn: jest.SpyInstance;
+  let logSpy: jest.SpiedFunction<(...parameters: unknown[]) => void>;
+  let mockedLogger: jest.Mock;
 
   beforeAll(() => {
-    cbErrFn = jest.spyOn(console, 'error').mockImplementation(() => { return; });
+    logSpy = jest.spyOn(ConsoleHelper, 'writeError');
+    mockedLogger = jest.fn((...parameters: unknown[]) => { parameters; });
+    logSpy.mockImplementation(mockedLogger);
   });
 
   afterAll(() => {
-    cbErrFn.mockRestore();
+    logSpy.mockReset();
   });
 
   beforeEach(() => {
@@ -84,7 +89,7 @@ describe('runCommand', () => {
   });
 
   afterEach(() => {
-    cbErrFn.mockClear();
+    logSpy.mockClear();
   });
 
   test('runs a simple command', async () => {
@@ -106,7 +111,7 @@ describe('runCommand', () => {
     expect(commandResult?.out).toContain('usage: git');
     expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
-    expect(cbErrFn).not.toHaveBeenCalled();
+    expect(mockedLogger).not.toHaveBeenCalled();
   });
 
   test('identifies a nonexistent repositoryPath', async () => {
@@ -153,7 +158,7 @@ describe('runCommand', () => {
     expect(commandResult?.out).toContain('usage: git');
     expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
-    expect(cbErrFn).not.toHaveBeenCalled();
+    expect(mockedLogger).not.toHaveBeenCalled();
   });
 
   test('identifies a nonexistent command name', async () => {
@@ -175,7 +180,7 @@ describe('runCommand', () => {
     expect(commandResult?.out).toBe('');
     expect(commandResult?.err).toContain('git: \'asdfghjkl\' is not a git command. See \'git --help\'.\n');
     expect(error).toBeNull();
-    expect(cbErrFn).not.toHaveBeenCalled();
+    expect(mockedLogger).not.toHaveBeenCalled();
   });
 
   test('includes the environment variables on an error condition', async () => {
@@ -241,7 +246,7 @@ describe('runCommand', () => {
     expect(commandResult?.out).toBe(conOut);
     expect(commandResult?.err).toBe('');
     expect(error).toBeNull();
-    expect(cbErrFn).toHaveBeenCalledWith(expect.any(String), expect.anything());
+    expect(mockedLogger).toHaveBeenCalledWith(expect.any(String), expect.anything());
   });
 
   test('invokes a user-supplied stderr handler', async () => {
@@ -267,7 +272,7 @@ describe('runCommand', () => {
     expect(commandResult?.err).toBe(conErr);
     expect(conErr).toContain('trace: built-in: git help');
     expect(error).toBeNull();
-    expect(cbErrFn).toHaveBeenCalledWith(expect.any(String), expect.anything());
+    expect(mockedLogger).toHaveBeenCalledWith(expect.any(String), expect.anything());
   });
 
 });

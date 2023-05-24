@@ -1,4 +1,4 @@
-import { parseBigInt, parseNumber, parseOptionalString, parseUnixDate } from '../src/helpers/parsers';
+import { parseBigInt, parseNumber, parseOptionalString, parseUnixDate } from '../src/helpers/parsers.ts';
 
 describe('parseBigInt', () => {
 

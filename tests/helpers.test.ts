@@ -1,5 +1,5 @@
-import { cloneEnv, createDirectory, deleteDirectory } from './helpers';
-import { pathExists } from '../src/helpers/path-exists';
+import { cloneEnv, createDirectory, deleteDirectory } from './helpers.ts';
+import { pathExists } from '../src/helpers/path-exists.ts';
 
 describe('cloneEnv', () => {
 

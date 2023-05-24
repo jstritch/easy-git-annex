@@ -3,6 +3,5 @@
   "compilerOptions": {
     "allowImportingTsExtensions": true,
     "noEmit": true
-  },
-  "include": ["tests/**/*.ts"]
+  }
 }

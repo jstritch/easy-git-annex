@@ -1,7 +1,7 @@
-import { createFromTextLines } from '../helpers/creators';
-import { FindOptions } from '../interfaces/find-options';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { Parser } from '../interfaces/parser';
+import { createFromTextLines } from '../helpers/creators.js';
+import { FindOptions } from '../interfaces/find-options.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { Parser } from '../interfaces/parser.js';
 
 /**
  * Returns information about available files in application-defined JavaScript objects.

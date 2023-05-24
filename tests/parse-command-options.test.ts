@@ -1,5 +1,5 @@
-import { CommandGroup } from '../src/helpers/command-options';
-import { parseCommandOptions } from '../src/helpers/parse-command-options';
+import { CommandGroup } from '../src/helpers/command-options.ts';
+import { parseCommandOptions } from '../src/helpers/parse-command-options.ts';
 
 describe('parseCommandOptions', () => {
 

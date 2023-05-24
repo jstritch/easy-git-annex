@@ -1,5 +1,5 @@
-import * as anx from '../../src/index';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory, TestFile } from '../helpers';
+import * as anx from '../../src/index.ts';
+import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory, TestFile } from '../helpers.ts';
 
 describe('copy', () => {
   const remoteName = 'annex-remote';

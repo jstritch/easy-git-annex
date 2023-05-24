@@ -1,6 +1,6 @@
-import * as anx from '../../src/index';
-import * as path from 'path';
-import { createRepository, deleteDirectory } from '../helpers';
+import * as anx from '../../src/index.ts';
+import * as path from 'node:path';
+import { createRepository, deleteDirectory } from '../helpers.ts';
 
 describe('revParse', () => {
   let repositoryPath: string;

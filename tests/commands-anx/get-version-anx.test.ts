@@ -1,4 +1,4 @@
-import * as anx from '../../src/index';
+import * as anx from '../../src/index.ts';
 
 describe('getVersionAnx', () => {
   let myAnx: anx.GitAnnexAPI;

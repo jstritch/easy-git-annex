@@ -1,7 +1,7 @@
-import { createFromTextLines } from '../helpers/creators';
-import { GitAnnexAccessor } from '../git-annex-accessor';
-import { LsFilesOptions } from '../interfaces/ls-files-options';
-import { Parser } from '../interfaces/parser';
+import { createFromTextLines } from '../helpers/creators.js';
+import { GitAnnexAccessor } from '../git-annex-accessor.js';
+import { LsFilesOptions } from '../interfaces/ls-files-options.js';
+import { Parser } from '../interfaces/parser.js';
 
 /**
  * Returns information about files in the index and the working tree in application-defined JavaScript objects.

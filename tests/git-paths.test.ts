@@ -1,12 +1,11 @@
-import * as anx from '../src/index';
-import { getPlatform } from '../src/helpers/get-platform';
-
-jest.mock('../src/helpers/get-platform');
+import * as anx from '../src/index.js';
+import { jest } from '@jest/globals'; // eslint-disable-line node/no-extraneous-import
+import { ProcessHelper } from '../src/helpers/process-helper.js';
 
 describe('path separator conversions', () => {
 
   afterEach(() => {
-    jest.restoreAllMocks();
+    jest.clearAllMocks();
   });
 
   const gitSep = '/';
@@ -19,7 +18,7 @@ describe('path separator conversions', () => {
 
   test.each(tests)('platform (%o %s)', (platform, sysSep) => {
 
-    (getPlatform as jest.Mock).mockReturnValue(platform);
+    jest.spyOn(ProcessHelper, 'getPlatformName').mockReturnValue(platform);
 
     expect(anx.gitPath(sysSep)).toEqual(gitSep);
     expect(anx.gitPaths([sysSep, sysSep])).toEqual([gitSep, gitSep]);

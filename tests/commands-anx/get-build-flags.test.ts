@@ -1,4 +1,4 @@
-import * as anx from '../../src/index';
+import * as anx from '../../src/index.ts';
 
 describe('getBuildFlags', () => {
   let myAnx: anx.GitAnnexAPI;
