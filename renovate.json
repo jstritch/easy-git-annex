@@ -2,6 +2,9 @@
   "extends": [
     "config:base"
   ],
+  "ignoreDeps": [
+    "node"
+  ],
   "automerge": true,
   "automergeType": "branch",
   "prHourlyLimit": 1,
