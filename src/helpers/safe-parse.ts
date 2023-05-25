@@ -27,11 +27,11 @@ export function safeParse<T>(guard: (o: unknown) => o is T, json: string): T | u
 export function safeParseToArray<T>(guard: (o: unknown) => o is T, text: string): T[] {
   const a = [] as T[];
   const lines = text.length > 0 ? text.split('\n') : [];
-  lines.forEach((json) => {
+  for (const json of lines) {
     const o = safeParse(guard, json);
     if (o) {
       a.push(o);
     }
-  });
+  }
   return a;
 }

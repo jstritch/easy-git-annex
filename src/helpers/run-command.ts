@@ -137,9 +137,9 @@ function formatError(repositoryPath: string, exeName: string, args: string[], ou
   msg += `reported ${errMsg}\nstdout: ${out}\nstderr: ${err}`;
   if (env) {
     msg += '\nenv:';
-    Object.entries(env).forEach(([key, value]) => {
+    for (const [key, value] of Object.entries(env)) {
       msg += `\n${key}: ${isString(value) ? value : typeof value}`;
-    });
+    }
   }
   return msg;
 }

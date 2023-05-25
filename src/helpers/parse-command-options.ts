@@ -18,7 +18,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
   } else if (isRecord(commandOptions)) {
     const opts: string[] = [];
     const cmdOptions = getCommandOptions(commandGroup, commandName);
-    cmdOptions.forEach((cmdOpt) => {
+    for (const cmdOpt of cmdOptions) {
       if (cmdOpt.name in commandOptions) {
         const cmdOptValue = commandOptions[cmdOpt.name];
         let expectedType: string | null = null;
@@ -37,7 +37,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             if (cmdOptValue === null) {
               opts.push(cmdOpt.name);
             } else if (Array.isArray(cmdOptValue) && cmdOptValue.every((e) => { return e === null; })) {
-              cmdOptValue.forEach(() => { opts.push(cmdOpt.name); });
+              cmdOptValue.forEach(() => { opts.push(cmdOpt.name); }); // eslint-disable-line unicorn/no-array-for-each
             } else {
               expectedType = 'null | [null, null?]';
             }
@@ -85,7 +85,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             if (isKeyValue(cmdOptValue)) {
               opts.push(cmdOpt.name, `${cmdOptValue[0]}=${cmdOptValue[1]}`);
             } else if (isKeyValueArray(cmdOptValue) && cmdOptValue.length > 0) {
-              cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, `${element[0]}=${element[1]}`); });
+              for (const element of cmdOptValue) { opts.push(cmdOpt.name, `${element[0]}=${element[1]}`); }
             } else if (!(Array.isArray(cmdOptValue) && cmdOptValue.length === 0)) {
               expectedType = '[string, string] | [string, string][]';
             }
@@ -202,7 +202,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
             } else if (isStringArray(cmdOptValue)) {
               if (cmdOptValue.length > 0) {
-                cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
+                for (const element of cmdOptValue) { opts.push(`${cmdOpt.name}=${element}`); }
               }
             } else {
               expectedType = 'string | string[]';
@@ -213,7 +213,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${cmdOptValue}`);
             } else if (isStringArray(cmdOptValue)) {
-              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${element}`); });
+              for (const element of cmdOptValue) { opts.push(`${cmdOpt.name}=${element}`); }
             } else if (cmdOptValue === null) {
               opts.push(cmdOpt.name);
             } else {
@@ -225,7 +225,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             if (isString(cmdOptValue)) {
               opts.push(cmdOpt.name, cmdOptValue);
             } else if (isStringArray(cmdOptValue)) {
-              cmdOptValue.forEach((element) => { opts.push(cmdOpt.name, element); });
+              for (const element of cmdOptValue) { opts.push(cmdOpt.name, element); }
             } else if (cmdOptValue === null) {
               opts.push(cmdOpt.name);
             } else {
@@ -259,7 +259,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${gitPath(cmdOptValue)}`);
             } else if (isStringArray(cmdOptValue)) {
-              cmdOptValue.forEach((element) => { opts.push(`${cmdOpt.name}=${gitPath(element)}`); });
+              for (const element of cmdOptValue) { opts.push(`${cmdOpt.name}=${gitPath(element)}`); }
             } else {
               expectedType = 'string | string[]';
             }
@@ -270,7 +270,7 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
           throw new Error(`Value type ${typeof cmdOptValue} is not supported for ${commandName} option ${cmdOpt.name}, use ${expectedType} instead`);
         }
       }
-    });
+    }
     return opts;
   }
 

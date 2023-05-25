@@ -26,7 +26,7 @@ export function getLineStarting(str: string, prefix: string, includePrefix: bool
  */
 export function getLineStartingAsString(str: string, prefix: string, includePrefix: boolean): string {
   const line = getLineStarting(str, prefix, includePrefix);
-  return line !== undefined ? line : '';
+  return line === undefined ? '' : line;
 }
 
 /**
@@ -42,5 +42,5 @@ export function getLineStartingAsString(str: string, prefix: string, includePref
  */
 export function getLineStartingAsArray(str: string, prefix: string): string[] {
   const line = getLineStarting(str, prefix, false);
-  return line !== undefined ? line.split(' ').filter((item) => { return item; }) : [];
+  return line === undefined ? [] : line.split(' ').filter((item) => { return !!item; });
 }

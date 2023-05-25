@@ -20,7 +20,7 @@ export function gitPath(relativePath: string): string {
   if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePath;
   }
-  return relativePath.replace(backSlashRegExp, slash);
+  return relativePath.replaceAll(backSlashRegExp, slash);
 }
 
 /**
@@ -38,7 +38,7 @@ export function gitPaths(relativePaths: string[]): string[] {
   if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePaths;
   }
-  return relativePaths.map((relativePath) => { return relativePath.replace(backSlashRegExp, slash); });
+  return relativePaths.map((relativePath) => { return relativePath.replaceAll(backSlashRegExp, slash); });
 }
 
 /**
@@ -53,7 +53,7 @@ export function sysPath(relativePath: string): string {
   if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePath;
   }
-  return relativePath.replace(slashRegExp, backSlash);
+  return relativePath.replaceAll(slashRegExp, backSlash);
 }
 
 /**
@@ -68,5 +68,5 @@ export function sysPaths(relativePaths: string[]): string[] {
   if (ProcessHelper.getPlatformName() !== 'win32') {
     return relativePaths;
   }
-  return relativePaths.map((relativePath) => { return relativePath.replace(slashRegExp, backSlash); });
+  return relativePaths.map((relativePath) => { return relativePath.replaceAll(slashRegExp, backSlash); });
 }

@@ -24,6 +24,6 @@ import { Parser } from '../interfaces/parser.js';
  */
 export async function getFinds<T>(guard: (o: unknown) => o is T, columns: [string, Parser?][], repositoryPath: string, anxOptions: FindOptions | string[], relativePaths?: string | string[], columnDelimiter?: string): Promise<T[]> {
   const myAnx = GitAnnexAccessor.create(repositoryPath);
-  const result = await myAnx.find(relativePaths, anxOptions);
+  const result = await myAnx.find(relativePaths, anxOptions); // eslint-disable-line unicorn/no-array-method-this-argument -- rule should not flag find not on an array
   return createFromTextLines(guard, columns, result.out, columnDelimiter);
 }

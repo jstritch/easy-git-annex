@@ -47,12 +47,12 @@ export async function setRepositoryAuthor(repositoryPath: string): Promise<void>
 }
 
 export async function copyFile(testFile: TestFile | TestFile[], destinationDir: string, destinationFile?: string): Promise<void> {
-  if (!Array.isArray(testFile)) {
-    await fs.copyFile(path.join(dataFilePath, testFile), path.join(destinationDir, destinationFile ?? testFile));
-  } else {
+  if (Array.isArray(testFile)) {
     for (const file of testFile) {
       await fs.copyFile(path.join(dataFilePath, file), path.join(destinationDir, file));
     }
+  } else {
+    await fs.copyFile(path.join(dataFilePath, testFile), path.join(destinationDir, destinationFile ?? testFile));
   }
 }
 

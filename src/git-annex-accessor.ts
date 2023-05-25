@@ -147,7 +147,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     if (isKeyValue(value)) {
       args.push(`${value[0]}=${value[1]}`);
     } else if (isKeyValueArray(value)) {
-      value.forEach((element) => { args.push(`${element[0]}=${element[1]}`); });
+      for (const element of value) { args.push(`${element[0]}=${element[1]}`); }
     }
   }
 
@@ -595,16 +595,22 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     const quietIndex = args.indexOf('--quiet');
     this.insertAtIfString(args, quietIndex > 0 ? quietIndex + 1 : 1, subCommand);
     this.pushIfRelativePaths(args, relativePaths, true);
-    if (subCommand === SubmoduleCommand.Add) {
-      const markerIndex = args.indexOf('--');
-      this.insertAtIfString(args, markerIndex > 0 ? markerIndex + 1 : args.length, commandParameter);
-    } else if (subCommand === SubmoduleCommand.ForEach) {
-      this.pushIfString(args, commandParameter);
-    } else if (subCommand === SubmoduleCommand.SetUrl) {
-      this.pushIfString(args, commandParameter);
-    } else if (subCommand === SubmoduleCommand.Summary) {
-      const markerIndex = args.indexOf('--');
-      this.insertAtIfString(args, markerIndex > 0 ? markerIndex : args.length, commandParameter);
+    const markerIndex = args.indexOf('--');
+    switch (subCommand) {
+      case SubmoduleCommand.Add:
+        this.insertAtIfString(args, markerIndex > 0 ? markerIndex + 1 : args.length, commandParameter);
+        break;
+      case SubmoduleCommand.ForEach:
+        this.pushIfString(args, commandParameter);
+        break;
+      case SubmoduleCommand.SetUrl:
+        this.pushIfString(args, commandParameter);
+        break;
+      case SubmoduleCommand.Summary:
+        this.insertAtIfString(args, markerIndex > 0 ? markerIndex : args.length, commandParameter);
+        break;
+      default:
+        break;
     }
     return this.runGit(args, apiOptions);
   }
@@ -644,7 +650,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     };
 
     const result = await this.branch(pattern && pattern.length > 0 ? pattern : undefined, options);
-    return result.out.split('\n').filter((name) => { return name; });
+    return result.out.split('\n').filter((name) => { return !!name; });
   }
 
   public async getBuildFlags(): Promise<string[]> {
@@ -663,12 +669,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     };
 
     const result = await this.lsFiles(relativePaths, options);
-    return result.out.split('\0').filter((file) => { return file; });
+    return result.out.split('\0').filter((file) => { return !!file; });
   }
 
   public async getRemoteNames(): Promise<string[]> {
     const remoteResult = await this.remote();
-    return remoteResult.out.split('\n').filter((name) => { return name; });
+    return remoteResult.out.split('\n').filter((name) => { return !!name; });
   }
 
   public async getRepositories(): Promise<RepositoryInfo[]> {
@@ -682,12 +688,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     const result = await this.info(undefined, { '--json': null });
     if (result.exitCode === 0 && result.out.length > 0) {
       const infos = JSON.parse(result.out) as Record<string, unknown>;
-      repositoryArrays.forEach((trustLevel, property) => {
+      for (const [property, trustLevel] of repositoryArrays.entries()) {
         const a = infos[property] as RepositoryInfo[];
-        a.forEach((info) => {
+        for (const info of a) {
           repositories.push({ uuid: info.uuid, description: info.description, here: info.here, trustLevel: trustLevel });
-        });
-      });
+        }
+      }
     }
     return repositories;
   }
@@ -708,20 +714,20 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     if (result.exitCode === 0 && result.out.length > 0) {
       const strs = result.out.split('\0');
       let needsOrig: StatusGit | null = null;
-      strs.forEach((s) => {
+      for (const s of strs) {
         if (s.length > 0) {
           if (needsOrig) {
             needsOrig.origPath = s;
             needsOrig = null;
           } else {
-            const statusGit = { x: s[0], y: s[1], path: s.substring(3) };
+            const statusGit = { x: s[0], y: s[1], path: s.slice(3) };
             if (statusGit.x === 'R' || statusGit.x === 'C') {
               needsOrig = statusGit;
             }
             status.push(statusGit);
           }
         }
-      });
+      }
     }
     return status;
   }
@@ -734,7 +740,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     };
 
     const result = await this.forEachRef(options, pattern ? `refs/tags/${pattern}` : 'refs/tags');
-    return result.out.split('\n').filter((name) => { return name; });
+    return result.out.split('\n').filter((name) => { return !!name; });
   }
 
   public async getVersionAnx(): Promise<VersionAnx> {

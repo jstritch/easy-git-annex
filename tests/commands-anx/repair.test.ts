@@ -19,7 +19,7 @@ describe('repair', () => {
 
   // git-annex repair is inoperative in Windows, run test on other platforms
   /* eslint-disable jest/require-hook, jest/no-standalone-expect */
-  const testFunc = process.platform !== 'win32' ? test : xtest;
+  const testFunc = process.platform === 'win32' ? xtest : test;
   testFunc('repairs the repository', async () => {
     await copyAddAnxCommit(allTestFiles, repositoryPath, 'add test files for repair');
     const rslt = await myAnx.repair();

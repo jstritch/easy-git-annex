@@ -7,7 +7,7 @@
 export function parseBigInt(s: string): bigint | undefined {
   try {
     // must be a signed decimal integer
-    if (s.search(/^[\s]*[+-]?\d*[\s]*$/) === 0) {
+    if (s.search(/^\s*[+-]?\d*\s*$/) === 0) {
       const n = BigInt(s);
       return typeof n === 'bigint' ? n : undefined;
     }
@@ -27,7 +27,10 @@ export function parseNumber(s: string): number | undefined {
   try {
     // unparsable strings must return undefined, not NaN
     const n = Number(s);
-    return !Number.isNaN(n) ? n : s.search(/^[\s]*NaN[\s]*$/i) === 0 ? n : undefined;
+    if (Number.isNaN(n)) {
+      return s.search(/^\s*nan\s*$/i) === 0 ? n : undefined;
+    }
+    return n;
   } catch {
     return undefined;
   }
@@ -52,7 +55,7 @@ export function parseOptionalString(s: string): string | undefined {
 export function parseUnixDate(s: string): Date | undefined {
   try {
     // must be an unsigned decimal integer
-    if (s.search(/^[\s]*\d+[\s]*$/) === 0) {
+    if (s.search(/^\s*\d+\s*$/) === 0) {
       let t = Number(s);
       t *= 1000;
       return Number.isInteger(t) ? new Date(t) : undefined;
