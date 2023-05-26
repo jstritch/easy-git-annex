@@ -2,19 +2,30 @@
   "name": "easy-git-annex",
   "version": "2.2.0",
   "description": "JavaScript/TypeScript API for git-annex and Git commands.",
+  "license": "MIT",
   "type": "module",
   "exports": "./dist/index.js",
-  "engines": {
-    "node": ">=18"
-  },
   "types": "./dist/index.d.ts",
   "files": [
     "/dist"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jstritch/easy-git-annex"
   },
+  "bugs": {
+    "url": "https://github.com/jstritch/easy-git-annex/issues"
+  },
+  "homepage": "https://jstritch.github.io/easy-git-annex/",
+  "author": "John Stritch <easy.git.annex@gmail.com>",
+  "funding": [
+    "https://liberapay.com/jstritch",
+    "https://www.patreon.com/jstritch",
+    "https://github.com/sponsors/jstritch"
+  ],
   "keywords": [
     "git",
     "annex",
@@ -23,24 +34,13 @@
     "typescript",
     "api"
   ],
-  "author": "John Stritch <easy.git.annex@gmail.com>",
-  "license": "MIT",
-  "funding": [
-    "https://liberapay.com/jstritch",
-    "https://www.patreon.com/jstritch",
-    "https://github.com/sponsors/jstritch"
-  ],
-  "bugs": {
-    "url": "https://github.com/jstritch/easy-git-annex/issues"
-  },
-  "homepage": "https://jstritch.github.io/easy-git-annex/",
   "scripts": {
     "build": "npx tsc",
     "lint": "npx eslint --ext .ts,.js,.json,.cjs --ignore-path .gitignore .",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:badge": "npm run test:coverage && npx make-coverage-badge",
-    "test:noanx": "npm run test -- --testPathIgnorePatterns=/tests/commands-anx/",
     "test:coverage": "npm run test -- --collectCoverage",
+    "test:noanx": "npm run test -- --testPathIgnorePatterns=/tests/commands-anx/",
     "typedoc": "npx typedoc && git checkout --quiet HEAD ./docs/_config.yml",
     "yalc": "yalc publish --no-scripts --push",
     "preversion": "npm run lint && npm run test:badge",
