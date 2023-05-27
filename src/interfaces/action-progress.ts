@@ -5,8 +5,23 @@ import { Action } from './action.js';
  */
 export interface ActionProgress {
 
+  /**
+   * The Action being reported.
+   */
   action: Action;
+
+  /**
+   * The count of bytes completed.
+   */
   'byte-progress': number;
+
+  /**
+   * The total byte count.
+   */
   'total-size': number;
+
+  /**
+   * A string representing the relative progress of the Action.
+   */
   'percent-progress': string;
 }

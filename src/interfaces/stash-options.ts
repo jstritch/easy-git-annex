@@ -2,15 +2,56 @@
  * StashCommand defines the subcommands recognized by the Git stash command.
  */
 export enum StashCommand {
+
+  /**
+   * Saves local modifications to a new stash entry.
+   */
   Push = 'push',
+
+  /**
+   * Lists the stash entries.
+   */
   List = 'list',
+
+  /**
+   * Shows the changes recorded in the stash entry as a diff.
+   */
   Show = 'show',
+
+  /**
+   * Removes a single stashed state from the stash.
+   */
   Pop = 'pop',
+
+  /**
+   * Like {@link Pop}, but does not remove the state from the stash list.
+   */
   Apply = 'apply',
+
+  /**
+   * Creates and checks out a new branch.
+   */
   Branch = 'branch',
+
+  /**
+   * Remove all the stash entries.
+   */
   Clear = 'clear',
+
+  /**
+   * Removes a single stash entry from the list.
+   */
   Drop = 'drop',
+
+  /**
+   * Creates a stash entry and return its object name without storing it anywhere in the ref namespace.
+   * See also {@link Store}.
+   */
   Create = 'create',
+
+  /**
+   * Store a given stash created via {@link Create}.
+   */
   Store = 'store',
 }
 

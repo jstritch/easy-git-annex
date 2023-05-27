@@ -2,16 +2,60 @@
  * SubmoduleCommand defines the subcommands recognized by the Git submodule command.
  */
 export enum SubmoduleCommand {
+
+  /**
+   * Moves the git directory of the submodule into its superproject.
+   */
   AbsorbGitDirs = 'absorbgitdirs',
+
+  /**
+   * Adds the given repository as a submodule.
+   */
   Add = 'add',
+
+  /**
+   * Unregisters the given submodules.
+   */
   Deinit = 'deinit',
+
+  /**
+   * Evaluates an arbitrary shell command in each checked out submodule.
+   */
   ForEach = 'foreach',
+
+  /**
+   * Initializes the submodules recorded in the index .
+   */
   Init = 'init',
+
+  /**
+   * Sets the default remote tracking branch for the submodule.
+   */
   SetBranch = 'set-branch',
+
+  /**
+   * Sets the URL of the specified submodule.
+   */
   SetUrl = 'set-url',
+
+  /**
+   * Shows the status of the submodules.
+   */
   Status = 'status',
+
+  /**
+   * Shows a commit summary.
+   */
   Summary = 'summary',
+
+  /**
+   * Synchronizes submodules' remote URL configuration setting.
+   */
   Sync = 'sync',
+
+  /**
+   * Updates the registered submodules to match what the superproject expects.
+   */
   Update = 'update',
 }
 

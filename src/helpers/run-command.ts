@@ -1,5 +1,6 @@
-import { ApiOptions, ConsoleDataHandler } from '../interfaces/api-options.js';
+import { ApiOptions } from '../interfaces/api-options.js';
 import { CommandResult } from '../interfaces/command-result.js';
+import { ConsoleDataHandler } from '../interfaces/console-data-handler.js';
 import { ConsoleHelper } from '../helpers/console-helper.js';
 import { isString } from '../helpers/type-predicates.js';
 import { spawn } from 'node:child_process';

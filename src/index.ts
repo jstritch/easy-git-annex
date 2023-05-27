@@ -52,6 +52,7 @@ export * from './interfaces/command-result.js';
 export * from './interfaces/commit-options.js';
 export * from './interfaces/config-anx-options.js';
 export * from './interfaces/config-git-options.js';
+export * from './interfaces/console-data-handler.js';
 export * from './interfaces/copy-options.js';
 export * from './interfaces/diff-common-options.js';
 export * from './interfaces/diff-options.js';

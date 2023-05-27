@@ -5,8 +5,23 @@ import { Action } from './action.js';
  */
 export interface ActionResult extends Action {
 
+  /**
+   * Success indicator.
+   */
   success: boolean;
+
+  /**
+   * The list of errors encountered
+   */
   'error-messages': string[];
+
+  /**
+   * The actual file key.
+   */
   key?: string;
+
+  /**
+   * A remark.
+   */
   note?: string;
 }
