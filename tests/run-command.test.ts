@@ -76,11 +76,11 @@ describe('runCommand', () => {
   beforeAll(() => {
     logSpy = jest.spyOn(ConsoleHelper, 'writeError');
     mockedLogger = jest.fn((...parameters: unknown[]) => { parameters; });
-    logSpy.mockImplementation(mockedLogger);
+    ConsoleHelper.setWriter(mockedLogger);
   });
 
   afterAll(() => {
-    logSpy.mockReset();
+    ConsoleHelper.setWriter(null);
   });
 
   beforeEach(() => {
