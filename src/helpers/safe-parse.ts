@@ -2,7 +2,7 @@
  * Parses a JSON string to the specified type.
  * @param guard The type predicate to validate the deserialized object.
  * @param json The JSON string to parse.
- * @typeParam T - The type of the returned objects.
+ * @typeParam T - The type of the returned object.
  * @returns The desrialized object, if the type guard function returns true; otherwise, undefined.
  * @category Helper
  */
