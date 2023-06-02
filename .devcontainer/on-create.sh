@@ -7,3 +7,6 @@ tar --extract --gzip --strip-components 1 --file=git-annex-standalone-amd64.tar.
 
 echo Removing download
 rm git-annex-standalone-amd64.tar.gz
+
+echo installing easy-git-annex
+npm ci
