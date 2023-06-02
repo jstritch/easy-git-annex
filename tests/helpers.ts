@@ -36,7 +36,7 @@ export async function deleteDirectory(repositoryPath: string, chmod = false): Pr
 export async function createRepository(repositoryPath?: string): Promise<string> {
   const repoPath = repositoryPath ?? await createDirectory();
   const myAnx = anx.createAccessor(repoPath);
-  await myAnx.initGit();
+  await myAnx.initGit({ '--initial-branch': 'master' });
   return repoPath;
 }
 
