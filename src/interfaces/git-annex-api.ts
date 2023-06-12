@@ -560,7 +560,7 @@ export interface GitAnnexAPI {
    * @returns The git-annex sync result.
    * @category Remotes
    */
-  sync(remotes: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  sync(remotes?: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Undoes a git-annex add command.

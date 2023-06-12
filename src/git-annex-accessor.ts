@@ -334,7 +334,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async sync(remotes: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async sync(remotes?: string | string[], anxOptions?: SyncOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'sync', anxOptions);
     this.pushIfStringOrStringArray(args, remotes);
     return this.runAnx(args, apiOptions);
