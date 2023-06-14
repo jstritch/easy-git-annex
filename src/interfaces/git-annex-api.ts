@@ -317,7 +317,8 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains information about an item or the repository.
-   * Consider using method {@link GitAnnexAPI.getRepositories} if a list of repositories is required.
+   * Consider using method {@link GitAnnexAPI.getRepositories} if a list of repositories is required
+   * or {@link GitAnnexAPI.getRepositoryInfo} if the current repository is required.
    *
    * Consult the
    * [git-annex info documentation](https://git-annex.branchable.com/git-annex-info/)
@@ -1302,13 +1303,20 @@ export interface GitAnnexAPI {
   getRemoteNames(): Promise<string[]>;
 
   /**
-   * Obtains an array identifying the current repositories.
+   * Obtains an array identifying the known repositories.
    * @returns An array describing the repositories.
    * The order of the repositories returned is indeterminate.
-   * An empty array is retuned if the repository has not been initialized by git-annex.
+   * An empty array is retuned if the directory has not been initialized by git-annex.
    * @category Inspection
    */
   getRepositories(): Promise<RepositoryInfo[]>;
+
+  /**
+   * Obtains an object identifying the current repository.
+   * @returns A RepositoryInfo identifying the current repository or undefined if the directory has not been initialized by git-annex.
+   * @category Inspection
+   */
+  getRepositoryInfo(): Promise<RepositoryInfo | undefined>;
 
   /**
    * Obtains an array of special remote types.

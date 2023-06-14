@@ -601,8 +601,6 @@ export class GitAnnexAccessor implements GitAnnexAPI {
         this.insertAtIfString(args, markerIndex > 0 ? markerIndex + 1 : args.length, commandParameter);
         break;
       case SubmoduleCommand.ForEach:
-        this.pushIfString(args, commandParameter);
-        break;
       case SubmoduleCommand.SetUrl:
         this.pushIfString(args, commandParameter);
         break;
@@ -696,6 +694,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
       }
     }
     return repositories;
+  }
+
+  public async getRepositoryInfo(): Promise<RepositoryInfo | undefined> {
+    const infos = await this.getRepositories();
+    return infos.find((info: RepositoryInfo) => { return info.here; });
   }
 
   public async getSpecialRemoteTypes(): Promise<string[]> {

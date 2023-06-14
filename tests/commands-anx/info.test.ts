@@ -26,3 +26,30 @@ describe('info', () => {
   });
 
 });
+
+describe('getRepositories', () => {
+  let repositoryPath: string;
+  let myAnx: anx.GitAnnexAPI;
+
+  beforeEach(async () => {
+    repositoryPath = await createRepository();
+    myAnx = anx.createAccessor(repositoryPath);
+  });
+
+  afterEach(async () => {
+    await deleteDirectory(repositoryPath);
+  });
+
+  test('returns undefined for a directory that is not a git annex', async () => {
+    const info = await myAnx.getRepositoryInfo();
+    expect(info).toBeUndefined();
+  });
+
+  test('returns information about the git annex', async () => {
+    await myAnx.initAnx();
+    const info = await myAnx.getRepositoryInfo();
+    expect(info?.trustLevel).toBe('semitrusted');
+    await myAnx.uninit();
+  });
+
+});

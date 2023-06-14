@@ -3,6 +3,7 @@
 * Add GitAnnexAPI methods
     * clean
     * expire
+    * getRepositoryInfo
     * grep
     * submodule
 * Add generic functions to return application-defined JavaScript objects
@@ -14,7 +15,8 @@
     * Add LsFilesOptions --format
 * Support git-annex 10.20230321 features
     * Deprecate getStatusAnx, isStatusAnx, statusAnx, StatusAnx, and StatusAnxOptions (documentation change only)
-* Make options the fourth generic function argument
+* Make GitAnnexAPI.sync parameter remotes optional
+* Make options the fourth generic function parameter
     * getFinds
     * getLogs
     * getShows
