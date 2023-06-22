@@ -651,6 +651,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return getLineStartingAsArray(versionResult.out, 'key/value backends: ');
   }
 
+  public async getBranchName(): Promise<string> {
+    const revParseResult = await this.revParse('HEAD', { '--abbrev-ref': null });
+    return revParseResult.out.trim();
+  }
+
   public async getBranchNames(pattern?: string, ignoreCase?: boolean): Promise<string[]> {
     const options: BranchOptions = {
       '--format': '%(refname:lstrip=2)',

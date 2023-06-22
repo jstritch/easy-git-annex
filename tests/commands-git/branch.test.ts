@@ -89,6 +89,11 @@ describe('branch', () => {
     expect(names).toHaveLength(expected);
   });
 
+  test('getBranchName', async () => {
+    const branchName = await myAnx.getBranchName();
+    expect(branchName).toBe('master');
+  });
+
 });
 
 describe('BranchOptions', () => {

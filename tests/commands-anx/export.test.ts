@@ -26,7 +26,8 @@ describe('export', () => {
     expect(rslt.exitCode).toBe(0);
 
     await copyAddAnxCommit([TestFile.TXT1, TestFile.JPG1], repositoryPath, 'add test files for export');
-    rslt = await myAnx.export('master', { '--to': remoteName, '--json': null });
+    const branchName = await myAnx.getBranchName();
+    rslt = await myAnx.export(branchName, { '--to': remoteName, '--json': null });
     expect(rslt.exitCode).toBe(0);
 
     expect(await anx.pathExists(path.join(remotePath, TestFile.TXT1))).toBe(true);

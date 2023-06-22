@@ -1289,6 +1289,13 @@ export interface GitAnnexAPI {
   getBackends(): Promise<string[]>;
 
   /**
+   * Obtains the current branch name.
+   * @returns A string containing the branch name.
+   * @category Branching
+   */
+  getBranchName(): Promise<string>;
+
+  /**
    * Obtains an array of branch names.
    * @param pattern Filters branches using either fnmatch(3) or
    * matching completely or from the beginning up to a slash.

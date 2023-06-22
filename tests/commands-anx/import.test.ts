@@ -25,9 +25,10 @@ describe('import', () => {
     expect(rslt.exitCode).toBe(0);
 
     await copyFile([TestFile.TXT1, TestFile.JPG1], remotePath);
-    rslt = await myAnx.import('master', { '--from': remoteName, '--json': null });
+    const branchName = await myAnx.getBranchName();
+    rslt = await myAnx.import(branchName, { '--from': remoteName, '--json': null });
     expect(rslt.exitCode).toBe(0);
-    rslt = await myAnx.mergeAnx(`${remoteName}/master`, { '--allow-unrelated-histories': null });
+    rslt = await myAnx.mergeAnx(`${remoteName}/${branchName}`, { '--allow-unrelated-histories': null });
     expect(rslt.exitCode).toBe(0);
 
     const fileNames = await myAnx.getFileNames();
