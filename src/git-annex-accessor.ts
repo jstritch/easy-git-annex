@@ -26,6 +26,7 @@ import { DiffOptions } from './interfaces/diff-options.js';
 import { DropOptions } from './interfaces/drop-options.js';
 import { DropunusedOptions } from './interfaces/dropunused-options.js';
 import { ExpireOptions } from './interfaces/expire-options.js';
+import { ExportOptions } from './interfaces/export-options.js';
 import { FetchOptions } from './interfaces/fetch-options.js';
 import { FindOptions } from './interfaces/find-options.js';
 import { ForEachRefOptions } from './interfaces/for-each-ref-options.js';
@@ -34,6 +35,7 @@ import { FsckGitOptions } from './interfaces/fsck-git-options.js';
 import { GetOptions } from './interfaces/get-options.js';
 import { GitAnnexAPI } from './interfaces/git-annex-api.js';
 import { GrepOptions } from './interfaces/grep-options.js';
+import { ImportOptions } from './interfaces/import-options.js';
 import { InfoOptions } from './interfaces/info-options.js';
 import { InitAnxOptions } from './interfaces/init-anx-options.js';
 import { InitGitOptions } from './interfaces/init-git-options.js';
@@ -217,6 +219,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async export(treeish: string, anxOptions?: ExportOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'export', anxOptions, treeish);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async find(relativePaths?: string | string[], anxOptions?: FindOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'find', anxOptions);
     this.pushIfRelativePaths(args, relativePaths);
@@ -244,6 +251,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async groupwanted(groupname: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'groupwanted', anxOptions, groupname);
     this.pushIfString(args, expression);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async import(treeish: string, anxOptions?: ImportOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'import', anxOptions, treeish);
     return this.runAnx(args, apiOptions);
   }
 

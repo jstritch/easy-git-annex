@@ -30,8 +30,14 @@ Environment variables may also be specified.
 ## Installation
 
 Git must be installed and verified to run from the command line.
-Install git-annex and verify it runs from the command line to use git-annex commands.
+
+If you want to use git-annex, install git-annex and verify it runs from the command line.
 Current versions of git-annex are available from the [developer](https://downloads.kitenet.net/).
+
+GitHub repositories can use the
+jstritch/setup-git-annex
+action to install git-annex in your workflows.
+Workflows using jstritch/setup-git-annex can test git-annex applications on Linux, macOS, and Windows.
 
 Installation of easy-git-annex may be performed with the command
 
@@ -40,14 +46,13 @@ Installation of easy-git-annex may be performed with the command
 ## Usage
 
 The easy-git-annex package is an ECMAScript module.
-It can be used by ECMAScript and CommonJS applications.
 Your code can reference the library statically
 
 ```typescript
 import * as anx from 'easy-git-annex';
 ```
 
-or use a dynamic import.
+or by using a dynamic import.
 
 ```typescript
 const anx = await import('easy-git-annex');
@@ -218,12 +223,14 @@ Links to commonly used methods appear below.
 * [diff](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#diff) Shows changes between commits, commit and working tree, etc.
 * [drop](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#drop) Removes file content from a repository.
 * [dropunused](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#dropunused) Drops unused file content.
+* [export](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#export) Exports a tree of files to a special remote.
 * [find](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#find) Lists available files.
 * [get](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#get) Makes content of annexed files available.
 * [getFileNames](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getFileNames) Obtains an array of filenames in the index and the working tree.
 * [getStatusAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusAnx) Obtains an array describing the working tree status.
 * [getStatusGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getStatusGit) Obtains an array describing the working tree status.
 * [grep](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#grep) Finds lines matching a pattern.
+* [import](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#import) Imports a tree of files from a special remote.
 * [lock](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#lock) Locks files to prevent modification.
 * [lsFiles](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#lsFiles) Shows information about files in the index and the working tree.
 * [move](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#move) Moves file content to or from another repository.
@@ -315,6 +322,9 @@ Links to commonly used methods appear below.
 
 ## Contributions
 
+If you would like to suggest a new feature or report a problem, please create an
+[issue](https://github.com/jstritch/easy-git-annex/issues).
+
 If you would like to improve the easy-git-annex code, please read CONTRIBUTING.md.
 
 I am an independent developer.
@@ -333,7 +343,6 @@ When you invoke runExampleClick from a test application, it creates a temporary 
 prepares the directory for Git and git-annex,
 adds one large and one small file to a subdirectory,
 and reports success or failure.
-The repository remains on your system for study.
 
 ```typescript
 import * as anx from 'easy-git-annex';
@@ -402,6 +411,8 @@ export async function runExampleClick(): Promise<void> {
   }
 }
 ```
+
+The repository remains on your system for study.
 
 ### Show progress of long-running commands
 

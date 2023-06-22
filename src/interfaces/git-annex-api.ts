@@ -19,6 +19,7 @@ import { DiffOptions } from './diff-options.js';
 import { DropOptions } from './drop-options.js';
 import { DropunusedOptions } from './dropunused-options.js';
 import { ExpireOptions } from './expire-options.js';
+import { ExportOptions } from './export-options.js';
 import { FetchOptions } from './fetch-options.js';
 import { FindOptions } from './find-options.js';
 import { ForEachRefOptions } from './for-each-ref-options.js';
@@ -26,6 +27,7 @@ import { FsckAnxOptions } from './fsck-anx-options.js';
 import { FsckGitOptions } from './fsck-git-options.js';
 import { GetOptions } from './get-options.js';
 import { GrepOptions } from './grep-options.js';
+import { ImportOptions } from './import-options.js';
 import { InfoOptions } from './info-options.js';
 import { InitAnxOptions } from './init-anx-options.js';
 import { InitGitOptions } from './init-git-options.js';
@@ -232,6 +234,20 @@ export interface GitAnnexAPI {
   expire(expirations: string, anxOptions?: ExpireOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Exports a tree of files to a special remote.
+   *
+   * Consult the
+   * [git-annex export documentation](https://git-annex.branchable.com/git-annex-export/)
+   * for additional information.
+   * @param treeish The name of a git branch, tag, or any other treeish accepted by Git, including branch:subdir.
+   * @param anxOptions The ExportOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex export result.
+   * @category Contents
+   */
+  export(treeish: string, anxOptions?: ExportOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Lists available files.
    * Consider using generic function {@link getFinds} if JavaScript objects are desired.
    *
@@ -314,6 +330,20 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   groupwanted(groupname: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Imports a tree of files from a special remote.
+   *
+   * Consult the
+   * [git-annex import documentation](https://git-annex.branchable.com/git-annex-import/)
+   * for additional information.
+   * @param treeish The name of a git branch, tag, or any other treeish accepted by Git, including branch:subdir.
+   * @param anxOptions The ImportOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex import result.
+   * @category Contents
+   */
+  import(treeish: string, anxOptions?: ImportOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Obtains information about an item or the repository.

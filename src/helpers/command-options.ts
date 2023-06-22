@@ -115,6 +115,13 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--activity', kind: OptionKind.String },
     { name: '--no-act', kind: OptionKind.Flag },
   ]],
+  ['export', [
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+    { name: '--json-progress', kind: OptionKind.Flag },
+    { name: '--to', kind: OptionKind.StringParam },
+  ]],
   ['find', [
     { name: '--branch', kind: OptionKind.String },
     { name: '--format', kind: OptionKind.String },
@@ -152,6 +159,17 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['group', []],
   ['groupwanted', []],
+  ['import', [
+    { name: '--backend', kind: OptionKind.String },
+    { name: '--content', kind: OptionKind.Flag },
+    { name: '--from', kind: OptionKind.StringParam },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+    { name: '--json-progress', kind: OptionKind.Flag },
+    { name: '--no-check-gitignore', kind: OptionKind.Flag },
+    { name: '--no-content', kind: OptionKind.Flag },
+  ]],
   ['info', [
     { name: '--autoenable', kind: OptionKind.Flag },
     { name: '--bytes', kind: OptionKind.Flag },

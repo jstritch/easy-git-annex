@@ -3,8 +3,10 @@
 * Add GitAnnexAPI methods
     * clean
     * expire
+    * export
     * getRepositoryInfo
     * grep
+    * import
     * submodule
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
