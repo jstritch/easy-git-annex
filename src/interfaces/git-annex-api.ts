@@ -1290,7 +1290,7 @@ export interface GitAnnexAPI {
 
   /**
    * Obtains the current branch name.
-   * @returns A string containing the branch name.
+   * @returns A string containing the current branch name. An empty string is returned if not on a branch.
    * @category Branching
    */
   getBranchName(): Promise<string>;
