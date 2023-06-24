@@ -1,5 +1,5 @@
 import * as anx from '../../src/index.ts';
-import { copyAddGitCommit, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers.ts';
+import { copyAddGitCommit, createDirectory, createRepository, deleteDirectory, setRepositoryAuthor, TestFile } from '../helpers.ts';
 
 const branch1 = 'v1.0-dev';
 const branch2 = 'v2.0-dev';
@@ -92,6 +92,14 @@ describe('branch', () => {
   test('getBranchName', async () => {
     const branchName = await myAnx.getBranchName();
     expect(branchName).toBe('master');
+  });
+
+  test('getBranchName on non-repository', async () => {
+    const dir = await createDirectory();
+    const notAnnex = anx.createAccessor(dir);
+    const branchName = await notAnnex.getBranchName();
+    expect(branchName).toHaveLength(0);
+    await deleteDirectory(dir);
   });
 
 });
