@@ -250,6 +250,7 @@ Links to commonly used methods appear below.
 * [branch](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#branch) Manages branches.
 * [checkout](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#checkout) Switches branches or restores working tree files.
 * [cherryPick](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#cherryPick) Applies changes introduced by existing commits.
+* [getBranchName](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getBranchName) Obtains the current branch name.
 * [getBranchNames](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getBranchNames) Obtains an array of branch names.
 * [getTagNames](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getTagNames) Obtains an array of tag names.
 * [log](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#log) Shows commit log entries.
