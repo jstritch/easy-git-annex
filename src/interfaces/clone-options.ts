@@ -55,7 +55,7 @@ export interface CloneOptions {
   '--no-checkout'?: null;
 
   /**
-   * Copeis files instead of using hardlinks on a locl filesystem..
+   * Copies files instead of using hardlinks on a local filesystem.
    */
   '--no-hardlinks'?: null;
 
