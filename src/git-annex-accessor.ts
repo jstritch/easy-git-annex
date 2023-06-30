@@ -652,8 +652,8 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   }
 
   public async getBranchName(): Promise<string> {
-    const revParseResult = await this.revParse('HEAD', { '--abbrev-ref': null });
-    return revParseResult.out.trim();
+    const branchResult = await this.branch(undefined, { '--show-current': null });
+    return branchResult.out.trim();
   }
 
   public async getBranchNames(pattern?: string, ignoreCase?: boolean): Promise<string[]> {
