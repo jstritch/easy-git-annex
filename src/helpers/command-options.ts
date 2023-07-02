@@ -40,7 +40,7 @@ export interface CommandOption {
 
 const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['_common', [
-    { name: '--c', kind: OptionKind.RepeatableKeyValue },
+    { name: '-c', kind: OptionKind.RepeatableKeyValue },
     { name: '--debug', kind: OptionKind.Flag },
     { name: '--debugfilter', kind: OptionKind.CommaDelimitedStrings },
     { name: '--fast', kind: OptionKind.Flag },

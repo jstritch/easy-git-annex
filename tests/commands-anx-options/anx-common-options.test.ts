@@ -10,8 +10,8 @@ describe('AnnexOptions', () => {
   });
 
   const tests: [anx.AnnexOptions, string[]][] = [
-    [{ '--c': ['A', 'B'] }, ['--c', 'A=B']],
-    [{ '--c': [['A', 'B'], ['C', 'D']] }, ['--c', 'A=B', '--c', 'C=D']],
+    [{ '-c': ['A', 'B'] }, ['-c', 'A=B']],
+    [{ '-c': [['A', 'B'], ['C', 'D']] }, ['-c', 'A=B', '-c', 'C=D']],
     [{ '--debug': null }, ['--debug']],
     [{ '--debugfilter': 'Process' }, ['--debugfilter=Process']],
     [{ '--debugfilter': ['Process', 'External'] }, ['--debugfilter=Process,External']],

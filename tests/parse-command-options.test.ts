@@ -34,10 +34,10 @@ describe('parseCommandOptions', () => {
     [[CommandGroup.Git, 'clone', { '--config': [['name0', 'value0'], ['name1', 'value1']] }], ['--config', 'name0=value0,name1=value1']],
     [[CommandGroup.Git, 'clone', { '--config': [] }], []],
     // OptionKind.RepeatableKeyValue
-    [[CommandGroup.AnxCommon, 'version', { '--c': ['name', 'value'] }], ['--c', 'name=value']],
-    [[CommandGroup.AnxCommon, 'version', { '--c': [['name', 'value']] }], ['--c', 'name=value']],
-    [[CommandGroup.AnxCommon, 'version', { '--c': [['name0', 'value0'], ['name1', 'value1']] }], ['--c', 'name0=value0', '--c', 'name1=value1']],
-    [[CommandGroup.AnxCommon, 'version', { '--c': [] }], []],
+    [[CommandGroup.AnxCommon, 'version', { '-c': ['name', 'value'] }], ['-c', 'name=value']],
+    [[CommandGroup.AnxCommon, 'version', { '-c': [['name', 'value']] }], ['-c', 'name=value']],
+    [[CommandGroup.AnxCommon, 'version', { '-c': [['name0', 'value0'], ['name1', 'value1']] }], ['-c', 'name0=value0', '-c', 'name1=value1']],
+    [[CommandGroup.AnxCommon, 'version', { '-c': [] }], []],
     // OptionKind.AnonymousKeyValue
     [[CommandGroup.Git, 'config', { set: ['easy-git-annex.test', 'true'] }], ['easy-git-annex.test', 'true']],
     // OptionKind.Numeric
@@ -127,7 +127,7 @@ describe('parseCommandOptions', () => {
     // OptionKind.CommaDelimitedKeyValue
     [[CommandGroup.Git, 'clone', { '--config': {} }], 'Value type object is not supported for clone option --config, use [string, string] | [string, string][] instead'],
     // OptionKind.RepeatableKeyValue
-    [[CommandGroup.AnxCommon, 'version', { '--c': {} }], 'Value type object is not supported for version option --c, use [string, string] | [string, string][] instead'],
+    [[CommandGroup.AnxCommon, 'version', { '-c': {} }], 'Value type object is not supported for version option -c, use [string, string] | [string, string][] instead'],
     // OptionKind.AnonymousKeyValue
     [[CommandGroup.Git, 'config', { set: 'key=value' }], 'Value type string is not supported for config option set, use [string, string] instead'],
     // OptionKind.Numeric

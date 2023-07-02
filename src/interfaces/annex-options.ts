@@ -9,10 +9,8 @@ export interface AnnexOptions {
 
   /**
    * Overrides Git configuration settings.
-   * To override one value, specify `['name', 'value']`.
-   * Use a [string, string][] to specify multiple values.
    */
-  '--c'?: [string, string] | [string, string][];
+  '-c'?: [string, string] | [string, string][];
 
   /**
    * Displays debug messages.
@@ -21,7 +19,6 @@ export interface AnnexOptions {
 
   /**
    * Shows debug messages coming from a module.
-   * To specify multiple modules, use a string[].
    */
   '--debugfilter'?: string | string[];
 
