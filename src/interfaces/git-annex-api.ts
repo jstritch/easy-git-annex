@@ -23,6 +23,7 @@ import { ExportOptions } from './export-options.js';
 import { FetchOptions } from './fetch-options.js';
 import { FindOptions } from './find-options.js';
 import { ForEachRefOptions } from './for-each-ref-options.js';
+import { ForgetOptions } from './forget-options.js';
 import { FsckAnxOptions } from './fsck-anx-options.js';
 import { FsckGitOptions } from './fsck-git-options.js';
 import { GetOptions } from './get-options.js';
@@ -262,6 +263,19 @@ export interface GitAnnexAPI {
    * @category Contents
    */
   find(relativePaths?: string | string[], anxOptions?: FindOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Prunes git-annex branch history.
+   *
+   * Consult the
+   * [git-annex forget documentation](https://git-annex.branchable.com/git-annex-forget/)
+   * for additional information.
+   * @param anxOptions The ForgetOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex forget result.
+   * @category Maintenance
+   */
+  forget(anxOptions?: ForgetOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Verifies the validity of objects in git-annex.

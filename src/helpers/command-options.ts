@@ -129,6 +129,9 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
+  ['forget', [
+    { name: '--drop-dead', kind: OptionKind.Flag },
+  ]],
   ['fsck', [
     { name: '--all', kind: OptionKind.Flag },
     { name: '--branch', kind: OptionKind.String },

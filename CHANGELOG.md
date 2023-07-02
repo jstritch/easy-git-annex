@@ -4,6 +4,7 @@
     * clean
     * expire
     * export
+    * forget
     * getBranchName
     * getRepositoryInfo
     * grep

@@ -30,6 +30,7 @@ import { ExportOptions } from './interfaces/export-options.js';
 import { FetchOptions } from './interfaces/fetch-options.js';
 import { FindOptions } from './interfaces/find-options.js';
 import { ForEachRefOptions } from './interfaces/for-each-ref-options.js';
+import { ForgetOptions } from './interfaces/forget-options.js';
 import { FsckAnxOptions } from './interfaces/fsck-anx-options.js';
 import { FsckGitOptions } from './interfaces/fsck-git-options.js';
 import { GetOptions } from './interfaces/get-options.js';
@@ -227,6 +228,11 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async find(relativePaths?: string | string[], anxOptions?: FindOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'find', anxOptions);
     this.pushIfRelativePaths(args, relativePaths);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async forget(anxOptions?: ForgetOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'forget', anxOptions);
     return this.runAnx(args, apiOptions);
   }
 
