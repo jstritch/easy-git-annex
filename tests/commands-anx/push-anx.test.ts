@@ -22,7 +22,10 @@ describe('pushAnx', () => {
     await deleteDirectory(remotePath, true);
   });
 
-  test('pushes files to a directory special remote', async () => {
+  // git-annex 10.20230626 is not yet available for macOS, run test on other platforms
+  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
+  const testFunc = process.platform === 'darwin' ? xtest : test;
+  testFunc('pushes files to a directory special remote', async () => {
     const branchName = await myAnx.getBranchName();
     const remoteName = 'push-anx-test';
     await copyAddAnxCommit(allTestFiles, repositoryPath, 'add test files for pushAnx');

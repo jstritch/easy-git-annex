@@ -22,7 +22,10 @@ describe('assist', () => {
     await deleteDirectory(remotePath, true);
   });
 
-  test('transfers a directory special remote', async () => {
+  // git-annex 10.20230626 is not yet available for macOS, run test on other platforms
+  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
+  const testFunc = process.platform === 'darwin' ? xtest : test;
+  testFunc('transfers a directory special remote', async () => {
     const branchName = await myAnx.getBranchName();
     const remoteName = 'assist-anx-test';
     await copyAddAnxCommit([TestFile.TXT1, TestFile.JPG1], repositoryPath, 'add two files for assist');
