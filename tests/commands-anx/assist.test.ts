@@ -13,6 +13,7 @@ describe('assist', () => {
     await myAnx.initAnx();
     await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
     remotePath = await createRepository();
+    await setRepositoryAuthor(remotePath);
   });
 
   afterEach(async () => {
