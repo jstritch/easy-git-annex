@@ -1,5 +1,5 @@
 import * as anx from '../../src/index.ts';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers.ts';
+import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory, setRepositoryAuthor } from '../helpers.ts';
 
 describe('pushAnx', () => {
   let repositoryPath: string;
@@ -9,6 +9,7 @@ describe('pushAnx', () => {
   beforeEach(async () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
+    await setRepositoryAuthor(repositoryPath);
     await myAnx.initAnx();
     await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
     remotePath = await createRepository();

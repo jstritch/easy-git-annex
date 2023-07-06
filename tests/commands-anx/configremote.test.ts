@@ -24,6 +24,7 @@ describe('configremote', () => {
     expect(rslt.exitCode).toBe(0);
 
     rslt = await myAnx.configremote(remoteName, ['autoenable', 'true']);
+    expect(rslt).toBeNull();
     expect(rslt.exitCode).toBe(0);
   });
 });
