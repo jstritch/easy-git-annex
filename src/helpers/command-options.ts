@@ -30,6 +30,7 @@ export enum OptionKind {
   RepeatableOptionalStringParam,
   AnonymousStrings,
   NamedStrings,
+  PathParam,
   RepeatablePath,
 }
 
@@ -66,6 +67,10 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--update', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
+  ['addunused', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['adjust', [
     { name: '--fix', kind: OptionKind.Flag },
     { name: '--hide-missing', kind: OptionKind.Flag },
@@ -73,10 +78,32 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--unlock', kind: OptionKind.Flag },
     { name: '--unlock-present', kind: OptionKind.Flag },
   ]],
+  ['assist', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--backend', kind: OptionKind.String },
+    { name: '--cleanup', kind: OptionKind.Flag },
+    { name: '--content', kind: OptionKind.Flag },
+    { name: '--content-of', kind: OptionKind.RepeatablePath },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--message', kind: OptionKind.String },
+    { name: '--no-allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--no-content', kind: OptionKind.Flag },
+    { name: '--no-resolvemerge', kind: OptionKind.Flag },
+    { name: '--not-only-annex', kind: OptionKind.Flag },
+    { name: '--only-annex', kind: OptionKind.Flag },
+    { name: '--resolvemerge', kind: OptionKind.Flag },
+  ]],
   ['config', [
+    { name: '--for-file', kind: OptionKind.PathParam },
     { name: '--get', kind: OptionKind.String },
     { name: '--set', kind: OptionKind.KeyValue },
+    { name: '--show-origin', kind: OptionKind.StringParam },
     { name: '--unset', kind: OptionKind.String },
+  ]],
+  ['configremote', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
   ]],
   ['copy', [
     { name: '--all', kind: OptionKind.Flag },
@@ -93,8 +120,14 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--unused', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
-  ['dead', []],
-  ['describe', []],
+  ['dead', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
+  ['describe', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['drop', [
     { name: '--all', kind: OptionKind.Flag },
     { name: '--auto', kind: OptionKind.Flag },
@@ -109,10 +142,17 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['dropunused', [
     { name: '--from', kind: OptionKind.String },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
   ]],
-  ['enableremote', []],
+  ['enableremote', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['expire', [
     { name: '--activity', kind: OptionKind.String },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--no-act', kind: OptionKind.Flag },
   ]],
   ['export', [
@@ -182,10 +222,14 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['init', [
     { name: '--autoenable', kind: OptionKind.Flag },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--no-autoenable', kind: OptionKind.Flag },
     { name: '--version', kind: OptionKind.Numeric },
   ]],
   ['initremote', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--private', kind: OptionKind.Flag },
     { name: '--sameas', kind: OptionKind.String },
     { name: '--whatelse', kind: OptionKind.Flag },
@@ -201,6 +245,8 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['merge', [
     { name: '--allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--no-allow-unrelated-histories', kind: OptionKind.Flag },
   ]],
   ['mincopies', []],
@@ -219,11 +265,44 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['numcopies', []],
-  ['reinit', []],
-  ['renameremote', []],
+  ['pull', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--backend', kind: OptionKind.String },
+    { name: '--content', kind: OptionKind.Flag },
+    { name: '--content-of', kind: OptionKind.RepeatablePath },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--no-allow-unrelated-histories', kind: OptionKind.Flag },
+    { name: '--no-content', kind: OptionKind.Flag },
+    { name: '--no-resolvemerge', kind: OptionKind.Flag },
+    { name: '--not-only-annex', kind: OptionKind.Flag },
+    { name: '--only-annex', kind: OptionKind.Flag },
+    { name: '--resolvemerge', kind: OptionKind.Flag },
+  ]],
+  ['push', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--cleanup', kind: OptionKind.Flag },
+    { name: '--content', kind: OptionKind.Flag },
+    { name: '--content-of', kind: OptionKind.RepeatablePath },
+    { name: '--jobs', kind: OptionKind.Numeric },
+    { name: '--no-content', kind: OptionKind.Flag },
+    { name: '--not-only-annex', kind: OptionKind.Flag },
+    { name: '--only-annex', kind: OptionKind.Flag },
+  ]],
+  ['reinit', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
+  ['renameremote', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['repair', []],
   ['required', []],
-  ['semitrust', []],
+  ['semitrust', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['status', [
     { name: '--ignore-submodules', kind: OptionKind.OptionalString },
     { name: '--json', kind: OptionKind.Flag },
@@ -252,18 +331,28 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--resolvemerge', kind: OptionKind.Flag },
   ]],
   ['unannex', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['ungroup', []],
-  ['uninit', []],
+  ['uninit', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['unlock', [
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
-  ['untrust', []],
+  ['untrust', [
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
+  ]],
   ['unused', [
     { name: '--from', kind: OptionKind.String },
+    { name: '--json', kind: OptionKind.Flag },
+    { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--used-refspec', kind: OptionKind.String },
   ]],
   ['version', [

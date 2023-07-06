@@ -8,9 +8,11 @@ import { StashCommand, StashOptions } from './interfaces/stash-options.js';
 import { SubmoduleCommand, SubmoduleOptions } from './interfaces/submodule-options.js';
 import { AddAnxOptions } from './interfaces/add-anx-options.js';
 import { AddGitOptions } from './interfaces/add-git-options.js';
+import { AddunusedOptions } from './interfaces/addunused-options.js';
 import { AdjustOptions } from './interfaces/adjust-options.js';
 import { AnnexOptions } from './interfaces/annex-options.js';
 import { ApiOptions } from './interfaces/api-options.js';
+import { AssistOptions } from './interfaces/assist-options.js';
 import { BranchOptions } from './interfaces/branch-options.js';
 import { CheckoutOptions } from './interfaces/checkout-options.js';
 import { CherryPickOptions } from './interfaces/cherry-pick-options.js';
@@ -21,10 +23,14 @@ import { CommandResult } from './interfaces/command-result.js';
 import { CommitOptions } from './interfaces/commit-options.js';
 import { ConfigAnxOptions } from './interfaces/config-anx-options.js';
 import { ConfigGitOptions } from './interfaces/config-git-options.js';
+import { ConfigremoteOptions } from './interfaces/configremote-options.js';
 import { CopyOptions } from './interfaces/copy-options.js';
+import { DeadOptions } from './interfaces/dead-options.js';
+import { DescribeAnxOptions } from './interfaces/describe-anx-options.js';
 import { DiffOptions } from './interfaces/diff-options.js';
 import { DropOptions } from './interfaces/drop-options.js';
 import { DropunusedOptions } from './interfaces/dropunused-options.js';
+import { EnableremoteOptions } from './interfaces/enableremote-options.js';
 import { ExpireOptions } from './interfaces/expire-options.js';
 import { ExportOptions } from './interfaces/export-options.js';
 import { FetchOptions } from './interfaces/fetch-options.js';
@@ -50,15 +56,20 @@ import { MergeGitOptions } from './interfaces/merge-git-options.js';
 import { MoveOptions } from './interfaces/move-options.js';
 import { MvOptions } from './interfaces/mv-options.js';
 import { parseCommandOptions } from './helpers/parse-command-options.js';
+import { PullAnxOptions } from './interfaces/pull-anx-options.js';
 import { PullOptions } from './interfaces/pull-options.js';
+import { PushAnxOptions } from './interfaces/push-anx-options.js';
 import { PushOptions } from './interfaces/push-options.js';
 import { RebaseOptions } from './interfaces/rebase-options.js';
+import { ReinitOptions } from './interfaces/reinit-options.js';
+import { RenameremoteOptions } from './interfaces/renameremote-options.js';
 import { ResetOptions } from './interfaces/reset-options.js';
 import { RestoreOptions } from './interfaces/restore-options.js';
 import { RevertOptions } from './interfaces/revert-options.js';
 import { RevParseOptions } from './interfaces/rev-parse-options.js';
 import { RmOptions } from './interfaces/rm-options.js';
 import { safeParseToArray } from './helpers/safe-parse.js';
+import { SemitrustOptions } from './interfaces/semitrust-options.js';
 import { ShowOptions } from './interfaces/show-options.js';
 import { StatusAnx } from './interfaces/status-anx.js';
 import { StatusAnxOptions } from './interfaces/status-anx-options.js';
@@ -68,7 +79,9 @@ import { SwitchOptions } from './interfaces/switch-options.js';
 import { SyncOptions } from './interfaces/sync-options.js';
 import { TagOptions } from './interfaces/tag-options.js';
 import { UnannexOptions } from './interfaces/unannex-options.js';
+import { UninitOptions } from './interfaces/uninit-options.js';
 import { UnlockOptions } from './interfaces/unlock-options.js';
+import { UntrustOptions } from './interfaces/untrust-options.js';
 import { UnusedOptions } from './interfaces/unused-options.js';
 import { VersionAnx } from './interfaces/version-anx.js';
 import { VersionAnxOptions } from './interfaces/version-anx-options.js';
@@ -168,13 +181,32 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
+  public async addunused(indices: string | string[], anxOptions?: AddunusedOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'addunused', anxOptions);
+    this.pushIfStringOrStringArray(args, indices);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async adjust(anxOptions: AdjustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'adjust', anxOptions);
     return this.runAnx(args, apiOptions);
   }
 
+  public async assist(remotes?: string | string[], anxOptions?: AssistOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'assist', anxOptions);
+    this.pushIfStringOrStringArray(args, remotes);
+    return this.runAnx(args, apiOptions);
+  }
+
   public async configAnx(anxOptions: ConfigAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'config', anxOptions);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async configremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: ConfigremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'configremote', anxOptions);
+    this.pushIfString(args, name);
+    this.pushIfKeyValuePairs(args, parameters);
     return this.runAnx(args, apiOptions);
   }
 
@@ -184,13 +216,13 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async dead(repository: string | string[], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async dead(repository: string | string[], anxOptions?: DeadOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'dead', anxOptions);
     this.pushIfStringOrStringArray(args, repository);
     return this.runAnx(args, apiOptions);
   }
 
-  public async describeAnx(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async describeAnx(repository: string, description: string, anxOptions?: DescribeAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'describe', anxOptions, repository, description);
     return this.runAnx(args, apiOptions);
   }
@@ -207,7 +239,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: EnableremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'enableremote', anxOptions);
     this.pushIfString(args, name);
     this.pushIfKeyValuePairs(args, parameters);
@@ -319,12 +351,24 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async reinit(uuid: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async pullAnx(remotes?: string | string[], anxOptions?: PullAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'pull', anxOptions);
+    this.pushIfStringOrStringArray(args, remotes);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async pushAnx(remotes?: string | string[], anxOptions?: PushAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'push', anxOptions);
+    this.pushIfStringOrStringArray(args, remotes);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async reinit(uuid: string, anxOptions?: ReinitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'reinit', anxOptions, uuid);
     return this.runAnx(args, apiOptions);
   }
 
-  public async renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async renameremote(name: string, newName: string, anxOptions?: RenameremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'renameremote', anxOptions, name, newName);
     return this.runAnx(args, apiOptions);
   }
@@ -340,7 +384,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async semitrust(repository: string | string[], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async semitrust(repository: string | string[], anxOptions?: SemitrustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'semitrust', anxOptions);
     this.pushIfStringOrStringArray(args, repository);
     return this.runAnx(args, apiOptions);
@@ -369,7 +413,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async uninit(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async uninit(anxOptions?: UninitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'uninit', anxOptions);
     return this.runAnx(args, apiOptions);
   }
@@ -380,7 +424,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
     return this.runAnx(args, apiOptions);
   }
 
-  public async untrust(repository: string | string[], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+  public async untrust(repository: string | string[], anxOptions?: UntrustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'untrust', anxOptions);
     this.pushIfStringOrStringArray(args, repository);
     return this.runAnx(args, apiOptions);

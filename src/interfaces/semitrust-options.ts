@@ -1,15 +1,10 @@
 import { AnnexOptions } from './annex-options.js';
 
 /**
- * DropunusedOptions defines the supported options for the git-annex dropunused command.
+ * SemitrustOptions defines the supported options for the git-annex semitrust command.
  * @category Command Options
  */
-export interface DropunusedOptions extends AnnexOptions {
-
-  /**
-   * Drops unused data from the specified repository.
-   */
-  '--from'?: string;
+export interface SemitrustOptions extends AnnexOptions {
 
   /**
    * Produces a JSON object on each line of output.

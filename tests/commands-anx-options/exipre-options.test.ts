@@ -11,6 +11,8 @@ describe('ExipreOptions', () => {
 
   const tests: [anx.ExpireOptions, string[]][] = [
     [{ '--activity': 'Fsck' }, ['--activity=Fsck']],
+    [{ '--json': null }, ['--json']],
+    [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ '--no-act': null }, ['--no-act']],
   ];
 

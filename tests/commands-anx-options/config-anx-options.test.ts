@@ -10,8 +10,10 @@ describe('ConfigAnxOptions', () => {
   });
 
   const tests: [anx.ConfigAnxOptions, string[]][] = [
+    [{ '--for-file': 'A' }, ['--for-file', 'A']],
     [{ '--get': 'A' }, ['--get=A']],
     [{ '--set': ['A', 'B'] }, ['--set', 'A', 'B']],
+    [{ '--show-origin': 'A' }, ['--show-origin', 'A']],
     [{ '--unset': 'A' }, ['--unset=A']],
   ];
 

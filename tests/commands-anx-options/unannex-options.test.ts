@@ -10,6 +10,8 @@ describe('UnannexOptions', () => {
   });
 
   const tests: [anx.UnannexOptions, string[]][] = [
+    [{ '--json': null }, ['--json']],
+    [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ matching: ['--include=*.mp3', '--or', '--include=*.ogg'] }, ['--include=*.mp3', '--or', '--include=*.ogg']],
   ];
 

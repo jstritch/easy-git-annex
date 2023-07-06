@@ -7,6 +7,13 @@ import { AnnexOptions } from './annex-options.js';
 export interface ConfigAnxOptions extends AnnexOptions {
 
   /**
+  * Used in combination with --show-origin to specify the filename to check in .gitattributes.
+  * Provide the file name to examine.
+  * The gitPath function is called internally.
+  */
+  '--for-file'?: string;
+
+  /**
    * Gets a configuration value.
    * Provide the key name to interrogate.
    */
@@ -17,6 +24,12 @@ export interface ConfigAnxOptions extends AnnexOptions {
   * Provide the key and value strings to set.
   */
   '--set'?: [string, string];
+
+  /**
+  * Shows where the value is configured.
+  * Provide the key name to examine.
+  */
+  '--show-origin'?: string;
 
   /**
   * Unsets a configuration value.

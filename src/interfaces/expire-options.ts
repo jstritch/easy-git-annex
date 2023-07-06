@@ -12,6 +12,16 @@ export interface ExpireOptions extends AnnexOptions {
   '--activity'?: string;
 
   /**
+   * Produces a JSON object on each line of output.
+   */
+  '--json'?: null;
+
+  /**
+   * Includes error messages in the json instead of sending them to standard error.
+   */
+  '--json-error-messages'?: null;
+
+  /**
    * Outputs what would be done but does not actually expire or unexpire any repositories.
    */
   '--no-act'?: null;

@@ -5,6 +5,16 @@
 export interface InitremoteOptions {
 
   /**
+   * Produces a JSON object on each line of output.
+   */
+  '--json'?: null;
+
+  /**
+   * Includes error messages in the json instead of sending them to standard error.
+   */
+  '--json-error-messages'?: null;
+
+  /**
    * Makes the remote usable only from the repository where it was created.
    */
   '--private'?: null;

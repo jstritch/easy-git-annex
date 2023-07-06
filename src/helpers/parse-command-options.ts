@@ -255,6 +255,14 @@ export function parseCommandOptions(commandGroup: CommandGroup, commandName: str
             }
             break;
 
+          case OptionKind.PathParam:
+            if (isString(cmdOptValue)) {
+              opts.push(cmdOpt.name, gitPath(cmdOptValue));
+            } else {
+              expectedType = 'string';
+            }
+            break;
+
           case OptionKind.RepeatablePath:
             if (isString(cmdOptValue)) {
               opts.push(`${cmdOpt.name}=${gitPath(cmdOptValue)}`);

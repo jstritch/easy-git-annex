@@ -11,6 +11,8 @@ describe('UnusedOptions', () => {
 
   const tests: [anx.UnusedOptions, string[]][] = [
     [{ '--from': 'A' }, ['--from=A']],
+    [{ '--json': null }, ['--json']],
+    [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ '--used-refspec': 'A' }, ['--used-refspec=A']],
   ];
 

@@ -1,6 +1,6 @@
 import * as anx from '../../src/index.ts';
 
-describe('InitremoteOptions', () => {
+describe('DescribeAnxOptions', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -9,16 +9,13 @@ describe('InitremoteOptions', () => {
     myAnx = anx.createAccessor(repositoryPath);
   });
 
-  const tests: [anx.InitremoteOptions, string[]][] = [
+  const tests: [anx.DescribeAnxOptions, string[]][] = [
     [{ '--json': null }, ['--json']],
     [{ '--json-error-messages': null }, ['--json-error-messages']],
-    [{ '--private': null }, ['--private']],
-    [{ '--sameas': 'A' }, ['--sameas=A']],
-    [{ '--whatelse': null }, ['--whatelse']],
   ];
 
-  test.each(tests)('InitremoteOptions "%o"', async (anxOptions, expected) => {
-    const rslt = await myAnx.initremote('', '', undefined, anxOptions, { noOp: true });
+  test.each(tests)('DescribeAnxOptions "%o"', async (anxOptions, expected) => {
+    const rslt = await myAnx.describeAnx('here', 'not there', anxOptions, { noOp: true });
     expect(rslt.exitCode).toBeNaN();
     expect(rslt.args).toEqual(expect.arrayContaining(expected));
   });

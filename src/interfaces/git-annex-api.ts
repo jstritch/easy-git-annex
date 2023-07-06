@@ -3,9 +3,11 @@ import { StashCommand, StashOptions } from './stash-options.js';
 import { SubmoduleCommand, SubmoduleOptions } from './submodule-options.js';
 import { AddAnxOptions } from './add-anx-options.js';
 import { AddGitOptions } from './add-git-options.js';
+import { AddunusedOptions } from './addunused-options.js';
 import { AdjustOptions } from './adjust-options.js';
 import { AnnexOptions } from './annex-options.js';
 import { ApiOptions } from './api-options.js';
+import { AssistOptions } from './assist-options.js';
 import { BranchOptions } from './branch-options.js';
 import { CheckoutOptions } from './checkout-options.js';
 import { CherryPickOptions } from './cherry-pick-options.js';
@@ -15,9 +17,13 @@ import { CommandResult } from './command-result.js';
 import { CommitOptions } from './commit-options.js';
 import { ConfigAnxOptions } from './config-anx-options.js';
 import { ConfigGitOptions } from './config-git-options.js';
+import { ConfigremoteOptions } from './configremote-options.js';
+import { DeadOptions } from './dead-options.js';
+import { DescribeAnxOptions } from './describe-anx-options.js';
 import { DiffOptions } from './diff-options.js';
 import { DropOptions } from './drop-options.js';
 import { DropunusedOptions } from './dropunused-options.js';
+import { EnableremoteOptions } from './enableremote-options.js';
 import { ExpireOptions } from './expire-options.js';
 import { ExportOptions } from './export-options.js';
 import { FetchOptions } from './fetch-options.js';
@@ -41,15 +47,20 @@ import { MergeAnxOptions } from './merge-anx-options.js';
 import { MergeGitOptions } from './merge-git-options.js';
 import { MoveOptions } from './move-options.js';
 import { MvOptions } from './mv-options.js';
+import { PullAnxOptions } from './pull-anx-options.js';
 import { PullOptions } from './pull-options.js';
+import { PushAnxOptions } from './push-anx-options.js';
 import { PushOptions } from './push-options.js';
 import { RebaseOptions } from './rebase-options.js';
+import { ReinitOptions } from './reinit-options.js';
+import { RenameremoteOptions } from './renameremote-options.js';
 import { RepositoryInfo } from './repository-info.js';
 import { ResetOptions } from './reset-options.js';
 import { RestoreOptions } from './restore-options.js';
 import { RevertOptions } from './revert-options.js';
 import { RevParseOptions } from './rev-parse-options.js';
 import { RmOptions } from './rm-options.js';
+import { SemitrustOptions } from './semitrust-options.js';
 import { ShowOptions } from './show-options.js';
 import { StatusAnx } from './status-anx.js';
 import { StatusAnxOptions } from './status-anx-options.js';
@@ -59,7 +70,9 @@ import { SwitchOptions } from './switch-options.js';
 import { SyncOptions } from './sync-options.js';
 import { TagOptions } from './tag-options.js';
 import { UnannexOptions } from './unannex-options.js';
+import { UninitOptions } from './uninit-options.js';
 import { UnlockOptions } from './unlock-options.js';
+import { UntrustOptions } from './untrust-options.js';
 import { UnusedOptions } from './unused-options.js';
 import { VersionAnx } from './version-anx.js';
 import { VersionAnxOptions } from './version-anx-options.js';
@@ -101,6 +114,20 @@ export interface GitAnnexAPI {
   addAnx(relativePaths?: string | string[], anxOptions?: AddAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Adds back unused files.
+   *
+   * Consult the
+   * [git-annex addunused documentation](https://git-annex.branchable.com/git-annex-addunused/)
+   * for additional information.
+   * @param indices The indicies to add.
+   * @param anxOptions The AddunusedOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex addunused result.
+   * @category Contents
+   */
+  addunused(indices: string | string[], anxOptions?: AddunusedOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Enters an adjusted branch.
    *
    * Consult the
@@ -112,6 +139,20 @@ export interface GitAnnexAPI {
    * @category Branching
    */
   adjust(anxOptions: AdjustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Adds files and synchronizes changes with remotes.
+   *
+   * Consult the
+   * [git-annex assist documentation](https://git-annex.branchable.com/git-annex-assist/)
+   * for additional information.
+   * @param remotes The remote names or remote groups to be synchronized.
+   * @param anxOptions The AssistOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex assist result.
+   * @category Remotes
+   */
+  assist(remotes?: string | string[], anxOptions?: AssistOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Gets or set git-annex configuration settings.
@@ -126,6 +167,21 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   configAnx(anxOptions: ConfigAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Changes special remote configuration.
+   *
+   * Consult the
+   * [git-annex configremote documentation](https://git-annex.branchable.com/git-annex-configremote/)
+   * for additional information.
+   * @param name The name of the repository.
+   * @param parameters Configuration of the remote.
+   * @param anxOptions The ConfigremoteOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex configremote result.
+   * @category Remotes
+   */
+  configremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: ConfigremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Copies file content to or from another repository.
@@ -151,12 +207,12 @@ export interface GitAnnexAPI {
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Method {@link GitAnnexAPI.getRepositories} returns an array of repositories.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The DeadOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex dead result.
    * @category Remotes
    */
-  dead(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  dead(repository: string, anxOptions?: DeadOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Changes the description of a repository.
@@ -168,12 +224,12 @@ export interface GitAnnexAPI {
    * The string `here` may be used to specify the current repository.
    * Method {@link GitAnnexAPI.getRepositories} returns an array of repositories.
    * @param description A description of the new repository.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The DescribeAnxOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex describe result.
    * @category Setup
    */
-  describeAnx(repository: string, description: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  describeAnx(repository: string, description: string, anxOptions?: DescribeAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Removes file content from a repository.
@@ -213,12 +269,12 @@ export interface GitAnnexAPI {
    * @param name The name of the repository.
    * If not specified, the remotes are listed in CommandResult.err.
    * @param parameters Configuration of the remote.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The EnableremoteOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex enableremote result.
    * @category Remotes
    */
-  enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  enableremote(name?: string, parameters?: [string, string] | [string, string][], anxOptions?: EnableremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Expires inactive repositories.
@@ -495,6 +551,34 @@ export interface GitAnnexAPI {
   numcopies(n?: number | string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
+   * Pulls content from remotes.
+   *
+   * Consult the
+   * [git-annex pull documentation](https://git-annex.branchable.com/git-annex-pull/)
+   * for additional information.
+   * @param remotes The remote names (or remote groups) from which to pull content.
+   * @param anxOptions The PullAnxOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex pull result.
+   * @category Remotes
+   */
+  pullAnx(remotes?: string | string[], anxOptions?: PullAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Pushes content to remotes.
+   *
+   * Consult the
+   * [git-annex push documentation](https://git-annex.branchable.com/git-annex-push/)
+   * for additional information.
+   * @param remotes The remote names (or remote groups) to be pushed content.
+   * @param anxOptions The PushAnxOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex push result.
+   * @category Remotes
+   */
+  pushAnx(remotes?: string | string[], anxOptions?: PushAnxOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
    * Initializes a repository for use with git-annex specifying the uuid.
    *
    * The reinit command may be used to begin replacement of an irretrievably lost repository.
@@ -504,12 +588,12 @@ export interface GitAnnexAPI {
    * [git-annex reinit documentation](https://git-annex.branchable.com/git-annex-reinit/)
    * for additional information.
    * @param uuid The uuid of the repository being replaced.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The ReinitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex reinit result.
    * @category Setup
    */
-  reinit(uuid: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  reinit(uuid: string, anxOptions?: ReinitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Changes name of a special remote.
@@ -519,12 +603,12 @@ export interface GitAnnexAPI {
    * for additional information.
    * @param name The name of the remote.
    * @param newName The new name of the remote.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The RenameremoteOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex renameremote result.
    * @category Remotes
    */
-  renameremote(name: string, newName: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  renameremote(name: string, newName: string, anxOptions?: RenameremoteOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Recovers a broken Git repository.
@@ -568,12 +652,12 @@ export interface GitAnnexAPI {
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Method {@link GitAnnexAPI.getRepositories} returns an array of repositories.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The SemitrustOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex semitrust result.
    * @category Remotes
    */
-  semitrust(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  semitrust(repository: string, anxOptions?: SemitrustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Shows the working tree status.
@@ -645,12 +729,12 @@ export interface GitAnnexAPI {
    * Consult the
    * [git-annex uninit documentation](https://git-annex.branchable.com/git-annex-uninit/)
    * for additional information.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The UninitOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex uninit result.
    * @category Setup
    */
-  uninit(anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  uninit(anxOptions?: UninitOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Unlocks files for modification.
@@ -676,12 +760,12 @@ export interface GitAnnexAPI {
    * @param repository The name, uuid, or description of the repository.
    * The string `here` may be used to specify the current repository.
    * Method {@link GitAnnexAPI.getRepositories} returns an array of repositories.
-   * @param anxOptions The AnnexOptions for the command.
+   * @param anxOptions The UntrustOptions for the command.
    * @param apiOptions The ApiOptions for the command.
    * @returns The git-annex untrust result.
    * @category Remotes
    */
-  untrust(repository: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+  untrust(repository: string, anxOptions?: UntrustOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Looks for unused file content.

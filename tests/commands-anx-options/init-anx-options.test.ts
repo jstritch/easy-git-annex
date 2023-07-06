@@ -11,6 +11,8 @@ describe('InitAnxOptions', () => {
 
   const tests: [anx.InitAnxOptions, string[]][] = [
     [{ '--autoenable': null }, ['--autoenable']],
+    [{ '--json': null }, ['--json']],
+    [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ '--no-autoenable': null }, ['--no-autoenable']],
     [{ '--version': 8 }, ['--version=8']],
     [{ '--version': '9' }, ['--version=9']],

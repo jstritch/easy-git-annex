@@ -1,7 +1,10 @@
 ## vNext
 * Convert the package to an ECMAScript module from CommonJS
 * Add GitAnnexAPI methods
+    * addunused
+    * assist
     * clean
+    * configremote
     * expire
     * export
     * forget
@@ -9,6 +12,8 @@
     * getRepositoryInfo
     * grep
     * import
+    * pullAnx
+    * pushAnx
     * submodule
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
@@ -19,6 +24,24 @@
     * Add LsFilesOptions --format
 * Support git-annex 10.20230321 features
     * Deprecate getStatusAnx, isStatusAnx, statusAnx, StatusAnx, and StatusAnxOptions (documentation change only)
+* Support git-annex 10.20230626 features
+    * Add ConfigAnxOptions --for-file and --show-origin
+    * Add ConfigremoteOptions --json and --json-error-messages
+    * Add DeadOptions --json and --json-error-messages
+    * Add DescribeAnxOptions --json and --json-error-messages
+    * Add DropunusedOptions --json and --json-error-messages
+    * Add EnableremoteOptions --json and --json-error-messages
+    * Add ExpireOptions --json and --json-error-messages
+    * Add InitAnxOptions --json and --json-error-messages
+    * Add InitremoteOptions --json and --json-error-messages
+    * Add MergeAnxOptions --json and --json-error-messages
+    * Add ReinitOptions --json and --json-error-messages
+    * Add RenameremoteOptions --json and --json-error-messages
+    * Add SemitrrustOptions --json and --json-error-messages
+    * Add UnannexOptions --json and --json-error-messages
+    * Add UninitOptions --json and --json-error-messages
+    * Add UntrustOptions --json and --json-error-messages
+    * Add UnusedOptions --json and --json-error-messages
 * Make GitAnnexAPI.sync parameter remotes optional
 * Make options the fourth generic function parameter
     * getFinds

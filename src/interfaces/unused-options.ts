@@ -12,6 +12,16 @@ export interface UnusedOptions extends AnnexOptions {
   '--from'?: string;
 
   /**
+   * Produces a JSON object on each line of output.
+   */
+  '--json'?: null;
+
+  /**
+   * Includes error messages in the json instead of sending them to standard error.
+   */
+  '--json-error-messages'?: null;
+
+  /**
    * Specifies the filter for refs.
    */
   '--used-refspec'?: string;

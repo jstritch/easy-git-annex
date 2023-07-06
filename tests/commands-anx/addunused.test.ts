@@ -1,7 +1,7 @@
 import * as anx from '../../src/index.ts';
-import { allTestFiles, copyAddAnxCommit, createRepository, deleteDirectory } from '../helpers.ts';
+import { createRepository, deleteDirectory } from '../helpers.ts';
 
-describe('repair', () => {
+describe('addunused', () => {
   let repositoryPath: string;
   let myAnx: anx.GitAnnexAPI;
 
@@ -9,7 +9,6 @@ describe('repair', () => {
     repositoryPath = await createRepository();
     myAnx = anx.createAccessor(repositoryPath);
     await myAnx.initAnx();
-    await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
   });
 
   afterEach(async () => {
@@ -17,9 +16,8 @@ describe('repair', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  test('repairs the repository', async () => {
-    await copyAddAnxCommit(allTestFiles, repositoryPath, 'add test files for repair');
-    const rslt = await myAnx.repair();
+  test('adds back unused content', async () => {
+    const rslt = await myAnx.addunused('all');
     expect(rslt.exitCode).toBe(0);
   });
 

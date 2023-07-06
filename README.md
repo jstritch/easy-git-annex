@@ -25,23 +25,22 @@ Additional methods, such as getRepositories and getStatusGit, return JavaScript 
 for tasks common to many applications.
 
 Callbacks for stdout and stderr are available to show progress of time-consuming commands.
-Environment variables may also be specified.
+Environment variables can also be specified.
 
 ## Installation
 
 Git must be installed and verified to run from the command line.
 
-If you want to use git-annex, install git-annex and verify it runs from the command line.
-Current versions of git-annex are available from the [developer](https://downloads.kitenet.net/).
+If you want to use git-annex, [download](https://downloads.kitenet.net/), install, and verify it runs from the command line.
+
+Installation of easy-git-annex can be performed with the command
+
+`npm install easy-git-annex`
 
 GitHub repositories can use the
 jstritch/setup-git-annex
-action to install git-annex in your workflows.
+action to install git-annex in workflows.
 Workflows using jstritch/setup-git-annex can test git-annex applications on Linux, macOS, and Windows.
-
-Installation of easy-git-annex may be performed with the command
-
-`npm install easy-git-annex`
 
 ## Usage
 
@@ -77,12 +76,12 @@ Frequently used commands, such as commit, have a specific method to invoke the c
 Low-level methods runGit and runAnx are capable of invoking any Git or git-annex command.
 
 A process is spawned to run each command asynchronously.
-The ApiOptions parameter, described below, may be used to influence process creation.
+The ApiOptions parameter, described below, can be used to influence process creation.
 
 ### Command options
 
 Many git-annex and Git commands accept one or more options.
-Options may be passed in an object or a string array.
+Options can be passed in an object or a string array.
 When an object is passed, easy-git-annex handles the mechanics of generating the correct command syntax.
 The string array approach is intended to meet atypical requirements.
 
@@ -92,7 +91,7 @@ Command option names containing hyphens must be enclosed
 in single or double quotation marks to be valid JavaScript identifiers.
 
 Several types of option values are used.
-Arrays of the appropriate type are used for options accepting more than one value and options which may be repeated.
+Arrays of the appropriate type are used for options accepting more than one value and options which can be repeated.
 
 #### Scalar
 
@@ -124,7 +123,7 @@ const rslt = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp
 
 #### String array
 
-Instead of passing an object with keys and values, an application may choose to construct the options parameter as a string array.
+Instead of passing an object with keys and values, an application can choose to construct the options parameter as a string array.
 The following line is functionally equivalent to the scalar example above.
 
 ```typescript
@@ -153,7 +152,7 @@ const rslt = await myAnx.addGit(relativePath);
 
 ### API options
 
-An application may control the environment variables passed to the command and
+An application can control the environment variables passed to the command and
 register callbacks for stdout and stderr using the
 [ApiOptions](https://jstritch.github.io/easy-git-annex/interfaces/ApiOptions.html)
 parameter.
@@ -167,7 +166,7 @@ anxEnv['GIT_TRACE'] = '2';
 const apiOptions = { env: anxEnv };
 ```
 
-The JavaScript `bind` function may be used to pass `this` and other parameters
+The JavaScript `bind` function can be used to pass `this` and other parameters
 to a callback as shown in the fragment below.
 
 ```javascript
@@ -182,7 +181,7 @@ The Promise returned by every command contains uninterpreted information about t
 [CommandResult](https://jstritch.github.io/easy-git-annex/interfaces/CommandResult.html) interface.
 
 Any method is capable of throwing an Error.
-Any command that doesn't throw may return an exitCode indicating failure.
+Any command that doesn't throw can return an exitCode indicating failure.
 Application design must account for these eventualities.
 
 ## Documentation
@@ -217,6 +216,7 @@ Links to commonly used methods appear below.
 
 * [addAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#addAnx) Adds files to Git and git-annex.
 * [addGit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#addGit) Adds file contents to the index.
+* [addunused](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#addunused) Adds back unused files.
 * [clean](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#clean) Removes untracked files from the working tree.
 * [commit](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#commit) Records changes to the repository.
 * [copy](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#copy) Copies file content to or from another repository.
@@ -266,13 +266,17 @@ Links to commonly used methods appear below.
 
 ### Remotes methods
 
+* [assist](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#assist) Adds files and synchronizes changes with remotes.
+* [configremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#configremote) Changes special remote configuration.
 * [dead](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#dead) Hides a lost repository.
 * [enableremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#enableremote) Enables use of an existing remote in the current repository.
 * [expire](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#expire) Expires inactive repositories.
 * [fetch](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#fetch) Downloads objects and refs from another repository.
 * [getRemoteNames](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#getRemoteNames) Obtains an array of remote names.
 * [initremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#initremote) Creates a special remote.
+* [pullAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#pullAnx) Pulls content from remotes.
 * [pull](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#pull) Fetches from and integrates with another repository or a local branch.
+* [pushAnx](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#pushAnx) Pushes content to remotes.
 * [push](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#push) Updates remote refs along with associated objects.
 * [remote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#remote) Manages the set of tracked repositories.
 * [renameremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#renameremote) Changes the name of a special remote.
@@ -501,4 +505,4 @@ Your application can make the following call to get a list of all tags beginning
 const fooTags = await getFooTags(repositoryPath, 'v*');
 ```
 
-The `fooTags` array may then be used in your application normally.
+The `fooTags` array can then be used in your application normally.

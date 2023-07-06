@@ -11,6 +11,8 @@ describe('DropunusedOptions', () => {
 
   const tests: [anx.DropunusedOptions, string[]][] = [
     [{ '--from': 'A' }, ['--from=A']],
+    [{ '--json': null }, ['--json']],
+    [{ '--json-error-messages': null }, ['--json-error-messages']],
   ];
 
   test.each(tests)('DropunusedOptions "%o"', async (anxOptions, expected) => {

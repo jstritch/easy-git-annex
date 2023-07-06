@@ -101,6 +101,8 @@ describe('parseCommandOptions', () => {
     [[CommandGroup.Git, 'checkout', { '-b': ['A'] }], ['-b', 'A']],
     [[CommandGroup.Git, 'checkout', { '-b': ['A', 'B'] }], ['-b', 'A', 'B']],
     [[CommandGroup.Git, 'checkout', { '-b': [] }], []],
+    // OptionKind.PathParam
+    [[CommandGroup.AnxCommon, 'config', { '--for-file': 'aaa/bbb/ccc' }], ['--for-file', 'aaa/bbb/ccc']],
     // OptionKind.RepeatablePath
     [[CommandGroup.AnxCommon, 'sync', { '--content-of': 'aaa/bbb/ccc' }], ['--content-of=aaa/bbb/ccc']],
     [[CommandGroup.AnxCommon, 'sync', { '--content-of': ['aaa/bbb/ccc'] }], ['--content-of=aaa/bbb/ccc']],
@@ -160,6 +162,8 @@ describe('parseCommandOptions', () => {
     [[CommandGroup.AnxCommon, 'list', { matching: {} }], 'Value type object is not supported for list option matching, use string | string[] instead'],
     // OptionKind.NamedStrings
     [[CommandGroup.Git, 'checkout', { '-b': {} }], 'Value type object is not supported for checkout option -b, use string | string[] instead'],
+    // OptionKind.PathParam
+    [[CommandGroup.AnxCommon, 'config', { '--for-file': {} }], 'Value type object is not supported for config option --for-file, use string instead'],
     // OptionKind.RepeatablePath
     [[CommandGroup.AnxCommon, 'sync', { '--content-of': {} }], 'Value type object is not supported for sync option --content-of, use string | string[] instead'],
   ];

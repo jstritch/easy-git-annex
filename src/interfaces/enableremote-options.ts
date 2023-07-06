@@ -1,15 +1,10 @@
 import { AnnexOptions } from './annex-options.js';
 
 /**
- * DropunusedOptions defines the supported options for the git-annex dropunused command.
+ * EnableremoteOptions defines the supported options for the git-annex enableremote command.
  * @category Command Options
  */
-export interface DropunusedOptions extends AnnexOptions {
-
-  /**
-   * Drops unused data from the specified repository.
-   */
-  '--from'?: string;
+export interface EnableremoteOptions extends AnnexOptions {
 
   /**
    * Produces a JSON object on each line of output.
