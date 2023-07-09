@@ -8,8 +8,16 @@ assignees: ''
 ---
 
 **Problem description**
-<!--- Explain what happens. -->
+<!--- Explain what happens. Use as many numbers as necessary. -->
+1.
+2.
+3.
 
+**Expected behavior**
+<!--- Explain what should happen. Use as many numbers as necessary. -->
+1.
+2.
+3.
 
 **Steps to reproduce the problem**
 <!--- Use as many numbers as necessary. -->
