@@ -72,63 +72,24 @@ An application may hold multiple accessors simultaneously.
 
 Git and git-annex commands are exposed by methods on the
 [GitAnnexAPI](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html) interface.
-Frequently used commands, such as commit, have a specific method to invoke the command.
-Low-level methods runGit and runAnx are capable of invoking any Git or git-annex command.
-
 A process is spawned to run each command asynchronously.
 The ApiOptions parameter, described below, can be used to influence process creation.
 
 ### Command options
 
 Many git-annex and Git commands accept one or more options.
-Options can be passed in an object or a string array.
-When an object is passed, easy-git-annex handles the mechanics of generating the correct command syntax.
-The string array approach is intended to meet atypical requirements.
+The command-line syntax for passing option values varies per command and option.
+Applications can choose to let easy-git-annex deal with the syntax by passing options in an object.
+To meet atypical requirements, an application can construct the command-line syntax options in a string array.
 
-To pass options, construct an object with the desired keys and values.
-Any keys in the object not for the command are ignored.
-Command option names containing hyphens must be enclosed
+Applications passing options as an object have a consistent way to specify values since easy-git-annex inserts the correct delimiters.
+When constructing a command option object, key names containing hyphens must be enclosed
 in single or double quotation marks to be valid JavaScript identifiers.
-
-Several types of option values are used.
-Arrays of the appropriate type are used for options accepting more than one value and options which can be repeated.
-
-#### Scalar
-
-Some options accept a single value.
-The following JavaScript adds files using at most two CPU cores.
-
-```typescript
-const rslt = await myAnx.addAnx(relativePaths, { '--jobs': 2 });
-```
-
-#### Flag
-
-Some options do not accept a value. Supply a `null` value for these options.
-The line below obtains a list of Git remotes and the associated URLs.
-
-```typescript
-const rslt = await myAnx.remote(anx.RemoteCommand.Show, undefined, { '--verbose': null });
-```
-
-#### Key-value pair
-
-Options that require a key-value pair accept a tuple of [string, string]
-containing the key name and value.
-An example git-annex configuration setting appears below.
-
-```typescript
-const rslt = await myAnx.configAnx({ '--set': ['annex.largefiles', 'include=*.mp3 or include=*.jpg'] });
-```
-
-#### String array
-
-Instead of passing an object with keys and values, an application can choose to construct the options parameter as a string array.
-The following line is functionally equivalent to the scalar example above.
-
-```typescript
-const rslt = await myAnx.addAnx(relativePaths, ['--jobs=2']);
-```
+To pass a flag that does not accept a value, supply null as the value, e.g. `{ '--verbose': null }`.
+Scalar values are passed normally, e.g. `{ '--jobs': 2 }`.
+A tuple of [string, string] is used for options requiring a key-value pair, e.g. `{ '--set': ['annex.largefiles', 'mimeencoding=binary'] }`.
+Arrays of the appropriate type are used for options accepting more than one value and options which can be repeated, e.g. `{ '-e': ['foo', 'bar', 'baz'] }`.
+Any keys in the object not for the command are ignored by easy-git-annex.
 
 ### Command file name parameters
 
@@ -137,7 +98,7 @@ Git and git-annex commands use forward slash path separators regardless of platf
 The gitPath and gitPaths functions perform the conversions when necessary.
 
 The gitPath and gitPaths functions are called internally by easy-git-annex for implemented relative path parameters.
-When building a low-level command, calling gitPath and gitPaths is the application's responsibility.
+When building a low-level command or constructing an options string array, calling gitPath and gitPaths is the application's responsibility.
 The following JavaScript illustrates a low-level call of the Git add command
 
 ```typescript
@@ -150,7 +111,7 @@ which is functionally equivalent to
 const rslt = await myAnx.addGit(relativePath);
 ```
 
-### API options
+### Command API options
 
 An application can control the environment variables passed to the command and
 register callbacks for stdout and stderr using the
