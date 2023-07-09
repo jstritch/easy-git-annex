@@ -86,13 +86,13 @@ Applications passing options as an object have a consistent way to specify value
 When constructing a command option object, key names containing hyphens must be enclosed
 in single or double quotation marks to be valid JavaScript identifiers.
 
-* Scalar values are passed normally, e.g. `{ '--jobs': 2 }`.
+* Scalar values are passed normally: `{ '--jobs': 2 }`.
 
-* To pass a flag that does not accept a value, supply null as the value, e.g. `{ '--verbose': null }`.
+* To pass a flag that does not accept a value, supply null as the value: `{ '--verbose': null }`.
 
-* A tuple of [string, string] is used for options requiring a key-value pair, e.g. `{ '--set': ['annex.largefiles', 'mimeencoding=binary'] }`.
+* A tuple of [string, string] is used for options requiring a key-value pair: `{ '--set': ['annex.largefiles', 'mimeencoding=binary'] }`.
 
-* Arrays are used for options accepting more than one value and options which can be repeated, e.g. `{ '-e': ['foo', 'bar', 'baz'] }`.
+* Arrays are used for options accepting more than one value and options which can be repeated: `{ '-e': ['foo', 'bar', 'baz'] }`.
 
 Any keys in the object not defined for the command are ignored by easy-git-annex.
 
