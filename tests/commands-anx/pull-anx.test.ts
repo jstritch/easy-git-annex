@@ -22,10 +22,7 @@ describe('pullAnx', () => {
     await deleteDirectory(remotePath, true);
   });
 
-  // git-annex 10.20230626 is not yet available for macOS, run test on other platforms
-  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
-  const testFunc = process.platform === 'darwin' ? xtest : test;
-  testFunc('pulls files from a directory special remote', async () => {
+  test('pulls files from a directory special remote', async () => {
     const branchName = await myAnx.getBranchName();
     const remoteName = 'pull-anx-test';
     await copyAddAnxCommit([TestFile.TXT1, TestFile.JPG1], repositoryPath, 'add two files for pullAnx');

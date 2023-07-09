@@ -18,10 +18,7 @@ describe('configremote', () => {
     await deleteDirectory(remotePath);
   });
 
-  // git-annex 10.20230626 is not yet available for macOS, run test on other platforms
-  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
-  const testFunc = process.platform === 'darwin' ? xtest : test;
-  testFunc('configures a remote with parameters', async () => {
+  test('configures a remote with parameters', async () => {
     const remoteName = 'annex-configremote';
     let rslt = await myAnx.initremote(remoteName, 'directory', [['directory', remotePath], ['encryption', 'none']]);
     expect(rslt.exitCode).toBe(0);
