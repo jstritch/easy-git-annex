@@ -2,6 +2,7 @@
 const config = {
   preset: 'ts-jest',
   testEnvironment: 'node',
+  maxWorkers: '50%',
   testTimeout: 60000,
   extensionsToTreatAsEsm: [
     '.ts'
