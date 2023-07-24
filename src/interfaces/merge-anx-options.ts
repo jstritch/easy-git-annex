@@ -1,8 +1,10 @@
+import { AnnexOptions } from './annex-options.js';
+
 /**
  * MergeAnxOptions defines the supported options for the git-annex merge command.
  * @category Command Options
  */
-export interface MergeAnxOptions {
+export interface MergeAnxOptions extends AnnexOptions {
 
   /**
    * Permits merge histories that do not share a common ancestor.
