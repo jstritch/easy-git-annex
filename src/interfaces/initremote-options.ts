@@ -1,8 +1,10 @@
+import { AnnexOptions } from './annex-options.js';
+
 /**
  * InitremoteOptions defines the supported options for the git-annex initremote command.
  * @category Command Options
  */
-export interface InitremoteOptions {
+export interface InitremoteOptions extends AnnexOptions {
 
   /**
    * Produces a JSON object on each line of output.
