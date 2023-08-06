@@ -1,6 +1,7 @@
 [![Renovate Status](https://img.shields.io/badge/renovate-enabled-brightgreen.svg)](https://renovatebot.com/)
 [![CI Status](https://github.com/jstritch/easy-git-annex/workflows/CI/badge.svg)](https://github.com/jstritch/easy-git-annex/actions)
 ![Test Coverage](https://github.com/jstritch/easy-git-annex/blob/master/coverage/badge.svg?raw=true)
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/R6R8NY1ZK)
 [![Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/jstritch)
 [![Patreon](https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white)](https://www.patreon.com/jstritch)
 
