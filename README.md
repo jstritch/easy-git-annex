@@ -111,7 +111,7 @@ The following JavaScript illustrates a low-level call of the Git add command
 const rslt = await myAnx.runGit(['add', anx.gitPath(relativePath)]);
 ```
 
-which is functionally equivalent to
+which is equivalent to
 
 ```typescript
 const rslt = await myAnx.addGit(relativePath);
@@ -303,6 +303,7 @@ If you would like to improve the easy-git-annex code, please read CONTRIBUTING.m
 
 I am an independent developer.
 If you find easy-git-annex helpful, please consider donating via
+[Ko-fi](https://ko-fi.com/jstritch),
 [Liberapay](https://liberapay.com/jstritch),
 [Patreon](https://www.patreon.com/jstritch), or
 [GitHub](https://github.com/sponsors/jstritch).
