@@ -15,6 +15,7 @@ describe('AnnexOptions', () => {
     [{ '--debug': null }, ['--debug']],
     [{ '--debugfilter': 'Process' }, ['--debugfilter=Process']],
     [{ '--debugfilter': ['Process', 'External'] }, ['--debugfilter=Process,External']],
+    [{ '--explain': null }, ['--explain']],
     [{ '--fast': null }, ['--fast']],
     [{ '--force': null }, ['--force']],
     [{ '--mincopies': 2 }, ['--mincopies=2']],

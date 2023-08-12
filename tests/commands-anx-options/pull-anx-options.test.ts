@@ -15,6 +15,7 @@ describe('PullAnxOptions', () => {
     [{ '--backend': 'A' }, ['--backend=A']],
     [{ '--content': null }, ['--content']],
     [{ '--content-of': 'A' }, ['--content-of=A']],
+    [{ '--content-of': ['A', 'B'] }, ['--content-of=A', '--content-of=B']],
     [{ '--jobs': 2 }, ['--jobs=2']],
     [{ '--jobs': '3' }, ['--jobs=3']],
     [{ '--no-allow-unrelated-histories': null }, ['--no-allow-unrelated-histories']],

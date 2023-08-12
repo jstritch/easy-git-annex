@@ -17,6 +17,7 @@ describe('SyncOptions', () => {
     [{ '--commit': null }, ['--commit']],
     [{ '--content': null }, ['--content']],
     [{ '--content-of': 'A' }, ['--content-of=A']],
+    [{ '--content-of': ['A', 'B'] }, ['--content-of=A', '--content-of=B']],
     [{ '--jobs': 2 }, ['--jobs=2']],
     [{ '--jobs': '3' }, ['--jobs=3']],
     [{ '--message': 'A' }, ['--message=A']],

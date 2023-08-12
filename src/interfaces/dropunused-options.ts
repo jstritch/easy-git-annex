@@ -12,6 +12,11 @@ export interface DropunusedOptions extends AnnexOptions {
   '--from'?: string;
 
   /**
+   * Enables parallel drops with up to the specified number of jobs running at once.
+   */
+  '--jobs'?: number | string;
+
+  /**
    * Produces a JSON object on each line of output.
    */
   '--json'?: null;

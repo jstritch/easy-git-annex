@@ -104,6 +104,7 @@ export * from './interfaces/restore-options.js';
 export * from './interfaces/rev-parse-options.js';
 export * from './interfaces/revert-options.js';
 export * from './interfaces/rm-options.js';
+export * from './interfaces/satisfy-options.js';
 export * from './interfaces/semitrust-options.js';
 export * from './interfaces/show-options.js';
 export * from './interfaces/stash-options.js';

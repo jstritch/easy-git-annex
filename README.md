@@ -247,6 +247,7 @@ Links to commonly used methods appear below.
 * [push](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#push) Updates remote refs along with associated objects.
 * [remote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#remote) Manages the set of tracked repositories.
 * [renameremote](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#renameremote) Changes the name of a special remote.
+* [satisfy](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#satisfy) Transfers and drops content as configured.
 * [semitrust](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#semitrust) Sets a repository to the default trust level.
 * [sync](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#sync) Synchronizes the local repository with remotes.
 * [untrust](https://jstritch.github.io/easy-git-annex/interfaces/GitAnnexAPI.html#untrust) Records that a repository is not trusted and could lose content at any time.

@@ -69,6 +69,7 @@ import { RevertOptions } from './interfaces/revert-options.js';
 import { RevParseOptions } from './interfaces/rev-parse-options.js';
 import { RmOptions } from './interfaces/rm-options.js';
 import { safeParseToArray } from './helpers/safe-parse.js';
+import { SatisfyOptions } from './interfaces/satisfy-options.js';
 import { SemitrustOptions } from './interfaces/semitrust-options.js';
 import { ShowOptions } from './interfaces/show-options.js';
 import { StatusAnx } from './interfaces/status-anx.js';
@@ -381,6 +382,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async required(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'required', anxOptions, repository);
     this.pushIfString(args, expression);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async satisfy(remotes?: string | string[], anxOptions?: SatisfyOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'satisfy', anxOptions);
+    this.pushIfStringOrStringArray(args, remotes);
     return this.runAnx(args, apiOptions);
   }
 

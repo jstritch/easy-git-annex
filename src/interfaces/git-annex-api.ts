@@ -60,6 +60,7 @@ import { RestoreOptions } from './restore-options.js';
 import { RevertOptions } from './revert-options.js';
 import { RevParseOptions } from './rev-parse-options.js';
 import { RmOptions } from './rm-options.js';
+import { SatisfyOptions } from './satisfy-options.js';
 import { SemitrustOptions } from './semitrust-options.js';
 import { ShowOptions } from './show-options.js';
 import { StatusAnx } from './status-anx.js';
@@ -642,6 +643,20 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   required(repository: string, expression?: string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Transfers and drops content as configured.
+   *
+   * Consult the
+   * [git-annex satisfy documentation](https://git-annex.branchable.com/git-annex-satisfy/)
+   * for additional information.
+   * @param remotes The remote names (or remote groups) to satisfy.
+   * @param anxOptions The SatisfyOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex satisfy result.
+   * @category Remotes
+   */
+  satisfy(remotes?: string | string[], anxOptions?: SatisfyOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Sets a repository to the default trust level.

@@ -14,6 +14,7 @@
     * import
     * pullAnx
     * pushAnx
+    * satisfy
     * submodule
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
@@ -42,6 +43,9 @@
     * Add UninitOptions --json and --json-error-messages
     * Add UntrustOptions --json and --json-error-messages
     * Add UnusedOptions --json and --json-error-messages
+* Support git-annex 10.20230802 features
+    * Add AnnexOptions --explain
+    * Add DropunusedOptions --jobs
 * Make GitAnnexAPI.sync parameter remotes optional
 * Make options the fourth generic function parameter
     * getFinds

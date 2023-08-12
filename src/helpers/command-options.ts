@@ -44,6 +44,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '-c', kind: OptionKind.RepeatableKeyValue },
     { name: '--debug', kind: OptionKind.Flag },
     { name: '--debugfilter', kind: OptionKind.CommaDelimitedStrings },
+    { name: '--explain', kind: OptionKind.Flag },
     { name: '--fast', kind: OptionKind.Flag },
     { name: '--force', kind: OptionKind.Flag },
     { name: '--mincopies', kind: OptionKind.Numeric },
@@ -142,6 +143,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['dropunused', [
     { name: '--from', kind: OptionKind.String },
+    { name: '--jobs', kind: OptionKind.Numeric },
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },
   ]],
@@ -299,6 +301,11 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ]],
   ['repair', []],
   ['required', []],
+  ['satisfy', [
+    { name: '--all', kind: OptionKind.Flag },
+    { name: '--content-of', kind: OptionKind.RepeatablePath },
+    { name: '--jobs', kind: OptionKind.Numeric },
+  ]],
   ['semitrust', [
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },

@@ -23,6 +23,11 @@ export interface AnnexOptions {
   '--debugfilter'?: string | string[];
 
   /**
+   * Displays explanations of what git-annex takes into account when deciding what to do.
+   */
+  '--explain'?: null;
+
+  /**
    * Avoids slow operations normally performed by a command.
    */
   '--fast'?: null;
