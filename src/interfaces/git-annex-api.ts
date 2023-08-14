@@ -886,8 +886,9 @@ export interface GitAnnexAPI {
 
   /**
    * Manages branches.
-   * Consider using method {@link getBranchNames} if a list of remote names is required
+   * Consider using method {@link getBranchNames} if a list of branch names is required
    * or generic function {@link getBranches} if JavaScript objects are desired.
+   * Method {@link getBranchName} returns the current branch name.
    *
    * Consult the
    * [Git branch documentation](https://git-scm.com/docs/git-branch)
