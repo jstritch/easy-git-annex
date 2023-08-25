@@ -89,6 +89,13 @@ import { WhereusedOptions } from './whereused-options.js';
 export interface GitAnnexAPI {
 
   /**
+   * Gets the path of the repository root directory.
+   *
+   * @returns The repository root directory.
+   */
+  get repositoryPath(): string;
+
+  /**
    * Provides the ability to run any git-annex command.
    * @param args The arguments to pass to the git-annex program.
    * The application is responsible for calling {@link gitPath} and {@link gitPaths}

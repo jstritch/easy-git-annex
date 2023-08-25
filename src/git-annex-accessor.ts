@@ -93,14 +93,14 @@ import { WhereusedOptions } from './interfaces/whereused-options.js';
 
 export class GitAnnexAccessor implements GitAnnexAPI {
 
-  private readonly repositoryPath: string;
-
-  private constructor(repositoryPath: string) {
-    this.repositoryPath = repositoryPath;
-  }
+  private constructor(private readonly _repositoryPath: string) {}
 
   public static create(repositoryPath: string): GitAnnexAccessor {
     return new GitAnnexAccessor(repositoryPath);
+  }
+
+  public get repositoryPath(): string {
+    return this._repositoryPath;
   }
 
   //
@@ -108,7 +108,7 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   //
 
   private async runCommand(exeName: string, args: string[], apiOptions?: ApiOptions): Promise<CommandResult> {
-    const cmd = new CommandParameters(this.repositoryPath, exeName, args, apiOptions);
+    const cmd = new CommandParameters(this._repositoryPath, exeName, args, apiOptions);
     return runCommand(cmd);
   }
 

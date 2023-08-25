@@ -16,6 +16,8 @@
     * pushAnx
     * satisfy
     * submodule
+* Add GitAnnexAPI property
+    * repositoryPath
 * Add generic functions to return application-defined JavaScript objects
     * listFiles
 * Add helper functions
