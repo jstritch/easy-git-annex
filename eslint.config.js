@@ -2,8 +2,8 @@ import eslint from '@eslint/js';
 import globals from 'globals';
 import jestPlugin from 'eslint-plugin-jest';
 import jestPluginFormatting from 'eslint-plugin-jest-formatting';
-import jsonc from 'eslint-plugin-jsonc';
 import jsoncParser from 'jsonc-eslint-parser';
+import jsoncPlugin from 'eslint-plugin-jsonc';
 import tsEslintParser from '@typescript-eslint/parser';
 import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
 import unicornPlugin from 'eslint-plugin-unicorn';
@@ -203,10 +203,10 @@ export default [
       reportUnusedDisableDirectives: true,
     },
     plugins: {
-      jsonc: jsonc,
+      jsonc: jsoncPlugin,
     },
     rules: {
-      ...jsonc.configs['recommended-with-json'].rules,
+      ...jsoncPlugin.configs['recommended-with-json'].rules,
       'jsonc/array-bracket-newline': ['error', 'consistent'],
       'jsonc/array-bracket-spacing': ['error', 'never'],
       'jsonc/comma-style': ['error', 'last'],
