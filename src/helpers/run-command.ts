@@ -48,7 +48,7 @@ export class CommandParameters {
 
   public userEnv: boolean;
 
-  public env: NodeJS.ProcessEnv;
+  public env: {};
 
   public errHandler: ConsoleDataHandler | null;
 
@@ -132,8 +132,8 @@ export async function runCommand(cmd: CommandParameters): Promise<CommandResult>
   });
 }
 
-function formatError(repositoryPath: string, exeName: string, args: string[], out: string, err: string, error: unknown, env?: NodeJS.ProcessEnv): string {
-  const errMsg = typeof error === 'object' && error !== null ? error.toString() : typeof error; // eslint-disable-line @typescript-eslint/no-base-to-string
+function formatError(repositoryPath: string, exeName: string, args: string[], out: string, err: string, error: unknown, env?: Record<string, unknown>): string {
+  const errMsg = typeof error === 'object' && error !== null ? error.toString() : typeof error;
   let msg = `The command: ${exeName} ${args.join(' ')}\nfor repository ${repositoryPath}\n`;
   msg += `reported ${errMsg}\nstdout: ${out}\nstderr: ${err}`;
   if (env) {

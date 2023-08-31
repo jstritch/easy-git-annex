@@ -18,7 +18,7 @@ export const allTestFiles = Object.values(TestFile);
 const projectPath = process.cwd();
 const dataFilePath = path.join(projectPath, 'tests', 'data');
 
-export function cloneEnv(): NodeJS.ProcessEnv {
+export function cloneEnv(): Record<string, unknown> {
   return Object.assign({}, process.env);
 }
 

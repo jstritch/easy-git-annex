@@ -16,7 +16,7 @@ export interface ApiOptions {
    * [Node.js process.env documentation](https://nodejs.org/api/process.html#processenv)
    * describes the environment object.
    */
-  env?: NodeJS.ProcessEnv;
+  env?: Record<string, unknown>;
 
   /**
    * The callback to receive stderr data as it becomes available.

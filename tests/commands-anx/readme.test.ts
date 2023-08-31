@@ -1,5 +1,5 @@
 import { deleteDirectory } from '../helpers.ts';
-import { jest } from '@jest/globals'; // eslint-disable-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 import { runExampleClick } from './readme.ts';
 
 describe('example', () => {

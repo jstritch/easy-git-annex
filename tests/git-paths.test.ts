@@ -1,5 +1,5 @@
 import * as anx from '../src/index.js';
-import { jest } from '@jest/globals'; // eslint-disable-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 import { ProcessHelper } from '../src/helpers/process-helper.js';
 
 describe('path separator conversions', () => {

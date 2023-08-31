@@ -2,7 +2,7 @@ import { CommandParameters, runCommand, RunCommandResult } from '../src/helpers/
 import { cloneEnv } from './helpers.ts';
 import { CommandResult } from '../src/interfaces/command-result.ts';
 import { ConsoleHelper } from '../src/helpers/console-helper.ts';
-import { jest } from '@jest/globals'; // eslint-disable-line node/no-extraneous-import
+import { jest } from '@jest/globals';
 
 describe('CommandResult', () => {
 
@@ -17,7 +17,7 @@ describe('CommandResult', () => {
 
 describe('new CommandParameters', () => {
 
-  let env: NodeJS.ProcessEnv;
+  let env: Record<string, unknown>;
   let con: string;
 
   beforeEach(() => {
