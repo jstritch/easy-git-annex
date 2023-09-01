@@ -161,7 +161,6 @@ const tsRules = {
   'unicorn/numeric-separators-style': ['error', { 'onlyIfContainsSeparator': true }],
   'unicorn/prevent-abbreviations': ['off'],
   'unicorn/switch-case-braces': ['error', 'avoid'],
-
 };
 
 export default [
@@ -173,7 +172,6 @@ export default [
     ignores: [
       'dist/**',
       'docs/**',
-      '.yalc/**',
     ],
     languageOptions: {
       globals: {
@@ -194,7 +192,6 @@ export default [
     ignores: [
       'coverage/**',
       'dist/**',
-      '.yalc/**',
     ],
     languageOptions: {
       parser: jsoncParser,
@@ -222,7 +219,6 @@ export default [
     ],
     ignores: [
       'dist/**',
-      '.yalc/**',
     ],
     languageOptions: {
       sourceType: 'module',
@@ -251,7 +247,6 @@ export default [
     ],
     ignores: [
       'dist/**',
-      '.yalc/**',
     ],
     languageOptions: {
       sourceType: 'module',
