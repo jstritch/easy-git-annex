@@ -12,6 +12,7 @@
     * getRepositoryInfo
     * grep
     * import
+    * oldkeys
     * pullAnx
     * pushAnx
     * satisfy
@@ -48,6 +49,8 @@
 * Support git-annex 10.20230802 features
     * Add AnnexOptions --explain
     * Add DropunusedOptions --jobs
+* Support git-annex 10.20230828 features
+    * Add InfoOptions --dead-repositories
 * Make GitAnnexAPI.sync parameter remotes optional
 * Make options the fourth generic function parameter
     * getFinds

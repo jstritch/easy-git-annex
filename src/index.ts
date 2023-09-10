@@ -89,6 +89,7 @@ export * from './interfaces/merge-anx-options.js';
 export * from './interfaces/merge-git-options.js';
 export * from './interfaces/move-options.js';
 export * from './interfaces/mv-options.js';
+export * from './interfaces/oldkeys-options.js';
 export * from './interfaces/parser.js';
 export * from './interfaces/pull-anx-options.js';
 export * from './interfaces/pull-options.js';

@@ -218,6 +218,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
   ['info', [
     { name: '--autoenable', kind: OptionKind.Flag },
     { name: '--bytes', kind: OptionKind.Flag },
+    { name: '--dead-repositories', kind: OptionKind.Flag },
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: 'matching', kind: OptionKind.AnonymousStrings },
@@ -267,6 +268,10 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: 'matching', kind: OptionKind.AnonymousStrings },
   ]],
   ['numcopies', []],
+  ['oldkeys', [
+    { name: '--revision-range', kind: OptionKind.String },
+    { name: '--unchecked', kind: OptionKind.Flag },
+  ]],
   ['pull', [
     { name: '--all', kind: OptionKind.Flag },
     { name: '--allow-unrelated-histories', kind: OptionKind.Flag },

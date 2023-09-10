@@ -12,6 +12,7 @@ describe('InfoOptions', () => {
   const tests: [anx.InfoOptions, string[]][] = [
     [{ '--autoenable': null }, ['--autoenable']],
     [{ '--bytes': null }, ['--bytes']],
+    [{ '--dead-repositories': null }, ['--dead-repositories']],
     [{ '--json': null }, ['--json']],
     [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ matching: ['--include=*.mp3', '--or', '--include=*.ogg'] }, ['--include=*.mp3', '--or', '--include=*.ogg']],

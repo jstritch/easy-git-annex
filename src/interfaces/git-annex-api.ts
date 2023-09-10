@@ -47,6 +47,7 @@ import { MergeAnxOptions } from './merge-anx-options.js';
 import { MergeGitOptions } from './merge-git-options.js';
 import { MoveOptions } from './move-options.js';
 import { MvOptions } from './mv-options.js';
+import { OldkeysOptions } from './oldkeys-options.js';
 import { PullAnxOptions } from './pull-anx-options.js';
 import { PullOptions } from './pull-options.js';
 import { PushAnxOptions } from './push-anx-options.js';
@@ -557,6 +558,21 @@ export interface GitAnnexAPI {
    * @category Configuration
    */
   numcopies(n?: number | string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
+
+  /**
+   * Lists keys used for old versions of annexed files.
+   *
+   * Consult the
+   * [git-annex oldkeys documentation](https://git-annex.branchable.com/git-annex-oldkeys/)
+   * for additional information.
+   * @param relativePaths The paths to include in the list.
+   * If specified, helper function {@link gitPath} or {@link gitPaths} is called internally.
+   * @param anxOptions The OldkeysOptions for the command.
+   * @param apiOptions The ApiOptions for the command.
+   * @returns The git-annex oldkeys result.
+   * @category Contents
+   */
+  oldkeys(relativePaths?: string | string[], anxOptions?: OldkeysOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult>;
 
   /**
    * Pulls content from remotes.

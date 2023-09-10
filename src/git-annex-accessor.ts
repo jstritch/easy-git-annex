@@ -55,6 +55,7 @@ import { MergeAnxOptions } from './interfaces/merge-anx-options.js';
 import { MergeGitOptions } from './interfaces/merge-git-options.js';
 import { MoveOptions } from './interfaces/move-options.js';
 import { MvOptions } from './interfaces/mv-options.js';
+import { OldkeysOptions } from './interfaces/oldkeys-options.js';
 import { parseCommandOptions } from './helpers/parse-command-options.js';
 import { PullAnxOptions } from './interfaces/pull-anx-options.js';
 import { PullOptions } from './interfaces/pull-options.js';
@@ -349,6 +350,12 @@ export class GitAnnexAccessor implements GitAnnexAPI {
   public async numcopies(n?: number | string, anxOptions?: AnnexOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
     const args = this.makeArgs(CommandGroup.AnxCommon, 'numcopies', anxOptions);
     this.pushIfNumeric(args, n);
+    return this.runAnx(args, apiOptions);
+  }
+
+  public async oldkeys(relativePaths?: string | string[], anxOptions?: OldkeysOptions | string[], apiOptions?: ApiOptions): Promise<CommandResult> {
+    const args = this.makeArgs(CommandGroup.AnxCommon, 'oldkeys', anxOptions);
+    this.pushIfRelativePaths(args, relativePaths);
     return this.runAnx(args, apiOptions);
   }
 

@@ -17,6 +17,11 @@ export interface InfoOptions extends AnnexOptions {
   '--bytes'?: null;
 
   /**
+   * Displays a list of repositories that have been marked as dead.
+   */
+  '--dead-repositories'?: null;
+
+  /**
    * Produces a JSON object on each line of output.
    */
   '--json'?: null;
