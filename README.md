@@ -39,7 +39,7 @@ Installation of easy-git-annex can be performed with the command
 `npm install easy-git-annex`
 
 GitHub repositories can use the
-jstritch/setup-git-annex
+[jstritch/setup-git-annex](https://github.com/marketplace/actions/setup-git-annex)
 action to install git-annex in workflows.
 Workflows using jstritch/setup-git-annex can test git-annex applications on Linux, macOS, and Windows.
 

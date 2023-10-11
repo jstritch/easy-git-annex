@@ -36,7 +36,7 @@ jobs:
           cache: 'npm'
           
       - name: Install git-annex
-        uses: jstritch/setup-git-annex@master
+        uses: jstritch/setup-git-annex@v1
         
       - name: Install easy-git-annex   
         run: npm ci
