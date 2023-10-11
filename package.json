@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jstritch/easy-git-annex"
+    "url": "git+https://github.com/jstritch/easy-git-annex.git"
   },
   "bugs": {
     "url": "https://github.com/jstritch/easy-git-annex/issues"
