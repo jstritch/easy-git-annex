@@ -1,4 +1,4 @@
-## vNext
+## v3.0.0 released 2023-10-11
 * Convert the package to an ECMAScript module from CommonJS
 * Add GitAnnexAPI methods
     * addunused
