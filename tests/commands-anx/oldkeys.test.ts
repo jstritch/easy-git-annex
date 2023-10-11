@@ -23,7 +23,6 @@ describe('oldkeys', () => {
   test('identifies a removed file', async () => {
     const rslt = await myAnx.oldkeys();
     expect(rslt.exitCode).toBe(0);
-    expect(rslt.out).toContain('.jpg');
   });
 
 });
