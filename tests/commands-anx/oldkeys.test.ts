@@ -20,10 +20,7 @@ describe('oldkeys', () => {
     await deleteDirectory(repositoryPath);
   });
 
-  // git-annex oldkeys is inoperative in Windows, run test on other platforms
-  /* eslint-disable jest/require-hook, jest/no-standalone-expect */
-  const testFunc = process.platform === 'win32' ? xtest : test;
-  testFunc('identifies a removed file', async () => {
+  test('identifies a removed file', async () => {
     const rslt = await myAnx.oldkeys();
     expect(rslt.exitCode).toBe(0);
     expect(rslt.out).toContain('.jpg');
