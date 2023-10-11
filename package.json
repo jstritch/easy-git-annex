@@ -1,6 +1,6 @@
 {
   "name": "easy-git-annex",
-  "version": "2.2.0",
+  "version": "3.0.0",
   "description": "JavaScript/TypeScript API for git-annex and Git commands.",
   "license": "MIT",
   "type": "module",
