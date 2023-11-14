@@ -339,9 +339,9 @@ commands to copy files between a repository and a special remote or another repo
 
 ```typescript
 import * as anx from 'easy-git-annex';
-import * as os from 'os';
-import * as path from 'path';
-import { promises as fs } from 'fs';
+import * as os from 'node:os';
+import * as path from 'node:path';
+import { promises as fs } from 'node:fs';
 
 async function setupAnnexClient(repositoryPath: string, description: string, largefiles: string): Promise<void> {
   const myAnx = anx.createAccessor(repositoryPath);
