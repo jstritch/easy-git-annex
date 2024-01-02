@@ -17,6 +17,7 @@
  */
 export interface ConsoleDataHandler {
   /**
+   * The function to process the console output.
    * @param data The recently generated console output.
    */
   (data: string): void;
