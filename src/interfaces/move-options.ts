@@ -27,6 +27,11 @@ export interface MoveOptions extends AnnexOptions {
   '--from'?: string;
 
   /**
+   * Moves from the local repository as well as from any reachable remotes.
+   */
+  '--from-anywhere'?: null;
+
+  /**
    * Enables parallel transfers with up to the specified number of jobs running at once.
    */
   '--jobs'?: number | string;

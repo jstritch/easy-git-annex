@@ -32,6 +32,11 @@ export interface CopyOptions extends AnnexOptions {
   '--from'?: string;
 
   /**
+   * Copies from the local repository as well as from any reachable remotes.
+   */
+  '--from-anywhere'?: null;
+
+  /**
    * Enables parallel transfers with up to the specified number of jobs running at once.
    */
   '--jobs'?: number | string;

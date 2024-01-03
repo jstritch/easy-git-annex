@@ -15,6 +15,7 @@ describe('CopyOptions', () => {
     [{ '--branch': 'ref' }, ['--branch=ref']],
     [{ '--failed': null }, ['--failed']],
     [{ '--from': 'A' }, ['--from=A']],
+    [{ '--from-anywhere': null }, ['--from-anywhere']],
     [{ '--jobs': 2 }, ['--jobs=2']],
     [{ '--jobs': '3' }, ['--jobs=3']],
     [{ '--json': null }, ['--json']],
