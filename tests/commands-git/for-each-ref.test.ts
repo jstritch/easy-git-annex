@@ -155,6 +155,7 @@ describe('ForEachRefOptions', () => {
     [{ '--no-merged': 'c233c7a' }, ['--no-merged=c233c7a']],
     [{ '--no-merged': ['c233c7a'] }, ['--no-merged=c233c7a']],
     [{ '--no-merged': ['c233c7a', 'ab2c420'] }, ['--no-merged=c233c7a', '--no-merged=ab2c420']],
+    [{ '--omit-empty': null }, ['--omit-empty']],
     [{ '--points-at': null }, ['--points-at']],
     [{ '--points-at': 'HEAD' }, ['--points-at', 'HEAD']],
     [{ '--sort': 'key' }, ['--sort=key']],

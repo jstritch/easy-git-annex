@@ -1,4 +1,9 @@
 ## vNext
+* Support Git 2.41.0 features
+    * Add BranchListOptions --omit-empty
+    * Add FetchCommonOptions --porcelain
+    * Add ForEachRefOptions --omit-empty
+    * Add TagOptions --omit-empty
 * Support git-annex 10.20231227 features
     * Add CopyOptions --from-anywhere
     * Add MoveOptions --from-anywhere

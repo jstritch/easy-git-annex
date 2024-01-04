@@ -104,6 +104,11 @@ export interface TagOptions {
   '--no-sign'?: null;
 
   /**
+   * Does not print a newline after formatted refs where the format expands to the empty string.
+   */
+  '--omit-empty'?: null;
+
+  /**
    * Lists tags of the given object; HEAD if not specified.
    */
   '--points-at'?: string | null;

@@ -64,6 +64,7 @@ describe('PullOptions', () => {
     [{ '--no-stat': null }, ['--no-stat']],
     [{ '--no-verify': null }, ['--no-verify']],
     [{ '--no-verify-signatures': null }, ['--no-verify-signatures']],
+    [{ '--porcelain': null }, ['--porcelain']],
     [{ '--quiet': null }, ['--quiet']],
     [{ '--rebase': null }, ['--rebase']],
     [{ '--rebase': 'merges' }, ['--rebase=merges']],

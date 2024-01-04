@@ -76,6 +76,11 @@ export interface FetchCommonOptions {
   '--no-tags'?: null;
 
   /**
+   * Prints the output to standard output in an easy-to-parse format for scripts.
+   */
+  '--porcelain'?: null;
+
+  /**
    * Modifies the configured refspec to place all refs into the refs/prefetch/ namespace.
    */
   '--prefetch'?: null;

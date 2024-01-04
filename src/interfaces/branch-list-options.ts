@@ -78,6 +78,11 @@ export interface BranchListOptions {
   '--no-merged'?: string | string[] | null;
 
   /**
+   * Does not print a newline after formatted refs where the format expands to the empty string.
+   */
+  '--omit-empty'?: null;
+
+  /**
    * Lists branches of the given object.
    */
   '--points-at'?: string | null;

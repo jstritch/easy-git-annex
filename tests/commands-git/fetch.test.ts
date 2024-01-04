@@ -50,6 +50,7 @@ describe('FetchOptions', () => {
     [{ '--negotiation-tip': ['A', 'B'] }, ['--negotiation-tip=A', '--negotiation-tip=B']],
     [{ '--no-show-forced-updates': null }, ['--no-show-forced-updates']],
     [{ '--no-tags': null }, ['--no-tags']],
+    [{ '--porcelain': null }, ['--porcelain']],
     [{ '--prefetch': null }, ['--prefetch']],
     [{ '--progress': null }, ['--progress']],
     [{ '--prune': null }, ['--prune']],

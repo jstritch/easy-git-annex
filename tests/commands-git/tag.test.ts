@@ -98,6 +98,7 @@ describe('TagOptions', () => {
     [{ '--no-merged': ['c233c7a'] }, ['--no-merged', 'c233c7a']],
     [{ '--no-merged': ['c233c7a', 'ab2c420'] }, ['--no-merged', 'c233c7a', '--no-merged', 'ab2c420']],
     [{ '--no-sign': null }, ['--no-sign']],
+    [{ '--omit-empty': null }, ['--omit-empty']],
     [{ '--points-at': null }, ['--points-at']],
     [{ '--points-at': 'HEAD' }, ['--points-at', 'HEAD']],
     [{ '--sign': null }, ['--sign']],
