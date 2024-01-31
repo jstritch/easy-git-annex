@@ -47,6 +47,11 @@ export interface ImportOptions extends AnnexOptions {
   '--json-progress'?: null;
 
   /**
+   * Specifies a commit message for the changes that have been made to the special remote.
+   */
+  '--message'?: string;
+
+  /**
    * Adds gitignored files.
    */
   '--no-check-gitignore'?: null;

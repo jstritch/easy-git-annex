@@ -213,6 +213,7 @@ const anxCommandOptions: Map<string, CommandOption[]> = new Map([
     { name: '--json', kind: OptionKind.Flag },
     { name: '--json-error-messages', kind: OptionKind.Flag },
     { name: '--json-progress', kind: OptionKind.Flag },
+    { name: '--message', kind: OptionKind.String },
     { name: '--no-check-gitignore', kind: OptionKind.Flag },
     { name: '--no-content', kind: OptionKind.Flag },
   ]],

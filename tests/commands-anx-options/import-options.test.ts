@@ -18,6 +18,7 @@ describe('ImportOptions', () => {
     [{ '--json': null }, ['--json']],
     [{ '--json-error-messages': null }, ['--json-error-messages']],
     [{ '--json-progress': null }, ['--json-progress']],
+    [{ '--message': 'A' }, ['--message=A']],
     [{ '--no-check-gitignore': null }, ['--no-check-gitignore']],
     [{ '--no-content': null }, ['--no-content']],
   ];

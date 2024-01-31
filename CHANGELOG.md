@@ -7,6 +7,8 @@
 * Support git-annex 10.20231227 features
     * Add CopyOptions --from-anywhere
     * Add MoveOptions --from-anywhere
+* Support git-annex 10.20240129 features
+    * Add ImportOptions --message
 
 ## v3.0.0 released 2023-10-11
 * Convert the package to an ECMAScript module from CommonJS
