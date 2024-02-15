@@ -4,9 +4,8 @@ import jestPlugin from 'eslint-plugin-jest';
 import jestPluginFormatting from 'eslint-plugin-jest-formatting';
 import jsoncParser from 'jsonc-eslint-parser';
 import jsoncPlugin from 'eslint-plugin-jsonc';
-import stylistic from '@stylistic/eslint-plugin';
-import tsEslintParser from '@typescript-eslint/parser';
-import tsEslintPlugin from '@typescript-eslint/eslint-plugin';
+import stylisticPlugin from '@stylistic/eslint-plugin';
+import tseslint from 'typescript-eslint';
 import unicornPlugin from 'eslint-plugin-unicorn';
 
 const jsRules = {
@@ -49,7 +48,7 @@ const tsRules = {
   '@typescript-eslint/explicit-function-return-type': ['error'],
   '@typescript-eslint/explicit-member-accessibility': ['error'],
   '@typescript-eslint/explicit-module-boundary-types': ['error'],
-  '@typescript-eslint/member-delimiter-style': ['error'],
+
   '@typescript-eslint/method-signature-style': ['error', 'method'],
   'no-array-constructor': 'off',
   '@typescript-eslint/no-array-constructor': ['error'],
@@ -116,6 +115,7 @@ const styleRules = {
   '@stylistic/key-spacing': 'error',
   '@stylistic/keyword-spacing': 'error',
   '@stylistic/lines-between-class-members': ['error', 'always'],
+  '@stylistic/member-delimiter-style': ['error'],
   '@stylistic/new-parens': 'error',
   '@stylistic/no-confusing-arrow': 'error',
   '@stylistic/no-extra-semi': 'error',
@@ -159,7 +159,7 @@ export default [
       reportUnusedDisableDirectives: true,
     },
     plugins: {
-      '@stylistic': stylistic,
+      '@stylistic': stylisticPlugin,
     },
     rules: {
       ...jsRules,
@@ -206,7 +206,7 @@ export default [
       globals: {
         ...globals.node,
       },
-      parser: tsEslintParser,
+      parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig-eslint.json',
       },
@@ -215,8 +215,8 @@ export default [
       reportUnusedDisableDirectives: true,
     },
     plugins: {
-      '@typescript-eslint': tsEslintPlugin,
-      '@stylistic': stylistic,
+      '@typescript-eslint': tseslint.plugin,
+      '@stylistic': stylisticPlugin,
       unicorn: unicornPlugin,
     },
     rules: {
@@ -237,7 +237,7 @@ export default [
         ...globals.jest,
         ...globals.node,
       },
-      parser: tsEslintParser,
+      parser: tseslint.parser,
       parserOptions: {
         project: './tsconfig-jest.json',
       },
@@ -246,8 +246,8 @@ export default [
       reportUnusedDisableDirectives: true,
     },
     plugins: {
-      '@typescript-eslint': tsEslintPlugin,
-      '@stylistic': stylistic,
+      '@typescript-eslint': tseslint.plugin,
+      '@stylistic': stylisticPlugin,
       jest: jestPlugin,
       'jest-formatting': jestPluginFormatting,
       unicorn: unicornPlugin,

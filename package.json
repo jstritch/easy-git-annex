@@ -10,7 +10,7 @@
     "/dist"
   ],
   "engines": {
-    "node": ">=18"
+    "node": "^18.18.0 || >=20.0.0"
   },
   "repository": {
     "type": "git",
@@ -53,8 +53,6 @@
     "@tsconfig/node18": "^18.2.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.17",
-    "@typescript-eslint/eslint-plugin": "^7.0.1",
-    "@typescript-eslint/parser": "^7.0.1",
     "eslint": "^8.56.0",
     "eslint-plugin-jest": "^27.8.0",
     "eslint-plugin-jest-formatting": "^3.1.0",
@@ -64,6 +62,7 @@
     "make-coverage-badge": "^1.2.0",
     "ts-jest": "^29.1.2",
     "typedoc": "^0.25.8",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "typescript-eslint": "^7.0.1"
   }
 }
