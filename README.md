@@ -346,36 +346,36 @@ import { promises as fs } from 'node:fs';
 async function setupAnnexClient(repositoryPath: string, description: string, largefiles: string): Promise<void> {
   const myAnx = anx.createAccessor(repositoryPath);
 
-  let rslt = await myAnx.initGit();
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.initGit());
 
-  rslt = await myAnx.configGit({ set: ['push.followTags', 'true'] });
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  const gitSettings: [string, string][] = [
+    ['push.followTags', 'true'],
+    ['receive.denyCurrentBranch', 'updateInstead'],
+  ];
+  for (const setting of gitSettings) {
+    anx.checkResult(await myAnx.configGit({ set: setting, '--local': null }));
+  }
 
-  rslt = await myAnx.configGit({ set: ['receive.denyCurrentBranch', 'updateInstead'] });
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.initAnx(description));
 
-  rslt = await myAnx.initAnx(description);
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.wanted('here', 'standard'));
 
-  rslt = await myAnx.wanted('here', 'standard');
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.group('here', 'manual'));
 
-  rslt = await myAnx.group('here', 'manual');
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
-
-  rslt = await myAnx.configAnx({ '--set': ['annex.largefiles', largefiles] });
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  const anxSettings: [string, string][] = [
+    ['annex.largefiles', largefiles],
+  ];
+  for (const setting of anxSettings) {
+    anx.checkResult(await myAnx.configAnx({ '--set': setting }));
+  }
 }
 
 async function addFiles(repositoryPath: string, relativePaths: string | string[], commitMessage: string): Promise<void> {
   const myAnx = anx.createAccessor(repositoryPath);
 
-  let rslt = await myAnx.addAnx(relativePaths);
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.addAnx(relativePaths));
 
-  rslt = await myAnx.commit(relativePaths, { '--message': commitMessage });
-  if (rslt.exitCode !== 0) { throw new Error(rslt.toCommandResultString()); }
+  anx.checkResult(await myAnx.commit(relativePaths, { '--message': commitMessage }));
 }
 
 export async function runExampleClick(): Promise<void> {

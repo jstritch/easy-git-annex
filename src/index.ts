@@ -18,6 +18,7 @@ export function createAccessor(repositoryPath: string): GitAnnexAPI {
   return GitAnnexAccessor.create(repositoryPath);
 }
 
+export * from './helpers/check-result.js';
 export * from './helpers/chmodr.js';
 export * from './helpers/get-branches.js';
 export * from './helpers/get-finds.js';

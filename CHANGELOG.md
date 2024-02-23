@@ -1,4 +1,6 @@
 ## vNext
+* Add helper functions
+    * checkResult
 * Support Git 2.41.0 features
     * Add BranchListOptions --omit-empty
     * Add FetchCommonOptions --porcelain
