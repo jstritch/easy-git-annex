@@ -53,7 +53,7 @@
     "@tsconfig/node18": "^18.2.2",
     "@types/jest": "^29.5.12",
     "@types/node": "^20.11.20",
-    "eslint": "^8.56.0",
+    "eslint": "^8.57.0",
     "eslint-plugin-jest": "^27.9.0",
     "eslint-plugin-jest-formatting": "^3.1.0",
     "eslint-plugin-jsonc": "^2.13.0",
