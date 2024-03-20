@@ -37,6 +37,21 @@ Here are some suggestions to help you get started.
 1. Run `yalc add easy-git-annex` in your dependent project.
 1. Rebuild your application and test normally.
 
+# How to release a version
+
+1. Create a build VM on GitHub by creating a codespace using the dev container defined in the repository.
+    * sets up a clean build environment
+1. Update the version number and release date in CHANGELOG.md and commit the file.
+1. $ npm version major|minor|patch
+    * runs package script preversion
+    * bumps package version per the version command parameter
+    * runs package script version
+    * git commit and tag
+    * runs package script postversion
+1. $ npm login
+1. $ npm publish
+1. Shut down and delete the codespace.
+
 # License
 
 The easy-git-annex package uses the MIT license in LICENSE.md.
