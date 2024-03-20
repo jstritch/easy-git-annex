@@ -322,20 +322,6 @@ adds one large and one small file to a subdirectory,
 and reports success or failure.
 
 The repository remains on your system for study.
-Once the repository exists, you can
-
-* List annexed files using the [git annex list](https://git-annex.branchable.com/git-annex-list/) command.
-* Add remote repositories using [git clone](https://git-scm.com/docs/git-clone) followed by
-[git annex init](https://git-annex.branchable.com/git-annex-init/).
-* Add special remotes with [git annex initremote](https://git-annex.branchable.com/git-annex-initremote/).
-The `directory` remote type is great for learning.
-* Save new files, deleted files, and file modifications using the
-commands [git annex add](https://git-annex.branchable.com/git-annex-add/)
-followed by [git commit](https://git-scm.com/docs/git-commit).
-* Use the [git annex push](https://git-annex.branchable.com/git-annex-push/)
-and [git annex pull](https://git-annex.branchable.com/git-annex-pull/)
-commands to copy files between a repository and a special remote or another repository.
-* Experiment with other commands.
 
 ```typescript
 import * as anx from 'easy-git-annex';
