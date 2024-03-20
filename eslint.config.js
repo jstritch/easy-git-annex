@@ -184,7 +184,7 @@ export default [
       jsonc: jsoncPlugin,
     },
     rules: {
-      ...jsoncPlugin.configs['recommended-with-json'].rules,
+      ...jsoncPlugin.configs['flat/recommended-with-json'].rules,
       'jsonc/array-bracket-newline': ['error', 'consistent'],
       'jsonc/array-bracket-spacing': ['error', 'never'],
       'jsonc/comma-style': ['error', 'last'],
