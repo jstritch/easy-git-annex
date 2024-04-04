@@ -89,6 +89,7 @@ const tsRules = {
 
   ...unicornPlugin.configs.recommended.rules,
   'unicorn/catch-error-name': ['error', { 'name': 'e' }],
+  'unicorn/import-style': ['off'],
   'unicorn/no-null': ['off'],
   'unicorn/numeric-separators-style': ['error', { 'onlyIfContainsSeparator': true }],
   'unicorn/prevent-abbreviations': ['off'],
