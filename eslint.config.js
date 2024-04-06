@@ -263,7 +263,6 @@ export default [
       ...jestPlugin.configs.style.rules,
       'jest/consistent-test-it': ['error', { 'fn': 'test' }],
       'jest/no-duplicate-hooks': 'error',
-      'jest/no-if': 'error',
       'jest/no-test-return-statement': 'error',
       'jest/prefer-called-with': 'error',
       'jest/prefer-hooks-on-top': 'error',
